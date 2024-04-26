@@ -1,0 +1,18 @@
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey_Configurator.Form1.resources
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey Configurator.csproj.GenerateResource.cache
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey Configurator.GeneratedMSBuildEditorConfig.editorconfig
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey Configurator.AssemblyInfoInputs.cache
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey Configurator.AssemblyInfo.cs
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey Configurator.csproj.CoreCompileInputs.cache
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey Configurator.sourcelink.json
+D:\Survey Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows\Survey Configurator.exe
+D:\Survey Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows\Survey Configurator.deps.json
+D:\Survey Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows\Survey Configurator.runtimeconfig.json
+D:\Survey Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows\Survey Configurator.dll
+D:\Survey Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows\Survey Configurator.pdb
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey Configurator.dll
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\refint\Survey Configurator.dll
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey Configurator.pdb
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey Configurator.genruntimeconfig.cache
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\ref\Survey Configurator.dll
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey_Configurator.Sub_forms.Add.resources
