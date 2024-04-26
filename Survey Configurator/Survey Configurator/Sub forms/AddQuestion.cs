@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Survey_Configurator.Sub_forms
 {
-    public partial class Add : Form
+    public partial class AddQuestion : Form
     {
-        public Add()
+        public AddQuestion()
         {
             InitializeComponent();
         }
