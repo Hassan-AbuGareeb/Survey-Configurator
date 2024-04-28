@@ -36,15 +36,26 @@ namespace Survey_Configurator
             //check first if any question is selected
 
             DialogResult DeleteQuestion = MessageBox.Show("Are you sure you want to delete this question?", "Delete question", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            var selectedQuestions =QuestionsListBox.SelectedItems;
-            
-            if(DeleteQuestion == DialogResult.Yes)
+            var selectedQuestions = QuestionsListBox.SelectedItems;
+
+            if (DeleteQuestion == DialogResult.Yes)
             {
                 //delete the question from database
                 //when the above successful
                 //show confirmation message
                 //delete question from interface
             }
+        }
+
+        private void NumberRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            //sort items based on order
+            //QuestionsListBox.Sorted = true;
+        }
+
+        private void AlphabeticalRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            //sort items alphabetically
         }
     }
 }
