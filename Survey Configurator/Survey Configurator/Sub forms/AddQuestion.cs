@@ -56,19 +56,17 @@ namespace Survey_Configurator.Sub_forms
 
         private void QuestionTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch(QuestionTypeComboBox.SelectedItem?.ToString()) 
+            QuestionOptions.Controls.Clear();
+            switch (QuestionTypeComboBox.SelectedItem?.ToString()) 
             {
                 case "Slider":
                     addSliderOptions();
                     break;
-                //case "Smileys":
-                //    addSmileyOptions();
-                //    break;
+                case "Smileys":
+                    addSmileysOptions();
+                    break;
                 case "Stars":
                     addStarsOptions();
-                    break;
-                default:
-                    QuestionOptions.Controls.Clear();
                     break;
             }
         }
@@ -206,6 +204,32 @@ namespace Survey_Configurator.Sub_forms
             QuestionOptions.Controls.Add(SliderStartValueCaptionText);
             QuestionOptions.Controls.Add(SliderEndValueCaptionLabel);
             QuestionOptions.Controls.Add(SliderEndValueCaptionText);
+        }
+        private void addSmileysOptions()
+        {
+            //add a label next to the numeric field
+            Label NumberOfSmileysLabel = new Label();
+            NumberOfSmileysLabel.AutoSize = true;
+            NumberOfSmileysLabel.Font = new Font("Segoe UI", 14.25F);
+            NumberOfSmileysLabel.Location = new Point(0, 0);
+            NumberOfSmileysLabel.Name = "NumberOfSmileysLabel";
+            NumberOfSmileysLabel.Size = new Size(45, 25);
+            NumberOfSmileysLabel.TabIndex = 9;
+            NumberOfSmileysLabel.Text = "Number of Smileys";
+
+            //add a numeric field to specify a number for the smileys
+            NumericUpDown NumberOfSmileysNumeric = new NumericUpDown();
+            NumberOfSmileysNumeric.Location = new Point(200, 0);
+            NumberOfSmileysNumeric.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
+            NumberOfSmileysNumeric.Minimum = new decimal(new int[] { 0, 0, 0, 0 });
+            NumberOfSmileysNumeric.Name = "NumberOfSmileysNumeric";
+            NumberOfSmileysNumeric.Size = new Size(120, 23);
+            NumberOfSmileysNumeric.TabIndex = 10;
+            NumberOfSmileysNumeric.Value = new decimal(new int[] { 5, 0, 0, 0 });
+
+            //add fields to the form
+            QuestionOptions.Controls.Add(NumberOfSmileysLabel);
+            QuestionOptions.Controls.Add(NumberOfSmileysNumeric);
         }
     }
 }
