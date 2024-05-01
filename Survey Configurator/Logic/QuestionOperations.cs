@@ -20,7 +20,7 @@ namespace Logic
             conn = new SqlConnection("Server=HASSANABUGHREEB;Database=Questions_DB;Trusted_Connection=true;Encrypt=false");
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "SELECT Q_order, Q_text, Q_type  FROM Question";
+            cmd.CommandText = "SELECT * FROM Question";
             conn.Open();
             Console.WriteLine("connected");
             DbDataReader reader = cmd.ExecuteReader();
@@ -85,6 +85,15 @@ namespace Logic
         public static void UpdateQuestion(Question questionData)
         {
 
+        }
+
+        public static void DeleteQuestion(Question questionData)
+        {
+            //delete question specific info first
+
+            //delete question from database
+
+            //delete question from interface (Questions) in here
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Logic;
+using Database.models;
 
 namespace Survey_Configurator
 {
@@ -27,6 +28,7 @@ namespace Survey_Configurator
             //call the controller to obtain data from the db and populate the list of questions
             var questions = QuestionOperations.getQuestions();
             QuestionsDataGrid.DataSource = questions;
+            QuestionsDataGrid.Columns["Q_id"].Visible = false;
         }
 
         private void AddEditQuestionButton_Click(object sender, EventArgs e)
@@ -44,6 +46,7 @@ namespace Survey_Configurator
 
             if (DeleteQuestion == DialogResult.Yes)
             {
+                //QuestionOperations.DeleteQuestion(new Question());
                 //delete the question from database
                 //on deletion, delete the specific details row first then delete the question general info
                 //when the above successful
