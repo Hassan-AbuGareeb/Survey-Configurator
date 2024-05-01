@@ -1,19 +1,14 @@
-﻿using Database.models;
-using Logic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using Logic;
 
 namespace Survey_Configurator.Sub_forms
 {
-    public partial class AddQuestion : Form
+    public partial class AddEditQuestion : Form
     {
+        private static string Operation;
         //members that conditionally appears
         //stars question options
         private NumericUpDown NumberOfStarsNumeric;
@@ -25,55 +20,23 @@ namespace Survey_Configurator.Sub_forms
         private TextBox SliderStartValueCaptionText;
         private TextBox SliderEndValueCaptionText;
 
-        public AddQuestion()
+        public AddEditQuestion(string operation )
         {
             InitializeComponent();
+            Operation = operation.ToLower();
+            this.Text = operation;
+            TitleLabel.Text = operation + " Question";
         }
 
-        private void AddQuestion_Load(object sender, EventArgs e)
+        private void AddEdit_Load(object sender, EventArgs e)
         {
-        }
-
-        private void AddButton_Click(object sender, EventArgs e)
-        {
-            //check if all fields are filled properly
-            if (QuestionTextBox.Text.Length != 0 &&
-                QuestionTypeComboBox.SelectedItem != null)
-            {
-                //validate the type-specific fields
-                //add question to db and interface
-                switch (QuestionTypeComboBox.Text)
-                {
-                    case "Stars":
-                        QuestionOperations.AddQuestion(new StarsQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value,(int)NumberOfStarsNumeric.Value));
-                        break;
-                    case "Slider":
-                        QuestionOperations.AddQuestion(new SliderQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value,
-                            (int)SliderStartValueNumeric.Value, (int)SliderEndValueNumeric.Value,
-                            SliderStartValueCaptionText.Text, SliderEndValueCaptionText.Text));
-                        break;
-                    case "Smiley":
-                        QuestionOperations.AddQuestion(new SmileyQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value, (int)NumberOfSmileysNumeric.Value));
-                        break;
-                }
-                //should i check the result of the add question function ?
-
-                //show success message
-                MessageBox.Show("Question has been added successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                //close form
-                this.Close();
-            }
-            else
-            {
-                //show dialouge box indicating an error in filling fields
-                //show the missing fields ?
-                MessageBox.Show("All fields must have proper values", "Missing fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //check if the operation is edit and fill the fields with selected question data
+            //allow the user to edit question type
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            DialogResult cancelCreateQuestion = MessageBox.Show("Are you sure you want to cancel this questions?", "Cancel Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult cancelCreateQuestion = MessageBox.Show("Any changes made won't be saved.", "Cancel Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (cancelCreateQuestion == DialogResult.Yes)
             {
                 this.Close();
@@ -84,7 +47,7 @@ namespace Survey_Configurator.Sub_forms
         private void QuestionTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             QuestionOptions.Controls.Clear();
-            switch (QuestionTypeComboBox.SelectedItem?.ToString()) 
+            switch (QuestionTypeComboBox.SelectedItem?.ToString())
             {
                 case "Slider":
                     addSliderOptions();
@@ -97,7 +60,7 @@ namespace Survey_Configurator.Sub_forms
                     break;
             }
         }
-    
+            
         private void addStarsOptions()
         {
             //add a label next to the numeric field
