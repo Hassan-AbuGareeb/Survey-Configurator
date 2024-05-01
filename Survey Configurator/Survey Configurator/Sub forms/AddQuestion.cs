@@ -90,7 +90,7 @@ namespace Survey_Configurator.Sub_forms
                 case "Slider":
                     addSliderOptions();
                     break;
-                case "Smileys":
+                case "Smiley":
                     addSmileysOptions();
                     break;
                 case "Stars":
