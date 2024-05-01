@@ -25,7 +25,7 @@ namespace Survey_Configurator
         {
             //after obtaining the connection string 
             //call the controller to obtain data from the db and populate the list of questions
-            var questions = Class1.getQuestions();
+            var questions = QuestionOperations.getQuestions();
             QuestionsDataGrid.DataSource = questions;
         }
 
@@ -51,6 +51,7 @@ namespace Survey_Configurator
             if (DeleteQuestion == DialogResult.Yes)
             {
                 //delete the question from database
+                //on deletion, delete the specific details row first then delete the question general info
                 //when the above successful
                 //show confirmation message
                 //delete question from interface

@@ -102,7 +102,7 @@
             // QuestionTypeComboBox
             // 
             QuestionTypeComboBox.FormattingEnabled = true;
-            QuestionTypeComboBox.Items.AddRange(new object[] { "Slider", "Stars", "Smileys" });
+            QuestionTypeComboBox.Items.AddRange(new object[] { "Slider", "Stars", "Smiley" });
             QuestionTypeComboBox.Location = new Point(119, 300);
             QuestionTypeComboBox.Name = "QuestionTypeComboBox";
             QuestionTypeComboBox.Size = new Size(121, 23);

@@ -8,7 +8,7 @@ namespace Database.models
         public int Order { get; set; }
         public int NumberOfStars { get; set; }
 
-        public StarsQuestion(string text, int order, int numberOfStars = 0) : base(text, order)
+        public StarsQuestion(string text, int order, int numberOfStars = 5) : base(text, order)
         {
             NumberOfStars = numberOfStars;
         }
