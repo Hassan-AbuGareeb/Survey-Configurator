@@ -29,18 +29,12 @@ namespace Survey_Configurator
             QuestionsDataGrid.DataSource = questions;
         }
 
-        private void AddQuestionButton_Click(object sender, EventArgs e)
+        private void AddEditQuestionButton_Click(object sender, EventArgs e)
         {
-            AddQuestion addForm = new AddQuestion();
+            AddEditQuestion addForm = new AddEditQuestion(((sender as Button).Text));
             addForm.ShowDialog();
         }
 
-        private void EditQuestionButton_Click(object sender, EventArgs e)
-        {
-            //check that only one question is selected
-            EditQuestion editForm = new EditQuestion();
-            editForm.ShowDialog();
-        }
 
         private void DeleteQuestionButton_Click(object sender, EventArgs e)
         {

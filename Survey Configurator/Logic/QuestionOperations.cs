@@ -81,5 +81,10 @@ namespace Logic
             Questions.Rows.Add(questionData.Order, questionData.Text, questionType);
 
         }
+
+        public static void UpdateQuestion(Question questionData)
+        {
+
+        }
     }
 }

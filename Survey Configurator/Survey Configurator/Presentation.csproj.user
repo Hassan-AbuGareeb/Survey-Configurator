@@ -4,6 +4,9 @@
     <Compile Update="MainScreen.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Sub forms\AddEditQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Sub forms\AddQuestion.cs">
       <SubType>Form</SubType>
     </Compile>

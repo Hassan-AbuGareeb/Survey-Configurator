@@ -31,7 +31,7 @@
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
-            label4 = new Label();
+            Title = new Label();
             QuestionTextBox = new TextBox();
             QuestionOrderNumeric = new NumericUpDown();
             QuestionTypeComboBox = new ComboBox();
@@ -71,15 +71,15 @@
             label3.TabIndex = 2;
             label3.Text = "Type";
             // 
-            // label4
+            // Title
             // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(12, 9);
-            label4.Name = "label4";
-            label4.Size = new Size(193, 40);
-            label4.TabIndex = 3;
-            label4.Text = "Add Question";
+            Title.AutoSize = true;
+            Title.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Title.Location = new Point(12, 9);
+            Title.Name = "Title";
+            Title.Size = new Size(193, 40);
+            Title.TabIndex = 3;
+            Title.Text = "Add Question";
             // 
             // QuestionTextBox
             // 
@@ -149,7 +149,7 @@
             Controls.Add(QuestionTypeComboBox);
             Controls.Add(QuestionOrderNumeric);
             Controls.Add(QuestionTextBox);
-            Controls.Add(label4);
+            Controls.Add(Title);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -166,7 +166,7 @@
         private Label label1;
         private Label label2;
         private Label label3;
-        private Label label4;
+        private Label Title;
         private TextBox QuestionTextBox;
         private NumericUpDown QuestionOrderNumeric;
         private ComboBox QuestionTypeComboBox;
