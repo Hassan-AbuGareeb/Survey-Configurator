@@ -139,7 +139,7 @@ namespace Survey_Configurator.Sub_forms
             SliderStartValueLabel.Text = "Start value";
             //add a numeric field to specify a number for the smileys
             SliderStartValueNumeric = new NumericUpDown();
-            SliderStartValueNumeric.Location = new Point(200, 0);
+            SliderStartValueNumeric.Location = new Point(230, 0);
             SliderStartValueNumeric.Maximum = new decimal(new int[] { 50, 0, 0, 0 });
             SliderStartValueNumeric.Minimum = new decimal(new int[] { 0, 0, 0, 0 });
             SliderStartValueNumeric.Name = "SliderStartValueNumeric";
@@ -158,7 +158,7 @@ namespace Survey_Configurator.Sub_forms
             SliderEndValueLabel.Text = "End value";
             //add a numeric field to specify a number for the smileys
             SliderEndValueNumeric = new NumericUpDown();
-            SliderEndValueNumeric.Location = new Point(200, 40);
+            SliderEndValueNumeric.Location = new Point(230, 40);
             SliderEndValueNumeric.Maximum = new decimal(new int[] { 100, 0, 0, 0 });
             SliderEndValueNumeric.Minimum = new decimal(new int[] { 50, 0, 0, 0 });
             SliderEndValueNumeric.Name = "SliderEndValueNumeric";
@@ -177,7 +177,7 @@ namespace Survey_Configurator.Sub_forms
             SliderStartValueCaptionLabel.Text = "Start value caption";
             //add a numeric field to specify a number for the smileys
             SliderStartValueCaptionText = new TextBox();
-            SliderStartValueCaptionText.Location = new Point(200, 80);
+            SliderStartValueCaptionText.Location = new Point(230, 80);
             SliderStartValueCaptionText.Name = "SliderStartValueCaptionText";
             SliderStartValueCaptionText.Size = new Size(120, 23);
             SliderStartValueCaptionText.TabIndex = 14;
@@ -194,7 +194,7 @@ namespace Survey_Configurator.Sub_forms
             SliderEndValueCaptionLabel.Text = "End value caption";
             //add a numeric field to specify a number for the smileys
             SliderEndValueCaptionText = new TextBox();
-            SliderEndValueCaptionText.Location = new Point(200, 120);
+            SliderEndValueCaptionText.Location = new Point(230, 120);
             SliderEndValueCaptionText.Name = "SliderEndValueCaptionText";
             SliderEndValueCaptionText.Size = new Size(120, 23);
             SliderEndValueCaptionText.TabIndex = 14;

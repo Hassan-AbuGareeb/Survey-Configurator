@@ -78,7 +78,7 @@ namespace Logic
             conn.Close();
 
             //add the question to the UI
-            Questions.Rows.Add(questionData.Order, questionData.Text, questionType);
+            Questions.Rows.Add(questionId, questionData.Text, questionData.Order, questionType);
 
         }
 
