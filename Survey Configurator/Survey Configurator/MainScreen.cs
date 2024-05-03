@@ -38,6 +38,8 @@ namespace Survey_Configurator
         }
 
 
+        //disable the the delete button if non of the rows are selected
+
         private void DeleteQuestionButton_Click(object sender, EventArgs e)
         {
             //check first if any question is selected
@@ -46,24 +48,45 @@ namespace Survey_Configurator
 
             if (DeleteQuestion == DialogResult.Yes)
             {
-                //QuestionOperations.DeleteQuestion(new Question());
-                //delete the question from database
-                //on deletion, delete the specific details row first then delete the question general info
-                //when the above successful
-                //show confirmation message
-                //delete question from interface
+                //get the number of selected rows
+                int numberOfSelectedRows = QuestionsDataGrid.SelectedRows.Count;
+                DataRow[] selectedQuestions = new DataRow[numberOfSelectedRows];
+
+                //obtain the selected questions
+                for (int i = 0; i < numberOfSelectedRows; i++)
+                {
+                    DataRow currentQuestion = ((DataRowView)QuestionsDataGrid.Rows[i].DataBoundItem).Row;
+                    selectedQuestions[i] = currentQuestion;
+                }
+                //delete the questions from db and ui
+                QuestionOperations.DeleteQuestion(selectedQuestions);
+                MessageBox.Show($"Question{(numberOfSelectedRows > 1 ? "s " : " ")}deleted successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+
             //QuestionsListBox.DisplayMember = "Q_text";
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void QuestionsDataGrid_SelectionChanged(object sender, EventArgs e)
+        {
+            //disable delete button if no questions are selected
+            if(QuestionsDataGrid.SelectedRows.Count > 0)
+            {
+                DeleteQuestionButton.Enabled = true;
+            }
+            else
+            {
+                DeleteQuestionButton.Enabled = false;
+            }
         }
     }
 }

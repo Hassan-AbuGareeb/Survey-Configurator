@@ -87,13 +87,30 @@ namespace Logic
 
         }
 
-        public static void DeleteQuestion(Question questionData)
+        public static void DeleteQuestion(DataRow[] selectedQuestions)
         {
-            //delete question specific info first
-
+            conn = new SqlConnection("Server=HASSANABUGHREEB;Database=Questions_DB;Trusted_Connection=true;Encrypt=false");
+            conn.Open();
+            SqlCommand deleteQuestionsCmd = conn.CreateCommand();
+            deleteQuestionsCmd.CommandType = CommandType.Text;
+            //delete the specific details of the question type
+            for (int i = 0; i < selectedQuestions.Length; i++)
+            {
+                deleteQuestionsCmd.CommandText = $"DELETE FROM {selectedQuestions[i]["Q_type"]} WHERE Q_id = {selectedQuestions[i]["Q_id"]}";
+                deleteQuestionsCmd.ExecuteNonQuery();
+            }
             //delete question from database
-
+            for (int i = 0; i < selectedQuestions.Length; i++)
+            {
+                deleteQuestionsCmd.CommandText = $"DELETE FROM Question WHERE Q_id = {selectedQuestions[i]["Q_id"]}";
+                deleteQuestionsCmd.ExecuteNonQuery();
+            }
             //delete question from interface (Questions) in here
+            for (int i = 0; i < selectedQuestions.Length; i++)
+            {
+                Questions.Rows.Remove(selectedQuestions[i]);
+            }
+            conn.Close();
         }
     }
 }
