@@ -21,7 +21,7 @@ namespace Survey_Configurator.Sub_forms
         private TextBox SliderStartValueCaptionText;
         private TextBox SliderEndValueCaptionText;
 
-        public AddEditQuestion(string operation )
+        public AddEditQuestion(string operation)
         {
             InitializeComponent();
             Operation = operation.ToLower();
@@ -72,16 +72,6 @@ namespace Survey_Configurator.Sub_forms
             }
         }
 
-        private void CancelButton_Click(object sender, EventArgs e)
-        {
-            DialogResult cancelCreateQuestion = MessageBox.Show("Any changes made won't be saved.", "Cancel Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (cancelCreateQuestion == DialogResult.Yes)
-            {
-                this.Close();
-            }
-
-        }
-
         private void QuestionTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             QuestionOptions.Controls.Clear();
@@ -98,7 +88,7 @@ namespace Survey_Configurator.Sub_forms
                     break;
             }
         }
-            
+
         private void addStarsOptions()
         {
             //add a label next to the numeric field
@@ -234,6 +224,15 @@ namespace Survey_Configurator.Sub_forms
             //add fields to the form
             QuestionOptions.Controls.Add(NumberOfSmileysLabel);
             QuestionOptions.Controls.Add(NumberOfSmileysNumeric);
+        }
+
+        private void Cancel_Click(object sender, EventArgs e)
+        {
+            DialogResult cancelCreateQuestion = MessageBox.Show("Any changes made won't be saved.", "Cancel Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (cancelCreateQuestion == DialogResult.Yes)
+            {
+                this.Close();
+            }
         }
     }
 }

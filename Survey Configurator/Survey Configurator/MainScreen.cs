@@ -37,9 +37,6 @@ namespace Survey_Configurator
             addForm.ShowDialog();
         }
 
-
-        //disable the the delete button if non of the rows are selected
-
         private void DeleteQuestionButton_Click(object sender, EventArgs e)
         {
             //check first if any question is selected
@@ -71,21 +68,28 @@ namespace Survey_Configurator
             //QuestionsListBox.DisplayMember = "Q_text";
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
         private void QuestionsDataGrid_SelectionChanged(object sender, EventArgs e)
         {
+            int numberOfSelectedQuestions = QuestionsDataGrid.SelectedRows.Count;
             //disable delete button if no questions are selected
-            if(QuestionsDataGrid.SelectedRows.Count > 0)
+            if (numberOfSelectedQuestions > 0)
             {
                 DeleteQuestionButton.Enabled = true;
             }
             else
             {
                 DeleteQuestionButton.Enabled = false;
+            }
+
+            //enable the edit questions only if one question is selected
+            if(numberOfSelectedQuestions > 0 && numberOfSelectedQuestions < 2)
+            {
+                EditQuestionButton.Enabled = true;
+
+            }
+            else
+            {
+                EditQuestionButton.Enabled = false;
             }
         }
     }
