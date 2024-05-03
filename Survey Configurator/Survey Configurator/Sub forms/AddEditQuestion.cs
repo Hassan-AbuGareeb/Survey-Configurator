@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using Database.models;
 using Logic;
 
 namespace Survey_Configurator.Sub_forms
@@ -32,6 +33,43 @@ namespace Survey_Configurator.Sub_forms
         {
             //check if the operation is edit and fill the fields with selected question data
             //allow the user to edit question type
+        }
+
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            //check if all fields are filled properly
+            if (QuestionTextBox.Text.Length != 0 &&
+                QuestionTypeComboBox.SelectedItem != null)
+            {
+                //validate the type-specific fields
+                //add question to db and interface
+                switch (QuestionTypeComboBox.Text)
+                {
+                    case "Stars":
+                        QuestionOperations.AddQuestion(new StarsQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value, (int)NumberOfStarsNumeric.Value));
+                        break;
+                    case "Slider":
+                        QuestionOperations.AddQuestion(new SliderQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value,
+                            (int)SliderStartValueNumeric.Value, (int)SliderEndValueNumeric.Value,
+                            SliderStartValueCaptionText.Text, SliderEndValueCaptionText.Text));
+                        break;
+                    case "Smiley":
+                        QuestionOperations.AddQuestion(new SmileyQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value, (int)NumberOfSmileysNumeric.Value));
+                        break;
+                }
+                //should i check the result of the add question function ?
+
+                //show success message
+                MessageBox.Show("Question has been added successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                //close form
+                this.Close();
+            }
+            else
+            {
+                //show dialouge box indicating an error in filling fields
+                //show the missing fields ?
+                MessageBox.Show("All fields must have proper values", "Missing fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
@@ -101,7 +139,7 @@ namespace Survey_Configurator.Sub_forms
             SliderStartValueLabel.Text = "Start value";
             //add a numeric field to specify a number for the smileys
             SliderStartValueNumeric = new NumericUpDown();
-            SliderStartValueNumeric.Location = new Point(200, 0);
+            SliderStartValueNumeric.Location = new Point(230, 0);
             SliderStartValueNumeric.Maximum = new decimal(new int[] { 50, 0, 0, 0 });
             SliderStartValueNumeric.Minimum = new decimal(new int[] { 0, 0, 0, 0 });
             SliderStartValueNumeric.Name = "SliderStartValueNumeric";
@@ -120,7 +158,7 @@ namespace Survey_Configurator.Sub_forms
             SliderEndValueLabel.Text = "End value";
             //add a numeric field to specify a number for the smileys
             SliderEndValueNumeric = new NumericUpDown();
-            SliderEndValueNumeric.Location = new Point(200, 40);
+            SliderEndValueNumeric.Location = new Point(230, 40);
             SliderEndValueNumeric.Maximum = new decimal(new int[] { 100, 0, 0, 0 });
             SliderEndValueNumeric.Minimum = new decimal(new int[] { 50, 0, 0, 0 });
             SliderEndValueNumeric.Name = "SliderEndValueNumeric";
@@ -139,7 +177,7 @@ namespace Survey_Configurator.Sub_forms
             SliderStartValueCaptionLabel.Text = "Start value caption";
             //add a numeric field to specify a number for the smileys
             SliderStartValueCaptionText = new TextBox();
-            SliderStartValueCaptionText.Location = new Point(200, 80);
+            SliderStartValueCaptionText.Location = new Point(230, 80);
             SliderStartValueCaptionText.Name = "SliderStartValueCaptionText";
             SliderStartValueCaptionText.Size = new Size(120, 23);
             SliderStartValueCaptionText.TabIndex = 14;
@@ -156,7 +194,7 @@ namespace Survey_Configurator.Sub_forms
             SliderEndValueCaptionLabel.Text = "End value caption";
             //add a numeric field to specify a number for the smileys
             SliderEndValueCaptionText = new TextBox();
-            SliderEndValueCaptionText.Location = new Point(200, 120);
+            SliderEndValueCaptionText.Location = new Point(230, 120);
             SliderEndValueCaptionText.Name = "SliderEndValueCaptionText";
             SliderEndValueCaptionText.Size = new Size(120, 23);
             SliderEndValueCaptionText.TabIndex = 14;
@@ -185,7 +223,7 @@ namespace Survey_Configurator.Sub_forms
 
             //add a numeric field to specify a number for the smileys
             NumberOfSmileysNumeric = new NumericUpDown();
-            NumberOfSmileysNumeric.Location = new Point(200, 0);
+            NumberOfSmileysNumeric.Location = new Point(250, 0);
             NumberOfSmileysNumeric.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
             NumberOfSmileysNumeric.Minimum = new decimal(new int[] { 2, 0, 0, 0 });
             NumberOfSmileysNumeric.Name = "NumberOfSmileysNumeric";

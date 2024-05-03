@@ -20,7 +20,7 @@ namespace Logic
             conn = new SqlConnection("Server=HASSANABUGHREEB;Database=Questions_DB;Trusted_Connection=true;Encrypt=false");
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "SELECT Q_order, Q_text, Q_type  FROM Question";
+            cmd.CommandText = "SELECT * FROM Question";
             conn.Open();
             Console.WriteLine("connected");
             DbDataReader reader = cmd.ExecuteReader();
@@ -78,13 +78,39 @@ namespace Logic
             conn.Close();
 
             //add the question to the UI
-            Questions.Rows.Add(questionData.Order, questionData.Text, questionType);
+            Questions.Rows.Add(questionId, questionData.Text, questionData.Order, questionType);
 
         }
 
         public static void UpdateQuestion(Question questionData)
         {
 
+        }
+
+        public static void DeleteQuestion(DataRow[] selectedQuestions)
+        {
+            conn = new SqlConnection("Server=HASSANABUGHREEB;Database=Questions_DB;Trusted_Connection=true;Encrypt=false");
+            conn.Open();
+            SqlCommand deleteQuestionsCmd = conn.CreateCommand();
+            deleteQuestionsCmd.CommandType = CommandType.Text;
+            //delete the specific details of the question type
+            for (int i = 0; i < selectedQuestions.Length; i++)
+            {
+                deleteQuestionsCmd.CommandText = $"DELETE FROM {selectedQuestions[i]["Q_type"]} WHERE Q_id = {selectedQuestions[i]["Q_id"]}";
+                deleteQuestionsCmd.ExecuteNonQuery();
+            }
+            //delete question from database
+            for (int i = 0; i < selectedQuestions.Length; i++)
+            {
+                deleteQuestionsCmd.CommandText = $"DELETE FROM Question WHERE Q_id = {selectedQuestions[i]["Q_id"]}";
+                deleteQuestionsCmd.ExecuteNonQuery();
+            }
+            //delete question from interface (Questions) in here
+            for (int i = 0; i < selectedQuestions.Length; i++)
+            {
+                Questions.Rows.Remove(selectedQuestions[i]);
+            }
+            conn.Close();
         }
     }
 }
