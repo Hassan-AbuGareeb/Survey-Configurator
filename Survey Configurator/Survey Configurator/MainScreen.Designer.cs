@@ -51,7 +51,6 @@
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "groupBox1";
-            groupBox1.Enter += groupBox1_Enter;
             // 
             // QuestionsDataGrid
             // 
@@ -98,7 +97,7 @@
             EditQuestionButton.TabIndex = 6;
             EditQuestionButton.Text = "Edit";
             EditQuestionButton.UseVisualStyleBackColor = true;
-            EditQuestionButton.Click += AddEditQuestionButton_Click;
+            EditQuestionButton.Click += EditQuestionButton_Click;
             // 
             // AddQuestionButton
             // 
@@ -108,7 +107,7 @@
             AddQuestionButton.TabIndex = 5;
             AddQuestionButton.Text = "Add";
             AddQuestionButton.UseVisualStyleBackColor = true;
-            AddQuestionButton.Click += AddEditQuestionButton_Click;
+            AddQuestionButton.Click += AddQuestionButton_Click;
             // 
             // MainScreen
             // 
