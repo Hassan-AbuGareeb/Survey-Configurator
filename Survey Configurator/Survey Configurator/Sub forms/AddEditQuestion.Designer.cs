@@ -99,6 +99,7 @@
             // 
             QuestionTextBox.Location = new Point(137, 119);
             QuestionTextBox.Margin = new Padding(3, 4, 3, 4);
+            QuestionTextBox.MaxLength = 350;
             QuestionTextBox.Multiline = true;
             QuestionTextBox.Name = "QuestionTextBox";
             QuestionTextBox.Size = new Size(477, 117);
