@@ -10,7 +10,6 @@ namespace Logic
         // make a general purpose open connection function and send delegates to it
 
 
-        //private static List<Question> Questions = new List<Question>();
         private static DataTable Questions;
         private static SqlConnection conn;
         private QuestionOperations() { }
@@ -104,8 +103,57 @@ namespace Logic
 
         }
 
-        public static void UpdateQuestion(Question questionData)
+        public static void UpdateQuestion(int questionId, Question updatedQuestionData)
         {
+            //recieve the new question general and specific data
+            string originalQuestionType = Questions.Select($"Q_id = {questionId}")[0]["Q_type"].ToString();
+            conn = new SqlConnection("Server=HASSANABUGHREEB;Database=Questions_DB;Trusted_Connection=true;Encrypt=false");
+
+            if (updatedQuestionData.GetType().Name.Split("Q")[0].Equals(originalQuestionType))
+            {//type of question wasn't  changed
+             //update the specific details
+                string questionUpdateArguments = "";
+                switch (originalQuestionType)
+                {
+                    case "Smiley":
+                        SmileyQuestion smileyQuestionData = (SmileyQuestion)updatedQuestionData;
+                        questionUpdateArguments += $"Num_of_faces = {smileyQuestionData.NumberOfSmileyFaces}";
+                        break;
+                    case "Slider":
+                        SliderQuestion sliderQuestionData = (SliderQuestion)updatedQuestionData;
+                        questionUpdateArguments += $"Start_value = {sliderQuestionData.StartValue}," +
+                            $" End_value ={sliderQuestionData.EndValue}," +
+                            $" Start_value_caption = '{sliderQuestionData.StartValueCaption}'," +
+                            $" End_value_caption = '{sliderQuestionData.EndValueCaption}'";
+                        break;
+                    case "Stars":
+                        StarsQuestion starsQuestionData = (StarsQuestion)updatedQuestionData;
+                        questionUpdateArguments += $"Num_of_stars = {starsQuestionData.NumberOfStars}";
+                        break;
+                }
+                SqlCommand updateQuestionSpecificDataCmd = new SqlCommand();
+                updateQuestionSpecificDataCmd.CommandType = CommandType.Text;
+                updateQuestionSpecificDataCmd.CommandText = $"UPDATE {originalQuestionType} SET {questionUpdateArguments} WHERE Q_id = {questionId}";
+                updateQuestionSpecificDataCmd.Connection = conn;
+                //update the general question
+                SqlCommand updateQuestionDataCmd = conn.CreateCommand();
+                updateQuestionDataCmd.CommandType = CommandType.Text;
+                updateQuestionDataCmd.CommandText = $"UPDATE Question SET Q_order = {updatedQuestionData.Order}, Q_text = '{updatedQuestionData.Text}' WHERE Q_id = {questionId}";
+                updateQuestionDataCmd.Connection = conn;
+                conn.Open();
+                updateQuestionSpecificDataCmd.ExecuteNonQuery();
+                updateQuestionDataCmd.ExecuteNonQuery();
+                conn.Close();
+
+                //update ui
+                Questions.Rows.Remove(Questions.Select($"Q_id = {questionId}")[0]);
+                Questions.Rows.Add(questionId, updatedQuestionData.Text, updatedQuestionData.Order, originalQuestionType);
+            }
+            else
+            {//type of question changed
+
+               
+            }
 
         }
 

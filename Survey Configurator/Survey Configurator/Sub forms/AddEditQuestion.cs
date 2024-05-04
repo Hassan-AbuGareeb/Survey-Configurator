@@ -10,7 +10,7 @@ namespace Survey_Configurator.Sub_forms
 {
     public partial class AddEditQuestion : Form
     {
-        private static string Operation;
+        //private static string Operation;
         private static int QuestionId;
         //members that conditionally appears
         //stars question options
@@ -26,7 +26,7 @@ namespace Survey_Configurator.Sub_forms
         public AddEditQuestion()
         {
             InitializeComponent();
-            Operation = "Add";
+            //Operation = "Add";
             TitleLabel.Text = "Add Question";
             this.Text = "Add";
             Add.Text = "Add";
@@ -37,13 +37,11 @@ namespace Survey_Configurator.Sub_forms
         {
             InitializeComponent();
             QuestionId = questionId;
-            Operation = "Edit";
+            //Operation = "Edit";
             this.Text = "Edit";
             TitleLabel.Text = "Edit Question";
             Add.Text = "Edit";
         }
-
-       
 
         private void AddEdit_Load(object sender, EventArgs e)
         {
@@ -87,18 +85,29 @@ namespace Survey_Configurator.Sub_forms
                 switch (QuestionTypeComboBox.Text)
                 {
                     case "Stars":
-                        QuestionOperations.AddQuestion(new StarsQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value, (int)NumberOfStarsNumeric.Value));
+                        StarsQuestion starsData = new StarsQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value, (int)NumberOfStarsNumeric.Value);
+                        if (Add.Text.Equals("Add"))
+                            QuestionOperations.AddQuestion(starsData);
+                        else
+                            QuestionOperations.UpdateQuestion(QuestionId, starsData);
                         break;
                     case "Slider":
-                        QuestionOperations.AddQuestion(new SliderQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value,
+                        SliderQuestion sliderData = new SliderQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value,
                             (int)SliderStartValueNumeric.Value, (int)SliderEndValueNumeric.Value,
-                            SliderStartValueCaptionText.Text, SliderEndValueCaptionText.Text));
+                            SliderStartValueCaptionText.Text, SliderEndValueCaptionText.Text);
+                        if (Add.Text.Equals("Add"))
+                            QuestionOperations.AddQuestion(sliderData);
+                        else
+                            QuestionOperations.UpdateQuestion(QuestionId, sliderData);
                         break;
                     case "Smiley":
-                        QuestionOperations.AddQuestion(new SmileyQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value, (int)NumberOfSmileysNumeric.Value));
+                        SmileyQuestion smileyData = new SmileyQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value, (int)NumberOfSmileysNumeric.Value);
+                        if (Add.Text.Equals("Add"))
+                            QuestionOperations.AddQuestion(smileyData);
+                        else
+                            QuestionOperations.UpdateQuestion(QuestionId, smileyData);
                         break;
                 }
-                //should i check the result of the add question function ?
 
                 //show success message
                 MessageBox.Show("Question has been added successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
@@ -107,6 +116,7 @@ namespace Survey_Configurator.Sub_forms
             }
             else
             {
+                //validate specific fields too
                 //show dialouge box indicating an error in filling fields
                 //show the missing fields ?
                 MessageBox.Show("All fields must have proper values", "Missing fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
