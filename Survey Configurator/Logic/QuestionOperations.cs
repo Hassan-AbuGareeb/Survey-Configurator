@@ -151,8 +151,51 @@ namespace Logic
             }
             else
             {//type of question changed
-
-               
+                //delete the questions specific old data first
+                SqlCommand deleteSpecificQuestionDataCmd = new SqlCommand($"DELETE FROM {originalQuestionType} WHERE Q_id = {questionId}",conn);
+                //update the general question data
+                SqlCommand updateQuestionDataCmd = new SqlCommand
+                    ($"UPDATE Question SET Q_order = {updatedQuestionData.Order}, Q_text = '{updatedQuestionData.Text}'," +
+                    $" Q_type = '{updatedQuestionData.GetType().Name.Split("Q")[0]}' WHERE Q_id = {questionId}",
+                    conn);
+                //create a new row in the specific question type table
+                SqlCommand insertQuestionTypeCmd = conn.CreateCommand();
+                ////get the specific values for the question type
+                string questionTypeSpecificAttributes = "";
+                string questionTypeSpecificValues = "";
+                ////for each type of question downcast the question to its specific type
+                string updatedQuestionType = updatedQuestionData.GetType().Name.Split("Q")[0];
+                switch (updatedQuestionType)
+                {
+                    case "Smiley":
+                        SmileyQuestion smileyQuestionData = (SmileyQuestion)updatedQuestionData;
+                        questionTypeSpecificAttributes += "Num_of_faces";
+                        questionTypeSpecificValues += $"{smileyQuestionData.NumberOfSmileyFaces}";
+                        break;
+                    case "Slider":
+                        SliderQuestion sliderQuestionData = (SliderQuestion)updatedQuestionData;
+                        questionTypeSpecificAttributes += "Start_value, End_value, Start_value_caption, End_value_caption";
+                        questionTypeSpecificValues += $"{sliderQuestionData.StartValue}, {sliderQuestionData.EndValue}," +
+                            $" '{sliderQuestionData.StartValueCaption}', '{sliderQuestionData.EndValueCaption}'";
+                        break;
+                    case "Stars":
+                        StarsQuestion starsQuestionData = (StarsQuestion)updatedQuestionData;
+                        questionTypeSpecificAttributes += "Num_of_stars";
+                        questionTypeSpecificValues += $"{starsQuestionData.NumberOfStars}";
+                        break;
+                }
+                insertQuestionTypeCmd.CommandType = CommandType.Text;
+                insertQuestionTypeCmd.CommandText = $"INSERT INTO {updatedQuestionType} (Q_id, {questionTypeSpecificAttributes}) VALUES ({questionId}, {questionTypeSpecificValues})";
+                
+                conn.Open();
+                //exectue commands on database
+                deleteSpecificQuestionDataCmd.ExecuteNonQuery();
+                updateQuestionDataCmd.ExecuteNonQuery();
+                insertQuestionTypeCmd.ExecuteNonQuery();
+                conn.Close();
+                //udpate ui
+                Questions.Rows.Remove(Questions.Select($"Q_id = {questionId}")[0]);
+                Questions.Rows.Add(questionId, updatedQuestionData.Text, updatedQuestionData.Order, updatedQuestionType);
             }
 
         }
