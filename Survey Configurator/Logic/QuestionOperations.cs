@@ -30,6 +30,28 @@ namespace Logic
             return Questions;
         }
 
+        public static DataRow getQuestionData(int questionId)
+        {
+            DataRow questionGeneralData = Questions.Select($"Q_id = {questionId}")[0];
+            return questionGeneralData;
+        }
+
+        public static DataRow getQuestionSpecificData(int questionId, string questionType)
+        {
+            SqlConnection conn = new SqlConnection("Server=HASSANABUGHREEB;Database=Questions_DB;Trusted_Connection=true;Encrypt=false");
+
+            SqlCommand getQuestionDataCmd = new SqlCommand();
+            getQuestionDataCmd.CommandType = CommandType.Text;
+            getQuestionDataCmd.CommandText = $"SELECT * FROM {questionType} WHERE Q_id = {questionId}";
+            getQuestionDataCmd.Connection = conn;
+            conn.Open();
+            SqlDataReader reader = getQuestionDataCmd.ExecuteReader();
+            DataTable tempTable = new DataTable();
+            tempTable.Load(reader);
+            reader.Close();
+            return tempTable.Rows[0];
+        }
+
         public static void AddQuestion(Question questionData)
         {
             //get the Question type from its calss name

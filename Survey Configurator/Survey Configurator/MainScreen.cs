@@ -31,9 +31,18 @@ namespace Survey_Configurator
             QuestionsDataGrid.Columns["Q_id"].Visible = false;
         }
 
-        private void AddEditQuestionButton_Click(object sender, EventArgs e)
+        private void AddQuestionButton_Click(object sender, EventArgs e)
         {
-            AddEditQuestion addForm = new AddEditQuestion(((sender as Button).Text));
+            //get the selected question id 
+            AddEditQuestion addForm = new AddEditQuestion();
+            addForm.ShowDialog();
+        }
+
+        private void EditQuestionButton_Click(object sender, EventArgs e)
+        {
+            //get the selected question id 
+            int QuesitonId = (int)QuestionsDataGrid.SelectedRows[0].Cells["Q_id"].Value;
+            AddEditQuestion addForm = new AddEditQuestion(QuesitonId);
             addForm.ShowDialog();
         }
 

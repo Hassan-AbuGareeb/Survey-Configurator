@@ -4,12 +4,14 @@ using System.ComponentModel;
 using System.Data;
 using Database.models;
 using Logic;
+using Microsoft.Data.SqlClient;
 
 namespace Survey_Configurator.Sub_forms
 {
     public partial class AddEditQuestion : Form
     {
         private static string Operation;
+        private static int QuestionId;
         //members that conditionally appears
         //stars question options
         private NumericUpDown NumberOfStarsNumeric;
@@ -21,18 +23,57 @@ namespace Survey_Configurator.Sub_forms
         private TextBox SliderStartValueCaptionText;
         private TextBox SliderEndValueCaptionText;
 
-        public AddEditQuestion(string operation)
+        public AddEditQuestion()
         {
             InitializeComponent();
-            Operation = operation.ToLower();
-            this.Text = operation;
-            TitleLabel.Text = operation + " Question";
+            Operation = "Add";
+            TitleLabel.Text = "Add Question";
+            this.Text = "Add";
+            Add.Text = "Add";
+
         }
+
+        public AddEditQuestion(int questionId)
+        {
+            InitializeComponent();
+            QuestionId = questionId;
+            Operation = "Edit";
+            this.Text = "Edit";
+            TitleLabel.Text = "Edit Question";
+            Add.Text = "Edit";
+        }
+
+       
 
         private void AddEdit_Load(object sender, EventArgs e)
         {
             //check if the operation is edit and fill the fields with selected question data
-            //allow the user to edit question type
+            if (Add.Text.Equals("Edit"))
+            {
+                DataRow generalQuestionData = QuestionOperations.getQuestionData(QuestionId);
+                QuestionTextBox.Text = generalQuestionData["Q_text"].ToString();
+                QuestionOrderNumeric.Value = (int)generalQuestionData["Q_order"];
+                QuestionTypeComboBox.SelectedItem = generalQuestionData["Q_type"];
+
+                //based on the combobox value further data about the question should be obtained
+                DataRow questionSpecificData = QuestionOperations.getQuestionSpecificData(QuestionId, generalQuestionData["Q_type"].ToString());
+                switch (generalQuestionData["Q_type"])
+                {
+                    //for each case get the info and downcast it and assign it to its respective field
+                    case "Smiley":
+                        NumberOfSmileysNumeric.Value = (int)questionSpecificData["Num_of_faces"];
+                        break;
+                    case "Stars":
+                        NumberOfStarsNumeric.Value = (int)questionSpecificData["Num_of_stars"];
+                        break;
+                    case "Slider":
+                        SliderStartValueNumeric.Value = (int)questionSpecificData["Start_value"];
+                        SliderEndValueNumeric.Value = (int)questionSpecificData["End_value"];
+                        SliderStartValueCaptionText.Text = questionSpecificData["Start_value_caption"].ToString();
+                        SliderEndValueCaptionText.Text = questionSpecificData["End_value_caption"].ToString();
+                        break;
+                }
+            }
         }
 
         private void AddButton_Click(object sender, EventArgs e)
@@ -78,18 +119,28 @@ namespace Survey_Configurator.Sub_forms
             switch (QuestionTypeComboBox.SelectedItem?.ToString())
             {
                 case "Slider":
-                    addSliderOptions();
+                    AddSliderOptions();
                     break;
                 case "Smiley":
-                    addSmileysOptions();
+                    AddSmileysOptions();
                     break;
                 case "Stars":
-                    addStarsOptions();
+                    AddStarsOptions();
                     break;
             }
         }
 
-        private void addStarsOptions()
+        private void Cancel_Click(object sender, EventArgs e)
+        {
+            DialogResult cancelCreateQuestion = MessageBox.Show("Any changes made won't be saved.", "Cancel Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (cancelCreateQuestion == DialogResult.Yes)
+            {
+                this.Close();
+            }
+        }
+
+
+        private void AddStarsOptions()
         {
             //add a label next to the numeric field
             Label NumberOfStarsLabel = new Label();
@@ -115,7 +166,7 @@ namespace Survey_Configurator.Sub_forms
             QuestionOptions.Controls.Add(NumberOfStarsLabel);
             QuestionOptions.Controls.Add(NumberOfStarsNumeric);
         }
-        private void addSliderOptions()
+        private void AddSliderOptions()
         {
             //label start value items
             //add a label next to the numeric field
@@ -199,7 +250,7 @@ namespace Survey_Configurator.Sub_forms
             QuestionOptions.Controls.Add(SliderEndValueCaptionLabel);
             QuestionOptions.Controls.Add(SliderEndValueCaptionText);
         }
-        private void addSmileysOptions()
+        private void AddSmileysOptions()
         {
             //add a label next to the numeric field
             Label NumberOfSmileysLabel = new Label();
@@ -224,15 +275,6 @@ namespace Survey_Configurator.Sub_forms
             //add fields to the form
             QuestionOptions.Controls.Add(NumberOfSmileysLabel);
             QuestionOptions.Controls.Add(NumberOfSmileysNumeric);
-        }
-
-        private void Cancel_Click(object sender, EventArgs e)
-        {
-            DialogResult cancelCreateQuestion = MessageBox.Show("Any changes made won't be saved.", "Cancel Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (cancelCreateQuestion == DialogResult.Yes)
-            {
-                this.Close();
-            }
         }
     }
 }
