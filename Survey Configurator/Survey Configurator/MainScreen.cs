@@ -48,22 +48,21 @@ namespace Survey_Configurator
 
         private void DeleteQuestionButton_Click(object sender, EventArgs e)
         {
-            //check first if any question is selected
-
-            DialogResult DeleteQuestion = MessageBox.Show("Are you sure you want to delete this question?", "Delete question", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            int numberOfSelectedRows = QuestionsDataGrid.SelectedRows.Count;
+            DialogResult DeleteQuestion = MessageBox.Show($"Are you sure you want to delete {(numberOfSelectedRows > 1 ? "these " : "this ")}question{(numberOfSelectedRows > 1 ? "s" : "")}?", "Delete question", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (DeleteQuestion == DialogResult.Yes)
             {
                 //get the number of selected rows
-                int numberOfSelectedRows = QuestionsDataGrid.SelectedRows.Count;
                 DataRow[] selectedQuestions = new DataRow[numberOfSelectedRows];
 
                 //obtain the selected questions
                 for (int i = 0; i < numberOfSelectedRows; i++)
                 {
-                    DataRow currentQuestion = ((DataRowView)QuestionsDataGrid.Rows[i].DataBoundItem).Row;
+                    DataRow currentQuestion = ((DataRowView)QuestionsDataGrid.SelectedRows[i].DataBoundItem).Row;
                     selectedQuestions[i] = currentQuestion;
                 }
+
                 //delete the questions from db and ui
                 QuestionOperations.DeleteQuestion(selectedQuestions);
                 MessageBox.Show($"Question{(numberOfSelectedRows > 1 ? "s " : " ")}deleted successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
