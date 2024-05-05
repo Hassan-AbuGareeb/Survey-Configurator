@@ -12,7 +12,7 @@ namespace Logic
 
         private static DataTable Questions;
         private static SqlConnection conn;
-        public static string ConnectionString ;
+        public static string ConnectionString="" ;
         private QuestionOperations() 
         {
         
