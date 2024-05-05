@@ -1,22 +1,12 @@
 ﻿using Survey_Configurator.Sub_forms;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using Logic;
-using Database.models;
+using System.Resources;
 
 namespace Survey_Configurator
 {
     public partial class MainScreen : Form
     {
-        //create a list of type Question to hold questions data obtained from the controller
-
         public MainScreen()
         {
             InitializeComponent();
@@ -24,16 +14,22 @@ namespace Survey_Configurator
 
         private void MainScreen_Load(object sender, EventArgs e)
         {
-            //after obtaining the connection string 
+                //handle the case of not being able to obtain any connection string
+
+            //try to obtain the connection string from a file
+
+            //get connection string and assign it to the QuestionsOperations property
+            QuestionOperations.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["app"].ConnectionString;
             //call the controller to obtain data from the db and populate the list of questions
             var questions = QuestionOperations.getQuestions();
+            //bind the questions table to the datagrid
             QuestionsDataGrid.DataSource = questions;
+            //hide the question id column
             QuestionsDataGrid.Columns["Q_id"].Visible = false;
         }
 
         private void AddQuestionButton_Click(object sender, EventArgs e)
         {
-            //get the selected question id 
             AddEditQuestion addForm = new AddEditQuestion();
             addForm.ShowDialog();
         }
@@ -53,27 +49,20 @@ namespace Survey_Configurator
 
             if (DeleteQuestion == DialogResult.Yes)
             {
-                //get the number of selected rows
                 DataRow[] selectedQuestions = new DataRow[numberOfSelectedRows];
 
-                //obtain the selected questions
+                //obtain the selected questions and store them
                 for (int i = 0; i < numberOfSelectedRows; i++)
                 {
+                    //cast the selected grid row to dataRowView to store it in a dataRow
                     DataRow currentQuestion = ((DataRowView)QuestionsDataGrid.SelectedRows[i].DataBoundItem).Row;
                     selectedQuestions[i] = currentQuestion;
                 }
-
-                //delete the questions from db and ui
+                //delete the questions from database and ui
                 QuestionOperations.DeleteQuestion(selectedQuestions);
                 MessageBox.Show($"Question{(numberOfSelectedRows > 1 ? "s " : " ")}deleted successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-            //QuestionsListBox.DisplayMember = "Q_text";
         }
 
         private void QuestionsDataGrid_SelectionChanged(object sender, EventArgs e)
@@ -93,7 +82,6 @@ namespace Survey_Configurator
             if(numberOfSelectedQuestions > 0 && numberOfSelectedQuestions < 2)
             {
                 EditQuestionButton.Enabled = true;
-
             }
             else
             {

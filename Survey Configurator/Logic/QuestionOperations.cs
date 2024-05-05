@@ -12,11 +12,15 @@ namespace Logic
 
         private static DataTable Questions;
         private static SqlConnection conn;
-        private QuestionOperations() { }
+        public static string ConnectionString ;
+        private QuestionOperations() 
+        {
+        
+        }
 
         public static DataTable getQuestions() 
         {
-            conn = new SqlConnection("Server=HASSANABUGHREEB;Database=Questions_DB;Trusted_Connection=true;Encrypt=false");
+            conn = new SqlConnection(ConnectionString);
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = "SELECT * FROM Question";
@@ -37,7 +41,7 @@ namespace Logic
 
         public static DataRow getQuestionSpecificData(int questionId, string questionType)
         {
-            SqlConnection conn = new SqlConnection("Server=HASSANABUGHREEB;Database=Questions_DB;Trusted_Connection=true;Encrypt=false");
+            SqlConnection conn = new SqlConnection(ConnectionString);
 
             SqlCommand getQuestionDataCmd = new SqlCommand();
             getQuestionDataCmd.CommandType = CommandType.Text;
@@ -55,9 +59,10 @@ namespace Logic
         {
             //get the Question type from its calss name
             string questionType = questionData.GetType().Name.Split("Q")[0];
-
+            //escaping any single quote as not to cause any propblems in sql statements
+            questionData.Text = questionData.Text.Replace("'", "''");
             //create db connection
-            conn = new SqlConnection("Server=HASSANABUGHREEB;Database=Questions_DB;Trusted_Connection=true;Encrypt=false");
+            conn = new SqlConnection(ConnectionString);
 
             //insert question data in the question table
             SqlCommand insertQuestionCmd = conn.CreateCommand();
@@ -99,7 +104,7 @@ namespace Logic
             conn.Close();
 
             //add the question to the UI
-            Questions.Rows.Add(questionId, questionData.Text, questionData.Order, questionType);
+            Questions.Rows.Add(questionId, questionData.Text.Replace("''","'"), questionData.Order, questionType);
 
         }
 
@@ -107,7 +112,9 @@ namespace Logic
         {
             //recieve the new question general and specific data
             string originalQuestionType = Questions.Select($"Q_id = {questionId}")[0]["Q_type"].ToString();
-            conn = new SqlConnection("Server=HASSANABUGHREEB;Database=Questions_DB;Trusted_Connection=true;Encrypt=false");
+            updatedQuestionData.Text = updatedQuestionData.Text.Replace("'", "''");
+
+            conn = new SqlConnection(ConnectionString);
 
             if (updatedQuestionData.GetType().Name.Split("Q")[0].Equals(originalQuestionType))
             {//type of question wasn't  changed
@@ -195,14 +202,14 @@ namespace Logic
                 conn.Close();
                 //udpate ui
                 Questions.Rows.Remove(Questions.Select($"Q_id = {questionId}")[0]);
-                Questions.Rows.Add(questionId, updatedQuestionData.Text, updatedQuestionData.Order, updatedQuestionType);
+                Questions.Rows.Add(questionId, updatedQuestionData.Text.Replace("''", "'"), updatedQuestionData.Order, updatedQuestionType);
             }
 
         }
 
         public static void DeleteQuestion(DataRow[] selectedQuestions)
         {
-            conn = new SqlConnection("Server=HASSANABUGHREEB;Database=Questions_DB;Trusted_Connection=true;Encrypt=false");
+            conn = new SqlConnection(ConnectionString);
             conn.Open();
             SqlCommand deleteQuestionsCmd = conn.CreateCommand();
             deleteQuestionsCmd.CommandType = CommandType.Text;

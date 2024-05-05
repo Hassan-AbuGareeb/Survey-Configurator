@@ -80,7 +80,6 @@ namespace Survey_Configurator.Sub_forms
             if (QuestionTextBox.Text.Length != 0 &&
                 QuestionTypeComboBox.SelectedItem != null)
             {
-                //validate the type-specific fields
                 //add question to db and interface
                 switch (QuestionTypeComboBox.Text)
                 {
@@ -108,7 +107,6 @@ namespace Survey_Configurator.Sub_forms
                             QuestionOperations.UpdateQuestion(QuestionId, smileyData);
                         break;
                 }
-
                 //show success message
                 MessageBox.Show("Question has been added successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 //close form
@@ -116,8 +114,6 @@ namespace Survey_Configurator.Sub_forms
             }
             else
             {
-                //validate specific fields too
-                //show dialouge box indicating an error in filling fields
                 //show the missing fields ?
                 MessageBox.Show("All fields must have proper values", "Missing fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -149,7 +145,6 @@ namespace Survey_Configurator.Sub_forms
             }
         }
 
-
         private void AddStarsOptions()
         {
             //add a label next to the numeric field
@@ -164,7 +159,7 @@ namespace Survey_Configurator.Sub_forms
 
             //add a numeric field to specify a number for the smileys
             NumberOfStarsNumeric = new NumericUpDown();
-            NumberOfStarsNumeric.Location = new Point(200, 0);
+            NumberOfStarsNumeric.Location = new Point((int)NumberOfStarsNumeric.Value+175, 0);
             NumberOfStarsNumeric.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             NumberOfStarsNumeric.Minimum = new decimal(new int[] { 0, 0, 0, 0 });
             NumberOfStarsNumeric.Name = "NumberOfStarsNumeric";
@@ -232,7 +227,7 @@ namespace Survey_Configurator.Sub_forms
             SliderStartValueCaptionText.Name = "SliderStartValueCaptionText";
             SliderStartValueCaptionText.Size = new Size(120, 23);
             SliderStartValueCaptionText.TabIndex = 14;
-            SliderStartValueCaptionText.Text = "";
+            SliderStartValueCaptionText.Text = "Min";
 
             //label end value items
             Label SliderEndValueCaptionLabel = new Label();
@@ -249,7 +244,7 @@ namespace Survey_Configurator.Sub_forms
             SliderEndValueCaptionText.Name = "SliderEndValueCaptionText";
             SliderEndValueCaptionText.Size = new Size(120, 23);
             SliderEndValueCaptionText.TabIndex = 14;
-            SliderEndValueCaptionText.Text = "";
+            SliderEndValueCaptionText.Text = "Max";
 
             QuestionOptions.Controls.Add(SliderStartValueLabel);
             QuestionOptions.Controls.Add(SliderStartValueNumeric);
