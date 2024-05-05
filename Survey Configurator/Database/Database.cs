@@ -9,6 +9,8 @@ namespace Database
     public class Database
     {
         public static string ConnectionString = "";
+        private static DataTable Questions = new DataTable();
+
 
         private Database() { }
 
@@ -20,10 +22,15 @@ namespace Database
                 conn.Open();
                 SqlCommand getQuestionsDataCmd = new SqlCommand("SELECT * FROM Question",conn);
                 reader = getQuestionsDataCmd.ExecuteReader();
-                DataTable temp = new DataTable();
-                temp.Load(reader);
-                return temp;
+                Questions.Load(reader);
+                return Questions;
             }
+        }
+
+        public static DataRow getQuestionData(int questionId)
+        {
+            DataRow questionGeneralData = Questions.Select($"Q_id = {questionId}")[0];
+            return questionGeneralData;
         }
 
         public static DataRow getQuestionSpecificDataFromDB(int questionId, string questionType)
@@ -41,7 +48,7 @@ namespace Database
             }
         }
 
-        public static int AddQuestionToDB(Question questionData)
+        public static void AddQuestionToDB(Question questionData)
         {
             //get the Question type from its calss name
             string questionType = questionData.GetType().Name.Split("Q")[0];
@@ -84,18 +91,22 @@ namespace Database
                 insertQuestionTypeCmd.CommandType = CommandType.Text;
                 insertQuestionTypeCmd.CommandText = $"INSERT INTO {questionType} (Q_id, {questionTypeSpecificAttributes}) VALUES ({questionId}, {questionTypeSpecificValues})";
                 insertQuestionTypeCmd.ExecuteNonQuery();
-                //return the questionId to controller to add it to the questions table
-                return questionId;
+                //add question to ui
+                Questions.Rows.Add(questionId, questionData.Text.Replace("''", "'"), questionData.Order, questionType);
             }
         }
 
-        public static string UpdateQuestionOnDB(int questionId, string originalQuestionType, Question updatedQuestionData)
+        public static void UpdateQuestionOnDB(int questionId, Question updatedQuestionData)
         {
             updatedQuestionData.Text = updatedQuestionData.Text.Replace("'", "''");
-            using(SqlConnection conn = new SqlConnection(ConnectionString)) 
+            //get the original question type
+            string originalQuestionType = Questions.Select($"Q_id = {questionId}")[0]["Q_type"].ToString();
+            string updatedQuestionType = updatedQuestionData.GetType().Name.Split("Q")[0];
+
+            using (SqlConnection conn = new SqlConnection(ConnectionString)) 
             {
                 conn.Open();
-                if (updatedQuestionData.GetType().Name.Split("Q")[0].Equals(originalQuestionType))
+                if (updatedQuestionType.Equals(originalQuestionType))
                 {
                     //type of question wasn't  changed
                     //update the specific details
@@ -129,8 +140,6 @@ namespace Database
                     updateQuestionDataCmd.Connection = conn;
                     updateQuestionSpecificDataCmd.ExecuteNonQuery();
                     updateQuestionDataCmd.ExecuteNonQuery();
-                    //update ui
-                    return originalQuestionType;
                 }
                 else
                 {
@@ -148,7 +157,6 @@ namespace Database
                     string questionTypeSpecificAttributes = "";
                     string questionTypeSpecificValues = "";
                     ////for each type of question downcast the question to its specific type
-                    string updatedQuestionType = updatedQuestionData.GetType().Name.Split("Q")[0];
                     switch (updatedQuestionType)
                     {
                         case "Smiley":
@@ -175,10 +183,16 @@ namespace Database
                     deleteSpecificQuestionDataCmd.ExecuteNonQuery();
                     updateQuestionDataCmd.ExecuteNonQuery();
                     insertQuestionTypeCmd.ExecuteNonQuery();
-                    //udpate ui
-                    return updatedQuestionType;
                 }
             }
+            //update ui
+            Questions.Rows.Remove(Questions.Select($"Q_id = {questionId}")[0]);
+            Questions.Rows.Add(questionId,
+                updatedQuestionData.Text.Replace("''", "'"),
+                updatedQuestionData.Order,
+                //decide the type of the question on whether it was changed or not
+                (updatedQuestionType.Equals(originalQuestionType)? originalQuestionType: updatedQuestionType));
+
         }
 
         public static void DeleteQuestionFromDB(DataRow[] selectedQuestions)
@@ -199,7 +213,14 @@ namespace Database
                     deleteQuestionsCmd.CommandText = $"DELETE FROM Question WHERE Q_id = {selectedQuestions[i]["Q_id"]}";
                     deleteQuestionsCmd.ExecuteNonQuery();
                 }
+                //delete question from interface (Questions) in here
+                for (int i = 0; i < selectedQuestions.Length; i++)
+                {
+                    Questions.Rows.Remove(selectedQuestions[i]);
+                }
             }
         }
+
+
     }
 }

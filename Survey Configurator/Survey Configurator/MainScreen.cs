@@ -14,11 +14,9 @@ namespace Survey_Configurator
         private void MainScreen_Load(object sender, EventArgs e)
         {
             //initialize the connection string
-            QuestionOperations.setConnectionString(getConnectionString());
-            //call the controller to obtain data from the db and populate the list of questions
-            var questions = QuestionOperations.getQuestions();
-            //bind the questions table to the datagrid
-            QuestionsDataGrid.DataSource = questions;
+            QuestionOperations.SetConnectionString();
+            //get the questions table from the controller and bind it to the datagrid
+            QuestionsDataGrid.DataSource = QuestionOperations.GetQuestions();
             //hide the question id column
             QuestionsDataGrid.Columns["Q_id"].Visible = false;
         }
@@ -84,38 +82,5 @@ namespace Survey_Configurator
             }
         }
 
-        private string getConnectionString()
-        {
-            //try to obtain the connection string from a file
-            //check if the file exists at all
-            //get connection string and assign it to the QuestionsOperations property
-
-            //check that file exists
-            string filePath = Directory.GetCurrentDirectory() + "\\connectionSettings.txt";
-            if (!File.Exists(filePath))
-            {
-                //create the file if it doesn't exist
-                FileStream fs = File.Create(filePath);
-                fs.Close();
-
-                //add the default values to the file
-                StreamWriter writer = new StreamWriter(filePath);
-                writer.WriteLine("Server : HASSANABUGHREEB,\r\nDatabase : Questions_DB,\r\nTrusted_Connection : true,\r\nUser : ,\r\nPassword : ,\r\nEncrypt : false");
-                writer.Close();
-            }
-
-            //read connection string values from file
-            StreamReader sr = new StreamReader(filePath);
-            string connectionString="";
-
-            string[] connectionStringParameters = sr.ReadToEnd().Split(",");
-            foreach (string parameter in connectionStringParameters)
-            {
-                string property = parameter.Split(":")[0].Trim();
-                string value = parameter.Split(":")[1].Trim();
-                connectionString += $"{property} = {value};\n";
-            }
-            return connectionString;
-        }
     }
 }

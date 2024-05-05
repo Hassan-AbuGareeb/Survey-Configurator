@@ -48,16 +48,16 @@ namespace Survey_Configurator.Sub_forms
             //check if the operation is edit and fill the fields with selected question data
             if (Add.Text.Equals("Edit"))
             {
-                DataRow generalQuestionData = QuestionOperations.getQuestionData(QuestionId);
+                DataRow generalQuestionData = QuestionOperations.GetQuestionData(QuestionId);
                 QuestionTextBox.Text = generalQuestionData["Q_text"].ToString();
                 QuestionOrderNumeric.Value = (int)generalQuestionData["Q_order"];
                 QuestionTypeComboBox.SelectedItem = generalQuestionData["Q_type"];
 
                 //based on the combobox value further data about the question should be obtained
-                DataRow questionSpecificData = QuestionOperations.getQuestionSpecificData(QuestionId, generalQuestionData["Q_type"].ToString());
+                DataRow questionSpecificData = QuestionOperations.GetQuestionSpecificData(QuestionId, generalQuestionData["Q_type"].ToString());
                 switch (generalQuestionData["Q_type"])
                 {
-                    //for each case get the info and downcast it and assign it to its respective field
+                    //for each case Get the info and downcast it and assign it to its respective field
                     case "Smiley":
                         NumberOfSmileysNumeric.Value = (int)questionSpecificData["Num_of_faces"];
                         break;
