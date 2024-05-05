@@ -10,3 +10,4 @@ D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\Database.dl
 D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\refint\Database.dll
 D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\Database.pdb
 D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\ref\Database.dll
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\Database.csproj.AssemblyReference.cache

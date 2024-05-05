@@ -707,21 +707,24 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
-      "Database/1.0.0": {
+      "DatabaseLayer/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Microsoft.Data.SqlClient": "5.2.0"
+        },
         "compile": {
-          "bin/placeholder/Database.dll": {}
+          "bin/placeholder/DatabaseLayer.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Database.dll": {}
+          "bin/placeholder/DatabaseLayer.dll": {}
         }
       },
       "Logic/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
-          "Database": "1.0.0",
+          "DatabaseLayer": "1.0.0",
           "Microsoft.Data.SqlClient": "5.2.0"
         },
         "compile": {
@@ -2035,10 +2038,10 @@
         "version.txt"
       ]
     },
-    "Database/1.0.0": {
+    "DatabaseLayer/1.0.0": {
       "type": "project",
-      "path": "../Database/Database.csproj",
-      "msbuildProject": "../Database/Database.csproj"
+      "path": "../Database/DatabaseLayer.csproj",
+      "msbuildProject": "../Database/DatabaseLayer.csproj"
     },
     "Logic/1.0.0": {
       "type": "project",

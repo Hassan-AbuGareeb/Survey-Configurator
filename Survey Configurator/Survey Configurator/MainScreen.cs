@@ -13,11 +13,8 @@ namespace Survey_Configurator
 
         private void MainScreen_Load(object sender, EventArgs e)
         {
-            
-
             //initialize the connection string
-            QuestionOperations.ConnectionString = getConnectionString();
-
+            QuestionOperations.setConnectionString(getConnectionString());
             //call the controller to obtain data from the db and populate the list of questions
             var questions = QuestionOperations.getQuestions();
             //bind the questions table to the datagrid
