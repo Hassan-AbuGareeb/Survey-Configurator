@@ -12,5 +12,5 @@ D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\Logic.dll
 D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\refint\Logic.dll
 D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\Logic.pdb
 D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\ref\Logic.dll
-D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\DatabaseLayer.dll
-D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\DatabaseLayer.pdb
+D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\DataBase.dll
+D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\DataBase.pdb

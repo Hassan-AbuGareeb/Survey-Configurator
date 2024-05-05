@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Database\DatabaseLayer.csproj" />
+    <ProjectReference Include="..\Database\DataBase.csproj" />
   </ItemGroup>
 
 </Project>

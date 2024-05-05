@@ -1890,9 +1890,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Survey Configurator\\Survey Configurator\\Database\\DatabaseLayer.csproj",
-      "projectName": "DatabaseLayer",
-      "projectPath": "D:\\Survey Configurator\\Survey Configurator\\Database\\DatabaseLayer.csproj",
+      "projectUniqueName": "D:\\Survey Configurator\\Survey Configurator\\Database\\DataBase.csproj",
+      "projectName": "DataBase",
+      "projectPath": "D:\\Survey Configurator\\Survey Configurator\\Database\\DataBase.csproj",
       "packagesPath": "C:\\Users\\hassan\\.nuget\\packages\\",
       "outputPath": "D:\\Survey Configurator\\Survey Configurator\\Database\\obj\\",
       "projectStyle": "PackageReference",

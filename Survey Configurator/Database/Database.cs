@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Data;
 using System.Data.Common;
-using Database.models;
+using DatabaseLayer.models;
 using Microsoft.Data.SqlClient;
 
-namespace Database
+namespace DatabaseLayer
 {
     public class Database
     {
@@ -52,15 +52,15 @@ namespace Database
         {
             //get the Question type from its calss name
             string questionType = questionData.GetType().Name.Split("Q")[0];
-            //escaping any single quote as not to cause any propblems in sql statements
-            questionData.Text = questionData.Text.Replace("'", "''");
             //create db connection
             using(SqlConnection conn = new SqlConnection(ConnectionString))
             {
                 conn.Open();
                 //insert question data in the question table
-                SqlCommand insertQuestionCmd = new SqlCommand($"INSERT INTO Question (Q_text, Q_order, Q_type) OUTPUT INSERTED.Q_id VALUES ('{questionData.Text}', {questionData.Order}, '{questionType}')"
+                SqlCommand insertQuestionCmd = new SqlCommand($"INSERT INTO Question (Q_text, Q_order, Q_type) OUTPUT INSERTED.Q_id VALUES (@Q_text, {questionData.Order}, '{questionType}')"
                     , conn);
+                insertQuestionCmd.Parameters.Add(new SqlParameter("@Q_text", questionData.Text));
+
                 //insert the row data to the question and return the id of the created question
                 int questionId = (int)insertQuestionCmd.ExecuteScalar();
 
@@ -92,17 +92,15 @@ namespace Database
                 insertQuestionTypeCmd.CommandText = $"INSERT INTO {questionType} (Q_id, {questionTypeSpecificAttributes}) VALUES ({questionId}, {questionTypeSpecificValues})";
                 insertQuestionTypeCmd.ExecuteNonQuery();
                 //add question to ui
-                Questions.Rows.Add(questionId, questionData.Text.Replace("''", "'"), questionData.Order, questionType);
+                Questions.Rows.Add(questionId, questionData.Text, questionData.Order, questionType);
             }
         }
 
         public static void UpdateQuestionOnDB(int questionId, Question updatedQuestionData)
         {
-            updatedQuestionData.Text = updatedQuestionData.Text.Replace("'", "''");
             //get the original question type
             string originalQuestionType = Questions.Select($"Q_id = {questionId}")[0]["Q_type"].ToString();
             string updatedQuestionType = updatedQuestionData.GetType().Name.Split("Q")[0];
-
             using (SqlConnection conn = new SqlConnection(ConnectionString)) 
             {
                 conn.Open();
@@ -136,7 +134,8 @@ namespace Database
                     //update the general question
                     SqlCommand updateQuestionDataCmd = conn.CreateCommand();
                     updateQuestionDataCmd.CommandType = CommandType.Text;
-                    updateQuestionDataCmd.CommandText = $"UPDATE Question SET Q_order = {updatedQuestionData.Order}, Q_text = '{updatedQuestionData.Text}' WHERE Q_id = {questionId}";
+                    updateQuestionDataCmd.CommandText = $"UPDATE Question SET Q_order = {updatedQuestionData.Order}, Q_text = @Q_text WHERE Q_id = {questionId}";
+                    updateQuestionDataCmd.Parameters.Add(new SqlParameter("@Q_text", updatedQuestionData.Text));
                     updateQuestionDataCmd.Connection = conn;
                     updateQuestionSpecificDataCmd.ExecuteNonQuery();
                     updateQuestionDataCmd.ExecuteNonQuery();
@@ -148,9 +147,11 @@ namespace Database
                     SqlCommand deleteSpecificQuestionDataCmd = new SqlCommand($"DELETE FROM {originalQuestionType} WHERE Q_id = {questionId}", conn);
                     //update the general question data
                     SqlCommand updateQuestionDataCmd = new SqlCommand
-                        ($"UPDATE Question SET Q_order = {updatedQuestionData.Order}, Q_text = '{updatedQuestionData.Text}'," +
+                        ($"UPDATE Question SET Q_order = {updatedQuestionData.Order}, Q_text = @Q_text," +
                         $" Q_type = '{updatedQuestionData.GetType().Name.Split("Q")[0]}' WHERE Q_id = {questionId}",
                         conn);
+                    updateQuestionDataCmd.Parameters.Add(new SqlParameter("@Q_text", updatedQuestionData.Text));
+
                     //create a new row in the specific question type table
                     SqlCommand insertQuestionTypeCmd = conn.CreateCommand();
                     ////get the specific values for the question type
@@ -188,7 +189,7 @@ namespace Database
             //update ui
             Questions.Rows.Remove(Questions.Select($"Q_id = {questionId}")[0]);
             Questions.Rows.Add(questionId,
-                updatedQuestionData.Text.Replace("''", "'"),
+                updatedQuestionData.Text,
                 updatedQuestionData.Order,
                 //decide the type of the question on whether it was changed or not
                 (updatedQuestionType.Equals(originalQuestionType)? originalQuestionType: updatedQuestionType));

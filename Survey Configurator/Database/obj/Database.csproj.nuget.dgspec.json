@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Survey Configurator\\Survey Configurator\\Database\\Database.csproj": {}
+    "D:\\Survey Configurator\\Survey Configurator\\Database\\DataBase.csproj": {}
   },
   "projects": {
-    "D:\\Survey Configurator\\Survey Configurator\\Database\\Database.csproj": {
+    "D:\\Survey Configurator\\Survey Configurator\\Database\\DataBase.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Survey Configurator\\Survey Configurator\\Database\\Database.csproj",
-        "projectName": "Database",
-        "projectPath": "D:\\Survey Configurator\\Survey Configurator\\Database\\Database.csproj",
+        "projectUniqueName": "D:\\Survey Configurator\\Survey Configurator\\Database\\DataBase.csproj",
+        "projectName": "DataBase",
+        "projectPath": "D:\\Survey Configurator\\Survey Configurator\\Database\\DataBase.csproj",
         "packagesPath": "C:\\Users\\hassan\\.nuget\\packages\\",
         "outputPath": "D:\\Survey Configurator\\Survey Configurator\\Database\\obj\\",
         "projectStyle": "PackageReference",

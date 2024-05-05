@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using Database.models;
 using Logic;
 using Microsoft.Data.SqlClient;
+using DatabaseLayer.models;
+
 
 namespace Survey_Configurator.Sub_forms
 {
@@ -28,7 +29,7 @@ namespace Survey_Configurator.Sub_forms
             InitializeComponent();
             //Operation = "Add";
             TitleLabel.Text = "Add Question";
-            this.Text = "Add";
+            Text = "Add";
             Add.Text = "Add";
 
         }
@@ -40,13 +41,13 @@ namespace Survey_Configurator.Sub_forms
             //Operation = "Edit";
             this.Text = "Edit";
             TitleLabel.Text = "Edit Question";
-            Add.Text = "Edit";
+            Add.Text = "Save";
         }
 
         private void AddEdit_Load(object sender, EventArgs e)
         {
             //check if the operation is edit and fill the fields with selected question data
-            if (Add.Text.Equals("Edit"))
+            if (Add.Text.Equals("Save"))
             {
                 DataRow generalQuestionData = QuestionOperations.GetQuestionData(QuestionId);
                 QuestionTextBox.Text = generalQuestionData["Q_text"].ToString();
@@ -115,7 +116,29 @@ namespace Survey_Configurator.Sub_forms
             else
             {
                 //show the missing fields ?
-                MessageBox.Show("All fields must have proper values", "Missing fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string missingFieldsMessage = "";
+                if (QuestionTextBox.Text.Length == 0 && QuestionTypeComboBox.SelectedItem == null)
+                {
+                    missingFieldsMessage += "Question text, Question type ";
+                }    
+                else if (QuestionTextBox.Text.Length == 0)
+                {
+                    missingFieldsMessage += "Question text";
+                }
+                else
+                {
+                    missingFieldsMessage += "Question type";
+                }
+                MessageBox.Show($"The following fields must have proper values: {missingFieldsMessage}", "Missing fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            DialogResult cancelCreateQuestion = MessageBox.Show("Any changes made won't be saved.", "Cancel Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (cancelCreateQuestion == DialogResult.Yes)
+            {
+                Close();
             }
         }
 
@@ -136,15 +159,6 @@ namespace Survey_Configurator.Sub_forms
             }
         }
 
-        private void Cancel_Click(object sender, EventArgs e)
-        {
-            DialogResult cancelCreateQuestion = MessageBox.Show("Any changes made won't be saved.", "Cancel Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (cancelCreateQuestion == DialogResult.Yes)
-            {
-                this.Close();
-            }
-        }
-
         private void AddStarsOptions()
         {
             //add a label next to the numeric field
@@ -159,7 +173,7 @@ namespace Survey_Configurator.Sub_forms
 
             //add a numeric field to specify a number for the smileys
             NumberOfStarsNumeric = new NumericUpDown();
-            NumberOfStarsNumeric.Location = new Point((int)NumberOfStarsNumeric.Value+175, 0);
+            NumberOfStarsNumeric.Location = new Point((int)NumberOfStarsNumeric.Value + 175, 0);
             NumberOfStarsNumeric.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             NumberOfStarsNumeric.Minimum = new decimal(new int[] { 0, 0, 0, 0 });
             NumberOfStarsNumeric.Name = "NumberOfStarsNumeric";
@@ -281,5 +295,7 @@ namespace Survey_Configurator.Sub_forms
             QuestionOptions.Controls.Add(NumberOfSmileysLabel);
             QuestionOptions.Controls.Add(NumberOfSmileysNumeric);
         }
+
+        
     }
 }

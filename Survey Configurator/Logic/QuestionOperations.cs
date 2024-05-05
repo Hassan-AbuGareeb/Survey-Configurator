@@ -1,7 +1,7 @@
-﻿using Database.models;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using System.Data;
-
+using DatabaseLayer.models;
+using DatabaseLayer;
 
 namespace Logic
 {
@@ -14,33 +14,33 @@ namespace Logic
 
         public static DataTable GetQuestions() 
         {
-            return Database.Database.getQuestionsFromDB(); ;
+            return Database.getQuestionsFromDB(); ;
         }
 
         public static DataRow GetQuestionData(int questionId)
         {
-            return Database.Database.getQuestionData(questionId);
+            return Database.getQuestionData(questionId);
         }
 
         public static DataRow GetQuestionSpecificData(int questionId, string questionType)
         {
-            return Database.Database.getQuestionSpecificDataFromDB(questionId, questionType);
+            return Database.getQuestionSpecificDataFromDB(questionId, questionType);
         }
 
         public static void AddQuestion(Question questionData)
         {
-          Database.Database.AddQuestionToDB(questionData);
+          Database.AddQuestionToDB(questionData);
         }
 
         public static void UpdateQuestion(int questionId, Question updatedQuestionData)
         {
             //recieve the new question general and specific data
-           Database.Database.UpdateQuestionOnDB( questionId, updatedQuestionData);
+           Database.UpdateQuestionOnDB( questionId, updatedQuestionData);
         }
 
         public static void DeleteQuestion(DataRow[] selectedQuestions)
         {
-            Database.Database.DeleteQuestionFromDB(selectedQuestions);
+            Database.DeleteQuestionFromDB(selectedQuestions);
         }
 
         public static void SetConnectionString()
@@ -50,7 +50,7 @@ namespace Logic
             //get connection string and assign it to the QuestionsOperations property
 
             //check that file exists
-            string filePath = Directory.GetCurrentDirectory() + "\\connectionSettings.txt";
+            string filePath = Directory.GetCurrentDirectory() +"\\connectionSettings.txt";
             if (!File.Exists(filePath))
             {
                 //create the file if it doesn't exist
@@ -75,7 +75,7 @@ namespace Logic
                 connectionString += $"{property} = {value};\n";
             }
 
-            Database.Database.ConnectionString = connectionString;
+            Database.ConnectionString = connectionString;
         }
 
     }

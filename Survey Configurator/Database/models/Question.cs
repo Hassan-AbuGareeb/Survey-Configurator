@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace Database.models
+namespace DatabaseLayer.models
 {
     public abstract class Question
     {
