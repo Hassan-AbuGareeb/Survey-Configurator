@@ -13,38 +13,11 @@ namespace Survey_Configurator
 
         private void MainScreen_Load(object sender, EventArgs e)
         {
-            //handle the case of not being able to obtain any connection string
+            
 
-            //try to obtain the connection string from a file
-            //check if the file exists at all
-            //get connection string and assign it to the QuestionsOperations property
+            //initialize the connection string
+            QuestionOperations.ConnectionString = getConnectionString();
 
-            //check that file exists
-            string filePath = Directory.GetCurrentDirectory() + "\\connectionSettings.txt";
-            if (!File.Exists(filePath) )
-            {
-                //create the file if it doesn't exist
-                FileStream fs= File.Create(filePath);
-                fs.Close();
-
-                //add the default values to the file
-                StreamWriter writer = new StreamWriter(filePath);
-                writer.WriteLine("Server : HASSANABUGHREEB,\r\nDatabase : Questions_DB,\r\nTrusted_Connection : true,\r\nUser : ,\r\nPassword : ,\r\nEncrypt : false");
-                writer.Close();
-            }
-
-            //read connection string values from file
-            StreamReader sr = new StreamReader(filePath);
-            string connectionString = sr.ReadToEnd();
-
-            string[] connectionStringParameters = connectionString.Split(",");
-            foreach ( string parameter in connectionStringParameters )
-            {
-                string property = parameter.Split(":")[0].Trim();
-                string value = parameter.Split(":")[1].Trim();
-                QuestionOperations.ConnectionString+=$"{property} = {value};\n";
-            }
-            //QuestionOperations.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["app"].ConnectionString;
             //call the controller to obtain data from the db and populate the list of questions
             var questions = QuestionOperations.getQuestions();
             //bind the questions table to the datagrid
@@ -112,6 +85,40 @@ namespace Survey_Configurator
             {
                 EditQuestionButton.Enabled = false;
             }
+        }
+
+        private string getConnectionString()
+        {
+            //try to obtain the connection string from a file
+            //check if the file exists at all
+            //get connection string and assign it to the QuestionsOperations property
+
+            //check that file exists
+            string filePath = Directory.GetCurrentDirectory() + "\\connectionSettings.txt";
+            if (!File.Exists(filePath))
+            {
+                //create the file if it doesn't exist
+                FileStream fs = File.Create(filePath);
+                fs.Close();
+
+                //add the default values to the file
+                StreamWriter writer = new StreamWriter(filePath);
+                writer.WriteLine("Server : HASSANABUGHREEB,\r\nDatabase : Questions_DB,\r\nTrusted_Connection : true,\r\nUser : ,\r\nPassword : ,\r\nEncrypt : false");
+                writer.Close();
+            }
+
+            //read connection string values from file
+            StreamReader sr = new StreamReader(filePath);
+            string connectionString="";
+
+            string[] connectionStringParameters = sr.ReadToEnd().Split(",");
+            foreach (string parameter in connectionStringParameters)
+            {
+                string property = parameter.Split(":")[0].Trim();
+                string value = parameter.Split(":")[1].Trim();
+                connectionString += $"{property} = {value};\n";
+            }
+            return connectionString;
         }
     }
 }
