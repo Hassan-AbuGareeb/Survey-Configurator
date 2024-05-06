@@ -2,6 +2,7 @@
 using System.Data;
 using Logic;
 using System.Configuration;
+using Microsoft.Data.SqlClient;
 namespace Survey_Configurator
 {
     public partial class MainScreen : Form
@@ -13,12 +14,37 @@ namespace Survey_Configurator
 
         private void MainScreen_Load(object sender, EventArgs e)
         {
-            //initialize the connection string
-            QuestionOperations.SetConnectionString();
-            //get the questions table from the controller and bind it to the datagrid
-            QuestionsDataGrid.DataSource = QuestionOperations.GetQuestions();
-            //hide the question id column
-            QuestionsDataGrid.Columns["Q_id"].Visible = false;
+            try
+            {
+                //get the connection string from file
+                string defaultConnectionString = ConfigurationManager.ConnectionStrings["app"].ConnectionString;
+                string connectionStringObtained =QuestionOperations.SetConnectionString(defaultConnectionString);
+                if (connectionStringObtained != "success")
+                {
+                    MessageBox.Show("File issue occured, please check your permission on creating and editing files");
+                    MessageBox.Show("Trying to connect using default connection parameters");
+                }
+                //get the questions table from the controller and bind it to the datagrid
+                            //danger
+                QuestionsDataGrid.DataSource = QuestionOperations.GetQuestions();
+                //hide the question id column
+                            //danger
+                QuestionsDataGrid.Columns["Q_id"].Visible = false;
+            }catch(ArgumentException)
+            {
+                MessageBox.Show("Wrong connection parameters please check the connectionSettings.txt file");
+                Close();
+            }
+            catch (SqlException)
+            {
+                MessageBox.Show("Database connection error, check the connection parameters or the sql server configurations");
+                Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"{ex.GetType().FullName}, {ex.StackTrace}");
+                Close();
+            }
         }
 
         private void AddQuestionButton_Click(object sender, EventArgs e)
@@ -52,6 +78,7 @@ namespace Survey_Configurator
                     selectedQuestions[i] = currentQuestion;
                 }
                 //delete the questions from database and ui
+                        //danger
                 QuestionOperations.DeleteQuestion(selectedQuestions);
                 MessageBox.Show($"Question{(numberOfSelectedRows > 1 ? "s " : " ")}deleted successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
 

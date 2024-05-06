@@ -8,22 +8,31 @@ namespace DatabaseLayer
 {
     public class Database
     {
-        public static string ConnectionString = "";
+        public static string ConnectionString;
         private static DataTable Questions = new DataTable();
-
 
         private Database() { }
 
         public static DataTable getQuestionsFromDB()
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionString)) 
+            try { 
+                using (SqlConnection conn = new SqlConnection(ConnectionString)) 
+                {
+                    DbDataReader reader;
+                    conn.Open();
+                    SqlCommand getQuestionsDataCmd = new SqlCommand("SELECT * FROM Question",conn);
+                    reader = getQuestionsDataCmd.ExecuteReader();
+                    Questions.Load(reader);
+                    return Questions;
+                }
+            }catch(SqlException ex)
             {
-                DbDataReader reader;
-                conn.Open();
-                SqlCommand getQuestionsDataCmd = new SqlCommand("SELECT * FROM Question",conn);
-                reader = getQuestionsDataCmd.ExecuteReader();
-                Questions.Load(reader);
-                return Questions;
+                //log error
+                throw ;
+            }catch(Exception ex)
+            {
+                //log error
+                throw ;
             }
         }
 
