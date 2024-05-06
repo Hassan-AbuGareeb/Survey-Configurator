@@ -18,25 +18,25 @@ namespace Survey_Configurator
             {
                 //get the connection string from file
                 string defaultConnectionString = ConfigurationManager.ConnectionStrings["app"].ConnectionString;
-                string connectionStringObtained =QuestionOperations.SetConnectionString(defaultConnectionString);
+                string connectionStringObtained = QuestionOperations.SetConnectionString(defaultConnectionString);
                 if (connectionStringObtained != "success")
                 {
                     MessageBox.Show("File issue occured, please check your permission on creating and editing files");
                     MessageBox.Show("Trying to connect using default connection parameters");
                 }
                 //get the questions table from the controller and bind it to the datagrid
-                            //danger
+                //danger
                 QuestionsDataGrid.DataSource = QuestionOperations.GetQuestions();
                 //hide the question id column
-                            //danger
+                //danger
                 QuestionsDataGrid.Columns["Q_id"].Visible = false;
             }
-            catch(ArgumentException)
+            catch (ArgumentException)
             {
                 MessageBox.Show("Wrong connection parameters please check the connectionSettings.txt file");
                 Close();
             }
-            catch (InvalidOperationException )
+            catch (InvalidOperationException)
             {
                 //error during getting data from database, implement a retury mechanism
                 MessageBox.Show("error occured while Loading data, please try again");
@@ -46,7 +46,7 @@ namespace Survey_Configurator
                 MessageBox.Show("Database connection error, check the connection parameters or the sql server configurations");
                 Close();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"{ex.GetType().FullName}, {ex.StackTrace}");
                 Close();
@@ -84,7 +84,7 @@ namespace Survey_Configurator
                     selectedQuestions[i] = currentQuestion;
                 }
                 //delete the questions from database and ui
-                        //danger
+                //danger
                 QuestionOperations.DeleteQuestion(selectedQuestions);
                 MessageBox.Show($"Question{(numberOfSelectedRows > 1 ? "s " : " ")}deleted successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -105,7 +105,7 @@ namespace Survey_Configurator
             }
 
             //enable the edit questions only if one question is selected
-            if(numberOfSelectedQuestions > 0 && numberOfSelectedQuestions < 2)
+            if (numberOfSelectedQuestions > 0 && numberOfSelectedQuestions < 2)
             {
                 EditQuestionButton.Enabled = true;
             }
@@ -115,5 +115,15 @@ namespace Survey_Configurator
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                throw new ArgumentException();
+            }catch(Exception ex)
+            {
+                MessageBox.Show($"{DateTime.Now.ToUniversalTime()} UTC\n{ex.GetType().Name}\n{ex.Message}\n{ex.Source}\n{ex.TargetSite}\n{ex.StackTrace}");
+            }
+        }
     }
 }

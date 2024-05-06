@@ -33,21 +33,21 @@
             DeleteQuestionButton = new Button();
             EditQuestionButton = new Button();
             AddQuestionButton = new Button();
+            button1 = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)QuestionsDataGrid).BeginInit();
             SuspendLayout();
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(button1);
             groupBox1.Controls.Add(QuestionsDataGrid);
             groupBox1.Controls.Add(DeleteQuestionButton);
             groupBox1.Controls.Add(EditQuestionButton);
             groupBox1.Controls.Add(AddQuestionButton);
-            groupBox1.Location = new Point(0, 2);
-            groupBox1.Margin = new Padding(3, 2, 3, 2);
+            groupBox1.Location = new Point(0, 3);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(3, 2, 3, 2);
-            groupBox1.Size = new Size(1420, 757);
+            groupBox1.Size = new Size(1623, 1009);
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "groupBox1";
@@ -59,20 +59,20 @@
             QuestionsDataGrid.AllowUserToOrderColumns = true;
             QuestionsDataGrid.BackgroundColor = SystemColors.ControlLight;
             QuestionsDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            QuestionsDataGrid.Location = new Point(363, 89);
+            QuestionsDataGrid.Location = new Point(415, 119);
+            QuestionsDataGrid.Margin = new Padding(3, 4, 3, 4);
             QuestionsDataGrid.Name = "QuestionsDataGrid";
             QuestionsDataGrid.ReadOnly = true;
             QuestionsDataGrid.RowHeadersWidth = 51;
-            QuestionsDataGrid.Size = new Size(523, 350);
+            QuestionsDataGrid.Size = new Size(598, 467);
             QuestionsDataGrid.TabIndex = 9;
             QuestionsDataGrid.SelectionChanged += QuestionsDataGrid_SelectionChanged;
             // 
             // DeleteQuestionButton
             // 
-            DeleteQuestionButton.Location = new Point(796, 501);
-            DeleteQuestionButton.Margin = new Padding(3, 2, 3, 2);
+            DeleteQuestionButton.Location = new Point(910, 668);
             DeleteQuestionButton.Name = "DeleteQuestionButton";
-            DeleteQuestionButton.Size = new Size(90, 49);
+            DeleteQuestionButton.Size = new Size(103, 65);
             DeleteQuestionButton.TabIndex = 7;
             DeleteQuestionButton.Text = "Delete";
             DeleteQuestionButton.UseVisualStyleBackColor = true;
@@ -80,10 +80,9 @@
             // 
             // EditQuestionButton
             // 
-            EditQuestionButton.Location = new Point(580, 501);
-            EditQuestionButton.Margin = new Padding(3, 2, 3, 2);
+            EditQuestionButton.Location = new Point(663, 668);
             EditQuestionButton.Name = "EditQuestionButton";
-            EditQuestionButton.Size = new Size(90, 49);
+            EditQuestionButton.Size = new Size(103, 65);
             EditQuestionButton.TabIndex = 6;
             EditQuestionButton.Text = "Edit";
             EditQuestionButton.UseVisualStyleBackColor = true;
@@ -91,22 +90,30 @@
             // 
             // AddQuestionButton
             // 
-            AddQuestionButton.Location = new Point(363, 501);
-            AddQuestionButton.Margin = new Padding(3, 2, 3, 2);
+            AddQuestionButton.Location = new Point(415, 668);
             AddQuestionButton.Name = "AddQuestionButton";
-            AddQuestionButton.Size = new Size(90, 49);
+            AddQuestionButton.Size = new Size(103, 65);
             AddQuestionButton.TabIndex = 5;
             AddQuestionButton.Text = "Add";
             AddQuestionButton.UseVisualStyleBackColor = true;
             AddQuestionButton.Click += AddQuestionButton_Click;
             // 
+            // button1
+            // 
+            button1.Location = new Point(663, 806);
+            button1.Name = "button1";
+            button1.Size = new Size(103, 57);
+            button1.TabIndex = 10;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // MainScreen
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1421, 752);
+            ClientSize = new Size(1624, 1003);
             Controls.Add(groupBox1);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "MainScreen";
             Text = "Form1";
             Load += MainScreen_Load;
@@ -122,5 +129,6 @@
         private Button DeleteQuestionButton;
         private Button EditQuestionButton;
         private DataGridView QuestionsDataGrid;
+        private Button button1;
     }
 }

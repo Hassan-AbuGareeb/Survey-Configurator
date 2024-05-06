@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Data;
 using System.Data.Common;
+using System.Linq;
 using DatabaseLayer.models;
 using Microsoft.Data.SqlClient;
-
 namespace DatabaseLayer
 {
     public class Database
@@ -25,19 +25,19 @@ namespace DatabaseLayer
                     Questions.Load(reader);
                     return Questions;
                 }
-            }catch (SqlException)
+            }catch (SqlException ex)
             {
-                //log error
+                LogError(ex);
                 throw;
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
-                //log error
-                throw ;
+                LogError(ex);
+                throw;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //log error
+                LogError(ex);
                 throw;
             }
         }
@@ -63,19 +63,19 @@ namespace DatabaseLayer
                     reader.Close();
                     return tempTable.Rows[0];
                 }
-            }catch (SqlException)
+            }catch (SqlException ex)
             {
-                //log error
+                LogError(ex);
                 throw;
             }
             catch (InvalidOperationException ex)
             {
-                //log error
+                LogError(ex);
                 throw new InvalidOperationException("problem in connection to database", ex);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //log error
+                LogError(ex);
                 throw;
             }
         }
@@ -129,19 +129,19 @@ namespace DatabaseLayer
                     Questions.Rows.Add(questionId, questionData.Text, questionData.Order, questionType);
                 }
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
-                //log error
+                LogError(ex);
                 throw;
             }
             catch (InvalidOperationException ex)
             {
-                //log error
+                LogError(ex);
                 throw new InvalidOperationException("problem in connection to database", ex);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //log error
+                LogError(ex);
                 throw;
             }
         }
@@ -309,6 +309,39 @@ namespace DatabaseLayer
             {
                 //log error
                 throw;
+            }
+        }
+
+        public static void LogError(Exception exceptionData)
+        {
+            try
+            {
+                //create the error info to log to the file
+                string[] exceptionDetails = {$"{DateTime.Now.ToUniversalTime()} UTC", $"Exception: {exceptionData.GetType().Name}", $"Exception message: {exceptionData.Message}", $"Stack trace:\n{exceptionData.StackTrace}" };
+                //check that file exists
+                string directoryPath = Directory.GetCurrentDirectory() + "\\errorlogs";
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                string filePath = directoryPath + "\\errorlog.txt";
+                if (!File.Exists(filePath))
+                {
+                    //create the file if it doesn't exist
+                    FileStream fs = File.Create(filePath);
+                    fs.Close();
+                }
+
+                //add the default values to the file
+                StreamWriter writer = File.AppendText(filePath);
+                writer.WriteLine(string.Join(",\n", exceptionDetails) + "\n\n--------\n");
+                writer.Close();
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error occurred while logging: {ex.Message}");
             }
         }
     }
