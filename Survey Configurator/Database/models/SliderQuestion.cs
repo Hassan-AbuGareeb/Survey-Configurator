@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Database.models
+namespace DatabaseLayer.models
 {
     public class SliderQuestion : Question
     {

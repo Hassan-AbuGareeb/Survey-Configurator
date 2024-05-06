@@ -398,14 +398,17 @@
       "System.Text.Encodings.Web/4.7.2": {},
       "System.Text.Json/4.7.2": {},
       "System.Threading.Tasks.Extensions/4.5.4": {},
-      "Database/1.0.0": {
+      "DataBase/1.0.0": {
+        "dependencies": {
+          "Microsoft.Data.SqlClient": "5.2.0"
+        },
         "runtime": {
-          "Database.dll": {}
+          "DataBase.dll": {}
         }
       },
       "Logic/1.0.0": {
         "dependencies": {
-          "Database": "1.0.0",
+          "DataBase": "1.0.0",
           "Microsoft.Data.SqlClient": "5.2.0"
         },
         "runtime": {
@@ -686,7 +689,7 @@
       "path": "system.threading.tasks.extensions/4.5.4",
       "hashPath": "system.threading.tasks.extensions.4.5.4.nupkg.sha512"
     },
-    "Database/1.0.0": {
+    "DataBase/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

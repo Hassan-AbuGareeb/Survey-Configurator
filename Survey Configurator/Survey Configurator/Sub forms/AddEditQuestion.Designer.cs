@@ -43,31 +43,28 @@
             // 
             // QuestionOptions
             // 
-            QuestionOptions.Location = new Point(31, 476);
-            QuestionOptions.Margin = new Padding(3, 4, 3, 4);
+            QuestionOptions.Location = new Point(27, 357);
             QuestionOptions.Name = "QuestionOptions";
-            QuestionOptions.Size = new Size(584, 320);
+            QuestionOptions.Size = new Size(511, 240);
             QuestionOptions.TabIndex = 19;
             // 
             // Cancel
             // 
             Cancel.Font = new Font("Segoe UI", 14.25F);
-            Cancel.Location = new Point(501, 804);
-            Cancel.Margin = new Padding(3, 4, 3, 4);
+            Cancel.Location = new Point(438, 603);
             Cancel.Name = "Cancel";
-            Cancel.Size = new Size(114, 59);
+            Cancel.Size = new Size(100, 44);
             Cancel.TabIndex = 18;
             Cancel.Text = "Cancel";
             Cancel.UseVisualStyleBackColor = true;
-            Cancel.Click += Cancel_Click;
+            Cancel.Click += CancelButton_Click;
             // 
             // Add
             // 
             Add.Font = new Font("Segoe UI", 14.25F);
-            Add.Location = new Point(137, 804);
-            Add.Margin = new Padding(3, 4, 3, 4);
+            Add.Location = new Point(120, 603);
             Add.Name = "Add";
-            Add.Size = new Size(114, 59);
+            Add.Size = new Size(100, 44);
             Add.TabIndex = 17;
             Add.Text = "Add";
             Add.UseVisualStyleBackColor = true;
@@ -75,43 +72,41 @@
             // 
             // QuestionTypeComboBox
             // 
+            QuestionTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             QuestionTypeComboBox.FormattingEnabled = true;
             QuestionTypeComboBox.Items.AddRange(new object[] { "Slider", "Stars", "Smiley" });
-            QuestionTypeComboBox.Location = new Point(136, 400);
-            QuestionTypeComboBox.Margin = new Padding(3, 4, 3, 4);
+            QuestionTypeComboBox.Location = new Point(119, 300);
             QuestionTypeComboBox.Name = "QuestionTypeComboBox";
-            QuestionTypeComboBox.Size = new Size(138, 28);
+            QuestionTypeComboBox.Size = new Size(121, 23);
             QuestionTypeComboBox.TabIndex = 16;
             QuestionTypeComboBox.SelectedIndexChanged += QuestionTypeComboBox_SelectedIndexChanged;
             // 
             // QuestionOrderNumeric
             // 
-            QuestionOrderNumeric.Location = new Point(137, 295);
-            QuestionOrderNumeric.Margin = new Padding(3, 4, 3, 4);
+            QuestionOrderNumeric.Location = new Point(120, 221);
             QuestionOrderNumeric.Maximum = new decimal(new int[] { 120, 0, 0, 0 });
             QuestionOrderNumeric.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             QuestionOrderNumeric.Name = "QuestionOrderNumeric";
-            QuestionOrderNumeric.Size = new Size(137, 27);
+            QuestionOrderNumeric.Size = new Size(120, 23);
             QuestionOrderNumeric.TabIndex = 15;
             QuestionOrderNumeric.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // QuestionTextBox
             // 
-            QuestionTextBox.Location = new Point(137, 119);
-            QuestionTextBox.Margin = new Padding(3, 4, 3, 4);
+            QuestionTextBox.Location = new Point(120, 89);
             QuestionTextBox.MaxLength = 350;
             QuestionTextBox.Multiline = true;
             QuestionTextBox.Name = "QuestionTextBox";
-            QuestionTextBox.Size = new Size(477, 117);
+            QuestionTextBox.Size = new Size(418, 89);
             QuestionTextBox.TabIndex = 14;
             // 
             // TitleLabel
             // 
             TitleLabel.AutoSize = true;
             TitleLabel.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            TitleLabel.Location = new Point(14, 12);
+            TitleLabel.Location = new Point(12, 9);
             TitleLabel.Name = "TitleLabel";
-            TitleLabel.Size = new Size(326, 50);
+            TitleLabel.Size = new Size(253, 40);
             TitleLabel.TabIndex = 13;
             TitleLabel.Text = "Add/Edit Question";
             // 
@@ -119,9 +114,9 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 14.25F);
-            label3.Location = new Point(31, 393);
+            label3.Location = new Point(27, 295);
             label3.Name = "label3";
-            label3.Size = new Size(65, 32);
+            label3.Size = new Size(51, 25);
             label3.TabIndex = 12;
             label3.Text = "Type";
             // 
@@ -129,9 +124,9 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 14.25F);
-            label2.Location = new Point(31, 287);
+            label2.Location = new Point(27, 215);
             label2.Name = "label2";
-            label2.Size = new Size(75, 32);
+            label2.Size = new Size(61, 25);
             label2.TabIndex = 11;
             label2.Text = "Order";
             // 
@@ -139,17 +134,17 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 14.25F);
-            label1.Location = new Point(31, 112);
+            label1.Location = new Point(27, 84);
             label1.Name = "label1";
-            label1.Size = new Size(57, 32);
+            label1.Size = new Size(45, 25);
             label1.TabIndex = 10;
             label1.Text = "Text";
             // 
             // AddEditQuestion
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(734, 920);
+            ClientSize = new Size(642, 690);
             Controls.Add(QuestionOptions);
             Controls.Add(Cancel);
             Controls.Add(Add);
@@ -160,7 +155,6 @@
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "AddEditQuestion";
             Text = "Add Edit";
             Load += AddEdit_Load;

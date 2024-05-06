@@ -5,9 +5,9 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "Survey Configurator\Presentation.csproj", "{A2DAD1B1-6837-406B-B5AE-01035D2339BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "Logic\Logic.csproj", "{C2FD8EE7-BBED-43DE-8427-6F2C6EF66E6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic", "Logic\Logic.csproj", "{C2FD8EE7-BBED-43DE-8427-6F2C6EF66E6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{74014156-5EE8-4BD9-9263-42E87FABF437}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBase", "Database\DataBase.csproj", "{74014156-5EE8-4BD9-9263-42E87FABF437}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

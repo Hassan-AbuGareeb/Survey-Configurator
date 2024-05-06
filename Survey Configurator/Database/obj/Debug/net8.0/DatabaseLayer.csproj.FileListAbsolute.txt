@@ -1,0 +1,13 @@
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\DatabaseLayer.csproj.AssemblyReference.cache
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\DatabaseLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\DatabaseLayer.AssemblyInfoInputs.cache
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\DatabaseLayer.AssemblyInfo.cs
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\DatabaseLayer.csproj.CoreCompileInputs.cache
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\DatabaseLayer.sourcelink.json
+D:\Survey Configurator\Survey Configurator\Database\bin\Debug\net8.0\DatabaseLayer.deps.json
+D:\Survey Configurator\Survey Configurator\Database\bin\Debug\net8.0\DatabaseLayer.dll
+D:\Survey Configurator\Survey Configurator\Database\bin\Debug\net8.0\DatabaseLayer.pdb
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\DatabaseLayer.dll
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\refint\DatabaseLayer.dll
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\DatabaseLayer.pdb
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\ref\DatabaseLayer.dll

@@ -1,8 +1,6 @@
 D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\Logic.deps.json
 D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\Logic.dll
 D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\Logic.pdb
-D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\Database.dll
-D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\Database.pdb
 D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\Logic.csproj.AssemblyReference.cache
 D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\Logic.GeneratedMSBuildEditorConfig.editorconfig
 D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\Logic.AssemblyInfoInputs.cache
@@ -14,3 +12,5 @@ D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\Logic.dll
 D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\refint\Logic.dll
 D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\Logic.pdb
 D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\ref\Logic.dll
+D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\DataBase.dll
+D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\DataBase.pdb

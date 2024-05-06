@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using Database.models;
 using Logic;
 using Microsoft.Data.SqlClient;
+using DatabaseLayer.models;
+
 
 namespace Survey_Configurator.Sub_forms
 {
@@ -28,7 +29,7 @@ namespace Survey_Configurator.Sub_forms
             InitializeComponent();
             //Operation = "Add";
             TitleLabel.Text = "Add Question";
-            this.Text = "Add";
+            Text = "Add";
             Add.Text = "Add";
 
         }
@@ -40,24 +41,24 @@ namespace Survey_Configurator.Sub_forms
             //Operation = "Edit";
             this.Text = "Edit";
             TitleLabel.Text = "Edit Question";
-            Add.Text = "Edit";
+            Add.Text = "Save";
         }
 
         private void AddEdit_Load(object sender, EventArgs e)
         {
             //check if the operation is edit and fill the fields with selected question data
-            if (Add.Text.Equals("Edit"))
+            if (Add.Text.Equals("Save"))
             {
-                DataRow generalQuestionData = QuestionOperations.getQuestionData(QuestionId);
+                DataRow generalQuestionData = QuestionOperations.GetQuestionData(QuestionId);
                 QuestionTextBox.Text = generalQuestionData["Q_text"].ToString();
                 QuestionOrderNumeric.Value = (int)generalQuestionData["Q_order"];
                 QuestionTypeComboBox.SelectedItem = generalQuestionData["Q_type"];
 
                 //based on the combobox value further data about the question should be obtained
-                DataRow questionSpecificData = QuestionOperations.getQuestionSpecificData(QuestionId, generalQuestionData["Q_type"].ToString());
+                DataRow questionSpecificData = QuestionOperations.GetQuestionSpecificData(QuestionId, generalQuestionData["Q_type"].ToString());
                 switch (generalQuestionData["Q_type"])
                 {
-                    //for each case get the info and downcast it and assign it to its respective field
+                    //for each case Get the info and downcast it and assign it to its respective field
                     case "Smiley":
                         NumberOfSmileysNumeric.Value = (int)questionSpecificData["Num_of_faces"];
                         break;
@@ -80,7 +81,6 @@ namespace Survey_Configurator.Sub_forms
             if (QuestionTextBox.Text.Length != 0 &&
                 QuestionTypeComboBox.SelectedItem != null)
             {
-                //validate the type-specific fields
                 //add question to db and interface
                 switch (QuestionTypeComboBox.Text)
                 {
@@ -108,7 +108,6 @@ namespace Survey_Configurator.Sub_forms
                             QuestionOperations.UpdateQuestion(QuestionId, smileyData);
                         break;
                 }
-
                 //show success message
                 MessageBox.Show("Question has been added successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 //close form
@@ -116,10 +115,30 @@ namespace Survey_Configurator.Sub_forms
             }
             else
             {
-                //validate specific fields too
-                //show dialouge box indicating an error in filling fields
                 //show the missing fields ?
-                MessageBox.Show("All fields must have proper values", "Missing fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string missingFieldsMessage = "";
+                if (QuestionTextBox.Text.Length == 0 && QuestionTypeComboBox.SelectedItem == null)
+                {
+                    missingFieldsMessage += "Question text, Question type ";
+                }    
+                else if (QuestionTextBox.Text.Length == 0)
+                {
+                    missingFieldsMessage += "Question text";
+                }
+                else
+                {
+                    missingFieldsMessage += "Question type";
+                }
+                MessageBox.Show($"The following fields must have proper values: {missingFieldsMessage}", "Missing fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            DialogResult cancelCreateQuestion = MessageBox.Show("Any changes made won't be saved.", "Cancel Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (cancelCreateQuestion == DialogResult.Yes)
+            {
+                Close();
             }
         }
 
@@ -140,16 +159,6 @@ namespace Survey_Configurator.Sub_forms
             }
         }
 
-        private void Cancel_Click(object sender, EventArgs e)
-        {
-            DialogResult cancelCreateQuestion = MessageBox.Show("Any changes made won't be saved.", "Cancel Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (cancelCreateQuestion == DialogResult.Yes)
-            {
-                this.Close();
-            }
-        }
-
-
         private void AddStarsOptions()
         {
             //add a label next to the numeric field
@@ -164,7 +173,7 @@ namespace Survey_Configurator.Sub_forms
 
             //add a numeric field to specify a number for the smileys
             NumberOfStarsNumeric = new NumericUpDown();
-            NumberOfStarsNumeric.Location = new Point(200, 0);
+            NumberOfStarsNumeric.Location = new Point((int)NumberOfStarsNumeric.Value + 175, 0);
             NumberOfStarsNumeric.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             NumberOfStarsNumeric.Minimum = new decimal(new int[] { 0, 0, 0, 0 });
             NumberOfStarsNumeric.Name = "NumberOfStarsNumeric";
@@ -232,7 +241,7 @@ namespace Survey_Configurator.Sub_forms
             SliderStartValueCaptionText.Name = "SliderStartValueCaptionText";
             SliderStartValueCaptionText.Size = new Size(120, 23);
             SliderStartValueCaptionText.TabIndex = 14;
-            SliderStartValueCaptionText.Text = "";
+            SliderStartValueCaptionText.Text = "Min";
 
             //label end value items
             Label SliderEndValueCaptionLabel = new Label();
@@ -249,7 +258,7 @@ namespace Survey_Configurator.Sub_forms
             SliderEndValueCaptionText.Name = "SliderEndValueCaptionText";
             SliderEndValueCaptionText.Size = new Size(120, 23);
             SliderEndValueCaptionText.TabIndex = 14;
-            SliderEndValueCaptionText.Text = "";
+            SliderEndValueCaptionText.Text = "Max";
 
             QuestionOptions.Controls.Add(SliderStartValueLabel);
             QuestionOptions.Controls.Add(SliderStartValueNumeric);
@@ -286,5 +295,7 @@ namespace Survey_Configurator.Sub_forms
             QuestionOptions.Controls.Add(NumberOfSmileysLabel);
             QuestionOptions.Controls.Add(NumberOfSmileysNumeric);
         }
+
+        
     }
 }
