@@ -30,10 +30,16 @@ namespace Survey_Configurator
                 //hide the question id column
                             //danger
                 QuestionsDataGrid.Columns["Q_id"].Visible = false;
-            }catch(ArgumentException)
+            }
+            catch(ArgumentException)
             {
                 MessageBox.Show("Wrong connection parameters please check the connectionSettings.txt file");
                 Close();
+            }
+            catch (InvalidOperationException )
+            {
+                //error during getting data from database, implement a retury mechanism
+                MessageBox.Show("error occured while Loading data, please try again");
             }
             catch (SqlException)
             {
