@@ -2,12 +2,12 @@
 using System.Data;
 using DatabaseLayer.models;
 using DatabaseLayer;
+using System.Runtime.CompilerServices;
 
 namespace Logic
 {
     public class QuestionOperations
     {
-        // make a general purpose open connection function and send delegates to it
         private QuestionOperations() 
         {
         }
@@ -43,39 +43,62 @@ namespace Logic
             Database.DeleteQuestionFromDB(selectedQuestions);
         }
 
-        public static void SetConnectionString()
+        public static string SetConnectionString(string defaultConenctionString)
         {
             //try to obtain the connection string from a file
             //check if the file exists at all
             //get connection string and assign it to the QuestionsOperations property
+           
+            try {
+                string connectionString = "";
 
-            //check that file exists
-            string filePath = Directory.GetCurrentDirectory() +"\\connectionSettings.txt";
-            if (!File.Exists(filePath))
+                //check that file exists
+            string filePath = Directory.GetCurrentDirectory() + "\\connectionSettings.txt";
+                if (!File.Exists(filePath))
+                {
+                    //create the file if it doesn't exist
+                    FileStream fs = File.Create(filePath);
+                    fs.Close();
+
+                    //add the default values to the file
+                    StreamWriter writer = new StreamWriter(filePath);
+                    writer.WriteLine(defaultConenctionString);
+                    writer.Close();
+                }
+                else
+                { 
+                    //read connection string values from file
+                    StreamReader sr = new StreamReader(filePath);
+                    connectionString = "";
+
+                    string[] connectionStringParameters = sr.ReadToEnd().Split(",");
+                    foreach (string parameter in connectionStringParameters)
+                    {
+                        string property = parameter.Split(':')[0].Trim();
+                        string value = parameter.Split(':')[1].Trim();
+                        connectionString += $"{property} = {value};\n";
+                    }
+                    sr.Close();
+                 }
+
+                Database.ConnectionString = connectionString;
+            }catch(IndexOutOfRangeException ex)
             {
-                //create the file if it doesn't exist
-                FileStream fs = File.Create(filePath);
-                fs.Close();
+                //log error 
 
-                //add the default values to the file
-                StreamWriter writer = new StreamWriter(filePath);
-                writer.WriteLine("Server : HASSANABUGHREEB,\r\nDatabase : Questions_DB,\r\nTrusted_Connection : true,\r\nUser : ,\r\nPassword : ,\r\nEncrypt : false");
-                writer.Close();
+                //return to caller with error
+                throw new ArgumentException("Wrong connection parameters",ex);
+            }
+            catch (Exception)
+            {
+                //log error
+
+                //either the file can't be created or it is a permission issue
+                Database.ConnectionString=defaultConenctionString;
+                return "unsucessful";
             }
 
-            //read connection string values from file
-            StreamReader sr = new StreamReader(filePath);
-            string connectionString = "";
-
-            string[] connectionStringParameters = sr.ReadToEnd().Split(",");
-            foreach (string parameter in connectionStringParameters)
-            {
-                string property = parameter.Split(":")[0].Trim();
-                string value = parameter.Split(":")[1].Trim();
-                connectionString += $"{property} = {value};\n";
-            }
-
-            Database.ConnectionString = connectionString;
+            return "success";
         }
 
     }

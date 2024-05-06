@@ -3,4 +3,5 @@ Database : Questions_DB,
 Trusted_Connection : true,
 User : ,
 Password : ,
-Encrypt : false
+Encrypt : false,
+Timeout : 4
