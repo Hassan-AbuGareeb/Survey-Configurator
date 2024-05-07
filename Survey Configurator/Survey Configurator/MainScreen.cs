@@ -32,6 +32,10 @@ namespace Survey_Configurator
                 QuestionsDataGrid.Columns["Q_order"].HeaderText = "Order";
                 QuestionsDataGrid.Columns["Q_text"].HeaderText = "Text";
                 QuestionsDataGrid.Columns["Q_type"].HeaderText = "Type";
+                //change the order of the columns in the grid view
+                QuestionsDataGrid.Columns["Q_order"].DisplayIndex = 0;
+                QuestionsDataGrid.Columns["Q_text"].DisplayIndex = 1;
+                QuestionsDataGrid.Columns["Q_type"].DisplayIndex = 2;
 
             }
             catch (ArgumentException)
