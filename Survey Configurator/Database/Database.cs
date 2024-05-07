@@ -251,19 +251,19 @@ namespace DatabaseLayer
                     //decide the type of the question on whether it was changed or not
                     (updatedQuestionType.Equals(originalQuestionType)? originalQuestionType: updatedQuestionType));
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
-                //log error
+                LogError(ex);
                 throw;
             }
             catch (InvalidOperationException ex)
             {
-                //log error
+                LogError(ex);
                 throw new InvalidOperationException("problem in connection to database", ex);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //log error
+                LogError(ex);
                 throw;
             }
         }
@@ -296,18 +296,19 @@ namespace DatabaseLayer
                     }
                 }
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
-                //log error
+                LogError(ex);
                 throw;
             }
             catch (InvalidOperationException ex)
             {
+                LogError(ex);
                 throw new InvalidOperationException("problem in connection to database",ex);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //log error
+                LogError(ex);
                 throw;
             }
         }

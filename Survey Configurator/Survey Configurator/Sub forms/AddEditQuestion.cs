@@ -202,7 +202,7 @@ namespace Survey_Configurator.Sub_forms
 
             //add a numeric field to specify a number for the smileys
             NumberOfStarsNumeric = new NumericUpDown();
-            NumberOfStarsNumeric.Location = new Point((int)NumberOfStarsNumeric.Value + 175, 0);
+            NumberOfStarsNumeric.Location = new Point(205, 0);
             NumberOfStarsNumeric.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             NumberOfStarsNumeric.Minimum = new decimal(new int[] { 0, 0, 0, 0 });
             NumberOfStarsNumeric.Name = "NumberOfStarsNumeric";
@@ -240,14 +240,14 @@ namespace Survey_Configurator.Sub_forms
             Label SliderEndValueLabel = new Label();
             SliderEndValueLabel.AutoSize = true;
             SliderEndValueLabel.Font = new Font("Segoe UI", 14.25F);
-            SliderEndValueLabel.Location = new Point(0, 40);
+            SliderEndValueLabel.Location = new Point(0, 50);
             SliderEndValueLabel.Name = "SliderEndValue";
             SliderEndValueLabel.Size = new Size(45, 25);
             SliderEndValueLabel.TabIndex = 11;
             SliderEndValueLabel.Text = "End value";
             //add a numeric field to specify a number for the smileys
             SliderEndValueNumeric = new NumericUpDown();
-            SliderEndValueNumeric.Location = new Point(230, 40);
+            SliderEndValueNumeric.Location = new Point(230, 50);
             SliderEndValueNumeric.Maximum = new decimal(new int[] { 100, 0, 0, 0 });
             SliderEndValueNumeric.Minimum = new decimal(new int[] { 50, 0, 0, 0 });
             SliderEndValueNumeric.Name = "SliderEndValueNumeric";
@@ -259,14 +259,14 @@ namespace Survey_Configurator.Sub_forms
             Label SliderStartValueCaptionLabel = new Label();
             SliderStartValueCaptionLabel.AutoSize = true;
             SliderStartValueCaptionLabel.Font = new Font("Segoe UI", 14.25F);
-            SliderStartValueCaptionLabel.Location = new Point(0, 80);
+            SliderStartValueCaptionLabel.Location = new Point(0, 100);
             SliderStartValueCaptionLabel.Name = "SliderStartValueCaptionLabels";
             SliderStartValueCaptionLabel.Size = new Size(45, 25);
             SliderStartValueCaptionLabel.TabIndex = 13;
             SliderStartValueCaptionLabel.Text = "Start value caption";
             //add a numeric field to specify a number for the smileys
             SliderStartValueCaptionText = new TextBox();
-            SliderStartValueCaptionText.Location = new Point(230, 80);
+            SliderStartValueCaptionText.Location = new Point(230, 100);
             SliderStartValueCaptionText.Name = "SliderStartValueCaptionText";
             SliderStartValueCaptionText.Size = new Size(120, 23);
             SliderStartValueCaptionText.TabIndex = 14;
@@ -276,14 +276,14 @@ namespace Survey_Configurator.Sub_forms
             Label SliderEndValueCaptionLabel = new Label();
             SliderEndValueCaptionLabel.AutoSize = true;
             SliderEndValueCaptionLabel.Font = new Font("Segoe UI", 14.25F);
-            SliderEndValueCaptionLabel.Location = new Point(0, 120);
+            SliderEndValueCaptionLabel.Location = new Point(0, 150);
             SliderEndValueCaptionLabel.Name = "SliderEndValueCaptionLabel";
             SliderEndValueCaptionLabel.Size = new Size(45, 25);
             SliderEndValueCaptionLabel.TabIndex = 13;
             SliderEndValueCaptionLabel.Text = "End value caption";
             //add a numeric field to specify a number for the smileys
             SliderEndValueCaptionText = new TextBox();
-            SliderEndValueCaptionText.Location = new Point(230, 120);
+            SliderEndValueCaptionText.Location = new Point(230, 150);
             SliderEndValueCaptionText.Name = "SliderEndValueCaptionText";
             SliderEndValueCaptionText.Size = new Size(120, 23);
             SliderEndValueCaptionText.TabIndex = 14;
@@ -312,7 +312,7 @@ namespace Survey_Configurator.Sub_forms
 
             //add a numeric field to specify a number for the smileys
             NumberOfSmileysNumeric = new NumericUpDown();
-            NumberOfSmileysNumeric.Location = new Point(250, 0);
+            NumberOfSmileysNumeric.Location = new Point(237, 0);
             NumberOfSmileysNumeric.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
             NumberOfSmileysNumeric.Minimum = new decimal(new int[] { 2, 0, 0, 0 });
             NumberOfSmileysNumeric.Name = "NumberOfSmileysNumeric";
@@ -324,7 +324,5 @@ namespace Survey_Configurator.Sub_forms
             QuestionOptions.Controls.Add(NumberOfSmileysLabel);
             QuestionOptions.Controls.Add(NumberOfSmileysNumeric);
         }
-
-        
     }
 }
