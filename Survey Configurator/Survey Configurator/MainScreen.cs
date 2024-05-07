@@ -25,11 +25,14 @@ namespace Survey_Configurator
                     MessageBox.Show("Trying to connect using default connection parameters");
                 }
                 //get the questions table from the controller and bind it to the datagrid
-                //danger
                 QuestionsDataGrid.DataSource = QuestionOperations.GetQuestions();
                 //hide the question id column
-                //danger
                 QuestionsDataGrid.Columns["Q_id"].Visible = false;
+                //properly naming the columns in the datagrid view
+                QuestionsDataGrid.Columns["Q_order"].HeaderText = "Order";
+                QuestionsDataGrid.Columns["Q_text"].HeaderText = "Text";
+                QuestionsDataGrid.Columns["Q_type"].HeaderText = "Type";
+
             }
             catch (ArgumentException)
             {
@@ -120,10 +123,44 @@ namespace Survey_Configurator
             try
             {
                 throw new ArgumentException();
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show($"{DateTime.Now.ToUniversalTime()} UTC\n{ex.GetType().Name}\n{ex.Message}\n{ex.Source}\n{ex.TargetSite}\n{ex.StackTrace}");
             }
         }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            ClearSelectedOptions();
+            toolStripMenuItem2.Checked = true;
+            QuestionsDataGrid.RowsDefaultCellStyle.Font = new Font(QuestionsDataGrid.Font.FontFamily, 9);
+            QuestionsDataGrid.RowTemplate.Height = 29;
+        }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            ClearSelectedOptions();
+            toolStripMenuItem3.Checked = true;
+            QuestionsDataGrid.RowsDefaultCellStyle.Font = new Font(QuestionsDataGrid.Font.FontFamily, 12);
+            QuestionsDataGrid.RowTemplate.Height = 33;
+        }
+
+        private void toolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            ClearSelectedOptions();
+            toolStripMenuItem4.Checked = true;
+            QuestionsDataGrid.RowsDefaultCellStyle.Font = new Font(QuestionsDataGrid.Font.FontFamily, 15);
+            QuestionsDataGrid.RowTemplate.Height = 39;
+        }
+
+        private void ClearSelectedOptions()
+        {
+            toolStripMenuItem2.Checked = false;
+            toolStripMenuItem3.Checked = false;
+            toolStripMenuItem4.Checked = false;
+
+        }
+
     }
 }
