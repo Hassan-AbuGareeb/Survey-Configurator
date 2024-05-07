@@ -34,7 +34,6 @@ namespace Logic
 
         public static void UpdateQuestion(int questionId, Question updatedQuestionData)
         {
-            //recieve the new question general and specific data
            Database.UpdateQuestionOnDB( questionId, updatedQuestionData);
         }
 
@@ -82,17 +81,18 @@ namespace Logic
                  }
 
                 Database.ConnectionString = connectionString;
-            }catch(IndexOutOfRangeException ex)
+            }
+            catch(IndexOutOfRangeException ex)//caused by incorrect connection string which in turn causes the exception by trying to access out of range indexes in the splitted string 
             {
                 //log error 
-
+                Database.LogError(ex);
                 //return to caller with error
                 throw new ArgumentException("Wrong connection parameters",ex);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 //log error
-
+                Database.LogError(ex);
                 //either the file can't be created or it is a permission issue
                 Database.ConnectionString=defaultConenctionString;
                 return "unsucessful";
