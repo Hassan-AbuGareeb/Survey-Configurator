@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
             QuestionsDataGrid = new DataGridView();
             DeleteQuestionButton = new Button();
             EditQuestionButton = new Button();
@@ -55,60 +55,60 @@
             QuestionsDataGrid.AllowUserToAddRows = false;
             QuestionsDataGrid.AllowUserToDeleteRows = false;
             QuestionsDataGrid.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle1.BackColor = Color.Gainsboro;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            QuestionsDataGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            QuestionsDataGrid.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridViewCellStyle6.BackColor = Color.Gainsboro;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+            QuestionsDataGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+            QuestionsDataGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             QuestionsDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             QuestionsDataGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             QuestionsDataGrid.BackgroundColor = SystemColors.Window;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(224, 224, 224);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            QuestionsDataGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = Color.FromArgb(224, 224, 224);
+            dataGridViewCellStyle7.Font = new Font("Segoe UI", 12F);
+            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            QuestionsDataGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             QuestionsDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.FromArgb(224, 224, 224);
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 12F);
-            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            QuestionsDataGrid.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = Color.FromArgb(224, 224, 224);
+            dataGridViewCellStyle8.Font = new Font("Segoe UI", 12F);
+            dataGridViewCellStyle8.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
+            QuestionsDataGrid.DefaultCellStyle = dataGridViewCellStyle8;
             QuestionsDataGrid.GridColor = SystemColors.InfoText;
             QuestionsDataGrid.Location = new Point(12, 53);
             QuestionsDataGrid.Margin = new Padding(3, 4, 3, 4);
             QuestionsDataGrid.Name = "QuestionsDataGrid";
             QuestionsDataGrid.ReadOnly = true;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.White;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            QuestionsDataGrid.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = Color.White;
+            dataGridViewCellStyle9.Font = new Font("Segoe UI", 12F);
+            dataGridViewCellStyle9.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
+            QuestionsDataGrid.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             QuestionsDataGrid.RowHeadersWidth = 35;
-            dataGridViewCellStyle5.BackColor = Color.White;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            QuestionsDataGrid.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle10.BackColor = Color.White;
+            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
+            QuestionsDataGrid.RowsDefaultCellStyle = dataGridViewCellStyle10;
             QuestionsDataGrid.RowTemplate.Height = 33;
             QuestionsDataGrid.RowTemplate.Resizable = DataGridViewTriState.True;
             QuestionsDataGrid.ScrollBars = ScrollBars.Vertical;
-            QuestionsDataGrid.Size = new Size(1170, 527);
+            QuestionsDataGrid.Size = new Size(1226, 526);
             QuestionsDataGrid.TabIndex = 9;
             QuestionsDataGrid.SelectionChanged += QuestionsDataGrid_SelectionChanged;
             // 
             // DeleteQuestionButton
             // 
-            DeleteQuestionButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            DeleteQuestionButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             DeleteQuestionButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             DeleteQuestionButton.Font = new Font("Segoe UI", 15F);
-            DeleteQuestionButton.Location = new Point(999, 631);
+            DeleteQuestionButton.Location = new Point(1004, 631);
             DeleteQuestionButton.Name = "DeleteQuestionButton";
             DeleteQuestionButton.Size = new Size(131, 65);
             DeleteQuestionButton.TabIndex = 7;
@@ -118,10 +118,10 @@
             // 
             // EditQuestionButton
             // 
-            EditQuestionButton.Anchor = AnchorStyles.Top;
+            EditQuestionButton.Anchor = AnchorStyles.Bottom;
             EditQuestionButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             EditQuestionButton.Font = new Font("Segoe UI", 15F);
-            EditQuestionButton.Location = new Point(516, 631);
+            EditQuestionButton.Location = new Point(554, 631);
             EditQuestionButton.Name = "EditQuestionButton";
             EditQuestionButton.Size = new Size(131, 65);
             EditQuestionButton.TabIndex = 6;
@@ -131,6 +131,7 @@
             // 
             // AddQuestionButton
             // 
+            AddQuestionButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             AddQuestionButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             AddQuestionButton.Font = new Font("Segoe UI", 15F);
             AddQuestionButton.Location = new Point(57, 631);
@@ -150,7 +151,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { optionsToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1194, 36);
+            menuStrip1.Size = new Size(1250, 36);
             menuStrip1.TabIndex = 10;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -207,7 +208,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1194, 753);
+            ClientSize = new Size(1250, 753);
             Controls.Add(DeleteQuestionButton);
             Controls.Add(QuestionsDataGrid);
             Controls.Add(EditQuestionButton);

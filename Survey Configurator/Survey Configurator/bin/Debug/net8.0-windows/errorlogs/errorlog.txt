@@ -130,3 +130,13 @@ Stack trace:
 
 --------
 
+5/8/2024 5:48:05 PM UTC,
+Exception: IndexOutOfRangeException,
+Exception message: There is no row at position 0.,
+Stack trace:
+   at System.Data.RBTree`1.GetNodeByIndex(Int32 userIndex)
+   at System.Data.DataRowCollection.get_Item(Int32 index)
+   at DatabaseLayer.Database.getQuestionSpecificDataFromDB(Int32 questionId, String questionType) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 58
+
+--------
+
