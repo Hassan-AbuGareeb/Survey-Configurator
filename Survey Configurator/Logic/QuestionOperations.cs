@@ -4,25 +4,28 @@ using DatabaseLayer.models;
 using DatabaseLayer;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
+using System.Reflection.PortableExecutable;
 
 namespace Logic
 {
     public class QuestionOperations
     {
         public static bool IsAppRunning = true;
+        public static DataTable Questions = new DataTable();
 
         private QuestionOperations() 
         {
         }
 
-        public static DataTable GetQuestions() 
+        public static void GetQuestions() 
         {
-            return Database.getQuestionsFromDB(); ;
+            Questions =  Database.getQuestionsFromDB();
         }
 
         public static DataRow GetQuestionData(int questionId)
         {
-            return Database.getQuestionData(questionId);
+            DataRow questionGeneralData = Questions.Select($"Q_id = {questionId}")[0];
+            return questionGeneralData;
         }
 
         public static DataRow GetQuestionSpecificData(int questionId, string questionType)
@@ -32,17 +35,33 @@ namespace Logic
 
         public static void AddQuestion(Question questionData)
         {
-          Database.AddQuestionToDB(questionData);
+            int questionId = Database.AddQuestionToDB(questionData);
+            string questionType = questionData.GetType().Name.Split("Q")[0];
+            Questions.Rows.Add(questionId, questionData.Text, questionData.Order, questionType);
+           
         }
 
         public static void UpdateQuestion(int questionId, Question updatedQuestionData)
         {
-           Database.UpdateQuestionOnDB( questionId, updatedQuestionData);
+            string originalQuestionType = GetQuestionData(questionId)["Q_type"].ToString();
+            string updatedQuestionType = updatedQuestionData.GetType().Name.Split("Q")[0];
+            Database.UpdateQuestionOnDB( questionId, originalQuestionType, updatedQuestionData);
+            Questions.Rows.Remove(Questions.Select($"Q_id = {questionId}")[0]);
+            Questions.Rows.Add(questionId,
+            updatedQuestionData.Text,
+            updatedQuestionData.Order,
+            //decide the type of the question on whether it was changed or not
+            (updatedQuestionType.Equals(originalQuestionType) ? originalQuestionType : updatedQuestionType));
         }
 
         public static void DeleteQuestion(DataRow[] selectedQuestions)
         {
             Database.DeleteQuestionFromDB(selectedQuestions);
+            //delete question from interface (Questions) in here
+            foreach (DataRow question in selectedQuestions)
+            {
+                Questions.Rows.Remove(question);
+            }
         }
 
         public static string SetConnectionString(string defaultConenctionString)
@@ -108,16 +127,22 @@ namespace Logic
         {
             //get checksum of the database current version of data
             long currentChecksum = Database.getChecksum();
-            while(IsAppRunning)
+            while (IsAppRunning)
             {
                 await Task.Delay(10000);
                 //get checksum again to detect change
                 long newChecksum = Database.getChecksum();
-                if(currentChecksum != newChecksum)
+                if (currentChecksum != newChecksum)
                 {
                     //data changed
-                    Database.getQuestionsFromDB();
                     currentChecksum = newChecksum;
+                    DataTable updatedQuestions = Database.getQuestionsFromDB();
+                    Questions.Clear();
+                    for (int i = 0; i < updatedQuestions.Rows.Count; i++)
+                    {
+                        DataRow currentQuestion = updatedQuestions.Rows[i];
+                        Questions.Rows.Add(currentQuestion["Q_id"], currentQuestion["Q_text"], currentQuestion["Q_order"], currentQuestion["Q_type"]);
+                    }
                 }
             }
         }

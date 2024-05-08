@@ -38,8 +38,7 @@ namespace Survey_Configurator.Sub_forms
         {
             InitializeComponent();
             QuestionId = questionId;
-            //Operation = "Edit";
-            this.Text = "Edit";
+            Text = "Edit";
             TitleLabel.Text = "Edit Question";
             Add.Text = "Save";
         }
@@ -150,8 +149,9 @@ namespace Survey_Configurator.Sub_forms
                 MessageBox.Show("error occured while Loading data, please try again");
                 Close();
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
+                MessageBox.Show(ex.StackTrace);
                 MessageBox.Show("Database connection error, check the connection parameters or the sql server configurations");
                 Close();
             }

@@ -24,8 +24,10 @@ namespace Survey_Configurator
                     MessageBox.Show("File issue occured, please check your permission on creating and editing files");
                     MessageBox.Show("Trying to connect using default connection parameters");
                 }
+                QuestionOperations.GetQuestions();
+
                 //get the questions table from the controller and bind it to the datagrid
-                QuestionsDataGrid.DataSource = QuestionOperations.GetQuestions();
+                QuestionsDataGrid.DataSource = QuestionOperations.Questions;
 
                 //launch the database change checker
                 QuestionOperations.CheckDataBaseChange();
@@ -126,18 +128,6 @@ namespace Survey_Configurator
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                throw new ArgumentException();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"{DateTime.Now.ToUniversalTime()} UTC\n{ex.GetType().Name}\n{ex.Message}\n{ex.Source}\n{ex.TargetSite}\n{ex.StackTrace}");
-            }
-        }
-
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             ClearSelectedOptions();
@@ -179,7 +169,6 @@ namespace Survey_Configurator
             toolStripMenuItem2.Checked = false;
             toolStripMenuItem3.Checked = false;
             toolStripMenuItem4.Checked = false;
-
         }
 
         private void MainScreen_FormClosing(object sender, FormClosingEventArgs e)

@@ -9,7 +9,6 @@ namespace DatabaseLayer
     public class Database
     {
         public static string ConnectionString;
-        private static DataTable Questions = new DataTable();
 
         private Database() { }
 
@@ -22,9 +21,9 @@ namespace DatabaseLayer
                     conn.Open();
                     SqlCommand getQuestionsDataCmd = new SqlCommand("SELECT * FROM Question",conn);
                     reader = getQuestionsDataCmd.ExecuteReader();
-                    Questions.Clear();
-                    Questions.Load(reader);
-                    return Questions;
+                    DataTable QuestionsData = new DataTable();
+                    QuestionsData.Load(reader);
+                    return QuestionsData;
                 }
             }catch (SqlException ex)
             {
@@ -41,12 +40,6 @@ namespace DatabaseLayer
                 LogError(ex);
                 throw;
             }
-        }
-
-        public static DataRow getQuestionData(int questionId)
-        {
-            DataRow questionGeneralData = Questions.Select($"Q_id = {questionId}")[0];
-            return questionGeneralData;
         }
 
         public static DataRow getQuestionSpecificDataFromDB(int questionId, string questionType)
@@ -81,7 +74,7 @@ namespace DatabaseLayer
             }
         }
 
-        public static void AddQuestionToDB(Question questionData)
+        public static int AddQuestionToDB(Question questionData)
         {
             try
             {
@@ -126,8 +119,8 @@ namespace DatabaseLayer
                     insertQuestionTypeCmd.CommandType = CommandType.Text;
                     insertQuestionTypeCmd.CommandText = $"INSERT INTO {questionType} (Q_id, {questionTypeSpecificAttributes}) VALUES ({questionId}, {questionTypeSpecificValues})";
                     insertQuestionTypeCmd.ExecuteNonQuery();
-                    //add question to ui
-                    Questions.Rows.Add(questionId, questionData.Text, questionData.Order, questionType);
+                    //return question id to add question to UI
+                    return questionId;
                 }
             }
             catch (SqlException ex)
@@ -147,12 +140,11 @@ namespace DatabaseLayer
             }
         }
 
-        public static void UpdateQuestionOnDB(int questionId, Question updatedQuestionData)
+        public static void UpdateQuestionOnDB(int questionId, string originalQuestionType, Question updatedQuestionData)
         {
             try
             {
                 //get the original question type and updated question type if it's changed
-                string originalQuestionType = Questions.Select($"Q_id = {questionId}")[0]["Q_type"].ToString();
                 string updatedQuestionType = updatedQuestionData.GetType().Name.Split("Q")[0];
 
                 using (SqlConnection conn = new SqlConnection(ConnectionString)) 
@@ -244,13 +236,6 @@ namespace DatabaseLayer
                         insertQuestionTypeCmd.ExecuteNonQuery();
                     }
                 }
-                //update ui
-                Questions.Rows.Remove(Questions.Select($"Q_id = {questionId}")[0]);
-                Questions.Rows.Add(questionId,
-                    updatedQuestionData.Text,
-                    updatedQuestionData.Order,
-                    //decide the type of the question on whether it was changed or not
-                    (updatedQuestionType.Equals(originalQuestionType)? originalQuestionType: updatedQuestionType));
             }
             catch (SqlException ex)
             {
@@ -290,12 +275,7 @@ namespace DatabaseLayer
                         deleteQuestionsCmd.CommandText = $"DELETE FROM Question WHERE Q_id = {selectedQuestions[i]["Q_id"]}";
                         deleteQuestionsCmd.ExecuteNonQuery();
                     }
-                    //delete question from interface (Questions) in here
-                    for (int i = 0; i < selectedQuestions.Length; i++)
-                    {
-                        Questions.Rows.Remove(selectedQuestions[i]);
                     }
-                }
             }
             catch (SqlException ex)
             {
@@ -319,8 +299,12 @@ namespace DatabaseLayer
         {
             try
             {
-                //create the error info to log to the file
-                string[] exceptionDetails = {$"{DateTime.Now.ToUniversalTime()} UTC", $"Exception: {exceptionData.GetType().Name}", $"Exception message: {exceptionData.Message}", $"Stack trace:\n{exceptionData.StackTrace}" };
+                //collect the error info to log to the file
+                string[] exceptionDetails = [
+                    $"{DateTime.Now.ToUniversalTime()} UTC",
+                    $"Exception: {exceptionData.GetType().Name}",
+                    $"Exception message: {exceptionData.Message}",
+                    $"Stack trace:\n{exceptionData.StackTrace}"];
                 //check that file exists
                 string directoryPath = Directory.GetCurrentDirectory() + "\\errorlogs";
                 if (!Directory.Exists(directoryPath))
