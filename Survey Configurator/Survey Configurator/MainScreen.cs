@@ -3,6 +3,7 @@ using System.Data;
 using Logic;
 using System.Configuration;
 using Microsoft.Data.SqlClient;
+using Microsoft.VisualBasic.Logging;
 namespace Survey_Configurator
 {
     public partial class MainScreen : Form
@@ -96,21 +97,40 @@ namespace Survey_Configurator
 
         private void DeleteQuestionButton_Click(object sender, EventArgs e)
         {
-            int numberOfSelectedRows = QuestionsDataGrid.SelectedRows.Count;
-            DialogResult DeleteQuestion = MessageBox.Show($"Are you sure you want to delete {(numberOfSelectedRows > 1 ? "these " : "this ")}question{(numberOfSelectedRows > 1 ? "s" : "")}?", "Delete question", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (DeleteQuestion == DialogResult.Yes)
+            try
             {
-                DataRow[] selectedQuestions = new DataRow[numberOfSelectedRows];
-                //obtain the selected questions and store them
-                for (int i = 0; i < numberOfSelectedRows; i++)
+                int numberOfSelectedRows = QuestionsDataGrid.SelectedRows.Count;
+                DialogResult DeleteQuestion = MessageBox.Show($"Are you sure you want to delete {(numberOfSelectedRows > 1 ? "these " : "this ")}question{(numberOfSelectedRows > 1 ? "s" : "")}?", "Delete question", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                //to prevent any interruption in deleting
+                QuestionOperations.OperationOngoing = true;
+                if (DeleteQuestion == DialogResult.Yes)
                 {
-                    //cast the selected grid row to dataRowView to store it in a dataRow
-                    DataRow currentQuestion = ((DataRowView)QuestionsDataGrid.SelectedRows[i].DataBoundItem).Row;
-                    selectedQuestions[i] = currentQuestion;
+                    DataRow[] selectedQuestions = new DataRow[numberOfSelectedRows];
+                    //obtain the selected questions and store them
+                    for (int i = 0; i < numberOfSelectedRows; i++)
+                    {
+                        //cast the selected grid row to dataRowView to store it in a dataRow
+                        DataRow currentQuestion = ((DataRowView)QuestionsDataGrid.SelectedRows[i].DataBoundItem).Row;
+                        selectedQuestions[i] = currentQuestion;
+                    }
+                    //delete the questions from database and ui
+                    QuestionOperations.DeleteQuestion(selectedQuestions);
+                    MessageBox.Show($"Question{(numberOfSelectedRows > 1 ? "s " : " ")}deleted successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                //delete the questions from database and ui
-                QuestionOperations.DeleteQuestion(selectedQuestions);
-                MessageBox.Show($"Question{(numberOfSelectedRows > 1 ? "s " : " ")}deleted successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch(IndexOutOfRangeException ex)
+            {
+                QuestionOperations.LogError(ex);
+                MessageBox.Show("Please select the entire row to delete a question");
+            }
+            catch (Exception ex)
+            {
+                QuestionOperations.LogError(ex);
+                MessageBox.Show("An unexpected error occured");
+            }
+            finally
+            {
+                QuestionOperations.OperationOngoing = false;
             }
         }
 

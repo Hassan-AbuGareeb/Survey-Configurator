@@ -11,6 +11,8 @@ namespace Logic
     public class QuestionOperations
     {
         public static bool IsAppRunning = true;
+        //changed to true when the user is performing adding, updating or deleting operation
+        public static bool OperationOngoing = false;
         //A Datatable collection to hold data temporarly and reduce requests to database
         public static DataTable Questions = new DataTable();
 
@@ -220,19 +222,22 @@ namespace Logic
                 {
                     await Task.Delay(10000);
                     //get checksum again to detect change
-                    long newChecksum = Database.getChecksum();
-                    if (currentChecksum != newChecksum)
-                    {
-                        //data changed
-
-                        currentChecksum = newChecksum;
-                        DataTable updatedQuestions = Database.getQuestionsFromDB();
-                        Questions.Clear();
-                        //fill Questions collection with updated data from db
-                        for (int i = 0; i < updatedQuestions.Rows.Count; i++)
+                    if(!OperationOngoing) 
+                    { 
+                        long newChecksum = Database.getChecksum();
+                        if (currentChecksum != newChecksum)
                         {
-                            DataRow currentQuestion = updatedQuestions.Rows[i];
-                            Questions.Rows.Add(currentQuestion["Q_id"], currentQuestion["Q_text"], currentQuestion["Q_order"], currentQuestion["Q_type"]);
+                            //data changed
+
+                            currentChecksum = newChecksum;
+                            DataTable updatedQuestions = Database.getQuestionsFromDB();
+                            Questions.Clear();
+                            //fill Questions collection with updated data from db
+                            for (int i = 0; i < updatedQuestions.Rows.Count; i++)
+                            {
+                                DataRow currentQuestion = updatedQuestions.Rows[i];
+                                Questions.Rows.Add(currentQuestion["Q_id"], currentQuestion["Q_text"], currentQuestion["Q_order"], currentQuestion["Q_type"]);
+                            }
                         }
                     }
                 }
