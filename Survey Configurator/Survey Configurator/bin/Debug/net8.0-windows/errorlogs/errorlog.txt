@@ -42,3 +42,11 @@ Stack trace:
 
 --------
 
+5/8/2024 10:02:53 AM UTC,
+Exception: InvalidCastException,
+Exception message: Unable to cast object of type 'System.Int32' to type 'System.Int64'.,
+Stack trace:
+   at DatabaseLayer.Database.getChecksum() in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 359
+
+--------
+

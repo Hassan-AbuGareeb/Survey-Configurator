@@ -60,7 +60,7 @@
             QuestionsDataGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             QuestionsDataGrid.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             QuestionsDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            QuestionsDataGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllHeaders;
+            QuestionsDataGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             QuestionsDataGrid.BackgroundColor = SystemColors.Window;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(224, 224, 224);
@@ -219,6 +219,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Survey Configurator";
             WindowState = FormWindowState.Maximized;
+            FormClosing += MainScreen_FormClosing;
             Load += MainScreen_Load;
             ((System.ComponentModel.ISupportInitialize)QuestionsDataGrid).EndInit();
             menuStrip1.ResumeLayout(false);
