@@ -60,6 +60,7 @@
             QuestionsDataGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             QuestionsDataGrid.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             QuestionsDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            QuestionsDataGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllHeaders;
             QuestionsDataGrid.BackgroundColor = SystemColors.Window;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(224, 224, 224);
@@ -93,8 +94,10 @@
             QuestionsDataGrid.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             QuestionsDataGrid.RowHeadersWidth = 35;
             dataGridViewCellStyle5.BackColor = Color.White;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
             QuestionsDataGrid.RowsDefaultCellStyle = dataGridViewCellStyle5;
             QuestionsDataGrid.RowTemplate.Height = 33;
+            QuestionsDataGrid.RowTemplate.Resizable = DataGridViewTriState.True;
             QuestionsDataGrid.ScrollBars = ScrollBars.Vertical;
             QuestionsDataGrid.Size = new Size(1170, 527);
             QuestionsDataGrid.TabIndex = 9;
