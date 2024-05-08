@@ -4,6 +4,7 @@ using System.Data.Common;
 using System.Linq;
 using DatabaseLayer.models;
 using Microsoft.Data.SqlClient;
+
 namespace DatabaseLayer
 {
     public class Database
@@ -17,12 +18,12 @@ namespace DatabaseLayer
             try { 
                 using (SqlConnection conn = new SqlConnection(ConnectionString)) 
                 {
-                    DbDataReader reader;
                     conn.Open();
                     SqlCommand getQuestionsDataCmd = new SqlCommand("SELECT * FROM Question",conn);
-                    reader = getQuestionsDataCmd.ExecuteReader();
+                    DbDataReader reader = getQuestionsDataCmd.ExecuteReader(CommandBehavior.CloseConnection);
                     DataTable QuestionsData = new DataTable();
                     QuestionsData.Load(reader);
+                    reader.Close();
                     return QuestionsData;
                 }
             }catch (SqlException ex)
@@ -48,14 +49,13 @@ namespace DatabaseLayer
             {
                 using (SqlConnection conn = new SqlConnection(ConnectionString)) 
                 {
-                    DbDataReader reader;
                     conn.Open();
                     SqlCommand getQuestionSpecificData = new SqlCommand($"SELECT * FROM {questionType} WHERE Q_id = {questionId}", conn);
-                    reader = getQuestionSpecificData.ExecuteReader();
-                    DataTable tempTable = new DataTable();
-                    tempTable.Load(reader);
+                    DbDataReader reader = getQuestionSpecificData.ExecuteReader(CommandBehavior.CloseConnection);
+                    DataTable QuestionSpecificData = new DataTable();
+                    QuestionSpecificData.Load(reader);
                     reader.Close();
-                    return tempTable.Rows[0];
+                    return QuestionSpecificData.Rows[0];
                 }
             }catch (SqlException ex)
             {
@@ -91,12 +91,11 @@ namespace DatabaseLayer
 
                     //insert the row data to the question and return the id of the created question
                     int questionId = (int)insertQuestionCmd.ExecuteScalar();
-
-                    SqlCommand insertQuestionTypeCmd = conn.CreateCommand();
+                    
                     //get the specific values for the question type
                     string questionTypeSpecificAttributes = "";
                     string questionTypeSpecificValues = "";
-                    //for each type of question downcast the question to its specific type
+                    //for each type of question downcast the question to its specific type and obtain its properties
                     switch (questionType)
                     {
                         case "Smiley":
@@ -116,8 +115,8 @@ namespace DatabaseLayer
                             questionTypeSpecificValues += $"{starsQuestionData.NumberOfStars}";
                             break;
                     }
-                    insertQuestionTypeCmd.CommandType = CommandType.Text;
-                    insertQuestionTypeCmd.CommandText = $"INSERT INTO {questionType} (Q_id, {questionTypeSpecificAttributes}) VALUES ({questionId}, {questionTypeSpecificValues})";
+                    SqlCommand insertQuestionTypeCmd = new SqlCommand($"INSERT INTO {questionType} (Q_id, {questionTypeSpecificAttributes}) VALUES ({questionId}, {questionTypeSpecificValues})",
+                        conn);
                     insertQuestionTypeCmd.ExecuteNonQuery();
                     //return question id to add question to UI
                     return questionId;
@@ -144,7 +143,6 @@ namespace DatabaseLayer
         {
             try
             {
-                //get the original question type and updated question type if it's changed
                 string updatedQuestionType = updatedQuestionData.GetType().Name.Split("Q")[0];
 
                 using (SqlConnection conn = new SqlConnection(ConnectionString)) 
@@ -155,6 +153,7 @@ namespace DatabaseLayer
                         //type of question wasn't  changed
                         //update the specific details
                         string questionUpdateArguments = "";
+                        SqlCommand updateQuestionSpecificDataCmd = conn.CreateCommand();
                         switch (originalQuestionType)
                         {
                             case "Smiley":
@@ -164,28 +163,26 @@ namespace DatabaseLayer
                             case "Slider":
                                 SliderQuestion sliderQuestionData = (SliderQuestion)updatedQuestionData;
                                 questionUpdateArguments += $"Start_value = {sliderQuestionData.StartValue}," +
-                                    $" End_value ={sliderQuestionData.EndValue}," +
-                                    $" Start_value_caption = '{sliderQuestionData.StartValueCaption}'," +
-                                    $" End_value_caption = '{sliderQuestionData.EndValueCaption}'";
+                                    $" End_value = {sliderQuestionData.EndValue}," +
+                                    $" Start_value_caption = @Start_value_caption," +
+                                    $" End_value_caption = @End_value_caption";
+                                //to ensure safety against sql injection
+                                updateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter("@Start_value_caption", sliderQuestionData.StartValueCaption));
+                                updateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter("@End_value_caption", sliderQuestionData.EndValueCaption));
                                 break;
                             case "Stars":
                                 StarsQuestion starsQuestionData = (StarsQuestion)updatedQuestionData;
                                 questionUpdateArguments += $"Num_of_stars = {starsQuestionData.NumberOfStars}";
                                 break;
                         }
-
-                        //create the command to update the question specific data
-                        SqlCommand updateQuestionSpecificDataCmd = new SqlCommand();
                         updateQuestionSpecificDataCmd.CommandType = CommandType.Text;
                         updateQuestionSpecificDataCmd.CommandText = $"UPDATE {originalQuestionType} SET {questionUpdateArguments} WHERE Q_id = {questionId}";
-                        updateQuestionSpecificDataCmd.Connection = conn;
 
                         //update the general question
-                        SqlCommand updateQuestionDataCmd = conn.CreateCommand();
-                        updateQuestionDataCmd.CommandType = CommandType.Text;
-                        updateQuestionDataCmd.CommandText = $"UPDATE Question SET Q_order = {updatedQuestionData.Order}, Q_text = @Q_text WHERE Q_id = {questionId}";
+                        SqlCommand updateQuestionDataCmd = new SqlCommand($"UPDATE Question SET Q_order = {updatedQuestionData.Order}, Q_text = @Q_text WHERE Q_id = {questionId}",
+                            conn);
                         updateQuestionDataCmd.Parameters.Add(new SqlParameter("@Q_text", updatedQuestionData.Text));
-                        updateQuestionDataCmd.Connection = conn;
+
                         updateQuestionSpecificDataCmd.ExecuteNonQuery();
                         updateQuestionDataCmd.ExecuteNonQuery();
                     }
@@ -204,10 +201,11 @@ namespace DatabaseLayer
 
                         //create a new row in the specific question type table
                         SqlCommand insertQuestionTypeCmd = conn.CreateCommand();
-                        ////get the specific values for the question type
+                        //get the specific values for the question type
                         string questionTypeSpecificAttributes = "";
                         string questionTypeSpecificValues = "";
-                        ////for each type of question downcast the question to its specific type
+
+                        //for each type of question downcast the question to its specific type
                         switch (updatedQuestionType)
                         {
                             case "Smiley":
@@ -219,7 +217,10 @@ namespace DatabaseLayer
                                 SliderQuestion sliderQuestionData = (SliderQuestion)updatedQuestionData;
                                 questionTypeSpecificAttributes += "Start_value, End_value, Start_value_caption, End_value_caption";
                                 questionTypeSpecificValues += $"{sliderQuestionData.StartValue}, {sliderQuestionData.EndValue}," +
-                                    $" '{sliderQuestionData.StartValueCaption}', '{sliderQuestionData.EndValueCaption}'";
+                                    $" @Start_value_caption, @End_value_caption";
+                                //to ensure safety against sql injection
+                                insertQuestionTypeCmd.Parameters.Add(new SqlParameter("@Start_value_caption", sliderQuestionData.StartValueCaption));
+                                insertQuestionTypeCmd.Parameters.Add(new SqlParameter("@End_value_caption", sliderQuestionData.EndValueCaption));
                                 break;
                             case "Stars":
                                 StarsQuestion starsQuestionData = (StarsQuestion)updatedQuestionData;
@@ -227,6 +228,7 @@ namespace DatabaseLayer
                                 questionTypeSpecificValues += $"{starsQuestionData.NumberOfStars}";
                                 break;
                         }
+
                         insertQuestionTypeCmd.CommandType = CommandType.Text;
                         insertQuestionTypeCmd.CommandText = $"INSERT INTO {updatedQuestionType} (Q_id, {questionTypeSpecificAttributes}) VALUES ({questionId}, {questionTypeSpecificValues})";
 
@@ -275,7 +277,7 @@ namespace DatabaseLayer
                         deleteQuestionsCmd.CommandText = $"DELETE FROM Question WHERE Q_id = {selectedQuestions[i]["Q_id"]}";
                         deleteQuestionsCmd.ExecuteNonQuery();
                     }
-                    }
+                }
             }
             catch (SqlException ex)
             {

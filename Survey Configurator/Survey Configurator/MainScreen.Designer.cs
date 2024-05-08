@@ -41,9 +41,9 @@
             menuStrip1 = new MenuStrip();
             optionsToolStripMenuItem = new ToolStripMenuItem();
             fontSizeToolStripMenuItem = new ToolStripMenuItem();
-            toolStripMenuItem2 = new ToolStripMenuItem();
-            toolStripMenuItem3 = new ToolStripMenuItem();
-            toolStripMenuItem4 = new ToolStripMenuItem();
+            fontSize9StripMenuItem = new ToolStripMenuItem();
+            fontSize12StripMenuItem = new ToolStripMenuItem();
+            fontSize15StripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             openManualToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)QuestionsDataGrid).BeginInit();
@@ -99,7 +99,7 @@
             QuestionsDataGrid.RowTemplate.Height = 33;
             QuestionsDataGrid.RowTemplate.Resizable = DataGridViewTriState.True;
             QuestionsDataGrid.ScrollBars = ScrollBars.Vertical;
-            QuestionsDataGrid.Size = new Size(1226, 526);
+            QuestionsDataGrid.Size = new Size(1226, 532);
             QuestionsDataGrid.TabIndex = 9;
             QuestionsDataGrid.SelectionChanged += QuestionsDataGrid_SelectionChanged;
             // 
@@ -108,7 +108,7 @@
             DeleteQuestionButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             DeleteQuestionButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             DeleteQuestionButton.Font = new Font("Segoe UI", 15F);
-            DeleteQuestionButton.Location = new Point(1004, 631);
+            DeleteQuestionButton.Location = new Point(1004, 637);
             DeleteQuestionButton.Name = "DeleteQuestionButton";
             DeleteQuestionButton.Size = new Size(131, 65);
             DeleteQuestionButton.TabIndex = 7;
@@ -121,7 +121,7 @@
             EditQuestionButton.Anchor = AnchorStyles.Bottom;
             EditQuestionButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             EditQuestionButton.Font = new Font("Segoe UI", 15F);
-            EditQuestionButton.Location = new Point(554, 631);
+            EditQuestionButton.Location = new Point(554, 637);
             EditQuestionButton.Name = "EditQuestionButton";
             EditQuestionButton.Size = new Size(131, 65);
             EditQuestionButton.TabIndex = 6;
@@ -134,7 +134,7 @@
             AddQuestionButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             AddQuestionButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             AddQuestionButton.Font = new Font("Segoe UI", 15F);
-            AddQuestionButton.Location = new Point(57, 631);
+            AddQuestionButton.Location = new Point(57, 637);
             AddQuestionButton.Name = "AddQuestionButton";
             AddQuestionButton.Size = new Size(141, 65);
             AddQuestionButton.TabIndex = 5;
@@ -164,31 +164,31 @@
             // 
             // fontSizeToolStripMenuItem
             // 
-            fontSizeToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem2, toolStripMenuItem3, toolStripMenuItem4 });
+            fontSizeToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fontSize9StripMenuItem, fontSize12StripMenuItem, fontSize15StripMenuItem });
             fontSizeToolStripMenuItem.Name = "fontSizeToolStripMenuItem";
-            fontSizeToolStripMenuItem.Size = new Size(161, 28);
+            fontSizeToolStripMenuItem.Size = new Size(224, 28);
             fontSizeToolStripMenuItem.Text = "Font size";
             // 
-            // toolStripMenuItem2
+            // fontSize9StripMenuItem
             // 
-            toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new Size(112, 28);
-            toolStripMenuItem2.Text = "9";
-            toolStripMenuItem2.Click += toolStripMenuItem2_Click;
+            fontSize9StripMenuItem.Name = "fontSize9StripMenuItem";
+            fontSize9StripMenuItem.Size = new Size(224, 28);
+            fontSize9StripMenuItem.Text = "9";
+            fontSize9StripMenuItem.Click += toolStripMenuItem2_Click;
             // 
-            // toolStripMenuItem3
+            // fontSize12StripMenuItem
             // 
-            toolStripMenuItem3.Name = "toolStripMenuItem3";
-            toolStripMenuItem3.Size = new Size(112, 28);
-            toolStripMenuItem3.Text = "12";
-            toolStripMenuItem3.Click += toolStripMenuItem3_Click;
+            fontSize12StripMenuItem.Name = "fontSize12StripMenuItem";
+            fontSize12StripMenuItem.Size = new Size(224, 28);
+            fontSize12StripMenuItem.Text = "12";
+            fontSize12StripMenuItem.Click += toolStripMenuItem3_Click;
             // 
-            // toolStripMenuItem4
+            // fontSize15StripMenuItem
             // 
-            toolStripMenuItem4.Name = "toolStripMenuItem4";
-            toolStripMenuItem4.Size = new Size(112, 28);
-            toolStripMenuItem4.Text = "15";
-            toolStripMenuItem4.Click += toolStripMenuItem4_Click;
+            fontSize15StripMenuItem.Name = "fontSize15StripMenuItem";
+            fontSize15StripMenuItem.Size = new Size(224, 28);
+            fontSize15StripMenuItem.Text = "15";
+            fontSize15StripMenuItem.Click += toolStripMenuItem4_Click;
             // 
             // helpToolStripMenuItem
             // 
@@ -208,7 +208,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1250, 753);
+            ClientSize = new Size(1250, 759);
             Controls.Add(DeleteQuestionButton);
             Controls.Add(QuestionsDataGrid);
             Controls.Add(EditQuestionButton);
@@ -238,9 +238,9 @@
         private ToolStripMenuItem optionsToolStripMenuItem;
         private ToolStripMenuItem helpToolStripMenuItem;
         private ToolStripMenuItem fontSizeToolStripMenuItem;
-        private ToolStripMenuItem toolStripMenuItem2;
-        private ToolStripMenuItem toolStripMenuItem3;
-        private ToolStripMenuItem toolStripMenuItem4;
+        private ToolStripMenuItem fontSize9StripMenuItem;
+        private ToolStripMenuItem fontSize12StripMenuItem;
+        private ToolStripMenuItem fontSize15StripMenuItem;
         private ToolStripMenuItem openManualToolStripMenuItem;
     }
 }

@@ -3,6 +3,8 @@
 
 namespace DatabaseLayer.models
 {
+
+
     public abstract class Question
     {
         public string Text { get; set; }

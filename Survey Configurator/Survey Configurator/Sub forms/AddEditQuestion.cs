@@ -11,13 +11,15 @@ namespace Survey_Configurator.Sub_forms
 {
     public partial class AddEditQuestion : Form
     {
-        //private static string Operation;
         private static int QuestionId;
+
         //members that conditionally appears
         //stars question options
         private NumericUpDown NumberOfStarsNumeric;
+
         //smileys question options
         private NumericUpDown NumberOfSmileysNumeric;
+
         //slider question options
         private NumericUpDown SliderStartValueNumeric;
         private NumericUpDown SliderEndValueNumeric;
@@ -27,7 +29,6 @@ namespace Survey_Configurator.Sub_forms
         public AddEditQuestion()
         {
             InitializeComponent();
-            //Operation = "Add";
             TitleLabel.Text = "Add Question";
             Text = "Add";
             Add.Text = "Add";
@@ -50,13 +51,15 @@ namespace Survey_Configurator.Sub_forms
                 if (Add.Text.Equals("Save"))
                 {
                     DataRow generalQuestionData = QuestionOperations.GetQuestionData(QuestionId);
+                    //extract question data an add it to UI
                     QuestionTextBox.Text = generalQuestionData["Q_text"].ToString();
                     QuestionOrderNumeric.Value = (int)generalQuestionData["Q_order"];
                     QuestionTypeComboBox.SelectedItem = generalQuestionData["Q_type"];
 
-                    //based on the combobox value further data about the question should be obtained
-                    DataRow questionSpecificData = QuestionOperations.GetQuestionSpecificData(QuestionId, generalQuestionData["Q_type"].ToString());
-                    switch (generalQuestionData["Q_type"])
+                    //based on the combobox value further data about the question should be obtained and added to UI
+                    string QuestionType = generalQuestionData["Q_type"].ToString();
+                    DataRow questionSpecificData = QuestionOperations.GetQuestionSpecificData(QuestionId, QuestionType);
+                    switch (QuestionType)
                     {
                         //for each case Get the info and downcast it and assign it to its respective field
                         case "Smiley":
@@ -89,13 +92,14 @@ namespace Survey_Configurator.Sub_forms
         private void AddButton_Click(object sender, EventArgs e)
         {
             try{
-            //check if all fields are filled properly
+            //check if all general fields are filled properly
                 if (QuestionTextBox.Text.Length != 0 &&
                     QuestionTypeComboBox.SelectedItem != null)
                 {
                     //add question to db and interface
                     switch (QuestionTypeComboBox.Text)
                     {
+                        //decied whether to add or edit question based on the Clicked button text
                         case "Stars":
                             StarsQuestion starsData = new StarsQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value, (int)NumberOfStarsNumeric.Value);
                             if (Add.Text.Equals("Add"))
@@ -127,7 +131,7 @@ namespace Survey_Configurator.Sub_forms
                 }
                 else
                 {
-                    //show the missing fields ?
+                    //some fields are empty or have wrong inputs
                     string missingFieldsMessage = "";
                     if (QuestionTextBox.Text.Length == 0 && QuestionTypeComboBox.SelectedItem == null)
                     {
@@ -174,7 +178,7 @@ namespace Survey_Configurator.Sub_forms
         private void QuestionTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             QuestionOptions.Controls.Clear();
-            switch (QuestionTypeComboBox.SelectedItem?.ToString())
+            switch (QuestionTypeComboBox.SelectedItem.ToString())
             {
                 case "Slider":
                     AddSliderOptions();
