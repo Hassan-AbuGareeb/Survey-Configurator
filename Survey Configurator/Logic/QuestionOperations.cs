@@ -3,11 +3,14 @@ using System.Data;
 using DatabaseLayer.models;
 using DatabaseLayer;
 using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 namespace Logic
 {
     public class QuestionOperations
     {
+        public static bool IsAppRunning = true;
+
         private QuestionOperations() 
         {
         }
@@ -99,6 +102,24 @@ namespace Logic
             }
 
             return "success";
+        }
+
+        public static async void CheckDataBaseChange()
+        {
+            //get checksum of the database current version of data
+            long currentChecksum = Database.getChecksum();
+            while(IsAppRunning)
+            {
+                await Task.Delay(10000);
+                //get checksum again to detect change
+                long newChecksum = Database.getChecksum();
+                if(currentChecksum != newChecksum)
+                {
+                    //data changed
+                    Database.getQuestionsFromDB();
+                    currentChecksum = newChecksum;
+                }
+            }
         }
 
     }

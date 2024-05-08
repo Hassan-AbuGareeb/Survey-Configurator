@@ -26,6 +26,10 @@ namespace Survey_Configurator
                 }
                 //get the questions table from the controller and bind it to the datagrid
                 QuestionsDataGrid.DataSource = QuestionOperations.GetQuestions();
+
+                //launch the database change checker
+                QuestionOperations.CheckDataBaseChange();
+
                 //hide the question id column
                 QuestionsDataGrid.Columns["Q_id"].Visible = false;
                 //properly naming the columns in the datagrid view
@@ -139,7 +143,7 @@ namespace Survey_Configurator
             ClearSelectedOptions();
             toolStripMenuItem2.Checked = true;
             QuestionsDataGrid.RowsDefaultCellStyle.Font = new Font(QuestionsDataGrid.Font.FontFamily, 9);
-            for(int i = 0;i<QuestionsDataGrid.Rows.Count;i++)
+            for (int i = 0; i < QuestionsDataGrid.Rows.Count; i++)
             {
                 QuestionsDataGrid.Rows[i].Height = 29;
 
@@ -178,5 +182,9 @@ namespace Survey_Configurator
 
         }
 
+        private void MainScreen_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            QuestionOperations.IsAppRunning = false;
+        }
     }
 }

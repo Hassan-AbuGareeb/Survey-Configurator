@@ -22,6 +22,7 @@ namespace DatabaseLayer
                     conn.Open();
                     SqlCommand getQuestionsDataCmd = new SqlCommand("SELECT * FROM Question",conn);
                     reader = getQuestionsDataCmd.ExecuteReader();
+                    Questions.Clear();
                     Questions.Load(reader);
                     return Questions;
                 }
@@ -313,6 +314,7 @@ namespace DatabaseLayer
             }
         }
 
+        //move to logic layer ?
         public static void LogError(Exception exceptionData)
         {
             try
@@ -343,6 +345,35 @@ namespace DatabaseLayer
             {
 
                 Console.WriteLine($"Error occurred while logging: {ex.Message}");
+            }
+        }
+
+        public static long getChecksum()
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    SqlCommand getChecksum = new SqlCommand("SELECT CHECKSUM_AGG(BINARY_CHECKSUM(*)) FROM Question WITH (NOLOCK)", conn);
+                    long checksum = (int)getChecksum.ExecuteScalar();
+                    return checksum;
+                }
+            }
+            catch (SqlException ex)
+            {
+                LogError(ex);
+                throw;
+            }
+            catch (InvalidOperationException ex)
+            {
+                LogError(ex);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                LogError(ex);
+                throw;
             }
         }
     }
