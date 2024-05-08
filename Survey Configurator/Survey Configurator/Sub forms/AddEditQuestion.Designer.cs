@@ -176,6 +176,7 @@
             MinimumSize = new Size(720, 800);
             Name = "AddEditQuestion";
             Text = "Add Edit";
+            FormClosing += AddEditQuestion_FormClosing;
             Load += AddEdit_Load;
             ((System.ComponentModel.ISupportInitialize)QuestionOrderNumeric).EndInit();
             ResumeLayout(false);

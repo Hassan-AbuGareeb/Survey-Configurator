@@ -46,7 +46,10 @@ namespace Survey_Configurator.Sub_forms
 
         private void AddEdit_Load(object sender, EventArgs e)
         {
-            try { 
+            try
+            {
+                //to prevent any interruption in adding/updating
+                QuestionOperations.OperationOngoing = true;
                 //check if the operation is edit and fill the fields with selected question data
                 if (Add.Text.Equals("Save"))
                 {
@@ -91,8 +94,9 @@ namespace Survey_Configurator.Sub_forms
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            try{
-            //check if all general fields are filled properly
+            try
+            {
+                //check if all general fields are filled properly
                 if (QuestionTextBox.Text.Length != 0 &&
                     QuestionTypeComboBox.SelectedItem != null)
                 {
@@ -136,7 +140,7 @@ namespace Survey_Configurator.Sub_forms
                     if (QuestionTextBox.Text.Length == 0 && QuestionTypeComboBox.SelectedItem == null)
                     {
                         missingFieldsMessage += "Question text, Question type ";
-                    }    
+                    }
                     else if (QuestionTextBox.Text.Length == 0)
                     {
                         missingFieldsMessage += "Question text";
@@ -163,6 +167,10 @@ namespace Survey_Configurator.Sub_forms
             {
                 MessageBox.Show($"{ex.GetType().FullName}, {ex.StackTrace}");
                 Close();
+            }
+            finally
+            {
+                QuestionOperations.OperationOngoing = false;
             }
         }
 
@@ -327,6 +335,11 @@ namespace Survey_Configurator.Sub_forms
             //add fields to the form
             QuestionOptions.Controls.Add(NumberOfSmileysLabel);
             QuestionOptions.Controls.Add(NumberOfSmileysNumeric);
+        }
+
+        private void AddEditQuestion_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            QuestionOperations.OperationOngoing = false;
         }
     }
 }
