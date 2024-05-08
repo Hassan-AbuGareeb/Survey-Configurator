@@ -57,7 +57,7 @@ namespace Survey_Configurator
             }
             catch (InvalidOperationException)
             {
-                //error during getting data from database, implement a retury mechanism
+                //error during getting data from database, implement a retry mechanism
                 MessageBox.Show("error occured while Loading data, please try again");
             }
             catch (SqlException)

@@ -20,7 +20,25 @@ namespace Logic
 
         public static void GetQuestions() 
         {
-            Questions =  Database.getQuestionsFromDB();
+            try
+            {
+                Questions = Database.getQuestionsFromDB();
+            }
+            catch (SqlException ex)
+            {
+                LogError(ex);
+                throw;
+            }
+            catch (InvalidOperationException ex)
+            {
+                LogError(ex);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                LogError(ex);
+                throw;
+            }
         }
 
         public static DataRow GetQuestionData(int questionId)
@@ -31,42 +49,113 @@ namespace Logic
 
         public static DataRow GetQuestionSpecificData(int questionId, string questionType)
         {
-            return Database.getQuestionSpecificDataFromDB(questionId, questionType);
+            try
+            {
+                return Database.getQuestionSpecificDataFromDB(questionId, questionType);
+            }
+            catch (SqlException ex)
+            {
+                LogError(ex);
+                throw;
+            }
+            catch (InvalidOperationException ex)
+            {
+                LogError(ex);
+                throw new InvalidOperationException("problem in connection to database", ex);
+            }
+            catch (Exception ex)
+            {
+                LogError(ex);
+                throw;
+            }
         }
 
         public static void AddQuestion(Question questionData)
         {
-            //add the question to the database to generate its id and obtain it
-            int questionId = Database.AddQuestionToDB(questionData);
-            string questionType = questionData.GetType().Name.Split("Q")[0];
-            //add question to UI
-            Questions.Rows.Add(questionId, questionData.Text, questionData.Order, questionType);
-           
+            try 
+            { 
+                //add the question to the database to generate its id and obtain it
+                int questionId = Database.AddQuestionToDB(questionData);
+                string questionType = questionData.GetType().Name.Split("Q")[0];
+                //add question to UI
+                Questions.Rows.Add(questionId, questionData.Text, questionData.Order, questionType);
+            }
+            catch (SqlException ex)
+            {
+                LogError(ex);
+                throw;
+            }
+            catch (InvalidOperationException ex)
+            {
+                LogError(ex);
+                throw new InvalidOperationException("problem in connection to database", ex);
+            }
+            catch (Exception ex)
+            {
+                LogError(ex);
+                throw;
+            }
         }
 
         public static void UpdateQuestion(int questionId, Question updatedQuestionData)
         {
-            string originalQuestionType = GetQuestionData(questionId)["Q_type"].ToString();
-            string updatedQuestionType = updatedQuestionData.GetType().Name.Split("Q")[0];
+            try 
+            { 
+                string originalQuestionType = GetQuestionData(questionId)["Q_type"].ToString();
+                string updatedQuestionType = updatedQuestionData.GetType().Name.Split("Q")[0];
 
-            Database.UpdateQuestionOnDB( questionId, originalQuestionType, updatedQuestionData);
+                Database.UpdateQuestionOnDB( questionId, originalQuestionType, updatedQuestionData);
 
-            //update UI
-            Questions.Rows.Remove(Questions.Select($"Q_id = {questionId}")[0]);
-            Questions.Rows.Add(questionId,
-            updatedQuestionData.Text,
-            updatedQuestionData.Order,
-            //decide the type of the question on whether it was changed or not
-            (updatedQuestionType.Equals(originalQuestionType) ? originalQuestionType : updatedQuestionType));
+                //update UI
+                Questions.Rows.Remove(Questions.Select($"Q_id = {questionId}")[0]);
+                Questions.Rows.Add(questionId,
+                updatedQuestionData.Text,
+                updatedQuestionData.Order,
+                //decide the type of the question on whether it was changed or not
+                (updatedQuestionType.Equals(originalQuestionType) ? originalQuestionType : updatedQuestionType));
+            }
+            catch (SqlException ex)
+            {
+                LogError(ex);
+                throw;
+            }
+            catch (InvalidOperationException ex)
+            {
+                LogError(ex);
+                throw new InvalidOperationException("problem in connection to database", ex);
+            }
+            catch (Exception ex)
+            {
+                LogError(ex);
+                throw;
+            }
         }
 
         public static void DeleteQuestion(DataRow[] selectedQuestions)
         {
-            Database.DeleteQuestionFromDB(selectedQuestions);
-            //delete question from interface (Questions)
-            foreach (DataRow question in selectedQuestions)
+            try
             {
-                Questions.Rows.Remove(question);
+                Database.DeleteQuestionFromDB(selectedQuestions);
+                //delete question from interface (Questions)
+                foreach (DataRow question in selectedQuestions)
+                {
+                    Questions.Rows.Remove(question);
+                }
+            }
+            catch (SqlException ex)
+            {
+                LogError(ex);
+                throw;
+            }
+            catch (InvalidOperationException ex)
+            {
+                LogError(ex);
+                throw new InvalidOperationException("problem in connection to database", ex);
+            }
+            catch (Exception ex)
+            {
+                LogError(ex);
+                throw;
             }
         }
 
@@ -107,13 +196,13 @@ namespace Logic
             catch(IndexOutOfRangeException ex)//caused by incorrect connection string which in turn causes the exception by trying to access out of range indexes in the splitted string 
             {
                 //log error 
-                Database.LogError(ex);
+                LogError(ex);
                 throw new ArgumentException("Wrong connection parameters",ex);
             }
             catch (Exception ex)
             {
                 //log error
-                Database.LogError(ex);
+                LogError(ex);
                 //either the file can't be created or it is a permission issue
                 Database.ConnectionString=defaultConenctionString;
                 return false;
@@ -123,29 +212,83 @@ namespace Logic
 
         public static async void CheckDataBaseChange()
         {
-            //get checksum of the database current version of data
-            long currentChecksum = Database.getChecksum();
-            while (IsAppRunning)
+            try
             {
-                await Task.Delay(10000);
-                //get checksum again to detect change
-                long newChecksum = Database.getChecksum();
-                if (currentChecksum != newChecksum)
+                //get checksum of the database current version of data
+                long currentChecksum = Database.getChecksum();
+                while (IsAppRunning)
                 {
-                    //data changed
-
-                    currentChecksum = newChecksum;
-                    DataTable updatedQuestions = Database.getQuestionsFromDB();
-                    Questions.Clear();
-                    //fill Questions collection with updated data from db
-                    for (int i = 0; i < updatedQuestions.Rows.Count; i++)
+                    await Task.Delay(10000);
+                    //get checksum again to detect change
+                    long newChecksum = Database.getChecksum();
+                    if (currentChecksum != newChecksum)
                     {
-                        DataRow currentQuestion = updatedQuestions.Rows[i];
-                        Questions.Rows.Add(currentQuestion["Q_id"], currentQuestion["Q_text"], currentQuestion["Q_order"], currentQuestion["Q_type"]);
+                        //data changed
+
+                        currentChecksum = newChecksum;
+                        DataTable updatedQuestions = Database.getQuestionsFromDB();
+                        Questions.Clear();
+                        //fill Questions collection with updated data from db
+                        for (int i = 0; i < updatedQuestions.Rows.Count; i++)
+                        {
+                            DataRow currentQuestion = updatedQuestions.Rows[i];
+                            Questions.Rows.Add(currentQuestion["Q_id"], currentQuestion["Q_text"], currentQuestion["Q_order"], currentQuestion["Q_type"]);
+                        }
                     }
                 }
             }
+            catch (SqlException ex)
+            {
+                LogError(ex);
+                throw;
+            }
+            catch (InvalidOperationException ex)
+            {
+                LogError(ex);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                LogError(ex);
+                throw;
+            }
         }
 
+        public static void LogError(Exception exceptionData)
+        {
+            try
+            {
+                //collect the error info to log to the file
+                string[] exceptionDetails = [
+                    $"{DateTime.Now.ToUniversalTime()} UTC",
+                    $"Exception: {exceptionData.GetType().Name}",
+                    $"Exception message: {exceptionData.Message}",
+                    $"Stack trace:\n{exceptionData.StackTrace}"];
+                //check that file exists
+                string directoryPath = Directory.GetCurrentDirectory() + "\\errorlogs";
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                string filePath = directoryPath + "\\errorlog.txt";
+                if (!File.Exists(filePath))
+                {
+                    //create the file if it doesn't exist
+                    FileStream fs = File.Create(filePath);
+                    fs.Close();
+                }
+
+                //add the default values to the file
+                StreamWriter writer = File.AppendText(filePath);
+                writer.WriteLine(string.Join(",\n", exceptionDetails) + "\n\n--------\n");
+                writer.Close();
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error occurred while logging: {ex.Message}");
+            }
+        }
     }
 }
