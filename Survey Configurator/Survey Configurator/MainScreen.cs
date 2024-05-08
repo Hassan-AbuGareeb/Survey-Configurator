@@ -139,7 +139,11 @@ namespace Survey_Configurator
             ClearSelectedOptions();
             toolStripMenuItem2.Checked = true;
             QuestionsDataGrid.RowsDefaultCellStyle.Font = new Font(QuestionsDataGrid.Font.FontFamily, 9);
-            QuestionsDataGrid.RowTemplate.Height = 29;
+            for(int i = 0;i<QuestionsDataGrid.Rows.Count;i++)
+            {
+                QuestionsDataGrid.Rows[i].Height = 29;
+
+            }
         }
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
@@ -147,7 +151,11 @@ namespace Survey_Configurator
             ClearSelectedOptions();
             toolStripMenuItem3.Checked = true;
             QuestionsDataGrid.RowsDefaultCellStyle.Font = new Font(QuestionsDataGrid.Font.FontFamily, 12);
-            QuestionsDataGrid.RowTemplate.Height = 33;
+            for (int i = 0; i < QuestionsDataGrid.Rows.Count; i++)
+            {
+                QuestionsDataGrid.Rows[i].Height = 33;
+
+            }
         }
 
         private void toolStripMenuItem4_Click(object sender, EventArgs e)
@@ -155,7 +163,11 @@ namespace Survey_Configurator
             ClearSelectedOptions();
             toolStripMenuItem4.Checked = true;
             QuestionsDataGrid.RowsDefaultCellStyle.Font = new Font(QuestionsDataGrid.Font.FontFamily, 15);
-            QuestionsDataGrid.RowTemplate.Height = 39;
+            for (int i = 0; i < QuestionsDataGrid.Rows.Count; i++)
+            {
+                QuestionsDataGrid.Rows[i].Height = 39;
+
+            }
         }
 
         private void ClearSelectedOptions()
