@@ -16,26 +16,34 @@ namespace Survey_Configurator
         {
             try
             {
-                //get the connection string from file
+                //get a default connection string stored in the app.config file
                 string defaultConnectionString = ConfigurationManager.ConnectionStrings["app"].ConnectionString;
-                string connectionStringObtained = QuestionOperations.SetConnectionString(defaultConnectionString);
-                if (connectionStringObtained != "success")
+                bool isConnectionStringFound = QuestionOperations.SetConnectionString(defaultConnectionString);
+
+                //if the connection string isn't found for any reason the function used above will
+                //automatically try to use the connection string stored in the app.config file
+                if (!isConnectionStringFound )
                 {
                     MessageBox.Show("File issue occured, please check your permission on creating and editing files");
                     MessageBox.Show("Trying to connect using default connection parameters");
                 }
-                //get the questions table from the controller and bind it to the datagrid
-                QuestionsDataGrid.DataSource = QuestionOperations.GetQuestions();
 
-                //launch the database change checker
+                //notify the logic layer to fetch the questions data from the database
+                QuestionOperations.GetQuestions();
+
+                QuestionsDataGrid.DataSource = QuestionOperations.Questions;
+
+                //launch the database change checker to monitor database for any change and reflect it to the UI
                 QuestionOperations.CheckDataBaseChange();
 
                 //hide the question id column
                 QuestionsDataGrid.Columns["Q_id"].Visible = false;
+
                 //properly naming the columns in the datagrid view
                 QuestionsDataGrid.Columns["Q_order"].HeaderText = "Order";
                 QuestionsDataGrid.Columns["Q_text"].HeaderText = "Text";
                 QuestionsDataGrid.Columns["Q_type"].HeaderText = "Type";
+
                 //change the order of the columns in the grid view
                 QuestionsDataGrid.Columns["Q_order"].DisplayIndex = 0;
                 QuestionsDataGrid.Columns["Q_text"].DisplayIndex = 1;
@@ -49,7 +57,7 @@ namespace Survey_Configurator
             }
             catch (InvalidOperationException)
             {
-                //error during getting data from database, implement a retury mechanism
+                //error during getting data from database, implement a retry mechanism
                 MessageBox.Show("error occured while Loading data, please try again");
             }
             catch (SqlException)
@@ -64,6 +72,13 @@ namespace Survey_Configurator
             }
         }
 
+        private void MainScreen_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //stop the function checking the database changes
+            QuestionOperations.IsAppRunning = false;
+        }
+
+        //buttons click functions
         private void AddQuestionButton_Click(object sender, EventArgs e)
         {
             AddEditQuestion addForm = new AddEditQuestion();
@@ -74,6 +89,7 @@ namespace Survey_Configurator
         {
             //get the selected question id 
             int QuesitonId = (int)QuestionsDataGrid.SelectedRows[0].Cells["Q_id"].Value;
+
             AddEditQuestion addForm = new AddEditQuestion(QuesitonId);
             addForm.ShowDialog();
         }
@@ -82,11 +98,9 @@ namespace Survey_Configurator
         {
             int numberOfSelectedRows = QuestionsDataGrid.SelectedRows.Count;
             DialogResult DeleteQuestion = MessageBox.Show($"Are you sure you want to delete {(numberOfSelectedRows > 1 ? "these " : "this ")}question{(numberOfSelectedRows > 1 ? "s" : "")}?", "Delete question", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
             if (DeleteQuestion == DialogResult.Yes)
             {
                 DataRow[] selectedQuestions = new DataRow[numberOfSelectedRows];
-
                 //obtain the selected questions and store them
                 for (int i = 0; i < numberOfSelectedRows; i++)
                 {
@@ -95,12 +109,11 @@ namespace Survey_Configurator
                     selectedQuestions[i] = currentQuestion;
                 }
                 //delete the questions from database and ui
-                //danger
                 QuestionOperations.DeleteQuestion(selectedQuestions);
                 MessageBox.Show($"Question{(numberOfSelectedRows > 1 ? "s " : " ")}deleted successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             }
         }
+
 
         private void QuestionsDataGrid_SelectionChanged(object sender, EventArgs e)
         {
@@ -126,34 +139,23 @@ namespace Survey_Configurator
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                throw new ArgumentException();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"{DateTime.Now.ToUniversalTime()} UTC\n{ex.GetType().Name}\n{ex.Message}\n{ex.Source}\n{ex.TargetSite}\n{ex.StackTrace}");
-            }
-        }
-
+        //menu strip items functions
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             ClearSelectedOptions();
-            toolStripMenuItem2.Checked = true;
+
+            fontSize9StripMenuItem.Checked = true;
             QuestionsDataGrid.RowsDefaultCellStyle.Font = new Font(QuestionsDataGrid.Font.FontFamily, 9);
             for (int i = 0; i < QuestionsDataGrid.Rows.Count; i++)
             {
                 QuestionsDataGrid.Rows[i].Height = 29;
-
             }
         }
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
             ClearSelectedOptions();
-            toolStripMenuItem3.Checked = true;
+            fontSize12StripMenuItem.Checked = true;
             QuestionsDataGrid.RowsDefaultCellStyle.Font = new Font(QuestionsDataGrid.Font.FontFamily, 12);
             for (int i = 0; i < QuestionsDataGrid.Rows.Count; i++)
             {
@@ -165,7 +167,7 @@ namespace Survey_Configurator
         private void toolStripMenuItem4_Click(object sender, EventArgs e)
         {
             ClearSelectedOptions();
-            toolStripMenuItem4.Checked = true;
+            fontSize15StripMenuItem.Checked = true;
             QuestionsDataGrid.RowsDefaultCellStyle.Font = new Font(QuestionsDataGrid.Font.FontFamily, 15);
             for (int i = 0; i < QuestionsDataGrid.Rows.Count; i++)
             {
@@ -173,18 +175,12 @@ namespace Survey_Configurator
 
             }
         }
-
         private void ClearSelectedOptions()
         {
-            toolStripMenuItem2.Checked = false;
-            toolStripMenuItem3.Checked = false;
-            toolStripMenuItem4.Checked = false;
-
+            fontSize9StripMenuItem.Checked = false;
+            fontSize12StripMenuItem.Checked = false;
+            fontSize15StripMenuItem.Checked = false;
         }
 
-        private void MainScreen_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            QuestionOperations.IsAppRunning = false;
-        }
     }
 }
