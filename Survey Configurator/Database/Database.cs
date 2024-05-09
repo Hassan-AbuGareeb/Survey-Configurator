@@ -215,8 +215,10 @@ namespace DatabaseLayer
                 {
                     conn.Open();
                     SqlCommand getChecksum = new SqlCommand("SELECT CHECKSUM_AGG(BINARY_CHECKSUM(*)) FROM Question WITH (NOLOCK)", conn);
-                    long checksum = (int)getChecksum.ExecuteScalar();
-                    return checksum;
+                    var checksum = getChecksum.ExecuteScalar();
+                    if (DBNull.Value.Equals(checksum))
+                        return 0;
+                    return (int)checksum;
                 }
         }
     }

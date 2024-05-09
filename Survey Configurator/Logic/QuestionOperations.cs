@@ -221,9 +221,11 @@ namespace Logic
                 while (IsAppRunning)
                 {
                     await Task.Delay(10000);
-                    //get checksum again to detect change
+                    if (currentChecksum==0)
+                        continue;
                     if(!OperationOngoing) 
-                    { 
+                    {
+                        //get checksum again to detect change
                         long newChecksum = Database.getChecksum();
                         if (currentChecksum != newChecksum)
                         {

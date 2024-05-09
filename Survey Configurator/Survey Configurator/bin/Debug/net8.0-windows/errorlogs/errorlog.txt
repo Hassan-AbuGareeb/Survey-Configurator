@@ -276,3 +276,12 @@ Stack trace:
 
 --------
 
+5/9/2024 6:43:57 AM UTC,
+Exception: InvalidCastException,
+Exception message: Unable to cast object of type 'System.DBNull' to type 'System.Int32'.,
+Stack trace:
+   at DatabaseLayer.Database.getChecksum() in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 218
+   at Logic.QuestionOperations.CheckDataBaseChange() in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 220
+
+--------
+
