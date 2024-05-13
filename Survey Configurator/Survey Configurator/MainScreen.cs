@@ -19,12 +19,12 @@ namespace Survey_Configurator
             try
             {
                 //get a default connection string stored in the app.config file
-                string defaultConnectionString = ConfigurationManager.ConnectionStrings["app"].ConnectionString;
-                bool isConnectionStringFound = QuestionOperations.SetConnectionString(defaultConnectionString);
+                string tDefaultConnectionString = ConfigurationManager.ConnectionStrings["app"].ConnectionString;
+                bool tIsConnectionStringFound = QuestionOperations.SetConnectionString(tDefaultConnectionString);
 
                 //if the connection string isn't found for any reason the function used above will
                 //automatically try to use the connection string stored in the app.config file
-                if (!isConnectionStringFound )
+                if (!tIsConnectionStringFound)
                 {
                     MessageBox.Show("File issue occured, please check your permission on creating and editing files");
                     MessageBox.Show("Trying to connect using default connection parameters");
@@ -90,9 +90,9 @@ namespace Survey_Configurator
         private void EditQuestionButton_Click(object sender, EventArgs e)
         {
             //get the selected question id 
-            int QuesitonId = (int)QuestionsDataGrid.SelectedRows[0].Cells["Q_id"].Value;
+            int tQuesitonId = (int)QuestionsDataGrid.SelectedRows[0].Cells["Q_id"].Value;
 
-            AddEditQuestion addForm = new AddEditQuestion(QuesitonId);
+            AddEditQuestion addForm = new AddEditQuestion(tQuesitonId);
             addForm.ShowDialog();
         }
 
@@ -100,23 +100,23 @@ namespace Survey_Configurator
         {
             try
             {
-                int numberOfSelectedRows = QuestionsDataGrid.SelectedRows.Count;
-                DialogResult DeleteQuestion = MessageBox.Show($"Are you sure you want to delete {(numberOfSelectedRows > 1 ? "these " : "this ")}question{(numberOfSelectedRows > 1 ? "s" : "")}?", "Delete question", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                int tNumberOfSelectedRows = QuestionsDataGrid.SelectedRows.Count;
+                DialogResult tDeleteQuestion = MessageBox.Show($"Are you sure you want to delete {(tNumberOfSelectedRows > 1 ? "these " : "this ")}question{(tNumberOfSelectedRows > 1 ? "s" : "")}?", "Delete question", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 //to prevent any interruption in deleting
                 QuestionOperations.OperationOngoing = true;
-                if (DeleteQuestion == DialogResult.Yes)
+                if (tDeleteQuestion == DialogResult.Yes)
                 {
-                    DataRow[] selectedQuestions = new DataRow[numberOfSelectedRows];
+                    DataRow[] tSelectedQuestions = new DataRow[tNumberOfSelectedRows];
                     //obtain the selected questions and store them
-                    for (int i = 0; i < numberOfSelectedRows; i++)
+                    for (int i = 0; i < tNumberOfSelectedRows; i++)
                     {
                         //cast the selected grid row to dataRowView to store it in a dataRow
-                        DataRow currentQuestion = ((DataRowView)QuestionsDataGrid.SelectedRows[i].DataBoundItem).Row;
-                        selectedQuestions[i] = currentQuestion;
+                        DataRow tCurrentQuestion = ((DataRowView)QuestionsDataGrid.SelectedRows[i].DataBoundItem).Row;
+                        tSelectedQuestions[i] = tCurrentQuestion;
                     }
                     //delete the questions from database and ui
-                    QuestionOperations.DeleteQuestion(selectedQuestions);
-                    MessageBox.Show($"Question{(numberOfSelectedRows > 1 ? "s " : " ")}deleted successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    QuestionOperations.DeleteQuestion(tSelectedQuestions);
+                    MessageBox.Show($"Question{(tNumberOfSelectedRows > 1 ? "s " : " ")}deleted successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch(IndexOutOfRangeException ex)
@@ -137,9 +137,9 @@ namespace Survey_Configurator
 
         private void QuestionsDataGrid_SelectionChanged(object sender, EventArgs e)
         {
-            int numberOfSelectedQuestions = QuestionsDataGrid.SelectedRows.Count;
+            int tNumberOfSelectedQuestions = QuestionsDataGrid.SelectedRows.Count;
             //disable delete button if no questions are selected
-            if (numberOfSelectedQuestions > 0)
+            if (tNumberOfSelectedQuestions > 0)
             {
                 DeleteQuestionButton.Enabled = true;
             }
@@ -149,7 +149,7 @@ namespace Survey_Configurator
             }
 
             //enable the edit questions only if one question is selected
-            if (numberOfSelectedQuestions > 0 && numberOfSelectedQuestions < 2)
+            if (tNumberOfSelectedQuestions > 0 && tNumberOfSelectedQuestions < 2)
             {
                 EditQuestionButton.Enabled = true;
             }

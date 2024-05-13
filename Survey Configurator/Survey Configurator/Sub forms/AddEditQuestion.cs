@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using Logic;
+using QuestionServices;
 using Microsoft.Data.SqlClient;
-using DatabaseLayer.models;
+using QuestionDB.models;
 
 
 namespace Survey_Configurator.Sub_forms
@@ -134,20 +134,20 @@ namespace Survey_Configurator.Sub_forms
                 else
                 {
                     //some fields are empty or have wrong inputs
-                    string missingFieldsMessage = "";
+                    string tMissingFieldsMessage = "";
                     if (QuestionTextBox.Text.Length == 0 && QuestionTypeComboBox.SelectedItem == null)
                     {
-                        missingFieldsMessage += "Question text, Question type ";
+                        tMissingFieldsMessage += "Question text, Question type ";
                     }
                     else if (QuestionTextBox.Text.Length == 0)
                     {
-                        missingFieldsMessage += "Question text";
+                        tMissingFieldsMessage += "Question text";
                     }
                     else
                     {
-                        missingFieldsMessage += "Question type";
+                        tMissingFieldsMessage += "Question type";
                     }
-                    MessageBox.Show($"The following fields must have proper values: {missingFieldsMessage}", "Missing fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"The following fields must have proper values: {tMissingFieldsMessage}", "Missing fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (InvalidOperationException)
@@ -174,8 +174,8 @@ namespace Survey_Configurator.Sub_forms
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            DialogResult cancelCreateQuestion = MessageBox.Show("Any changes made won't be saved.", "Cancel Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (cancelCreateQuestion == DialogResult.Yes)
+            DialogResult tCancelCreateQuestion = MessageBox.Show("Any changes made won't be saved.", "Cancel Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (tCancelCreateQuestion == DialogResult.Yes)
             {
                 Close();
             }

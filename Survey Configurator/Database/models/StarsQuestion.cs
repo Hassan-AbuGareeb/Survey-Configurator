@@ -8,9 +8,9 @@ namespace QuestionDB.models
         public int Order { get; set; }
         public int NumberOfStars { get; set; }
 
-        public StarsQuestion(string text, int order, int numberOfStars = 5) : base(text, order)
+        public StarsQuestion(string pText, int pOrder, int pNumberOfStars = 5) : base(pText, pOrder)
         {
-            NumberOfStars = numberOfStars;
+            NumberOfStars = pNumberOfStars;
         }
     }
 }

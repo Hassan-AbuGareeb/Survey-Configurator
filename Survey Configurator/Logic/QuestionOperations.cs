@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
-using DatabaseLayer.models;
+using QuestionDB.models;
 using DatabaseLayer;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
@@ -44,17 +44,17 @@ namespace QuestionServices
             }
         }
 
-        public static DataRow GetQuestionData(int questionId)
+        public static DataRow GetQuestionData(int pQuestionId)
         {
-            DataRow questionGeneralData = Questions.Select($"Q_id = {questionId}")[0];
-            return questionGeneralData;
+            DataRow tQuestionGeneralData = Questions.Select($"Q_id = {pQuestionId}")[0];
+            return tQuestionGeneralData;
         }
 
-        public static DataRow GetQuestionSpecificData(int questionId, string questionType)
+        public static DataRow GetQuestionSpecificData(int pQuestionId, string pQuestionType)
         {
             try
             {
-                return Database.getQuestionSpecificDataFromDB(questionId, questionType);
+                return Database.getQuestionSpecificDataFromDB(pQuestionId, pQuestionType);
             }
             catch (SqlException ex)
             {
@@ -73,15 +73,15 @@ namespace QuestionServices
             }
         }
 
-        public static void AddQuestion(Question questionData)
+        public static void AddQuestion(Question pQuestionData)
         {
             try 
             { 
                 //add the question to the database to generate its id and obtain it
-                int questionId = Database.AddQuestionToDB(questionData);
-                string questionType = questionData.GetType().Name.Split("Q")[0];
+                int tQuestionId = Database.AddQuestionToDB(pQuestionData);
+                string tQuestionType = pQuestionData.GetType().Name.Split("Q")[0];
                 //add question to UI
-                Questions.Rows.Add(questionId, questionData.Text, questionData.Order, questionType);
+                Questions.Rows.Add(tQuestionId, pQuestionData.Text, pQuestionData.Order, tQuestionType);
             }
             catch (SqlException ex)
             {
@@ -100,22 +100,22 @@ namespace QuestionServices
             }
         }
 
-        public static void UpdateQuestion(int questionId, Question updatedQuestionData)
+        public static void UpdateQuestion(int pQuestionId, Question pUpdatedQuestionData)
         {
             try 
             { 
-                string originalQuestionType = GetQuestionData(questionId)["Q_type"].ToString();
-                string updatedQuestionType = updatedQuestionData.GetType().Name.Split("Q")[0];
+                string tOriginalQuestionType = GetQuestionData(pQuestionId)["Q_type"].ToString();
+                string tUpdatedQuestionType = pUpdatedQuestionData.GetType().Name.Split("Q")[0];
 
-                Database.UpdateQuestionOnDB( questionId, originalQuestionType, updatedQuestionData);
+                Database.UpdateQuestionOnDB(pQuestionId, tOriginalQuestionType, pUpdatedQuestionData);
 
                 //update UI
-                Questions.Rows.Remove(Questions.Select($"Q_id = {questionId}")[0]);
-                Questions.Rows.Add(questionId,
-                updatedQuestionData.Text,
-                updatedQuestionData.Order,
+                Questions.Rows.Remove(Questions.Select($"Q_id = {pQuestionId}")[0]);
+                Questions.Rows.Add(pQuestionId,
+                pUpdatedQuestionData.Text,
+                pUpdatedQuestionData.Order,
                 //decide the type of the question on whether it was changed or not
-                (updatedQuestionType.Equals(originalQuestionType) ? originalQuestionType : updatedQuestionType));
+                (tUpdatedQuestionType.Equals(tOriginalQuestionType) ? tOriginalQuestionType : tUpdatedQuestionType));
             }
             catch (SqlException ex)
             {
@@ -134,15 +134,15 @@ namespace QuestionServices
             }
         }
 
-        public static void DeleteQuestion(DataRow[] selectedQuestions)
+        public static void DeleteQuestion(DataRow[] pSelectedQuestions)
         {
             try
             {
-                Database.DeleteQuestionFromDB(selectedQuestions);
+                Database.DeleteQuestionFromDB(pSelectedQuestions);
                 //delete question from interface (Questions)
-                foreach (DataRow question in selectedQuestions)
+                foreach (DataRow tQuestion in pSelectedQuestions)
                 {
-                    Questions.Rows.Remove(question);
+                    Questions.Rows.Remove(tQuestion);
                 }
             }
             catch (SqlException ex)
@@ -264,39 +264,38 @@ namespace QuestionServices
             }
         }
 
-        public static void LogError(Exception exceptionData)
+        public static void LogError(Exception pExceptionData)
         {
             try
             {
                 //collect the error info to log to the file
-                string[] exceptionDetails = [
+                string[] tExceptionDetails = [
                     $"{DateTime.Now.ToUniversalTime()} UTC",
-                    $"Exception: {exceptionData.GetType().Name}",
-                    $"Exception message: {exceptionData.Message}",
-                    $"Stack trace:\n{exceptionData.StackTrace}"];
+                    $"Exception: {pExceptionData.GetType().Name}",
+                    $"Exception message: {pExceptionData.Message}",
+                    $"Stack trace:\n{pExceptionData.StackTrace}"];
                 //check that file exists
-                string directoryPath = Directory.GetCurrentDirectory() + "\\errorlogs";
-                if (!Directory.Exists(directoryPath))
+                string tDirectoryPath = Directory.GetCurrentDirectory() + "\\errorlogs";
+                if (!Directory.Exists(tDirectoryPath))
                 {
-                    Directory.CreateDirectory(directoryPath);
+                    Directory.CreateDirectory(tDirectoryPath);
                 }
 
-                string filePath = directoryPath + "\\errorlog.txt";
-                if (!File.Exists(filePath))
+                string tFilePath = tDirectoryPath + "\\errorlog.txt";
+                if (!File.Exists(tFilePath))
                 {
                     //create the file if it doesn't exist
-                    FileStream fs = File.Create(filePath);
+                    FileStream fs = File.Create(tFilePath);
                     fs.Close();
                 }
 
                 //add the default values to the file
-                StreamWriter writer = File.AppendText(filePath);
-                writer.WriteLine(string.Join(",\n", exceptionDetails) + "\n\n--------\n");
-                writer.Close();
+                StreamWriter tWriter = File.AppendText(tFilePath);
+                tWriter.WriteLine(string.Join(",\n", tExceptionDetails) + "\n\n--------\n");
+                tWriter.Close();
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine($"Error occurred while logging: {ex.Message}");
             }
         }

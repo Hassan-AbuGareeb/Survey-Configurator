@@ -10,10 +10,10 @@ namespace QuestionDB.models
         public string Text { get; set; }
         public int Order {  get; set; }
 
-        public Question (string text, int order)
+        public Question (string pText, int pOrder)
         {
-            Text = text;
-            Order = order;
+            Text = pText;
+            Order = pOrder;
         }
 
     }

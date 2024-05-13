@@ -11,12 +11,12 @@ namespace QuestionDB.models
         public string StartValueCaption { get; set; }
         public string EndValueCaption { get; set; }
 
-        public SliderQuestion(string text, int order, int startValue=0, int endValue=100, string startCaption="Min", string endCaption ="Max" ) : base(text, order)
+        public SliderQuestion(string pText, int pOrder, int pStartValue=0, int pEndValue=100, string pStartCaption="Min", string pEndCaption ="Max" ) : base(pText, pOrder)
         {
-            StartValue = startValue;
-            EndValue = endValue;
-            StartValueCaption = startCaption;
-            EndValueCaption = endCaption;
+            StartValue = pStartValue;
+            EndValue = pEndValue;
+            StartValueCaption = pStartCaption;
+            EndValueCaption = pEndCaption;
         }
 
 

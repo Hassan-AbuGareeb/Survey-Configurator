@@ -8,9 +8,9 @@ namespace QuestionDB.models
         public int Order { get; set; }
         public int NumberOfSmileyFaces { get; set; }
 
-        public SmileyQuestion(string text, int order, int numberOfSmileyFaces = 2) : base(text, order)
+        public SmileyQuestion(string pText, int pOrder, int pNumberOfSmileyFaces = 2) : base(pText, pOrder)
         {
-            NumberOfSmileyFaces = numberOfSmileyFaces;
+            NumberOfSmileyFaces = pNumberOfSmileyFaces;
         }
     }
 }
