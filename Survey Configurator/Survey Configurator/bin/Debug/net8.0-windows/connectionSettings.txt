@@ -1,7 +1,7 @@
 Server : HASSANABUGHREEB,
 Database : Questions_DB,
-Trusted_Connection : true,
-User : ,
-Password : ,
+Trusted_Connection : false,
+User : sa,
+Password : sedco123,
 Encrypt : false,
-Timeout : 4
+Timeout : 10 

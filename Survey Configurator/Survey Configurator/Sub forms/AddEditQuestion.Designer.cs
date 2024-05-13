@@ -53,12 +53,12 @@
             // Cancel
             // 
             Cancel.Anchor = AnchorStyles.Left;
-            Cancel.Font = new Font("Segoe UI", 14.25F);
-            Cancel.Location = new Point(529, 659);
+            Cancel.Font = new Font("Segoe UI", 12F);
+            Cancel.Location = new Point(550, 700);
             Cancel.Margin = new Padding(3, 4, 3, 4);
             Cancel.Name = "Cancel";
-            Cancel.Size = new Size(135, 59);
-            Cancel.TabIndex = 18;
+            Cancel.Size = new Size(120, 40);
+            Cancel.TabIndex = 9;
             Cancel.Text = "Cancel";
             Cancel.UseVisualStyleBackColor = true;
             Cancel.Click += CancelButton_Click;
@@ -66,12 +66,12 @@
             // Add
             // 
             Add.Anchor = AnchorStyles.Left;
-            Add.Font = new Font("Segoe UI", 14.25F);
-            Add.Location = new Point(31, 659);
+            Add.Font = new Font("Segoe UI", 12F);
+            Add.Location = new Point(424, 700);
             Add.Margin = new Padding(3, 4, 3, 4);
             Add.Name = "Add";
-            Add.Size = new Size(135, 59);
-            Add.TabIndex = 17;
+            Add.Size = new Size(120, 40);
+            Add.TabIndex = 8;
             Add.Text = "Add";
             Add.UseVisualStyleBackColor = true;
             Add.Click += AddButton_Click;
@@ -82,35 +82,35 @@
             QuestionTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             QuestionTypeComboBox.FormattingEnabled = true;
             QuestionTypeComboBox.Items.AddRange(new object[] { "Slider", "Stars", "Smiley" });
-            QuestionTypeComboBox.Location = new Point(113, 328);
+            QuestionTypeComboBox.Location = new Point(111, 321);
             QuestionTypeComboBox.Margin = new Padding(3, 4, 3, 4);
             QuestionTypeComboBox.Name = "QuestionTypeComboBox";
             QuestionTypeComboBox.Size = new Size(187, 28);
-            QuestionTypeComboBox.TabIndex = 16;
+            QuestionTypeComboBox.TabIndex = 3;
             QuestionTypeComboBox.SelectedIndexChanged += QuestionTypeComboBox_SelectedIndexChanged;
             // 
             // QuestionOrderNumeric
             // 
             QuestionOrderNumeric.Anchor = AnchorStyles.Left;
-            QuestionOrderNumeric.Location = new Point(113, 274);
+            QuestionOrderNumeric.Location = new Point(111, 266);
             QuestionOrderNumeric.Margin = new Padding(3, 4, 3, 4);
             QuestionOrderNumeric.Maximum = new decimal(new int[] { 120, 0, 0, 0 });
             QuestionOrderNumeric.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             QuestionOrderNumeric.Name = "QuestionOrderNumeric";
             QuestionOrderNumeric.Size = new Size(186, 27);
-            QuestionOrderNumeric.TabIndex = 15;
+            QuestionOrderNumeric.TabIndex = 2;
             QuestionOrderNumeric.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // QuestionTextBox
             // 
             QuestionTextBox.Anchor = AnchorStyles.Left;
-            QuestionTextBox.Location = new Point(114, 97);
+            QuestionTextBox.Location = new Point(111, 90);
             QuestionTextBox.Margin = new Padding(3, 4, 3, 4);
             QuestionTextBox.MaxLength = 350;
             QuestionTextBox.Multiline = true;
             QuestionTextBox.Name = "QuestionTextBox";
             QuestionTextBox.Size = new Size(559, 140);
-            QuestionTextBox.TabIndex = 14;
+            QuestionTextBox.TabIndex = 1;
             // 
             // TitleLabel
             // 

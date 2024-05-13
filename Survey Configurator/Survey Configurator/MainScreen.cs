@@ -15,6 +15,7 @@ namespace Survey_Configurator
 
         private void MainScreen_Load(object sender, EventArgs e)
         {
+            
             try
             {
                 //get a default connection string stored in the app.config file
