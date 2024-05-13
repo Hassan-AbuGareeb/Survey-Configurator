@@ -19,8 +19,7 @@ namespace Survey_Configurator
             try
             {
                 //get a default connection string stored in the app.config file
-                string tDefaultConnectionString = ConfigurationManager.ConnectionStrings["app"].ConnectionString;
-                bool tIsConnectionStringFound = QuestionOperations.SetConnectionString(tDefaultConnectionString);
+                bool tIsConnectionStringFound = QuestionOperations.SetConnectionString();
 
                 //if the connection string isn't found for any reason the function used above will
                 //automatically try to use the connection string stored in the app.config file

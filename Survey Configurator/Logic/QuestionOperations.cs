@@ -164,7 +164,7 @@ namespace QuestionServices
         #endregion
 
         #region class utilty functions
-        public static bool SetConnectionString(string defaultConenctionString)
+        public static bool SetConnectionString()
         {
             //try to obtain the connection string from a file
             try {
@@ -174,13 +174,8 @@ namespace QuestionServices
             string filePath = Directory.GetCurrentDirectory() + "\\connectionSettings.txt";
                 if (!File.Exists(filePath))
                 {
+                    //create json file and fill it with default stuff
                     using (FileStream fs = File.Create(filePath));
-
-                    //add the default values to the file
-                    using (StreamWriter writer = new StreamWriter(filePath))
-                    {
-                        writer.WriteLine(defaultConenctionString);
-                    }
                 }
                 else
                 { 
@@ -209,7 +204,6 @@ namespace QuestionServices
                 //log error
                 LogError(ex);
                 //either the file can't be created or it is a permission issue
-                Database.ConnectionString=defaultConenctionString;
                 return false;
             }
             return true;
