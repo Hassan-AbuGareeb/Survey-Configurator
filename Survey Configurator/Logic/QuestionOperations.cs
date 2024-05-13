@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using System.Reflection.PortableExecutable;
 
-namespace Logic
+namespace QuestionServices
 {
     public class QuestionOperations
     {
@@ -20,6 +20,7 @@ namespace Logic
         {
         }
 
+        #region class main functions
         public static void GetQuestions() 
         {
             try
@@ -160,7 +161,9 @@ namespace Logic
                 throw;
             }
         }
+        #endregion
 
+        #region class utilty functions
         public static bool SetConnectionString(string defaultConenctionString)
         {
             //try to obtain the connection string from a file
@@ -297,5 +300,6 @@ namespace Logic
                 Console.WriteLine($"Error occurred while logging: {ex.Message}");
             }
         }
+        #endregion
     }
 }

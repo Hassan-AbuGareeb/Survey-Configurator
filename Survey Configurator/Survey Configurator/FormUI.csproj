@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Logic\Logic.csproj" />
+    <ProjectReference Include="..\Logic\QuestionServices.csproj" />
   </ItemGroup>
 
   <ItemGroup>

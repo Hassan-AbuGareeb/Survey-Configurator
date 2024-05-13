@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace DatabaseLayer.models
+namespace QuestionDB.models
 {
 
 

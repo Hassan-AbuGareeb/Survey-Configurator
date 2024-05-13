@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.Common;
 using System.Linq;
-using DatabaseLayer.models;
+using QuestionDB.models;
 using Microsoft.Data.SqlClient;
 
 namespace DatabaseLayer
@@ -12,7 +12,7 @@ namespace DatabaseLayer
         public static string ConnectionString;
 
         private Database() { }
-
+        #region class main functions
         public static DataTable getQuestionsFromDB()
         {
             using (SqlConnection conn = new SqlConnection(ConnectionString)) 
@@ -208,7 +208,9 @@ namespace DatabaseLayer
                     }
                 }
         }
+        #endregion
 
+        #region class utility functions
         public static long getChecksum()
         {
             using (SqlConnection conn = new SqlConnection(ConnectionString))
@@ -221,5 +223,6 @@ namespace DatabaseLayer
                     return (int)checksum;
                 }
         }
+        #endregion
     }
 }

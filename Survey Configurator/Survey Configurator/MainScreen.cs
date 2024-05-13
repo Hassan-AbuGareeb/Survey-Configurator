@@ -1,6 +1,6 @@
 ﻿using Survey_Configurator.Sub_forms;
 using System.Data;
-using Logic;
+using QuestionServices;
 using System.Configuration;
 using Microsoft.Data.SqlClient;
 using Microsoft.VisualBasic.Logging;
@@ -135,7 +135,6 @@ namespace Survey_Configurator
             }
         }
 
-
         private void QuestionsDataGrid_SelectionChanged(object sender, EventArgs e)
         {
             int numberOfSelectedQuestions = QuestionsDataGrid.SelectedRows.Count;
@@ -160,7 +159,7 @@ namespace Survey_Configurator
             }
         }
 
-        //menu strip items functions
+        #region menu strip items functions
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             ClearSelectedOptions();
@@ -202,6 +201,7 @@ namespace Survey_Configurator
             fontSize12StripMenuItem.Checked = false;
             fontSize15StripMenuItem.Checked = false;
         }
+        #endregion
 
     }
 }

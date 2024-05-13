@@ -70,12 +70,12 @@
         }
       }
     },
-    "D:\\Survey Configurator\\Survey Configurator\\Logic\\Logic.csproj": {
+    "D:\\Survey Configurator\\Survey Configurator\\Logic\\QuestionServices.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Survey Configurator\\Survey Configurator\\Logic\\Logic.csproj",
-        "projectName": "Logic",
-        "projectPath": "D:\\Survey Configurator\\Survey Configurator\\Logic\\Logic.csproj",
+        "projectUniqueName": "D:\\Survey Configurator\\Survey Configurator\\Logic\\QuestionServices.csproj",
+        "projectName": "QuestionServices",
+        "projectPath": "D:\\Survey Configurator\\Survey Configurator\\Logic\\QuestionServices.csproj",
         "packagesPath": "C:\\Users\\hassan\\.nuget\\packages\\",
         "outputPath": "D:\\Survey Configurator\\Survey Configurator\\Logic\\obj\\",
         "projectStyle": "PackageReference",
@@ -164,8 +164,8 @@
           "net8.0-windows7.0": {
             "targetAlias": "net8.0-windows",
             "projectReferences": {
-              "D:\\Survey Configurator\\Survey Configurator\\Logic\\Logic.csproj": {
-                "projectPath": "D:\\Survey Configurator\\Survey Configurator\\Logic\\Logic.csproj"
+              "D:\\Survey Configurator\\Survey Configurator\\Logic\\QuestionServices.csproj": {
+                "projectPath": "D:\\Survey Configurator\\Survey Configurator\\Logic\\QuestionServices.csproj"
               }
             }
           }
