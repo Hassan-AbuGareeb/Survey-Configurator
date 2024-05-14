@@ -4,7 +4,7 @@ using System.Data.Common;
 using System.Linq;
 using SharedResources.models;
 using Microsoft.Data.SqlClient;
-
+using SharedResources;
 namespace DatabaseLayer
 {
     public class Database
@@ -13,17 +13,20 @@ namespace DatabaseLayer
 
         private Database() { }
         #region class main functions
-        public static DataTable getQuestionsFromDB()
+        public static void getQuestionsFromDB(ref List<Question> pQuestionsList)
         {
             using (SqlConnection tConn = new SqlConnection(ConnectionString)) 
             {
                 tConn.Open();
                 SqlCommand tGetQuestionsDataCmd = new SqlCommand("SELECT * FROM Question", tConn);
                 DbDataReader tReader = tGetQuestionsDataCmd.ExecuteReader(CommandBehavior.CloseConnection);
-                DataTable tQuestionsData = new DataTable();
-                tQuestionsData.Load(tReader);
+                //iterate over each row in the Reader and add it to the questions list
+                while (tReader.Read())
+                {
+                    pQuestionsList.Add(new Question((int)tReader["Id"], tReader["Text"].ToString(),
+                        (int)tReader["order"], (SharedResources.QuestionType)tReader["Type"]));
+                }
                 tReader.Close();
-                return tQuestionsData;
             }
         }
 

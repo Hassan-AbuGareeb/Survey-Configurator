@@ -2,13 +2,8 @@
 using System.Data;
 using SharedResources.models;
 using DatabaseLayer;
-using System.Runtime.CompilerServices;
-using System.Diagnostics;
-using System.Reflection.PortableExecutable;
 using SharedResources;
-using System.Text.Json.Nodes;
 using System.Text.Json;
-using System.Net;
 
 namespace QuestionServices
 {
@@ -19,6 +14,8 @@ namespace QuestionServices
         public static bool OperationOngoing = false;
         //A Datatable collection to hold data temporarly and reduce requests to database
         public static DataTable Questions = new DataTable();
+        //a list to temporarily contain the change in the database
+        public static List<Question> QuestionsList = new List<Question>();
 
         private QuestionOperations() 
         {
@@ -29,7 +26,7 @@ namespace QuestionServices
         {
             try
             {
-                Questions = Database.getQuestionsFromDB();
+                Database.getQuestionsFromDB(ref QuestionsList);
             }
             catch (SqlException ex)
             {
@@ -191,7 +188,7 @@ namespace QuestionServices
                     //read connection string values from file
                     using(StreamReader fileReader = new StreamReader(filePath)) {
                         string tReadConnectionString = fileReader.ReadToEnd();
-                        tReadConnectionString = tReadConnectionString.Trim().Substring(1, tReadConnectionString.Length - 2).Replace(":","=").Replace("\"","").Replace(",",";");
+                        tConnectionString = tReadConnectionString.Trim().Substring(1, tReadConnectionString.Length - 2).Replace(":","=").Replace("\"","").Replace(",",";");
                     }
                  }
                 Database.ConnectionString = tConnectionString;
@@ -239,14 +236,14 @@ namespace QuestionServices
                             //data changed
 
                             currentChecksum = newChecksum;
-                            DataTable updatedQuestions = Database.getQuestionsFromDB();
+                           Database.getQuestionsFromDB(ref QuestionsList);
                             Questions.Clear();
                             //fill Questions collection with updated data from db
-                            for (int i = 0; i < updatedQuestions.Rows.Count; i++)
-                            {
-                                DataRow currentQuestion = updatedQuestions.Rows[i];
-                                Questions.Rows.Add(currentQuestion["Q_id"], currentQuestion["Q_text"], currentQuestion["Q_order"], currentQuestion["Q_type"]);
-                            }
+                            //for (int i = 0; i < updatedQuestions.Rows.Count; i++)
+                            //{
+                            //    DataRow currentQuestion = updatedQuestions.Rows[i];
+                            //    Questions.Rows.Add(currentQuestion["Q_id"], currentQuestion["Q_text"], currentQuestion["Q_order"], currentQuestion["Q_type"]);
+                            //}
                         }
                     }
                 }

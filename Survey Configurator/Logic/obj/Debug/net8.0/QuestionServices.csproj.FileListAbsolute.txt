@@ -3,7 +3,9 @@ D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\QuestionServic
 D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\QuestionServices.dll
 D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\QuestionServices.pdb
 D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\QuestionDB.dll
+D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\SharedResources.dll
 D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\QuestionDB.pdb
+D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\SharedResources.pdb
 D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\QuestionServices.csproj.AssemblyReference.cache
 D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\QuestionServices.GeneratedMSBuildEditorConfig.editorconfig
 D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\QuestionServices.AssemblyInfoInputs.cache
@@ -15,5 +17,3 @@ D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\QuestionServic
 D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\refint\QuestionServices.dll
 D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\QuestionServices.pdb
 D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\ref\QuestionServices.dll
-D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\SharedResources.dll
-D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\SharedResources.pdb

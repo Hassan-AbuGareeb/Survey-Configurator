@@ -418,3 +418,78 @@ Stack trace:
 
 --------
 
+5/14/2024 7:14:02 AM UTC,
+Exception: InvalidOperationException,
+Exception message: The ConnectionString property has not been initialized.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at DatabaseLayer.Database.getQuestionsFromDB() in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 20
+   at QuestionServices.QuestionOperations.GetQuestions() in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 27
+
+--------
+
+5/14/2024 1:08:49 PM UTC,
+Exception: InvalidOperationException,
+Exception message: The ConnectionString property has not been initialized.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at DatabaseLayer.Database.getQuestionsFromDB() in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 20
+   at QuestionServices.QuestionOperations.GetQuestions() in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 29
+
+--------
+
+5/14/2024 1:18:19 PM UTC,
+Exception: InvalidOperationException,
+Exception message: The ConnectionString property has not been initialized.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at DatabaseLayer.Database.getQuestionsFromDB() in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 20
+   at QuestionServices.QuestionOperations.GetQuestions() in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 29
+
+--------
+
+5/14/2024 5:14:21 PM UTC,
+Exception: InvalidOperationException,
+Exception message: The ConnectionString property has not been initialized.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at DatabaseLayer.Database.getQuestionsFromDB(List`1& pQuestionsList) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 20
+   at QuestionServices.QuestionOperations.GetQuestions() in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 29
+
+--------
+
+5/14/2024 5:16:26 PM UTC,
+Exception: ArgumentOutOfRangeException,
+Exception message: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index'),
+Stack trace:
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at System.Linq.Enumerable.ElementAt[TSource](IEnumerable`1 source, Int32 index)
+   at DatabaseLayer.Database.getQuestionsFromDB(List`1& pQuestionsList) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 26
+   at QuestionServices.QuestionOperations.GetQuestions() in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 29
+
+--------
+

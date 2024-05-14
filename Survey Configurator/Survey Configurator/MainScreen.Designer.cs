@@ -28,18 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            //set the connection string here
-
-            //and test db connection too
-
-            //if any of them fails close the app directly
-
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            QuestionsDataGrid = new DataGridView();
             DeleteQuestionButton = new Button();
             EditQuestionButton = new Button();
             AddQuestionButton = new Button();
@@ -52,62 +40,12 @@
             fontSize15StripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             openManualToolStripMenuItem = new ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)QuestionsDataGrid).BeginInit();
+            QuestionsListView = new ListView();
+            QuestionOrder = new ColumnHeader();
+            QuestionText = new ColumnHeader();
+            QuestionType = new ColumnHeader();
             menuStrip1.SuspendLayout();
             SuspendLayout();
-            // 
-            // QuestionsDataGrid
-            // 
-            QuestionsDataGrid.AllowUserToAddRows = false;
-            QuestionsDataGrid.AllowUserToDeleteRows = false;
-            QuestionsDataGrid.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle1.BackColor = Color.Gainsboro;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            QuestionsDataGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            QuestionsDataGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            QuestionsDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            QuestionsDataGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            QuestionsDataGrid.BackgroundColor = SystemColors.Window;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(224, 224, 224);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            QuestionsDataGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            QuestionsDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.FromArgb(224, 224, 224);
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 12F);
-            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            QuestionsDataGrid.DefaultCellStyle = dataGridViewCellStyle3;
-            QuestionsDataGrid.GridColor = SystemColors.InfoText;
-            QuestionsDataGrid.Location = new Point(12, 53);
-            QuestionsDataGrid.Margin = new Padding(3, 4, 3, 4);
-            QuestionsDataGrid.Name = "QuestionsDataGrid";
-            QuestionsDataGrid.ReadOnly = true;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.White;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            QuestionsDataGrid.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            QuestionsDataGrid.RowHeadersWidth = 35;
-            dataGridViewCellStyle5.BackColor = Color.White;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            QuestionsDataGrid.RowsDefaultCellStyle = dataGridViewCellStyle5;
-            QuestionsDataGrid.RowTemplate.Height = 33;
-            QuestionsDataGrid.RowTemplate.Resizable = DataGridViewTriState.True;
-            QuestionsDataGrid.ScrollBars = ScrollBars.Vertical;
-            QuestionsDataGrid.Size = new Size(1226, 597);
-            QuestionsDataGrid.TabIndex = 1;
-            QuestionsDataGrid.SelectionChanged += QuestionsDataGrid_SelectionChanged;
             // 
             // DeleteQuestionButton
             // 
@@ -210,13 +148,41 @@
             openManualToolStripMenuItem.Size = new Size(198, 28);
             openManualToolStripMenuItem.Text = "Open manual";
             // 
+            // QuestionsListView
+            // 
+            QuestionsListView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            QuestionsListView.Columns.AddRange(new ColumnHeader[] { QuestionOrder, QuestionText, QuestionType });
+            QuestionsListView.FullRowSelect = true;
+            QuestionsListView.Location = new Point(12, 39);
+            QuestionsListView.Name = "QuestionsListView";
+            QuestionsListView.Size = new Size(1226, 574);
+            QuestionsListView.Sorting = SortOrder.Ascending;
+            QuestionsListView.TabIndex = 6;
+            QuestionsListView.UseCompatibleStateImageBehavior = false;
+            QuestionsListView.View = View.Details;
+            // 
+            // QuestionOrder
+            // 
+            QuestionOrder.Text = "Order";
+            QuestionOrder.Width = 80;
+            // 
+            // QuestionText
+            // 
+            QuestionText.Text = "Text";
+            QuestionText.Width = 300;
+            // 
+            // QuestionType
+            // 
+            QuestionType.Text = "Type";
+            QuestionType.Width = 80;
+            // 
             // MainScreen
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1250, 753);
+            Controls.Add(QuestionsListView);
             Controls.Add(DeleteQuestionButton);
-            Controls.Add(QuestionsDataGrid);
             Controls.Add(EditQuestionButton);
             Controls.Add(AddQuestionButton);
             Controls.Add(menuStrip1);
@@ -228,7 +194,6 @@
             WindowState = FormWindowState.Maximized;
             FormClosing += MainScreen_FormClosing;
             Load += MainScreen_Load;
-            ((System.ComponentModel.ISupportInitialize)QuestionsDataGrid).EndInit();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);
@@ -238,7 +203,6 @@
         private Button AddQuestionButton;
         private Button DeleteQuestionButton;
         private Button EditQuestionButton;
-        private DataGridView QuestionsDataGrid;
         private Microsoft.Data.SqlClient.SqlCommandBuilder sqlCommandBuilder1;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem optionsToolStripMenuItem;
@@ -248,5 +212,9 @@
         private ToolStripMenuItem fontSize12StripMenuItem;
         private ToolStripMenuItem fontSize15StripMenuItem;
         private ToolStripMenuItem openManualToolStripMenuItem;
+        private ListView QuestionsListView;
+        private ColumnHeader QuestionOrder;
+        private ColumnHeader QuestionText;
+        private ColumnHeader QuestionType;
     }
 }
