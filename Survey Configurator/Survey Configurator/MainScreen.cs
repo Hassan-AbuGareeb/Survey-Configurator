@@ -4,6 +4,7 @@ using QuestionServices;
 using System.Configuration;
 using Microsoft.Data.SqlClient;
 using Microsoft.VisualBasic.Logging;
+using SharedResources;
 namespace Survey_Configurator
 {
     public partial class MainScreen : Form
@@ -15,7 +16,6 @@ namespace Survey_Configurator
 
         private void MainScreen_Load(object sender, EventArgs e)
         {
-            
             try
             {
                 //get a default connection string stored in the app.config file
@@ -40,12 +40,12 @@ namespace Survey_Configurator
                 //hide the question id column
                 QuestionsDataGrid.Columns["Q_id"].Visible = false;
 
-                //properly naming the columns in the datagrid view
+                ////properly naming the columns in the datagrid view
                 QuestionsDataGrid.Columns["Q_order"].HeaderText = "Order";
                 QuestionsDataGrid.Columns["Q_text"].HeaderText = "Text";
                 QuestionsDataGrid.Columns["Q_type"].HeaderText = "Type";
 
-                //change the order of the columns in the grid view
+                ////change the order of the columns in the grid view
                 QuestionsDataGrid.Columns["Q_order"].DisplayIndex = 0;
                 QuestionsDataGrid.Columns["Q_text"].DisplayIndex = 1;
                 QuestionsDataGrid.Columns["Q_type"].DisplayIndex = 2;
@@ -120,12 +120,12 @@ namespace Survey_Configurator
             }
             catch(IndexOutOfRangeException ex)
             {
-                QuestionOperations.LogError(ex);
+                UtilityMethods.LogError(ex);
                 MessageBox.Show("Please select the entire row to delete a question");
             }
             catch (Exception ex)
             {
-                QuestionOperations.LogError(ex);
+                UtilityMethods.LogError(ex);
                 MessageBox.Show("An unexpected error occured");
             }
             finally

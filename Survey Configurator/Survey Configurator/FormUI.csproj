@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Logic\QuestionServices.csproj" />
+    <ProjectReference Include="..\SharedResources\SharedResources.csproj" />
   </ItemGroup>
 
   <ItemGroup>

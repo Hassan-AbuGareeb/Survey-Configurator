@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace QuestionDB.models
+namespace SharedResources.models
 {
     public class SliderQuestion : Question
     {

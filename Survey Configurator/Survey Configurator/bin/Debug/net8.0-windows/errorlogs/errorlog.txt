@@ -316,3 +316,105 @@ Stack trace:
 
 --------
 
+5/14/2024 6:42:04 AM UTC,
+Exception: IOException,
+Exception message: The process cannot access the file 'D:\Survey Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows\connectionSettings.json' because it is being used by another process.,
+Stack trace:
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.CreateFile(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategyCore(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+   at System.IO.StreamWriter.ValidateArgsAndOpenPath(String path, Boolean append, Encoding encoding, Int32 bufferSize)
+   at System.IO.StreamWriter..ctor(String path)
+   at QuestionServices.QuestionOperations.SetConnectionString() in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 183
+
+--------
+
+5/14/2024 6:42:07 AM UTC,
+Exception: InvalidOperationException,
+Exception message: The ConnectionString property has not been initialized.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at DatabaseLayer.Database.getQuestionsFromDB() in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 20
+   at QuestionServices.QuestionOperations.GetQuestions() in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 32
+
+--------
+
+5/14/2024 6:42:56 AM UTC,
+Exception: ArgumentOutOfRangeException,
+Exception message: startIndex cannot be larger than length of string. (Parameter 'startIndex'),
+Stack trace:
+   at System.String.ThrowSubstringArgumentOutOfRange(Int32 startIndex, Int32 length)
+   at System.String.Substring(Int32 startIndex, Int32 length)
+   at QuestionServices.QuestionOperations.SetConnectionString() in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 195
+
+--------
+
+5/14/2024 6:42:59 AM UTC,
+Exception: InvalidOperationException,
+Exception message: The ConnectionString property has not been initialized.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at DatabaseLayer.Database.getQuestionsFromDB() in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 20
+   at QuestionServices.QuestionOperations.GetQuestions() in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 32
+
+--------
+
+5/14/2024 6:58:35 AM UTC,
+Exception: IOException,
+Exception message: The process cannot access the file 'D:\Survey Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows\connectionSettings.json' because it is being used by another process.,
+Stack trace:
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.CreateFile(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategyCore(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+   at System.IO.StreamWriter.ValidateArgsAndOpenPath(String path, Boolean append, Encoding encoding, Int32 bufferSize)
+   at System.IO.StreamWriter..ctor(String path)
+   at QuestionServices.QuestionOperations.SetConnectionString() in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 183
+
+--------
+
+5/14/2024 6:58:37 AM UTC,
+Exception: InvalidOperationException,
+Exception message: The ConnectionString property has not been initialized.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at DatabaseLayer.Database.getQuestionsFromDB() in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 20
+   at QuestionServices.QuestionOperations.GetQuestions() in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 32
+
+--------
+
+5/14/2024 6:59:49 AM UTC,
+Exception: InvalidOperationException,
+Exception message: The ConnectionString property has not been initialized.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at DatabaseLayer.Database.getQuestionsFromDB() in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 20
+   at QuestionServices.QuestionOperations.GetQuestions() in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 32
+
+--------
+

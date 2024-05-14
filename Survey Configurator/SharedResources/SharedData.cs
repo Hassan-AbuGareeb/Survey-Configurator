@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SharedResources
 {
-     class SharedData
+     public class SharedData
     {
 
     }

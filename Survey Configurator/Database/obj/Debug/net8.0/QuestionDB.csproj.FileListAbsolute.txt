@@ -11,3 +11,6 @@ D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\QuestionDB.
 D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\refint\QuestionDB.dll
 D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\QuestionDB.pdb
 D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\ref\QuestionDB.dll
+D:\Survey Configurator\Survey Configurator\Database\bin\Debug\net8.0\SharedResources.dll
+D:\Survey Configurator\Survey Configurator\Database\bin\Debug\net8.0\SharedResources.pdb
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\QuestionDB.csproj.Up2Date

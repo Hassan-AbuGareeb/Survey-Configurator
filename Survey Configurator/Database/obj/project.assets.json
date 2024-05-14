@@ -636,6 +636,16 @@
         "runtime": {
           "lib/netcoreapp2.1/_._": {}
         }
+      },
+      "SharedResources/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/SharedResources.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SharedResources.dll": {}
+        }
       }
     }
   },
@@ -1877,11 +1887,17 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "SharedResources/1.0.0": {
+      "type": "project",
+      "path": "../SharedResources/SharedResources.csproj",
+      "msbuildProject": "../SharedResources/SharedResources.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "Microsoft.Data.SqlClient >= 5.2.0"
+      "Microsoft.Data.SqlClient >= 5.2.0",
+      "SharedResources >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -1910,7 +1926,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Survey Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj": {
+              "projectPath": "D:\\Survey Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

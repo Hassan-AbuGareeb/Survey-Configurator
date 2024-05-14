@@ -1,10 +1,14 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
-using QuestionDB.models;
+using SharedResources.models;
 using DatabaseLayer;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using System.Reflection.PortableExecutable;
+using SharedResources;
+using System.Text.Json.Nodes;
+using System.Text.Json;
+using System.Net;
 
 namespace QuestionServices
 {
@@ -29,17 +33,17 @@ namespace QuestionServices
             }
             catch (SqlException ex)
             {
-                LogError(ex);
+                UtilityMethods.LogError(ex);
                 throw;
             }
             catch (InvalidOperationException ex)
             {
-                LogError(ex);
+                UtilityMethods.LogError(ex);
                 throw;
             }
             catch (Exception ex)
             {
-                LogError(ex);
+                UtilityMethods.LogError(ex);
                 throw;
             }
         }
@@ -58,17 +62,17 @@ namespace QuestionServices
             }
             catch (SqlException ex)
             {
-                LogError(ex);
+                UtilityMethods.LogError(ex);
                 throw;
             }
             catch (InvalidOperationException ex)
             {
-                LogError(ex);
+                UtilityMethods.LogError(ex);
                 throw new InvalidOperationException("problem in connection to database", ex);
             }
             catch (Exception ex)
             {
-                LogError(ex);
+                UtilityMethods. LogError(ex);
                 throw;
             }
         }
@@ -85,17 +89,17 @@ namespace QuestionServices
             }
             catch (SqlException ex)
             {
-                LogError(ex);
+                UtilityMethods.LogError(ex);
                 throw;
             }
             catch (InvalidOperationException ex)
             {
-                LogError(ex);
+                UtilityMethods.LogError(ex);
                 throw new InvalidOperationException("problem in connection to database", ex);
             }
             catch (Exception ex)
             {
-                LogError(ex);
+                UtilityMethods.LogError(ex);
                 throw;
             }
         }
@@ -119,17 +123,17 @@ namespace QuestionServices
             }
             catch (SqlException ex)
             {
-                LogError(ex);
+                UtilityMethods.LogError(ex);
                 throw;
             }
             catch (InvalidOperationException ex)
             {
-                LogError(ex);
+                UtilityMethods.LogError(ex);
                 throw new InvalidOperationException("problem in connection to database", ex);
             }
             catch (Exception ex)
             {
-                LogError(ex);
+                UtilityMethods.LogError(ex);
                 throw;
             }
         }
@@ -147,17 +151,17 @@ namespace QuestionServices
             }
             catch (SqlException ex)
             {
-                LogError(ex);
+                UtilityMethods.LogError(ex);
                 throw;
             }
             catch (InvalidOperationException ex)
             {
-                LogError(ex);
+                UtilityMethods.LogError(ex);
                 throw new InvalidOperationException("problem in connection to database", ex);
             }
             catch (Exception ex)
             {
-                LogError(ex);
+                UtilityMethods.LogError(ex);
                 throw;
             }
         }
@@ -168,44 +172,50 @@ namespace QuestionServices
         {
             //try to obtain the connection string from a file
             try {
-                string connectionString = "";
-
+                string tConnectionString = "";
                 //check that file exists
-            string filePath = Directory.GetCurrentDirectory() + "\\connectionSettings.txt";
+            string filePath = Directory.GetCurrentDirectory() + "\\connectionSettings.json";
                 if (!File.Exists(filePath))
                 {
                     //create json file and fill it with default stuff
-                    using (FileStream fs = File.Create(filePath));
+                    using (FileStream fs = File.Create(filePath)) ;
+
+                    using(StreamWriter writer = new StreamWriter(filePath))
+                    {
+                        writer.Write(JsonSerializer.Serialize(new ConnectionString()));
+                    }
+                    //return a value to indicate that a file has been created and to fill it
                 }
                 else
                 { 
                     //read connection string values from file
                     using(StreamReader fileReader = new StreamReader(filePath)) {
-
-                    string[] connectionStringParameters = fileReader.ReadToEnd().Split(",");
-                        foreach (string parameter in connectionStringParameters)
-                        {
-                            string property = parameter.Split(':')[0].Trim();
-                            string value = parameter.Split(':')[1].Trim();
-                            connectionString += $"{property} = {value};\n";
-                        }
+                        string tReadConnectionString = fileReader.ReadToEnd();
+                        tReadConnectionString = tReadConnectionString.Trim().Substring(1, tReadConnectionString.Length - 2).Replace(":","=").Replace("\"","").Replace(",",";");
                     }
                  }
-                Database.ConnectionString = connectionString;
+                Database.ConnectionString = tConnectionString;
             }
+            catch (UnauthorizedAccessException ex)
+            {
+                UtilityMethods.LogError(ex);
+                //handle the unAuthorized access happening
+            }
+            //this exception should be removed ?
             catch(IndexOutOfRangeException ex)//caused by incorrect connection string which in turn causes the exception by trying to access out of range indexes in the splitted string 
             {
                 //log error 
-                LogError(ex);
+                UtilityMethods.LogError(ex);
                 throw new ArgumentException("Wrong connection parameters",ex);
             }
             catch (Exception ex)
             {
                 //log error
-                LogError(ex);
+                UtilityMethods.LogError(ex);
                 //either the file can't be created or it is a permission issue
                 return false;
             }
+            //more exceptions should be added according to the changes made to this function
             return true;
         }
 
@@ -243,56 +253,21 @@ namespace QuestionServices
             }
             catch (SqlException ex)
             {
-                LogError(ex);
+                UtilityMethods.LogError(ex);
                 throw;
             }
             catch (InvalidOperationException ex)
             {
-                LogError(ex);
+                UtilityMethods.LogError(ex);
                 throw;
             }
             catch (Exception ex)
             {
-                LogError(ex);
+                UtilityMethods.LogError(ex);
                 throw;
             }
         }
 
-        public static void LogError(Exception pExceptionData)
-        {
-            try
-            {
-                //collect the error info to log to the file
-                string[] tExceptionDetails = [
-                    $"{DateTime.Now.ToUniversalTime()} UTC",
-                    $"Exception: {pExceptionData.GetType().Name}",
-                    $"Exception message: {pExceptionData.Message}",
-                    $"Stack trace:\n{pExceptionData.StackTrace}"];
-                //check that file exists
-                string tDirectoryPath = Directory.GetCurrentDirectory() + "\\errorlogs";
-                if (!Directory.Exists(tDirectoryPath))
-                {
-                    Directory.CreateDirectory(tDirectoryPath);
-                }
-
-                string tFilePath = tDirectoryPath + "\\errorlog.txt";
-                if (!File.Exists(tFilePath))
-                {
-                    //create the file if it doesn't exist
-                    FileStream fs = File.Create(tFilePath);
-                    fs.Close();
-                }
-
-                //add the default values to the file
-                StreamWriter tWriter = File.AppendText(tFilePath);
-                tWriter.WriteLine(string.Join(",\n", tExceptionDetails) + "\n\n--------\n");
-                tWriter.Close();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error occurred while logging: {ex.Message}");
-            }
-        }
         #endregion
     }
 }

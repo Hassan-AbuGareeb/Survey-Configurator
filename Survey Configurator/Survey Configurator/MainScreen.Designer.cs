@@ -28,6 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            //set the connection string here
+
+            //and test db connection too
+
+            //if any of them fails close the app directly
+
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();

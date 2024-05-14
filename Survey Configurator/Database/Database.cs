@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.Common;
 using System.Linq;
-using QuestionDB.models;
+using SharedResources.models;
 using Microsoft.Data.SqlClient;
 
 namespace DatabaseLayer

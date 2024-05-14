@@ -4,8 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using QuestionServices;
 using Microsoft.Data.SqlClient;
-using QuestionDB.models;
-
+using SharedResources.models;
 
 namespace Survey_Configurator.Sub_forms
 {
@@ -105,27 +104,27 @@ namespace Survey_Configurator.Sub_forms
                     {
                         //decied whether to add or edit question based on the Clicked button text
                         case "Stars":
-                            StarsQuestion starsData = new StarsQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value, (int)NumberOfStarsNumeric.Value);
+                            StarsQuestion tStarsData = new StarsQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value, (int)NumberOfStarsNumeric.Value);
                             if (Add.Text.Equals("Add"))
-                                QuestionOperations.AddQuestion(starsData);
+                                QuestionOperations.AddQuestion(tStarsData);
                             else
-                                QuestionOperations.UpdateQuestion(QuestionId, starsData);
+                                QuestionOperations.UpdateQuestion(QuestionId, tStarsData);
                             break;
                         case "Slider":
-                            SliderQuestion sliderData = new SliderQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value,
+                            SliderQuestion tSliderData = new SliderQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value,
                                 (int)SliderStartValueNumeric.Value, (int)SliderEndValueNumeric.Value,
                                 SliderStartValueCaptionText.Text, SliderEndValueCaptionText.Text);
                             if (Add.Text.Equals("Add"))
-                                QuestionOperations.AddQuestion(sliderData);
+                                QuestionOperations.AddQuestion(tSliderData);
                             else
-                                QuestionOperations.UpdateQuestion(QuestionId, sliderData);
+                                QuestionOperations.UpdateQuestion(QuestionId, tSliderData);
                             break;
                         case "Smiley":
-                            SmileyQuestion smileyData = new SmileyQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value, (int)NumberOfSmileysNumeric.Value);
+                            SmileyQuestion tSmileyData = new SmileyQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value, (int)NumberOfSmileysNumeric.Value);
                             if (Add.Text.Equals("Add"))
-                                QuestionOperations.AddQuestion(smileyData);
+                                QuestionOperations.AddQuestion(tSmileyData);
                             else
-                                QuestionOperations.UpdateQuestion(QuestionId, smileyData);
+                                QuestionOperations.UpdateQuestion(QuestionId, tSmileyData);
                             break;
                     }
                     //close form

@@ -67,3 +67,5 @@ D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-
 D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\FormUI.pdb
 D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\FormUI.genruntimeconfig.cache
 D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\ref\FormUI.dll
+D:\Survey Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows\SharedResources.dll
+D:\Survey Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows\SharedResources.pdb

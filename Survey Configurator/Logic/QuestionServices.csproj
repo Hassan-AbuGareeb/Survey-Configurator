@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Database\QuestionDB.csproj" />
+    <ProjectReference Include="..\SharedResources\SharedResources.csproj" />
   </ItemGroup>
 
 </Project>
