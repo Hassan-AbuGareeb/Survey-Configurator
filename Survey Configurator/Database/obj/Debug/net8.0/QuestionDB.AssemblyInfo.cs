@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QuestionDB")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+05de9227d0ed5c13f3ecde666077a1ea0835a3f8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2a976cac48acef10a5acc05b86c2e407743c57eb")]
 [assembly: System.Reflection.AssemblyProductAttribute("QuestionDB")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QuestionDB")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

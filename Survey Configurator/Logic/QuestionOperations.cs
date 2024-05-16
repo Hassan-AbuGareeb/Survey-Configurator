@@ -82,7 +82,7 @@ namespace QuestionServices
                 //add the question to the database to generate its id and obtain it
                 Question tFullQuestionData = Database.AddQuestionToDB(pQuestionData);
                 //add question to UI
-                QuestionsList.Add(tFullQuestionData);
+                //QuestionsList.Add(tFullQuestionData);
             }
             catch (SqlException ex)
             {

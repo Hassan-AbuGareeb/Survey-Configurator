@@ -90,7 +90,6 @@ namespace Survey_Configurator
                         tSelectedQuestions[i] = tCurrentQuestion;
 
                         //remove question from UI
-                        QuestionsListView.Items.Remove(QuestionsListView.SelectedItems[i]);
                     }
                     //delete the questions from database and ui
                     QuestionOperations.DeleteQuestion(tSelectedQuestions);

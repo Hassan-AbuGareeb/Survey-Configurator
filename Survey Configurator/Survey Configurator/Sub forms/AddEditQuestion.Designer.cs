@@ -80,12 +80,12 @@
             QuestionTypeComboBox.Anchor = AnchorStyles.Left;
             QuestionTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             QuestionTypeComboBox.FormattingEnabled = true;
-            QuestionTypeComboBox.Items.AddRange(new object[] { "Slider", "Stars", "Smiley" });
             QuestionTypeComboBox.Location = new Point(29, 343);
             QuestionTypeComboBox.Margin = new Padding(3, 4, 3, 4);
             QuestionTypeComboBox.Name = "QuestionTypeComboBox";
             QuestionTypeComboBox.Size = new Size(187, 28);
             QuestionTypeComboBox.TabIndex = 3;
+            QuestionTypeComboBox.DataSource = Enum.GetValues(typeof(SharedResources.QuestionType));
             QuestionTypeComboBox.SelectedIndexChanged += QuestionTypeComboBox_SelectedIndexChanged;
             // 
             // QuestionOrderNumeric

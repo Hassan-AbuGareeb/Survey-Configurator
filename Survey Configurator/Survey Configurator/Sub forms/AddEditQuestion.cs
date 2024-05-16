@@ -44,6 +44,7 @@ namespace Survey_Configurator.Sub_forms
 
         private void AddEdit_Load(object sender, EventArgs e)
         {
+            QuestionTypeComboBox.SelectedItem = null;
             try
             {
                 //to prevent any interruption in adding/updating
@@ -52,8 +53,6 @@ namespace Survey_Configurator.Sub_forms
                 if (Add.Text.Equals("Save"))
                 {
                     //assing function on load
-                    Add.Click += AddButton_Click;
-
                     Question tQeneralQuestionData = QuestionOperations.GetQuestionData(QuestionId);
                     //extract question data an add it to UI
                     QuestionTextBox.Text = tQeneralQuestionData.Text;
@@ -79,10 +78,6 @@ namespace Survey_Configurator.Sub_forms
                             break;
                     }
                 }
-                else
-                {
-                    Add.Click += AddButton_Click;
-                }
             }
             catch (SqlException)
             {
@@ -105,7 +100,7 @@ namespace Survey_Configurator.Sub_forms
                     QuestionTypeComboBox.SelectedItem != null)
                 {
                     //get the enum value of the question type name
-                    Enum.TryParse(QuestionTypeComboBox.Text,out QuestionType tQuestionType);
+                    QuestionType tQuestionType = (QuestionType)QuestionTypeComboBox.SelectedItem;
                     //encapsulate obtained data in a question object
                     Question tNewQuestionData = new Question(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value, tQuestionType);
 
@@ -260,15 +255,15 @@ namespace Survey_Configurator.Sub_forms
         private void QuestionTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             QuestionOptions.Controls.Clear();
-            switch (QuestionTypeComboBox.SelectedItem.ToString())
+            switch (QuestionTypeComboBox.SelectedItem)
             {
-                case "Slider":
+                case SharedData.cSliderType:
                     AddSliderOptions();
                     break;
-                case "Smiley":
+                case SharedData.cSmileyType:
                     AddSmileysOptions();
                     break;
-                case "Stars":
+                case SharedData.cStarsType:
                     AddStarsOptions();
                     break;
             }

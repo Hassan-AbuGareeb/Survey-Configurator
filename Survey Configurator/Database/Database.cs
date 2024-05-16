@@ -72,9 +72,12 @@ namespace DatabaseLayer
             {
                 tConn.Open();
                 //insert question data in the question table
-                SqlCommand tInsertQuestionCmd = new SqlCommand($"INSERT INTO Question (Q_text, Q_order, Q_type) OUTPUT INSERTED.Q_id VALUES (@Q_text, {pQuestionData.Order}, '{pQuestionData.Type.ToString()}')",
+                SqlCommand tInsertQuestionCmd = new SqlCommand($"INSERT INTO Question ([Text], [Order], [Type]) OUTPUT INSERTED.Id" +
+                    $" VALUES (@Text, @Order, @Type)",
                     tConn);
-                tInsertQuestionCmd.Parameters.Add(new SqlParameter("@Q_text", pQuestionData.Text));
+                tInsertQuestionCmd.Parameters.Add(new SqlParameter("@Text", pQuestionData.Text));
+                tInsertQuestionCmd.Parameters.Add(new SqlParameter("@Order", pQuestionData.Order));
+                tInsertQuestionCmd.Parameters.Add(new SqlParameter("@Type", pQuestionData.Type));
 
                 //insert the row data to the question and return the id of the created question
                 int tQuestionId = (int)tInsertQuestionCmd.ExecuteScalar();
@@ -83,26 +86,28 @@ namespace DatabaseLayer
                 string tQuestionTypeSpecificAttributes = "";
                 string tQuestionTypeSpecificValues = "";
                 //for each type of question downcast the question to its specific type and obtain its properties
+                //make a generic function, or a specific function for each question type to make code more readable/ easier to maintain
                 switch (pQuestionData.Type)
                 {
                     case SharedData.cSmileyType:
                         SmileyQuestion smileyQuestionData = (SmileyQuestion)pQuestionData;
-                        tQuestionTypeSpecificAttributes += "Num_of_faces";
+                        tQuestionTypeSpecificAttributes += "NumberOfFaces";
                         tQuestionTypeSpecificValues += $"{smileyQuestionData.NumberOfSmileyFaces}";
                         break;
                     case SharedData.cSliderType:
                         SliderQuestion sliderQuestionData = (SliderQuestion)pQuestionData;
-                        tQuestionTypeSpecificAttributes += "Start_value, End_value, Start_value_caption, End_value_caption";
+                        tQuestionTypeSpecificAttributes += "StartValue, EndValue, StartValueCaption, EndValueCaption";
                         tQuestionTypeSpecificValues += $"{sliderQuestionData.StartValue}, {sliderQuestionData.EndValue}," +
                             $" '{sliderQuestionData.StartValueCaption}', '{sliderQuestionData.EndValueCaption}'";
                         break;
                     case SharedData.cStarsType:
                         StarsQuestion starsQuestionData = (StarsQuestion)pQuestionData;
-                        tQuestionTypeSpecificAttributes += "Num_of_stars";
+                        tQuestionTypeSpecificAttributes += "NumberOfStars";
                         tQuestionTypeSpecificValues += $"{starsQuestionData.NumberOfStars}";
                         break;
                 }
-                SqlCommand tInsertQuestionTypeCmd = new SqlCommand($"INSERT INTO {pQuestionData.Type.ToString()} (Q_id, {tQuestionTypeSpecificAttributes}) VALUES ({tQuestionId}, {tQuestionTypeSpecificValues})",
+                //add parameters
+                SqlCommand tInsertQuestionTypeCmd = new SqlCommand($"INSERT INTO {pQuestionData.Type} (Id, {tQuestionTypeSpecificAttributes}) VALUES ({tQuestionId}, {tQuestionTypeSpecificValues})",
                     tConn);
                 tInsertQuestionTypeCmd.ExecuteNonQuery();
                 //return question id to add question to UI
@@ -232,8 +237,8 @@ namespace DatabaseLayer
                     Question tCurrentQuestion = pSelectedQuestions[i];
                     tDeleteQuestionsCmd.CommandText = $"DELETE FROM Question WHERE Id = @Id";
                     tDeleteQuestionsCmd.Parameters.Add(new SqlParameter("@Id", tCurrentQuestion.Id));
-
                     tDeleteQuestionsCmd.ExecuteNonQuery();
+                    tDeleteQuestionsCmd.Parameters.Clear();
                 }
             }
         }

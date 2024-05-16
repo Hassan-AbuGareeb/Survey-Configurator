@@ -660,3 +660,378 @@ Stack trace:
 
 --------
 
+5/16/2024 9:51:46 AM UTC,
+Exception: SqlException,
+Exception message: Incorrect syntax near the keyword 'Order'.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at Microsoft.Data.SqlClient.SqlDataReader.get_MetaData()
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteScalar()
+   at DatabaseLayer.Database.AddQuestionToDB(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 83
+   at QuestionServices.QuestionOperations.AddQuestion(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 83
+
+--------
+
+5/16/2024 9:53:51 AM UTC,
+Exception: SqlException,
+Exception message: Incorrect syntax near the keyword 'Order'.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at Microsoft.Data.SqlClient.SqlDataReader.get_MetaData()
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteScalar()
+   at DatabaseLayer.Database.AddQuestionToDB(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 83
+   at QuestionServices.QuestionOperations.AddQuestion(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 83
+
+--------
+
+5/16/2024 9:54:00 AM UTC,
+Exception: SqlException,
+Exception message: Incorrect syntax near the keyword 'Order'.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at Microsoft.Data.SqlClient.SqlDataReader.get_MetaData()
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteScalar()
+   at DatabaseLayer.Database.AddQuestionToDB(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 83
+   at QuestionServices.QuestionOperations.AddQuestion(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 83
+
+--------
+
+5/16/2024 9:54:02 AM UTC,
+Exception: SqlException,
+Exception message: Incorrect syntax near the keyword 'Order'.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at Microsoft.Data.SqlClient.SqlDataReader.get_MetaData()
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteScalar()
+   at DatabaseLayer.Database.AddQuestionToDB(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 83
+   at QuestionServices.QuestionOperations.AddQuestion(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 83
+
+--------
+
+5/16/2024 9:56:08 AM UTC,
+Exception: SqlException,
+Exception message: Invalid column name 'Q_id'.
+Invalid column name 'Num_of_stars'.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean isAsync, Int32 timeout, Boolean asyncWrite)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String methodName)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DatabaseLayer.Database.AddQuestionToDB(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 111
+   at QuestionServices.QuestionOperations.AddQuestion(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 83
+
+--------
+
+5/16/2024 9:56:15 AM UTC,
+Exception: SqlException,
+Exception message: Invalid column name 'Q_id'.
+Invalid column name 'Num_of_stars'.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean isAsync, Int32 timeout, Boolean asyncWrite)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String methodName)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DatabaseLayer.Database.AddQuestionToDB(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 111
+   at QuestionServices.QuestionOperations.AddQuestion(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 83
+
+--------
+
+5/16/2024 10:07:47 AM UTC,
+Exception: ArgumentOutOfRangeException,
+Exception message: InvalidArgument=Value of '2' is not valid for 'index'. (Parameter 'index')
+Actual value was 2.,
+Stack trace:
+   at System.Windows.Forms.ListView.SelectedListViewItemCollection.get_Item(Int32 index)
+   at Survey_Configurator.MainScreen.DeleteQuestionButton_Click(Object sender, EventArgs e) in D:\Survey Configurator\Survey Configurator\Survey Configurator\MainScreen.cs:line 89
+
+--------
+
+5/16/2024 10:13:48 AM UTC,
+Exception: SqlException,
+Exception message: Must declare the scalar variable "@Id".,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean isAsync, Int32 timeout, Boolean asyncWrite)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String methodName)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DatabaseLayer.Database.DeleteQuestionFromDB(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 241
+   at QuestionServices.QuestionOperations.DeleteQuestion(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 141
+
+--------
+
+5/16/2024 10:13:48 AM UTC,
+Exception: SqlException,
+Exception message: Must declare the scalar variable "@Id".,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean isAsync, Int32 timeout, Boolean asyncWrite)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String methodName)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DatabaseLayer.Database.DeleteQuestionFromDB(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 241
+   at QuestionServices.QuestionOperations.DeleteQuestion(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 141
+   at Survey_Configurator.MainScreen.DeleteQuestionButton_Click(Object sender, EventArgs e) in D:\Survey Configurator\Survey Configurator\Survey Configurator\MainScreen.cs:line 96
+
+--------
+
+5/16/2024 10:15:53 AM UTC,
+Exception: ArgumentOutOfRangeException,
+Exception message: InvalidArgument=Value of '1' is not valid for 'index'. (Parameter 'index')
+Actual value was 1.,
+Stack trace:
+   at System.Windows.Forms.ListView.SelectedListViewItemCollection.get_Item(Int32 index)
+   at Survey_Configurator.MainScreen.DeleteQuestionButton_Click(Object sender, EventArgs e) in D:\Survey Configurator\Survey Configurator\Survey Configurator\MainScreen.cs:line 89
+
+--------
+
+5/16/2024 10:26:11 AM UTC,
+Exception: SqlException,
+Exception message: Invalid column name 'Stars'.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at Microsoft.Data.SqlClient.SqlDataReader.get_MetaData()
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteScalar()
+   at DatabaseLayer.Database.AddQuestionToDB(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 83
+   at QuestionServices.QuestionOperations.AddQuestion(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 83
+
+--------
+
+5/16/2024 10:26:18 AM UTC,
+Exception: SqlException,
+Exception message: Invalid column name 'Stars'.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at Microsoft.Data.SqlClient.SqlDataReader.get_MetaData()
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteScalar()
+   at DatabaseLayer.Database.AddQuestionToDB(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 83
+   at QuestionServices.QuestionOperations.AddQuestion(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 83
+
+--------
+
+5/16/2024 12:06:03 PM UTC,
+Exception: ArgumentOutOfRangeException,
+Exception message: InvalidArgument=Value of '1' is not valid for 'index'. (Parameter 'index')
+Actual value was 1.,
+Stack trace:
+   at System.Windows.Forms.ListView.SelectedListViewItemCollection.get_Item(Int32 index)
+   at Survey_Configurator.MainScreen.DeleteQuestionButton_Click(Object sender, EventArgs e) in D:\Survey Configurator\Survey Configurator\Survey Configurator\MainScreen.cs:line 89
+
+--------
+
+5/16/2024 12:12:31 PM UTC,
+Exception: SqlException,
+Exception message: The variable name '@Id' has already been declared. Variable names must be unique within a query batch or stored procedure.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String methodName)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DatabaseLayer.Database.DeleteQuestionFromDB(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 241
+   at QuestionServices.QuestionOperations.DeleteQuestion(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 141
+
+--------
+
+5/16/2024 12:12:31 PM UTC,
+Exception: SqlException,
+Exception message: The variable name '@Id' has already been declared. Variable names must be unique within a query batch or stored procedure.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String methodName)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DatabaseLayer.Database.DeleteQuestionFromDB(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 241
+   at QuestionServices.QuestionOperations.DeleteQuestion(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 141
+   at Survey_Configurator.MainScreen.DeleteQuestionButton_Click(Object sender, EventArgs e) in D:\Survey Configurator\Survey Configurator\Survey Configurator\MainScreen.cs:line 95
+
+--------
+
+5/16/2024 12:28:28 PM UTC,
+Exception: InvalidOperationException,
+Exception message: ExecuteNonQuery: CommandText property has not been initialized,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlCommand.ValidateCommand(Boolean isAsync, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String methodName)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DatabaseLayer.Database.DeleteQuestionFromDB(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 229
+   at QuestionServices.QuestionOperations.DeleteQuestion(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 141
+
+--------
+
+5/16/2024 12:28:28 PM UTC,
+Exception: InvalidOperationException,
+Exception message: problem in connection to database,
+Stack trace:
+   at QuestionServices.QuestionOperations.DeleteQuestion(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 156
+   at Survey_Configurator.MainScreen.DeleteQuestionButton_Click(Object sender, EventArgs e) in D:\Survey Configurator\Survey Configurator\Survey Configurator\MainScreen.cs:line 95
+
+--------
+
+5/16/2024 12:29:09 PM UTC,
+Exception: InvalidOperationException,
+Exception message: ExecuteNonQuery: CommandText property has not been initialized,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlCommand.ValidateCommand(Boolean isAsync, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String methodName)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DatabaseLayer.Database.DeleteQuestionFromDB(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 229
+   at QuestionServices.QuestionOperations.DeleteQuestion(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 141
+
+--------
+
+5/16/2024 12:29:09 PM UTC,
+Exception: InvalidOperationException,
+Exception message: problem in connection to database,
+Stack trace:
+   at QuestionServices.QuestionOperations.DeleteQuestion(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 156
+   at Survey_Configurator.MainScreen.DeleteQuestionButton_Click(Object sender, EventArgs e) in D:\Survey Configurator\Survey Configurator\Survey Configurator\MainScreen.cs:line 95
+
+--------
+
+5/16/2024 12:30:24 PM UTC,
+Exception: InvalidOperationException,
+Exception message: ExecuteNonQuery: CommandText property has not been initialized,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlCommand.ValidateCommand(Boolean isAsync, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String methodName)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DatabaseLayer.Database.DeleteQuestionFromDB(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 229
+   at QuestionServices.QuestionOperations.DeleteQuestion(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 141
+
+--------
+
+5/16/2024 12:30:24 PM UTC,
+Exception: InvalidOperationException,
+Exception message: problem in connection to database,
+Stack trace:
+   at QuestionServices.QuestionOperations.DeleteQuestion(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 156
+   at Survey_Configurator.MainScreen.DeleteQuestionButton_Click(Object sender, EventArgs e) in D:\Survey Configurator\Survey Configurator\Survey Configurator\MainScreen.cs:line 95
+
+--------
+
+5/16/2024 12:31:35 PM UTC,
+Exception: InvalidOperationException,
+Exception message: ExecuteNonQuery: CommandText property has not been initialized,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlCommand.ValidateCommand(Boolean isAsync, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String methodName)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DatabaseLayer.Database.DeleteQuestionFromDB(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 229
+   at QuestionServices.QuestionOperations.DeleteQuestion(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 141
+
+--------
+
+5/16/2024 12:31:35 PM UTC,
+Exception: InvalidOperationException,
+Exception message: problem in connection to database,
+Stack trace:
+   at QuestionServices.QuestionOperations.DeleteQuestion(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 156
+   at Survey_Configurator.MainScreen.DeleteQuestionButton_Click(Object sender, EventArgs e) in D:\Survey Configurator\Survey Configurator\Survey Configurator\MainScreen.cs:line 95
+
+--------
+
+5/16/2024 12:33:41 PM UTC,
+Exception: SqlException,
+Exception message: The variable name '@Id' has already been declared. Variable names must be unique within a query batch or stored procedure.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String methodName)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DatabaseLayer.Database.DeleteQuestionFromDB(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 240
+   at QuestionServices.QuestionOperations.DeleteQuestion(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 141
+
+--------
+
+5/16/2024 12:33:41 PM UTC,
+Exception: SqlException,
+Exception message: The variable name '@Id' has already been declared. Variable names must be unique within a query batch or stored procedure.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, SqlCommand command, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String methodName)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DatabaseLayer.Database.DeleteQuestionFromDB(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 240
+   at QuestionServices.QuestionOperations.DeleteQuestion(Question[] pSelectedQuestions) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 141
+   at Survey_Configurator.MainScreen.DeleteQuestionButton_Click(Object sender, EventArgs e) in D:\Survey Configurator\Survey Configurator\Survey Configurator\MainScreen.cs:line 95
+
+--------
+
