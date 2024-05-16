@@ -62,6 +62,7 @@ namespace Survey_Configurator
         {
             AddEditQuestion addForm = new AddEditQuestion();
             addForm.ShowDialog();
+            UpdateQuestionsList();
         }
 
         private void EditQuestionButton_Click(object sender, EventArgs e)
@@ -69,6 +70,7 @@ namespace Survey_Configurator
             Question tSelectedQuestion = QuestionsListView.SelectedItems[0].Tag as Question;
             AddEditQuestion addForm = new AddEditQuestion(tSelectedQuestion.Id);
             addForm.ShowDialog();
+            UpdateQuestionsList();
         }
 
         private void DeleteQuestionButton_Click(object sender, EventArgs e)
@@ -88,11 +90,12 @@ namespace Survey_Configurator
                         //cast the selected grid row to dataRowView to store it in a dataRow
                         Question tCurrentQuestion = QuestionsListView.SelectedItems[i].Tag as Question;
                         tSelectedQuestions[i] = tCurrentQuestion;
-
-                        //remove question from UI
                     }
-                    //delete the questions from database and ui
                     QuestionOperations.DeleteQuestion(tSelectedQuestions);
+
+                    //Update UI
+                    UpdateQuestionsList();
+                    
                     MessageBox.Show($"Question{(tNumberOfSelectedQuestions > 1 ? "s " : " ")}deleted successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -185,6 +188,13 @@ namespace Survey_Configurator
         private void QuestionsListViewInit()
         {
             QuestionOperations.GetQuestions();
+            UpdateQuestionsList();
+            //try and catch
+        }
+        
+        private void UpdateQuestionsList()
+        {
+            QuestionsListView.Items.Clear();
             foreach (Question question in QuestionOperations.QuestionsList)
             {
                 string[] tCurrentQuestionData = new[] { question.Order.ToString(), question.Text, question.Type.ToString() };
@@ -192,7 +202,6 @@ namespace Survey_Configurator
                 tCurrentQuestionItem.Tag = question;
                 QuestionsListView.Items.Add(tCurrentQuestionItem);
             }
-            //try and catch
         }
         #endregion
 

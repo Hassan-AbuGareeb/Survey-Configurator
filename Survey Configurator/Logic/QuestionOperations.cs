@@ -81,8 +81,7 @@ namespace QuestionServices
             { 
                 //add the question to the database to generate its id and obtain it
                 Question tFullQuestionData = Database.AddQuestionToDB(pQuestionData);
-                //add question to UI
-                //QuestionsList.Add(tFullQuestionData);
+                QuestionsList.Add(tFullQuestionData);
             }
             catch (SqlException ex)
             {
@@ -109,11 +108,10 @@ namespace QuestionServices
 
                 Database.UpdateQuestionOnDB(tOriginalQuestionType, pUpdatedQuestionData);
                 //remove from questions list
-                //QuestionsList.Remove(QuestionsList.Find(question => question.Id == pUpdatedQuestionData.Id));
-                ////add the new Question to the list
-                //QuestionsList.Add(pUpdatedQuestionData);
-                ////update UI
-
+                QuestionsList.Remove(QuestionsList.Find(question => question.Id == pUpdatedQuestionData.Id));
+                //add the new Question to the list
+                QuestionsList.Add(pUpdatedQuestionData);
+                //update UI
             }
             catch (SqlException ex)
             {
@@ -137,7 +135,7 @@ namespace QuestionServices
             try
             {
                 Database.DeleteQuestionFromDB(pSelectedQuestions);
-                //delete question from interface (Questions)
+                //delete question from List (Questions)
                 foreach (Question tQuestion in pSelectedQuestions)
                 {
                     QuestionsList.Remove(tQuestion);
