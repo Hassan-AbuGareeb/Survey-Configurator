@@ -9,9 +9,13 @@ namespace SharedResources
         Smiley=1,
         Slider=2
     }
+
      public class SharedData
     {
-        int value = 0;
-        QuestionType nono = (QuestionType)0;
+        public const QuestionType cStarsType = QuestionType.Stars;
+        public const QuestionType cSmileyType = QuestionType.Smiley;
+        public const QuestionType cSliderType = QuestionType.Slider;
+
+
     }
 }

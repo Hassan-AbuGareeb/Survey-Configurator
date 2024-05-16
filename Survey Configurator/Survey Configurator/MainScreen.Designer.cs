@@ -51,6 +51,7 @@
             // 
             DeleteQuestionButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             DeleteQuestionButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            DeleteQuestionButton.Enabled = false;
             DeleteQuestionButton.Font = new Font("Microsoft Sans Serif", 12F);
             DeleteQuestionButton.Location = new Point(1117, 673);
             DeleteQuestionButton.Name = "DeleteQuestionButton";
@@ -64,6 +65,7 @@
             // 
             EditQuestionButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             EditQuestionButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            EditQuestionButton.Enabled = false;
             EditQuestionButton.Font = new Font("Microsoft Sans Serif", 12F);
             EditQuestionButton.Location = new Point(990, 673);
             EditQuestionButton.Name = "EditQuestionButton";
@@ -155,11 +157,12 @@
             QuestionsListView.FullRowSelect = true;
             QuestionsListView.Location = new Point(12, 39);
             QuestionsListView.Name = "QuestionsListView";
-            QuestionsListView.Size = new Size(1226, 574);
+            QuestionsListView.Size = new Size(1226, 628);
             QuestionsListView.Sorting = SortOrder.Ascending;
             QuestionsListView.TabIndex = 6;
             QuestionsListView.UseCompatibleStateImageBehavior = false;
             QuestionsListView.View = View.Details;
+            QuestionsListView.SelectedIndexChanged += QuestionsListView_SelectedIndexChanged;
             // 
             // QuestionOrder
             // 

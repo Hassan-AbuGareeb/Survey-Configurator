@@ -45,17 +45,18 @@ namespace QuestionServices
             }
         }
 
-        public static DataRow GetQuestionData(int pQuestionId)
+        public static Question GetQuestionData(int pQuestionId)
         {
-            DataRow tQuestionGeneralData = Questions.Select($"Q_id = {pQuestionId}")[0];
+            Question tQuestionGeneralData = QuestionsList.Find(question => question.Id == pQuestionId);
             return tQuestionGeneralData;
         }
 
-        public static DataRow GetQuestionSpecificData(int pQuestionId, string pQuestionType)
+        public static Question GetQuestionSpecificData(int pQuestionId)
         {
             try
             {
-                return Database.getQuestionSpecificDataFromDB(pQuestionId, pQuestionType);
+                Question tQuestionData = GetQuestionData(pQuestionId);
+                return Database.getQuestionSpecificDataFromDB(tQuestionData);
             }
             catch (SqlException ex)
             {
@@ -79,10 +80,9 @@ namespace QuestionServices
             try 
             { 
                 //add the question to the database to generate its id and obtain it
-                int tQuestionId = Database.AddQuestionToDB(pQuestionData);
-                string tQuestionType = pQuestionData.GetType().Name.Split("Q")[0];
+                Question tFullQuestionData = Database.AddQuestionToDB(pQuestionData);
                 //add question to UI
-                Questions.Rows.Add(tQuestionId, pQuestionData.Text, pQuestionData.Order, tQuestionType);
+                QuestionsList.Add(tFullQuestionData);
             }
             catch (SqlException ex)
             {
@@ -101,22 +101,21 @@ namespace QuestionServices
             }
         }
 
-        public static void UpdateQuestion(int pQuestionId, Question pUpdatedQuestionData)
+        public static void UpdateQuestion(Question pUpdatedQuestionData)
         {
-            try 
-            { 
-                string tOriginalQuestionType = GetQuestionData(pQuestionId)["Q_type"].ToString();
-                string tUpdatedQuestionType = pUpdatedQuestionData.GetType().Name.Split("Q")[0];
+            try
+            {
+                string tOriginalQuestionType = GetQuestionData(pUpdatedQuestionData.Id).Type.ToString();
+                string tUpdatedQuestionType = pUpdatedQuestionData.Type.ToString();
 
-                Database.UpdateQuestionOnDB(pQuestionId, tOriginalQuestionType, pUpdatedQuestionData);
+                Database.UpdateQuestionOnDB(tOriginalQuestionType, pUpdatedQuestionData);
 
+                //remove from questions list
+                QuestionsList.Remove(QuestionsList.Find(question => question.Id == pUpdatedQuestionData.Id));
+                //add the new Question to the list
+                QuestionsList.Add(pUpdatedQuestionData);
                 //update UI
-                Questions.Rows.Remove(Questions.Select($"Q_id = {pQuestionId}")[0]);
-                Questions.Rows.Add(pQuestionId,
-                pUpdatedQuestionData.Text,
-                pUpdatedQuestionData.Order,
-                //decide the type of the question on whether it was changed or not
-                (tUpdatedQuestionType.Equals(tOriginalQuestionType) ? tOriginalQuestionType : tUpdatedQuestionType));
+
             }
             catch (SqlException ex)
             {
@@ -135,15 +134,15 @@ namespace QuestionServices
             }
         }
 
-        public static void DeleteQuestion(DataRow[] pSelectedQuestions)
+        public static void DeleteQuestion(Question[] pSelectedQuestions)
         {
             try
             {
                 Database.DeleteQuestionFromDB(pSelectedQuestions);
                 //delete question from interface (Questions)
-                foreach (DataRow tQuestion in pSelectedQuestions)
+                foreach (Question tQuestion in pSelectedQuestions)
                 {
-                    Questions.Rows.Remove(tQuestion);
+                    QuestionsList.Remove(tQuestion);
                 }
             }
             catch (SqlException ex)
@@ -234,16 +233,10 @@ namespace QuestionServices
                         if (currentChecksum != newChecksum)
                         {
                             //data changed
-
-                            currentChecksum = newChecksum;
+                           currentChecksum = newChecksum;
+                           QuestionsList.Clear();
                            Database.getQuestionsFromDB(ref QuestionsList);
-                            Questions.Clear();
-                            //fill Questions collection with updated data from db
-                            //for (int i = 0; i < updatedQuestions.Rows.Count; i++)
-                            //{
-                            //    DataRow currentQuestion = updatedQuestions.Rows[i];
-                            //    Questions.Rows.Add(currentQuestion["Q_id"], currentQuestion["Q_text"], currentQuestion["Q_order"], currentQuestion["Q_type"]);
-                            //}
+                           //update UI somehow
                         }
                     }
                 }

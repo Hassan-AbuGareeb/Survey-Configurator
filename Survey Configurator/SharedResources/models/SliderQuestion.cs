@@ -20,6 +20,15 @@ namespace SharedResources.models
             EndValueCaption = pEndCaption;
         }
 
+        public SliderQuestion(Question pQuestionData, int pStartValue = 0, int pEndValue = 100, string pStartCaption = "Min", string pEndCaption = "Max")
+            : base(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order, QuestionType.Slider)
+        {
+            StartValue = pStartValue;
+            EndValue = pEndValue;
+            StartValueCaption = pStartCaption;
+            EndValueCaption = pEndCaption;
+        }
+
 
     }
 }

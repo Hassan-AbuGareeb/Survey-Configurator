@@ -34,7 +34,6 @@
             QuestionTypeComboBox = new ComboBox();
             QuestionOrderNumeric = new NumericUpDown();
             QuestionTextBox = new TextBox();
-            TitleLabel = new Label();
             label3 = new Label();
             label2 = new Label();
             label1 = new Label();
@@ -44,10 +43,10 @@
             // QuestionOptions
             // 
             QuestionOptions.Anchor = AnchorStyles.Left;
-            QuestionOptions.Location = new Point(31, 378);
+            QuestionOptions.Location = new Point(31, 446);
             QuestionOptions.Margin = new Padding(3, 4, 3, 4);
             QuestionOptions.Name = "QuestionOptions";
-            QuestionOptions.Size = new Size(633, 273);
+            QuestionOptions.Size = new Size(633, 204);
             QuestionOptions.TabIndex = 19;
             // 
             // Cancel
@@ -82,7 +81,7 @@
             QuestionTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             QuestionTypeComboBox.FormattingEnabled = true;
             QuestionTypeComboBox.Items.AddRange(new object[] { "Slider", "Stars", "Smiley" });
-            QuestionTypeComboBox.Location = new Point(111, 321);
+            QuestionTypeComboBox.Location = new Point(29, 343);
             QuestionTypeComboBox.Margin = new Padding(3, 4, 3, 4);
             QuestionTypeComboBox.Name = "QuestionTypeComboBox";
             QuestionTypeComboBox.Size = new Size(187, 28);
@@ -92,7 +91,7 @@
             // QuestionOrderNumeric
             // 
             QuestionOrderNumeric.Anchor = AnchorStyles.Left;
-            QuestionOrderNumeric.Location = new Point(111, 266);
+            QuestionOrderNumeric.Location = new Point(30, 259);
             QuestionOrderNumeric.Margin = new Padding(3, 4, 3, 4);
             QuestionOrderNumeric.Maximum = new decimal(new int[] { 120, 0, 0, 0 });
             QuestionOrderNumeric.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
@@ -104,7 +103,7 @@
             // QuestionTextBox
             // 
             QuestionTextBox.Anchor = AnchorStyles.Left;
-            QuestionTextBox.Location = new Point(111, 90);
+            QuestionTextBox.Location = new Point(30, 62);
             QuestionTextBox.Margin = new Padding(3, 4, 3, 4);
             QuestionTextBox.MaxLength = 350;
             QuestionTextBox.Multiline = true;
@@ -112,22 +111,12 @@
             QuestionTextBox.Size = new Size(559, 140);
             QuestionTextBox.TabIndex = 1;
             // 
-            // TitleLabel
-            // 
-            TitleLabel.AutoSize = true;
-            TitleLabel.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            TitleLabel.Location = new Point(31, 9);
-            TitleLabel.Name = "TitleLabel";
-            TitleLabel.Size = new Size(326, 50);
-            TitleLabel.TabIndex = 13;
-            TitleLabel.Text = "Add/Edit Question";
-            // 
             // label3
             // 
             label3.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 14.25F);
-            label3.Location = new Point(31, 321);
+            label3.Location = new Point(30, 307);
             label3.Name = "label3";
             label3.Size = new Size(65, 32);
             label3.TabIndex = 12;
@@ -138,7 +127,7 @@
             label2.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 14.25F);
-            label2.Location = new Point(30, 266);
+            label2.Location = new Point(30, 223);
             label2.Name = "label2";
             label2.Size = new Size(75, 32);
             label2.TabIndex = 11;
@@ -149,7 +138,7 @@
             label1.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 14.25F);
-            label1.Location = new Point(31, 90);
+            label1.Location = new Point(30, 26);
             label1.Name = "label1";
             label1.Size = new Size(57, 32);
             label1.TabIndex = 10;
@@ -166,7 +155,6 @@
             Controls.Add(QuestionTypeComboBox);
             Controls.Add(QuestionOrderNumeric);
             Controls.Add(QuestionTextBox);
-            Controls.Add(TitleLabel);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -191,7 +179,6 @@
         private ComboBox QuestionTypeComboBox;
         private NumericUpDown QuestionOrderNumeric;
         private TextBox QuestionTextBox;
-        private Label TitleLabel;
         private Label label3;
         private Label label2;
         private Label label1;

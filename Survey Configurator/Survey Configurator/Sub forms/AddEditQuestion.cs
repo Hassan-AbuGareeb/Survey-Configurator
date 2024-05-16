@@ -5,6 +5,7 @@ using System.Data;
 using QuestionServices;
 using Microsoft.Data.SqlClient;
 using SharedResources.models;
+using SharedResources;
 
 namespace Survey_Configurator.Sub_forms
 {
@@ -28,7 +29,6 @@ namespace Survey_Configurator.Sub_forms
         public AddEditQuestion()
         {
             InitializeComponent();
-            TitleLabel.Text = "Add Question";
             Text = "Add";
             Add.Text = "Add";
 
@@ -39,7 +39,6 @@ namespace Survey_Configurator.Sub_forms
             InitializeComponent();
             QuestionId = questionId;
             Text = "Edit";
-            TitleLabel.Text = "Edit Question";
             Add.Text = "Save";
         }
 
@@ -52,31 +51,37 @@ namespace Survey_Configurator.Sub_forms
                 //check if the operation is edit and fill the fields with selected question data
                 if (Add.Text.Equals("Save"))
                 {
-                    DataRow generalQuestionData = QuestionOperations.GetQuestionData(QuestionId);
+                    //assing function on load
+                    Add.Click += AddButton_Click;
+
+                    Question tQeneralQuestionData = QuestionOperations.GetQuestionData(QuestionId);
                     //extract question data an add it to UI
-                    QuestionTextBox.Text = generalQuestionData["Q_text"].ToString();
-                    QuestionOrderNumeric.Value = (int)generalQuestionData["Q_order"];
-                    QuestionTypeComboBox.SelectedItem = generalQuestionData["Q_type"];
+                    QuestionTextBox.Text = tQeneralQuestionData.Text;
+                    QuestionOrderNumeric.Value = tQeneralQuestionData.Order;
+                    QuestionTypeComboBox.SelectedItem = tQeneralQuestionData.Type.ToString();
 
                     //based on the combobox value further data about the question should be obtained and added to UI
-                    string QuestionType = generalQuestionData["Q_type"].ToString();
-                    DataRow questionSpecificData = QuestionOperations.GetQuestionSpecificData(QuestionId, QuestionType);
-                    switch (QuestionType)
+                    Question questionSpecificData = QuestionOperations.GetQuestionSpecificData(QuestionId);
+                    switch (questionSpecificData.Type)
                     {
                         //for each case Get the info and downcast it and assign it to its respective field
-                        case "Smiley":
-                            NumberOfSmileysNumeric.Value = (int)questionSpecificData["Num_of_faces"];
+                        case SharedData.cSmileyType:
+                            NumberOfSmileysNumeric.Value = ((SmileyQuestion)questionSpecificData).NumberOfSmileyFaces;
                             break;
-                        case "Stars":
-                            NumberOfStarsNumeric.Value = (int)questionSpecificData["Num_of_stars"];
+                        case SharedData.cStarsType:
+                            NumberOfStarsNumeric.Value = ((StarsQuestion)questionSpecificData).NumberOfStars;
                             break;
-                        case "Slider":
-                            SliderStartValueNumeric.Value = (int)questionSpecificData["Start_value"];
-                            SliderEndValueNumeric.Value = (int)questionSpecificData["End_value"];
-                            SliderStartValueCaptionText.Text = questionSpecificData["Start_value_caption"].ToString();
-                            SliderEndValueCaptionText.Text = questionSpecificData["End_value_caption"].ToString();
+                        case SharedData.cSliderType:
+                            SliderStartValueNumeric.Value = ((SliderQuestion)questionSpecificData).StartValue;
+                            SliderEndValueNumeric.Value = ((SliderQuestion)questionSpecificData).EndValue;
+                            SliderStartValueCaptionText.Text = ((SliderQuestion)questionSpecificData).StartValueCaption;
+                            SliderEndValueCaptionText.Text = ((SliderQuestion)questionSpecificData).EndValueCaption;
                             break;
                     }
+                }
+                else
+                {
+                    Add.Click += AddButton_Click;
                 }
             }
             catch (SqlException)
@@ -93,82 +98,154 @@ namespace Survey_Configurator.Sub_forms
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    //check if all general fields are filled properly
-            //    if (QuestionTextBox.Text.Length != 0 &&
-            //        QuestionTypeComboBox.SelectedItem != null)
-            //    {
-            //        //add question to db and interface
-            //        switch (QuestionTypeComboBox.Text)
-            //        {
-            //            //decied whether to add or edit question based on the Clicked button text
-            //            case "Stars":
-            //                StarsQuestion tStarsData = new StarsQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value, (int)NumberOfStarsNumeric.Value);
-            //                if (Add.Text.Equals("Add"))
-            //                    QuestionOperations.AddQuestion(tStarsData);
-            //                else
-            //                    QuestionOperations.UpdateQuestion(QuestionId, tStarsData);
-            //                break;
-            //            case "Slider":
-            //                SliderQuestion tSliderData = new SliderQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value,
-            //                    (int)SliderStartValueNumeric.Value, (int)SliderEndValueNumeric.Value,
-            //                    SliderStartValueCaptionText.Text, SliderEndValueCaptionText.Text);
-            //                if (Add.Text.Equals("Add"))
-            //                    QuestionOperations.AddQuestion(tSliderData);
-            //                else
-            //                    QuestionOperations.UpdateQuestion(QuestionId, tSliderData);
-            //                break;
-            //            case "Smiley":
-            //                SmileyQuestion tSmileyData = new SmileyQuestion(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value, (int)NumberOfSmileysNumeric.Value);
-            //                if (Add.Text.Equals("Add"))
-            //                    QuestionOperations.AddQuestion(tSmileyData);
-            //                else
-            //                    QuestionOperations.UpdateQuestion(QuestionId, tSmileyData);
-            //                break;
-            //        }
-            //        //close form
-            //        Close();
-            //    }
-            //    else
-            //    {
-            //        //some fields are empty or have wrong inputs
-            //        string tMissingFieldsMessage = "";
-            //        if (QuestionTextBox.Text.Length == 0 && QuestionTypeComboBox.SelectedItem == null)
-            //        {
-            //            tMissingFieldsMessage += "Question text, Question type ";
-            //        }
-            //        else if (QuestionTextBox.Text.Length == 0)
-            //        {
-            //            tMissingFieldsMessage += "Question text";
-            //        }
-            //        else
-            //        {
-            //            tMissingFieldsMessage += "Question type";
-            //        }
-            //        MessageBox.Show($"The following fields must have proper values: {tMissingFieldsMessage}", "Missing fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    }
-            //}
-            //catch (InvalidOperationException)
-            //{
-            //    MessageBox.Show("error occured while Loading data, please try again");
-            //    Close();
-            //}
-            //catch (SqlException ex)
-            //{
-            //    MessageBox.Show(ex.StackTrace);
-            //    MessageBox.Show("Database connection error, check the connection parameters or the sql server configurations");
-            //    Close();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"{ex.GetType().FullName}, {ex.StackTrace}");
-            //    Close();
-            //}
-            //finally
-            //{
-            //    QuestionOperations.OperationOngoing = false;
-            //}
+            try
+            {
+                //check if all general fields are filled properly
+                if (QuestionTextBox.Text.Length != 0 &&
+                    QuestionTypeComboBox.SelectedItem != null)
+                {
+                    //get the enum value of the question type name
+                    Enum.TryParse(QuestionTypeComboBox.Text,out QuestionType tQuestionType);
+                    //encapsulate obtained data in a question object
+                    Question tNewQuestionData = new Question(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value, tQuestionType);
+
+                    //add question to db and interface
+                    switch (tQuestionType)
+                    {
+                        //decied whether to add or edit question based on the Clicked button text
+                        case SharedData.cStarsType:
+                            StarsQuestion tStarsData = new StarsQuestion(tNewQuestionData,(int)NumberOfStarsNumeric.Value);
+                                QuestionOperations.AddQuestion(tStarsData);
+                            break;
+                        case SharedData.cSliderType:
+                            SliderQuestion tSliderData = new SliderQuestion(tNewQuestionData,
+                                (int)SliderStartValueNumeric.Value, (int)SliderEndValueNumeric.Value,
+                                SliderStartValueCaptionText.Text, SliderEndValueCaptionText.Text);
+                                QuestionOperations.AddQuestion(tSliderData);
+                            break;
+                        case SharedData.cSmileyType:
+                            SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)NumberOfSmileysNumeric.Value);
+                                QuestionOperations.AddQuestion(tSmileyData);
+                            break;
+                    }
+                    //close form
+                    Close();
+                }
+                else
+                {
+                    //some fields are empty or have wrong inputs
+                    string tMissingFieldsMessage = "";
+                    if (QuestionTextBox.Text.Length == 0 && QuestionTypeComboBox.SelectedItem == null)
+                    {
+                        tMissingFieldsMessage += "Question text, Question type ";
+                    }
+                    else if (QuestionTextBox.Text.Length == 0)
+                    {
+                        tMissingFieldsMessage += "Question text";
+                    }
+                    else
+                    {
+                        tMissingFieldsMessage += "Question type";
+                    }
+                    MessageBox.Show($"The following fields must have proper values: {tMissingFieldsMessage}", "Missing fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                MessageBox.Show("error occured while Loading data, please try again");
+                Close();
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.StackTrace);
+                MessageBox.Show("Database connection error, check the connection parameters or the sql server configurations");
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.GetType().FullName}, {ex.StackTrace}");
+                Close();
+            }
+            finally
+            {
+                QuestionOperations.OperationOngoing = false;
+            }
+        }
+
+        private void EditButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //check if all general fields are filled properly
+                if (QuestionTextBox.Text.Length != 0 &&
+                    QuestionTypeComboBox.SelectedItem != null)
+                {
+                    //get the enum value of the question type name
+                    Enum.TryParse(QuestionTypeComboBox.Text, out QuestionType tQuestionType);
+                    //encapsulate obtained data in a question object
+                    Question tNewQuestionData = new Question(QuestionId, QuestionTextBox.Text, (int)QuestionOrderNumeric.Value, tQuestionType);
+
+                    //add question to db and interface
+                    switch (QuestionTypeComboBox.Text)
+                    {
+                        //decied whether to add or edit question based on the Clicked button text
+                        case nameof(SharedData.cStarsType):
+                            StarsQuestion tStarsData = new StarsQuestion(tNewQuestionData, (int)NumberOfStarsNumeric.Value);
+                            QuestionOperations.UpdateQuestion(tStarsData);
+                            break;
+                        case nameof(SharedData.cSliderType):
+                            SliderQuestion tSliderData = new SliderQuestion(tNewQuestionData,
+                                (int)SliderStartValueNumeric.Value, (int)SliderEndValueNumeric.Value,
+                                SliderStartValueCaptionText.Text, SliderEndValueCaptionText.Text);
+                                QuestionOperations.UpdateQuestion(tSliderData);
+                            break;
+                        case nameof(SharedData.cSmileyType):
+                            SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)NumberOfSmileysNumeric.Value);
+                                QuestionOperations.UpdateQuestion(tSmileyData);
+                            break;
+                    }
+                    //close form
+                    Close();
+                }
+                else
+                {
+                    //some fields are empty or have wrong inputs
+                    string tMissingFieldsMessage = "";
+                    if (QuestionTextBox.Text.Length == 0 && QuestionTypeComboBox.SelectedItem == null)
+                    {
+                        tMissingFieldsMessage += "Question text, Question type ";
+                    }
+                    else if (QuestionTextBox.Text.Length == 0)
+                    {
+                        tMissingFieldsMessage += "Question text";
+                    }
+                    else
+                    {
+                        tMissingFieldsMessage += "Question type";
+                    }
+                    MessageBox.Show($"The following fields must have proper values: {tMissingFieldsMessage}", "Missing fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                MessageBox.Show("error occured while Loading data, please try again");
+                Close();
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.StackTrace);
+                MessageBox.Show("Database connection error, check the connection parameters or the sql server configurations");
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.GetType().FullName}, {ex.StackTrace}");
+                Close();
+            }
+            finally
+            {
+                QuestionOperations.OperationOngoing = false;
+            }
         }
 
         private void CancelButton_Click(object sender, EventArgs e)

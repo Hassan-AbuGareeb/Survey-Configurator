@@ -12,5 +12,10 @@ namespace SharedResources.models
         {
             NumberOfSmileyFaces = pNumberOfSmileyFaces;
         }
+
+        public SmileyQuestion(Question pQuestionData, int pNumberOfSmileyFaces) : base(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order, QuestionType.Smiley)
+        {
+            NumberOfSmileyFaces = pNumberOfSmileyFaces;
+        }
     }
 }

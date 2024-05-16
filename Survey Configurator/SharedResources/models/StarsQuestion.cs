@@ -12,5 +12,10 @@ namespace SharedResources.models
         {
             NumberOfStars = pNumberOfStars;
         }
+
+        public StarsQuestion(Question pQuestionData, int pNumberOfstars):base(pQuestionData.Id,pQuestionData.Text, pQuestionData.Order, QuestionType.Stars)
+        {
+            NumberOfStars = pNumberOfstars;
+        }
     }
 }
