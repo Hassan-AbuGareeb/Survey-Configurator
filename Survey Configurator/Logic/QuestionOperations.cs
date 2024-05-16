@@ -105,16 +105,14 @@ namespace QuestionServices
         {
             try
             {
-                string tOriginalQuestionType = GetQuestionData(pUpdatedQuestionData.Id).Type.ToString();
-                string tUpdatedQuestionType = pUpdatedQuestionData.Type.ToString();
+                QuestionType tOriginalQuestionType = GetQuestionData(pUpdatedQuestionData.Id).Type;
 
                 Database.UpdateQuestionOnDB(tOriginalQuestionType, pUpdatedQuestionData);
-
                 //remove from questions list
-                QuestionsList.Remove(QuestionsList.Find(question => question.Id == pUpdatedQuestionData.Id));
-                //add the new Question to the list
-                QuestionsList.Add(pUpdatedQuestionData);
-                //update UI
+                //QuestionsList.Remove(QuestionsList.Find(question => question.Id == pUpdatedQuestionData.Id));
+                ////add the new Question to the list
+                //QuestionsList.Add(pUpdatedQuestionData);
+                ////update UI
 
             }
             catch (SqlException ex)

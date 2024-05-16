@@ -52,12 +52,11 @@ namespace Survey_Configurator.Sub_forms
                 //check if the operation is edit and fill the fields with selected question data
                 if (Add.Text.Equals("Save"))
                 {
-                    //assing function on load
                     Question tQeneralQuestionData = QuestionOperations.GetQuestionData(QuestionId);
                     //extract question data an add it to UI
                     QuestionTextBox.Text = tQeneralQuestionData.Text;
                     QuestionOrderNumeric.Value = tQeneralQuestionData.Order;
-                    QuestionTypeComboBox.SelectedItem = tQeneralQuestionData.Type.ToString();
+                    QuestionTypeComboBox.SelectedItem = tQeneralQuestionData.Type;
 
                     //based on the combobox value further data about the question should be obtained and added to UI
                     Question questionSpecificData = QuestionOperations.GetQuestionSpecificData(QuestionId);
@@ -77,6 +76,8 @@ namespace Survey_Configurator.Sub_forms
                             SliderEndValueCaptionText.Text = ((SliderQuestion)questionSpecificData).EndValueCaption;
                             break;
                     }
+                    Add.Click -= AddButton_Click;
+                    Add.Click += EditButton_Click;
                 }
             }
             catch (SqlException)
@@ -86,6 +87,7 @@ namespace Survey_Configurator.Sub_forms
             }
             catch (Exception ex)
             {
+                UtilityMethods.LogError(ex);
                 MessageBox.Show($"{ex.GetType().FullName}, {ex.StackTrace}");
                 Close();
             }
@@ -176,25 +178,25 @@ namespace Survey_Configurator.Sub_forms
                     QuestionTypeComboBox.SelectedItem != null)
                 {
                     //get the enum value of the question type name
-                    Enum.TryParse(QuestionTypeComboBox.Text, out QuestionType tQuestionType);
+                    QuestionType tQuestionType = (QuestionType)QuestionTypeComboBox.SelectedItem;
                     //encapsulate obtained data in a question object
                     Question tNewQuestionData = new Question(QuestionId, QuestionTextBox.Text, (int)QuestionOrderNumeric.Value, tQuestionType);
 
                     //add question to db and interface
-                    switch (QuestionTypeComboBox.Text)
+                    switch (QuestionTypeComboBox.SelectedItem)
                     {
                         //decied whether to add or edit question based on the Clicked button text
-                        case nameof(SharedData.cStarsType):
+                        case SharedData.cStarsType:
                             StarsQuestion tStarsData = new StarsQuestion(tNewQuestionData, (int)NumberOfStarsNumeric.Value);
                             QuestionOperations.UpdateQuestion(tStarsData);
                             break;
-                        case nameof(SharedData.cSliderType):
+                        case SharedData.cSliderType:
                             SliderQuestion tSliderData = new SliderQuestion(tNewQuestionData,
                                 (int)SliderStartValueNumeric.Value, (int)SliderEndValueNumeric.Value,
                                 SliderStartValueCaptionText.Text, SliderEndValueCaptionText.Text);
                                 QuestionOperations.UpdateQuestion(tSliderData);
                             break;
-                        case nameof(SharedData.cSmileyType):
+                        case SharedData.cSmileyType:
                             SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)NumberOfSmileysNumeric.Value);
                                 QuestionOperations.UpdateQuestion(tSmileyData);
                             break;
