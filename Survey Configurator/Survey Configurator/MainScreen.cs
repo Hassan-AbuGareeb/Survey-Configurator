@@ -28,6 +28,9 @@ namespace Survey_Configurator
                 //launch the database change checker to monitor database for any change and reflect it to the UI
                 QuestionOperations.CheckDataBaseChange();
 
+                //listen to any database change event
+                QuestionOperations.DataBaseChangedEvent += QuestionOperations_DataBaseChangedEvent;
+
             }
             catch (ArgumentException)
             {
@@ -63,6 +66,9 @@ namespace Survey_Configurator
             AddEditQuestion addForm = new AddEditQuestion();
             addForm.ShowDialog();
             UpdateQuestionsList();
+            //disable delete and edit button
+            DeleteQuestionButton.Enabled = false;
+            EditQuestionButton.Enabled = false;
         }
 
         private void EditQuestionButton_Click(object sender, EventArgs e)
@@ -71,6 +77,10 @@ namespace Survey_Configurator
             AddEditQuestion addForm = new AddEditQuestion(tSelectedQuestion.Id);
             addForm.ShowDialog();
             UpdateQuestionsList();
+
+            //disable delete and edit button
+            DeleteQuestionButton.Enabled = false;
+            EditQuestionButton.Enabled = false;
         }
 
         private void DeleteQuestionButton_Click(object sender, EventArgs e)
@@ -96,6 +106,10 @@ namespace Survey_Configurator
                     //Update UI
                     UpdateQuestionsList();
                     
+                    //disable delete and edit button
+                    DeleteQuestionButton.Enabled=false;
+                    EditQuestionButton.Enabled=false;
+
                     MessageBox.Show($"Question{(tNumberOfSelectedQuestions > 1 ? "s " : " ")}deleted successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -203,8 +217,11 @@ namespace Survey_Configurator
                 QuestionsListView.Items.Add(tCurrentQuestionItem);
             }
         }
-        #endregion
 
-        
+        private void QuestionOperations_DataBaseChangedEvent(object? sender, EventArgs e)
+        {
+            UpdateQuestionsList();
+        }
+        #endregion
     }
 }

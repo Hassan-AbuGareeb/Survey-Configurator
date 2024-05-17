@@ -1144,3 +1144,49 @@ Stack trace:
 
 --------
 
+5/17/2024 7:03:26 PM UTC,
+Exception: InvalidOperationException,
+Exception message: Invalid operation. The connection is closed.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.GetOpenTdsConnection()
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso, String transactionName)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction()
+   at DatabaseLayer.Database.AddQuestionToDB(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 72
+   at QuestionServices.QuestionOperations.AddQuestion(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 85
+
+--------
+
+5/17/2024 7:04:51 PM UTC,
+Exception: InvalidOperationException,
+Exception message: Invalid operation. The connection is closed.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlConnection.GetOpenTdsConnection()
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso, String transactionName)
+   at Microsoft.Data.SqlClient.SqlConnection.BeginTransaction()
+   at DatabaseLayer.Database.AddQuestionToDB(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 72
+   at QuestionServices.QuestionOperations.AddQuestion(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 85
+
+--------
+
+5/17/2024 7:11:21 PM UTC,
+Exception: InvalidOperationException,
+Exception message: This SqlTransaction has completed; it is no longer usable.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlTransaction.ZombieCheck()
+   at Microsoft.Data.SqlClient.SqlTransaction.Rollback()
+   at DatabaseLayer.Database.UpdateQuestionOnDB(QuestionType pOriginalQuestionType, Question pUpdatedQuestionData) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 236
+   at QuestionServices.QuestionOperations.UpdateQuestion(Question pUpdatedQuestionData) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 111
+
+--------
+
+5/17/2024 7:11:41 PM UTC,
+Exception: InvalidOperationException,
+Exception message: This SqlTransaction has completed; it is no longer usable.,
+Stack trace:
+   at Microsoft.Data.SqlClient.SqlTransaction.ZombieCheck()
+   at Microsoft.Data.SqlClient.SqlTransaction.Rollback()
+   at DatabaseLayer.Database.UpdateQuestionOnDB(QuestionType pOriginalQuestionType, Question pUpdatedQuestionData) in D:\Survey Configurator\Survey Configurator\Database\Database.cs:line 236
+   at QuestionServices.QuestionOperations.UpdateQuestion(Question pUpdatedQuestionData) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 111
+
+--------
+

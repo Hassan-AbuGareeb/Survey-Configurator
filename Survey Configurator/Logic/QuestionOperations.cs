@@ -9,6 +9,8 @@ namespace QuestionServices
 {
     public class QuestionOperations
     {
+        public static event EventHandler DataBaseChangedEvent;
+
         public static bool IsAppRunning = true;
         //changed to true when the user is performing adding, updating or deleting operation
         public static bool OperationOngoing = false;
@@ -211,6 +213,13 @@ namespace QuestionServices
             return true;
         }
 
+        public static void StartCheckingDataBaseChange()
+        {
+            Thread checkThread = new Thread(CheckDataBaseChange);
+            checkThread.IsBackground = true;
+            checkThread.Start();
+        }
+
         public static async void CheckDataBaseChange()
         {
             try
@@ -228,10 +237,11 @@ namespace QuestionServices
                         long newChecksum = Database.getChecksum();
                         if (currentChecksum != newChecksum)
                         {
-                            //data changed
+                           //data changed
                            currentChecksum = newChecksum;
                            QuestionsList.Clear();
                            Database.getQuestionsFromDB(ref QuestionsList);
+                           DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
                            //update UI somehow
                         }
                     }
