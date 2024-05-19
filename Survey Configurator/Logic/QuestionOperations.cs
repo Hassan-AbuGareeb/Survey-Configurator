@@ -9,7 +9,7 @@ namespace QuestionServices
 {
     public class QuestionOperations
     {
-        public static event EventHandler DataBaseChangedEvent;
+        public static event EventHandler<string> DataBaseChangedEvent;
 
         public static bool IsAppRunning = true;
         //changed to true when the user is performing adding, updating or deleting operation
@@ -83,7 +83,10 @@ namespace QuestionServices
             { 
                 //add the question to the database to generate its id and obtain it
                 Question tFullQuestionData = Database.AddQuestionToDB(pQuestionData);
+                //on successful question addition to Database add it to the Questions List
                 QuestionsList.Add(tFullQuestionData);
+                //notify UI of change
+                DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Added a new question");
             }
             catch (SqlException ex)
             {
@@ -113,6 +116,8 @@ namespace QuestionServices
                 QuestionsList.Remove(QuestionsList.Find(question => question.Id == pUpdatedQuestionData.Id));
                 //add the new Question to the list
                 QuestionsList.Add(pUpdatedQuestionData);
+                //notify UI of change
+                DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Updated question data");
             }
             catch (SqlException ex)
             {
@@ -131,7 +136,7 @@ namespace QuestionServices
             }
         }
 
-        public static void DeleteQuestion(Question[] pSelectedQuestions)
+        public static void DeleteQuestion(List<Question> pSelectedQuestions)
         {
             try
             {
@@ -141,6 +146,8 @@ namespace QuestionServices
                 {
                     QuestionsList.Remove(tQuestion);
                 }
+                //notify UI of change
+                DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Deleted question");
             }
             catch (SqlException ex)
             {
@@ -242,7 +249,7 @@ namespace QuestionServices
                            QuestionsList.Clear();
                            Database.getQuestionsFromDB(ref QuestionsList);
                            //notify UI of database change
-                           DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
+                           DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Database externally changed");
                         }
                     }
                 }

@@ -19,7 +19,7 @@ namespace DatabaseLayer
                 tConn.Open();
                 using (SqlTransaction tTransaction = tConn.BeginTransaction()) 
                 { 
-                    SqlCommand tGetQuestionsDataCmd = new SqlCommand("SELECT * FROM Question", tConn);
+                    SqlCommand tGetQuestionsDataCmd = new SqlCommand("SELECT * FROM Question", tConn, tTransaction);
                     DbDataReader tReader = tGetQuestionsDataCmd.ExecuteReader(CommandBehavior.CloseConnection);
                     //iterate over each row in the Reader and add it to the questions list
                     while (tReader.Read())
@@ -42,7 +42,7 @@ namespace DatabaseLayer
                     //parameterize the query
                     string tQuestionType = pQuestionData.Type.ToString();
 
-                    SqlCommand tGetQuestionSpecificData = new SqlCommand($"SELECT * FROM {tQuestionType} WHERE Id = @Id", tConn);
+                    SqlCommand tGetQuestionSpecificData = new SqlCommand($"SELECT * FROM {tQuestionType} WHERE Id = @Id", tConn, tTransaction);
                     tGetQuestionSpecificData.Parameters.Add(new SqlParameter("@Id",pQuestionData.Id));
                     DbDataReader tReader = tGetQuestionSpecificData.ExecuteReader(CommandBehavior.CloseConnection);
                     //this needs to be fixed
@@ -75,63 +75,64 @@ namespace DatabaseLayer
             //change to id to status code, and return id by reference
 
             //create db connection
-        using (SqlConnection tConn = new SqlConnection(ConnectionString)) {
+            using (SqlConnection tConn = new SqlConnection(ConnectionString)) 
+            {
                 tConn.Open();
                 using (SqlTransaction tTransaction = tConn.BeginTransaction())
-            {
-                try
                 {
-                    //insert question data in the question table
-                    SqlCommand tInsertQuestionCmd = new SqlCommand($"INSERT INTO Question ([Text], [Order], [Type]) OUTPUT INSERTED.Id" +
-                    $" VALUES (@Text, @Order, @Type)",
-                    tConn, tTransaction);
-                    tInsertQuestionCmd.Parameters.Add(new SqlParameter("@Text", pQuestionData.Text));
-                    tInsertQuestionCmd.Parameters.Add(new SqlParameter("@Order", pQuestionData.Order));
-                    tInsertQuestionCmd.Parameters.Add(new SqlParameter("@Type", pQuestionData.Type));
-
-                    //insert the row data to the question and return the id of the created question
-                    int tQuestionId = (int)tInsertQuestionCmd.ExecuteScalar();
-
-                    //get the specific values for the question type
-                    string tQuestionTypeSpecificAttributes = "";
-                    string tQuestionTypeSpecificValues = "";
-                    //for each type of question downcast the question to its specific type and obtain its properties
-                    //make a generic function, or a specific function for each question type to make code more readable/ easier to maintain
-                    switch (pQuestionData.Type)
+                    try
                     {
-                        case QuestionType.Stars:
-                            StarsQuestion tStarsQuestionData = (StarsQuestion)pQuestionData;
-                            tQuestionTypeSpecificAttributes += "NumberOfStars";
-                            tQuestionTypeSpecificValues += $"{tStarsQuestionData.NumberOfStars}";
-                            break;
-                        case QuestionType.Smiley:
-                            SmileyQuestion tSmileyQuestionData = (SmileyQuestion)pQuestionData;
-                            tQuestionTypeSpecificAttributes += "NumberOfFaces";
-                            tQuestionTypeSpecificValues += $"{tSmileyQuestionData.NumberOfSmileyFaces}";
-                            break;
-                        case QuestionType.Slider:
-                            SliderQuestion tSliderQuestionData = (SliderQuestion)pQuestionData;
-                            tQuestionTypeSpecificAttributes += "StartValue, EndValue, StartValueCaption, EndValueCaption";
-                            tQuestionTypeSpecificValues += $"{tSliderQuestionData.StartValue}, {tSliderQuestionData.EndValue}," +
-                                $" '{tSliderQuestionData.StartValueCaption}', '{tSliderQuestionData.EndValueCaption}'";
-                            break;
-                    }
-                    //add parameters
-                    SqlCommand tInsertQuestionTypeCmd = new SqlCommand($"INSERT INTO {pQuestionData.Type} (Id, {tQuestionTypeSpecificAttributes}) VALUES ({tQuestionId}, {tQuestionTypeSpecificValues})",
+                        //insert question data in the question table
+                        SqlCommand tInsertQuestionCmd = new SqlCommand($"INSERT INTO Question ([Text], [Order], [Type]) OUTPUT INSERTED.Id" +
+                        $" VALUES (@Text, @Order, @Type)",
                         tConn, tTransaction);
-                    tInsertQuestionTypeCmd.ExecuteNonQuery();
+                        tInsertQuestionCmd.Parameters.Add(new SqlParameter("@Text", pQuestionData.Text));
+                        tInsertQuestionCmd.Parameters.Add(new SqlParameter("@Order", pQuestionData.Order));
+                        tInsertQuestionCmd.Parameters.Add(new SqlParameter("@Type", pQuestionData.Type));
 
-                    //commit transaction
-                    tTransaction.Commit();
+                        //insert the row data to the question and return the id of the created question
+                        int tQuestionId = (int)tInsertQuestionCmd.ExecuteScalar();
 
-                    //return question id to add question to UI
-                    return new Question(tQuestionId, pQuestionData.Text, pQuestionData.Order, pQuestionData.Type);
+                        //get the specific values for the question type
+                        string tQuestionTypeSpecificAttributes = "";
+                        string tQuestionTypeSpecificValues = "";
+                        //for each type of question downcast the question to its specific type and obtain its properties
+                        //make a generic function, or a specific function for each question type to make code more readable/ easier to maintain
+                        switch (pQuestionData.Type)
+                        {
+                            case QuestionType.Stars:
+                                StarsQuestion tStarsQuestionData = (StarsQuestion)pQuestionData;
+                                tQuestionTypeSpecificAttributes += "NumberOfStars";
+                                tQuestionTypeSpecificValues += $"{tStarsQuestionData.NumberOfStars}";
+                                break;
+                            case QuestionType.Smiley:
+                                SmileyQuestion tSmileyQuestionData = (SmileyQuestion)pQuestionData;
+                                tQuestionTypeSpecificAttributes += "NumberOfFaces";
+                                tQuestionTypeSpecificValues += $"{tSmileyQuestionData.NumberOfSmileyFaces}";
+                                break;
+                            case QuestionType.Slider:
+                                SliderQuestion tSliderQuestionData = (SliderQuestion)pQuestionData;
+                                tQuestionTypeSpecificAttributes += "StartValue, EndValue, StartValueCaption, EndValueCaption";
+                                tQuestionTypeSpecificValues += $"{tSliderQuestionData.StartValue}, {tSliderQuestionData.EndValue}," +
+                                    $" '{tSliderQuestionData.StartValueCaption}', '{tSliderQuestionData.EndValueCaption}'";
+                                break;
+                        }
+                        //add parameters
+                        SqlCommand tInsertQuestionTypeCmd = new SqlCommand($"INSERT INTO {pQuestionData.Type} (Id, {tQuestionTypeSpecificAttributes}) VALUES ({tQuestionId}, {tQuestionTypeSpecificValues})",
+                            tConn, tTransaction);
+                        tInsertQuestionTypeCmd.ExecuteNonQuery();
+
+                        //commit transaction
+                        tTransaction.Commit();
+
+                        //return question id to add question to UI
+                        return new Question(tQuestionId, pQuestionData.Text, pQuestionData.Order, pQuestionData.Type);
+                    }
+                    catch (Exception e)
+                    {
+                    return null;
+                    }
                 }
-                catch (Exception e)
-                {
-                return null;
-                }
-            }
             }
         }
 
@@ -244,7 +245,7 @@ namespace DatabaseLayer
 
         }
 
-        public static void DeleteQuestionFromDB(Question[] pSelectedQuestions)
+        public static void DeleteQuestionFromDB(List<Question> pSelectedQuestions)
         {
             using (SqlConnection tConn = new SqlConnection(ConnectionString))
             {
@@ -257,7 +258,7 @@ namespace DatabaseLayer
                         tDeleteQuestionsCmd.CommandType = CommandType.Text;
                         tDeleteQuestionsCmd.Transaction = tTransaction;
                         //delete the specific details of the question type
-                        for (int i = 0; i < pSelectedQuestions.Length; i++)
+                        for (int i = 0; i < pSelectedQuestions.Count; i++)
                         {
                             Question tCurrentQuestion = pSelectedQuestions[i];
                             tDeleteQuestionsCmd.CommandText = $"DELETE FROM {tCurrentQuestion.Type} WHERE Id = @Id";
@@ -267,7 +268,7 @@ namespace DatabaseLayer
                         }
 
                         //delete question from database
-                        for (int i = 0; i < pSelectedQuestions.Length; i++)
+                        for (int i = 0; i < pSelectedQuestions.Count; i++)
                         {
                             Question tCurrentQuestion = pSelectedQuestions[i];
                             tDeleteQuestionsCmd.CommandText = $"DELETE FROM Question WHERE Id = @Id";

@@ -93,18 +93,15 @@ namespace Survey_Configurator
                 QuestionOperations.OperationOngoing = true;
                 if (tDeleteQuestion == DialogResult.Yes)
                 {
-                    Question[] tSelectedQuestions = new Question[tNumberOfSelectedQuestions];
+                    List<Question> tSelectedQuestions = new List<Question>();
                     //obtain the selected questions and store them
                     for (int i = 0; i < tNumberOfSelectedQuestions; i++)
                     {
                         //cast the selected grid row to dataRowView to store it in a dataRow
                         Question tCurrentQuestion = QuestionsListView.SelectedItems[i].Tag as Question;
-                        tSelectedQuestions[i] = tCurrentQuestion;
+                        tSelectedQuestions.Add(tCurrentQuestion); 
                     }
                     QuestionOperations.DeleteQuestion(tSelectedQuestions);
-
-                    //Update UI
-                    UpdateQuestionsList();
 
                     //disable delete and edit button
                     DeleteQuestionButton.Enabled = false;
@@ -218,7 +215,7 @@ namespace Survey_Configurator
             }
         }
 
-        private void QuestionOperations_DataBaseChangedEvent(object? sender, EventArgs e)
+        private void QuestionOperations_DataBaseChangedEvent(object? sender, string e)
         {
             UpdateQuestionsList();
         }
