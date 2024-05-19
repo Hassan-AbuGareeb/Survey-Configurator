@@ -63,8 +63,8 @@ namespace Survey_Configurator
         //buttons click functions
         private void AddQuestionButton_Click(object sender, EventArgs e)
         {
-            AddEditQuestion addForm = new AddEditQuestion();
-            addForm.ShowDialog();
+            AddEditQuestion tAddForm = new AddEditQuestion();
+            tAddForm.ShowDialog();
             UpdateQuestionsList();
             //disable delete and edit button
             DeleteQuestionButton.Enabled = false;
@@ -74,8 +74,8 @@ namespace Survey_Configurator
         private void EditQuestionButton_Click(object sender, EventArgs e)
         {
             Question tSelectedQuestion = QuestionsListView.SelectedItems[0].Tag as Question;
-            AddEditQuestion addForm = new AddEditQuestion(tSelectedQuestion.Id);
-            addForm.ShowDialog();
+            AddEditQuestion tAddForm = new AddEditQuestion(tSelectedQuestion.Id);
+            tAddForm.ShowDialog();
             UpdateQuestionsList();
 
             //disable delete and edit button
@@ -105,10 +105,10 @@ namespace Survey_Configurator
 
                     //Update UI
                     UpdateQuestionsList();
-                    
+
                     //disable delete and edit button
-                    DeleteQuestionButton.Enabled=false;
-                    EditQuestionButton.Enabled=false;
+                    DeleteQuestionButton.Enabled = false;
+                    EditQuestionButton.Enabled = false;
 
                     MessageBox.Show($"Question{(tNumberOfSelectedQuestions > 1 ? "s " : " ")}deleted successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -205,15 +205,15 @@ namespace Survey_Configurator
             UpdateQuestionsList();
             //try and catch
         }
-        
+
         private void UpdateQuestionsList()
         {
             QuestionsListView.Items.Clear();
-            foreach (Question question in QuestionOperations.QuestionsList)
+            foreach (Question tQuestion in QuestionOperations.QuestionsList)
             {
-                string[] tCurrentQuestionData = new[] { question.Order.ToString(), question.Text, question.Type.ToString() };
+                string[] tCurrentQuestionData = new[] { tQuestion.Order.ToString(), tQuestion.Text, tQuestion.Type.ToString() };
                 ListViewItem tCurrentQuestionItem = new ListViewItem(tCurrentQuestionData);
-                tCurrentQuestionItem.Tag = question;
+                tCurrentQuestionItem.Tag = tQuestion;
                 QuestionsListView.Items.Add(tCurrentQuestionItem);
             }
         }
@@ -223,5 +223,7 @@ namespace Survey_Configurator
             UpdateQuestionsList();
         }
         #endregion
+
+
     }
 }

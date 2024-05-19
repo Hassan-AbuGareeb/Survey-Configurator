@@ -113,7 +113,6 @@ namespace QuestionServices
                 QuestionsList.Remove(QuestionsList.Find(question => question.Id == pUpdatedQuestionData.Id));
                 //add the new Question to the list
                 QuestionsList.Add(pUpdatedQuestionData);
-                //update UI
             }
             catch (SqlException ex)
             {
@@ -239,10 +238,11 @@ namespace QuestionServices
                         {
                            //data changed
                            currentChecksum = newChecksum;
+                           
                            QuestionsList.Clear();
                            Database.getQuestionsFromDB(ref QuestionsList);
+                           //notify UI of database change
                            DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
-                           //update UI somehow
                         }
                     }
                 }

@@ -37,6 +37,7 @@
             label3 = new Label();
             label2 = new Label();
             label1 = new Label();
+            AddEditLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)QuestionOrderNumeric).BeginInit();
             SuspendLayout();
             // 
@@ -78,20 +79,25 @@
             // QuestionTypeComboBox
             // 
             QuestionTypeComboBox.Anchor = AnchorStyles.Left;
+            QuestionTypeComboBox.DataSource = new SharedResources.QuestionType[]
+    {
+    SharedResources.QuestionType.Stars,
+    SharedResources.QuestionType.Smiley,
+    SharedResources.QuestionType.Slider
+    };
             QuestionTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             QuestionTypeComboBox.FormattingEnabled = true;
-            QuestionTypeComboBox.Location = new Point(29, 343);
+            QuestionTypeComboBox.Location = new Point(31, 403);
             QuestionTypeComboBox.Margin = new Padding(3, 4, 3, 4);
             QuestionTypeComboBox.Name = "QuestionTypeComboBox";
             QuestionTypeComboBox.Size = new Size(187, 28);
             QuestionTypeComboBox.TabIndex = 3;
-            QuestionTypeComboBox.DataSource = Enum.GetValues(typeof(SharedResources.QuestionType));
             QuestionTypeComboBox.SelectedIndexChanged += QuestionTypeComboBox_SelectedIndexChanged;
             // 
             // QuestionOrderNumeric
             // 
             QuestionOrderNumeric.Anchor = AnchorStyles.Left;
-            QuestionOrderNumeric.Location = new Point(30, 259);
+            QuestionOrderNumeric.Location = new Point(31, 320);
             QuestionOrderNumeric.Margin = new Padding(3, 4, 3, 4);
             QuestionOrderNumeric.Maximum = new decimal(new int[] { 120, 0, 0, 0 });
             QuestionOrderNumeric.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
@@ -103,7 +109,7 @@
             // QuestionTextBox
             // 
             QuestionTextBox.Anchor = AnchorStyles.Left;
-            QuestionTextBox.Location = new Point(30, 62);
+            QuestionTextBox.Location = new Point(31, 126);
             QuestionTextBox.Margin = new Padding(3, 4, 3, 4);
             QuestionTextBox.MaxLength = 350;
             QuestionTextBox.Multiline = true;
@@ -116,7 +122,7 @@
             label3.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 14.25F);
-            label3.Location = new Point(30, 307);
+            label3.Location = new Point(31, 367);
             label3.Name = "label3";
             label3.Size = new Size(65, 32);
             label3.TabIndex = 12;
@@ -127,7 +133,7 @@
             label2.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 14.25F);
-            label2.Location = new Point(30, 223);
+            label2.Location = new Point(32, 284);
             label2.Name = "label2";
             label2.Size = new Size(75, 32);
             label2.TabIndex = 11;
@@ -138,17 +144,28 @@
             label1.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 14.25F);
-            label1.Location = new Point(30, 26);
+            label1.Location = new Point(32, 81);
             label1.Name = "label1";
             label1.Size = new Size(57, 32);
             label1.TabIndex = 10;
             label1.Text = "Text";
+            // 
+            // AddEditLabel
+            // 
+            AddEditLabel.AutoSize = true;
+            AddEditLabel.Font = new Font("Segoe UI", 21F);
+            AddEditLabel.Location = new Point(31, 18);
+            AddEditLabel.Name = "AddEditLabel";
+            AddEditLabel.Size = new Size(235, 47);
+            AddEditLabel.TabIndex = 20;
+            AddEditLabel.Text = "Add Question";
             // 
             // AddEditQuestion
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(702, 753);
+            Controls.Add(AddEditLabel);
             Controls.Add(QuestionOptions);
             Controls.Add(Cancel);
             Controls.Add(Add);
@@ -182,5 +199,6 @@
         private Label label3;
         private Label label2;
         private Label label1;
+        private Label AddEditLabel;
     }
 }

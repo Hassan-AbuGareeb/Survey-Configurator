@@ -12,9 +12,6 @@ namespace SharedResources
 
      public class SharedData
     {
-        public const QuestionType cStarsType = QuestionType.Stars;
-        public const QuestionType cSmileyType = QuestionType.Smiley;
-        public const QuestionType cSliderType = QuestionType.Slider;
 
 
     }

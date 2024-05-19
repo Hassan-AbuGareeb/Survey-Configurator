@@ -31,13 +31,12 @@ namespace Survey_Configurator.Sub_forms
             InitializeComponent();
             Text = "Add";
             Add.Text = "Add";
-
         }
 
-        public AddEditQuestion(int questionId)
+        public AddEditQuestion(int pQuestionId)
         {
             InitializeComponent();
-            QuestionId = questionId;
+            QuestionId = pQuestionId;
             Text = "Edit";
             Add.Text = "Save";
         }
@@ -59,21 +58,21 @@ namespace Survey_Configurator.Sub_forms
                     QuestionTypeComboBox.SelectedItem = tQeneralQuestionData.Type;
 
                     //based on the combobox value further data about the question should be obtained and added to UI
-                    Question questionSpecificData = QuestionOperations.GetQuestionSpecificData(QuestionId);
-                    switch (questionSpecificData.Type)
+                    Question tQuestionSpecificData = QuestionOperations.GetQuestionSpecificData(QuestionId);
+                    switch (tQuestionSpecificData.Type)
                     {
                         //for each case Get the info and downcast it and assign it to its respective field
-                        case SharedData.cSmileyType:
-                            NumberOfSmileysNumeric.Value = ((SmileyQuestion)questionSpecificData).NumberOfSmileyFaces;
+                        case QuestionType.Stars:
+                            NumberOfStarsNumeric.Value = ((StarsQuestion)tQuestionSpecificData).NumberOfStars;
                             break;
-                        case SharedData.cStarsType:
-                            NumberOfStarsNumeric.Value = ((StarsQuestion)questionSpecificData).NumberOfStars;
+                        case QuestionType.Smiley:
+                            NumberOfSmileysNumeric.Value = ((SmileyQuestion)tQuestionSpecificData).NumberOfSmileyFaces;
                             break;
-                        case SharedData.cSliderType:
-                            SliderStartValueNumeric.Value = ((SliderQuestion)questionSpecificData).StartValue;
-                            SliderEndValueNumeric.Value = ((SliderQuestion)questionSpecificData).EndValue;
-                            SliderStartValueCaptionText.Text = ((SliderQuestion)questionSpecificData).StartValueCaption;
-                            SliderEndValueCaptionText.Text = ((SliderQuestion)questionSpecificData).EndValueCaption;
+                        case QuestionType.Slider:
+                            SliderStartValueNumeric.Value = ((SliderQuestion)tQuestionSpecificData).StartValue;
+                            SliderEndValueNumeric.Value = ((SliderQuestion)tQuestionSpecificData).EndValue;
+                            SliderStartValueCaptionText.Text = ((SliderQuestion)tQuestionSpecificData).StartValueCaption;
+                            SliderEndValueCaptionText.Text = ((SliderQuestion)tQuestionSpecificData).EndValueCaption;
                             break;
                     }
                     Add.Click -= AddButton_Click;
@@ -110,19 +109,19 @@ namespace Survey_Configurator.Sub_forms
                     switch (tQuestionType)
                     {
                         //decied whether to add or edit question based on the Clicked button text
-                        case SharedData.cStarsType:
+                        case QuestionType.Stars:
                             StarsQuestion tStarsData = new StarsQuestion(tNewQuestionData,(int)NumberOfStarsNumeric.Value);
                                 QuestionOperations.AddQuestion(tStarsData);
                             break;
-                        case SharedData.cSliderType:
+                        case QuestionType.Smiley:
+                            SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)NumberOfSmileysNumeric.Value);
+                            QuestionOperations.AddQuestion(tSmileyData);
+                            break;
+                        case QuestionType.Slider:
                             SliderQuestion tSliderData = new SliderQuestion(tNewQuestionData,
                                 (int)SliderStartValueNumeric.Value, (int)SliderEndValueNumeric.Value,
                                 SliderStartValueCaptionText.Text, SliderEndValueCaptionText.Text);
                                 QuestionOperations.AddQuestion(tSliderData);
-                            break;
-                        case SharedData.cSmileyType:
-                            SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)NumberOfSmileysNumeric.Value);
-                                QuestionOperations.AddQuestion(tSmileyData);
                             break;
                     }
                     //close form
@@ -186,20 +185,21 @@ namespace Survey_Configurator.Sub_forms
                     switch (QuestionTypeComboBox.SelectedItem)
                     {
                         //decied whether to add or edit question based on the Clicked button text
-                        case SharedData.cStarsType:
+                        case QuestionType.Stars:
                             StarsQuestion tStarsData = new StarsQuestion(tNewQuestionData, (int)NumberOfStarsNumeric.Value);
                             QuestionOperations.UpdateQuestion(tStarsData);
                             break;
-                        case SharedData.cSliderType:
+                        case QuestionType.Smiley:
+                            SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)NumberOfSmileysNumeric.Value);
+                            QuestionOperations.UpdateQuestion(tSmileyData);
+                            break;
+                        case QuestionType.Slider:
                             SliderQuestion tSliderData = new SliderQuestion(tNewQuestionData,
                                 (int)SliderStartValueNumeric.Value, (int)SliderEndValueNumeric.Value,
                                 SliderStartValueCaptionText.Text, SliderEndValueCaptionText.Text);
                                 QuestionOperations.UpdateQuestion(tSliderData);
                             break;
-                        case SharedData.cSmileyType:
-                            SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)NumberOfSmileysNumeric.Value);
-                                QuestionOperations.UpdateQuestion(tSmileyData);
-                            break;
+                        
                     }
                     //close form
                     Close();
@@ -259,14 +259,14 @@ namespace Survey_Configurator.Sub_forms
             QuestionOptions.Controls.Clear();
             switch (QuestionTypeComboBox.SelectedItem)
             {
-                case SharedData.cSliderType:
+                case QuestionType.Stars:
+                    AddStarsOptions();
+                    break;
+                case QuestionType.Slider:
                     AddSliderOptions();
                     break;
-                case SharedData.cSmileyType:
+                case QuestionType.Smiley:
                     AddSmileysOptions();
-                    break;
-                case SharedData.cStarsType:
-                    AddStarsOptions();
                     break;
             }
         }
@@ -297,6 +297,33 @@ namespace Survey_Configurator.Sub_forms
             //add fields to the form
             QuestionOptions.Controls.Add(NumberOfStarsLabel);
             QuestionOptions.Controls.Add(NumberOfStarsNumeric);
+        }
+        private void AddSmileysOptions()
+        {
+            //add a label next to the numeric field
+            Label NumberOfSmileysLabel = new Label();
+            NumberOfSmileysLabel.AutoSize = true;
+            NumberOfSmileysLabel.Font = new Font("Segoe UI", 14.25F);
+            NumberOfSmileysLabel.Location = new Point(0, 0);
+            NumberOfSmileysLabel.Name = "NumberOfSmileysLabel";
+            NumberOfSmileysLabel.Size = new Size(45, 25);
+            NumberOfSmileysLabel.TabIndex = 9;
+            NumberOfSmileysLabel.Text = "Number of Smileys";
+
+            //add a numeric field to specify a number for the smileys
+            NumberOfSmileysNumeric = new NumericUpDown();
+            NumberOfSmileysNumeric.Location = new Point(237, 0);
+            NumberOfSmileysNumeric.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
+            NumberOfSmileysNumeric.Minimum = new decimal(new int[] { 2, 0, 0, 0 });
+            NumberOfSmileysNumeric.Name = "NumberOfSmileysNumeric";
+            NumberOfSmileysNumeric.Size = new Size(120, 23);
+            NumberOfSmileysNumeric.TabIndex = 10;
+            NumberOfSmileysNumeric.Value = new decimal(new int[] { 2, 0, 0, 0 });
+            NumberOfSmileysNumeric.TabIndex = 4;
+
+            //add fields to the form
+            QuestionOptions.Controls.Add(NumberOfSmileysLabel);
+            QuestionOptions.Controls.Add(NumberOfSmileysNumeric);
         }
         private void AddSliderOptions()
         {
@@ -386,33 +413,7 @@ namespace Survey_Configurator.Sub_forms
             QuestionOptions.Controls.Add(SliderEndValueCaptionLabel);
             QuestionOptions.Controls.Add(SliderEndValueCaptionText);
         }
-        private void AddSmileysOptions()
-        {
-            //add a label next to the numeric field
-            Label NumberOfSmileysLabel = new Label();
-            NumberOfSmileysLabel.AutoSize = true;
-            NumberOfSmileysLabel.Font = new Font("Segoe UI", 14.25F);
-            NumberOfSmileysLabel.Location = new Point(0, 0);
-            NumberOfSmileysLabel.Name = "NumberOfSmileysLabel";
-            NumberOfSmileysLabel.Size = new Size(45, 25);
-            NumberOfSmileysLabel.TabIndex = 9;
-            NumberOfSmileysLabel.Text = "Number of Smileys";
 
-            //add a numeric field to specify a number for the smileys
-            NumberOfSmileysNumeric = new NumericUpDown();
-            NumberOfSmileysNumeric.Location = new Point(237, 0);
-            NumberOfSmileysNumeric.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
-            NumberOfSmileysNumeric.Minimum = new decimal(new int[] { 2, 0, 0, 0 });
-            NumberOfSmileysNumeric.Name = "NumberOfSmileysNumeric";
-            NumberOfSmileysNumeric.Size = new Size(120, 23);
-            NumberOfSmileysNumeric.TabIndex = 10;
-            NumberOfSmileysNumeric.Value = new decimal(new int[] { 2, 0, 0, 0 });
-            NumberOfSmileysNumeric.TabIndex = 4;
-
-            //add fields to the form
-            QuestionOptions.Controls.Add(NumberOfSmileysLabel);
-            QuestionOptions.Controls.Add(NumberOfSmileysNumeric);
-        }
 
         private void AddEditQuestion_FormClosing(object sender, FormClosingEventArgs e)
         {
