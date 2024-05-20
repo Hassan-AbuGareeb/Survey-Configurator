@@ -12,12 +12,15 @@ namespace Survey_Configurator.Sub_forms
     public partial class AddEditQuestion : Form
     {
         private static int QuestionId;
-
+        private static string Operation;
         public AddEditQuestion()
         {
             InitializeComponent();
             Text = "Add";
-            Add.Text = "Add";
+            AddEditLabel.Text = "Add Question";
+            OperationButton.Text = "Add";
+            Operation = "Add";
+            OperationButton.Click += AddButton_Click;
         }
 
         public AddEditQuestion(int pQuestionId)
@@ -25,18 +28,21 @@ namespace Survey_Configurator.Sub_forms
             InitializeComponent();
             QuestionId = pQuestionId;
             Text = "Edit";
-            Add.Text = "Save";
+            AddEditLabel.Text = "Edit Question";
+            OperationButton.Text = "Edit";
+            Operation = "Edit";
+            OperationButton.Click += EditButton_Click;
         }
 
         private void AddEdit_Load(object sender, EventArgs e)
         {
-            QuestionTypeComboBox.SelectedItem = null;
             try
             {
                 //to prevent any interruption in adding/updating
                 QuestionOperations.OperationOngoing = true;
+                //encapsulate the following code into another function to make things look simpler
                 //check if the operation is edit and fill the fields with selected question data
-                if (Add.Text.Equals("Save"))
+                if (Operation == "Edit")
                 {
                     Question tQeneralQuestionData = QuestionOperations.GetQuestionData(QuestionId);
                     //extract question data an add it to UI
@@ -62,8 +68,7 @@ namespace Survey_Configurator.Sub_forms
                             SliderEndValueCaptionText.Text = ((SliderQuestion)tQuestionSpecificData).EndValueCaption;
                             break;
                     }
-                    Add.Click -= AddButton_Click;
-                    Add.Click += EditButton_Click;
+
                 }
             }
             catch (SqlException)
@@ -87,10 +92,12 @@ namespace Survey_Configurator.Sub_forms
                 if (QuestionTextBox.Text.Length != 0 &&
                     QuestionTypeComboBox.SelectedItem != null)
                 {
-                    //get the enum value of the question type name
+                    string tQuestionText = QuestionTextBox.Text;
+                    int tQuestionOrder = (int)QuestionOrderNumeric.Value;
+                    //get the enum value of the question type
                     QuestionType tQuestionType = (QuestionType)QuestionTypeComboBox.SelectedItem;
                     //encapsulate obtained data in a question object
-                    Question tNewQuestionData = new Question(QuestionTextBox.Text, (int)QuestionOrderNumeric.Value, tQuestionType);
+                    Question tNewQuestionData = new Question(tQuestionText, tQuestionOrder, tQuestionType);
 
                     //add question to db and interface
                     switch (tQuestionType)
@@ -163,15 +170,17 @@ namespace Survey_Configurator.Sub_forms
                 if (QuestionTextBox.Text.Length != 0 &&
                     QuestionTypeComboBox.SelectedItem != null)
                 {
-                    //get the enum value of the question type name
+                    string tQuestionText = QuestionTextBox.Text;
+                    int tQuestionOrder = (int)QuestionOrderNumeric.Value;
+                    //get the enum value of the question type
                     QuestionType tQuestionType = (QuestionType)QuestionTypeComboBox.SelectedItem;
                     //encapsulate obtained data in a question object
-                    Question tNewQuestionData = new Question(QuestionId, QuestionTextBox.Text, (int)QuestionOrderNumeric.Value, tQuestionType);
+                    Question tNewQuestionData = new Question(QuestionId, tQuestionText, tQuestionOrder, tQuestionType);
 
                     //add question to db and interface
-                    switch (QuestionTypeComboBox.SelectedItem)
+                    switch (tQuestionType)
                     {
-                        //decied whether to add or edit question based on the Clicked button text
+                        //send question data to logic layer to be updated
                         case QuestionType.Stars:
                             StarsQuestion tStarsData = new StarsQuestion(tNewQuestionData, (int)NumberOfStarsNumeric.Value);
                             QuestionOperations.UpdateQuestion(tStarsData);
@@ -261,21 +270,14 @@ namespace Survey_Configurator.Sub_forms
         private void AddStarsOptions()
         {
             StarsQuestionOptionsPanel.Show();
-
-            SliderQuestionOptionsPanel.SendToBack();
-            SmileyQuestionOptionsPanel.SendToBack();
         }
         private void AddSmileysOptions()
         {
             SmileyQuestionOptionsPanel.Show();
-            SliderQuestionOptionsPanel.SendToBack();
-            StarsQuestionOptionsPanel.SendToBack();
         }
         private void AddSliderOptions()
         {
             SliderQuestionOptionsPanel.Show();
-            StarsQuestionOptionsPanel.SendToBack();
-            SmileyQuestionOptionsPanel.SendToBack();
         }
 
         private void HideQuesitonOptionsPanel()

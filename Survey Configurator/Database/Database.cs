@@ -3,12 +3,32 @@ using System.Data.Common;
 using SharedResources.models;
 using Microsoft.Data.SqlClient;
 using SharedResources;
+using System.Transactions;
+using System;
 
 namespace DatabaseLayer
 {
     public class Database
     {
         public static string ConnectionString;
+
+        //constants
+            //Question table constants
+        private const string cQuestionsTableName = "Question";
+        private const string cIdColumn = "Id";
+        private const string cTextColumn = "Text";
+        private const string cOrderColumn = "Order";
+        private const string cTypeColumn = "Type";
+        //specific types constants
+            //Stars table
+        private const string cNumberOfStarsColumn = "NumberOfStars";
+            //Smiley table
+        private const string cNumberOfFacesColumn = "NumberOfFaces";
+            //Slider table
+        private const string cStartValueColumn = "StartValue";
+        private const string cEndValueColumn = "EndValue";
+        private const string cStartValueCaptionColumn = "StartValueCaption";
+        private const string cEndValueCaptionColumn = "EndValueCaption";
 
         private Database() { }
         #region class main functions
@@ -19,13 +39,13 @@ namespace DatabaseLayer
                 tConn.Open();
                 using (SqlTransaction tTransaction = tConn.BeginTransaction()) 
                 { 
-                    SqlCommand tGetQuestionsDataCmd = new SqlCommand("SELECT * FROM Question", tConn, tTransaction);
+                    SqlCommand tGetQuestionsDataCmd = new SqlCommand($"SELECT * FROM [{cQuestionsTableName}]", tConn, tTransaction);
                     DbDataReader tReader = tGetQuestionsDataCmd.ExecuteReader(CommandBehavior.CloseConnection);
                     //iterate over each row in the Reader and add it to the questions list
                     while (tReader.Read())
                     {
-                        pQuestionsList.Add(new Question((int)tReader["Id"], tReader["Text"].ToString(),
-                            (int)tReader["order"], (SharedResources.QuestionType)tReader["Type"]));
+                        pQuestionsList.Add(new Question((int)tReader[cIdColumn], tReader[cTextColumn].ToString(),
+                            (int)tReader[cOrderColumn], (QuestionType)tReader[cTypeColumn]));
                     }
                     tReader.Close();
                 }
@@ -42,8 +62,8 @@ namespace DatabaseLayer
                     //parameterize the query
                     string tQuestionType = pQuestionData.Type.ToString();
 
-                    SqlCommand tGetQuestionSpecificData = new SqlCommand($"SELECT * FROM {tQuestionType} WHERE Id = @Id", tConn, tTransaction);
-                    tGetQuestionSpecificData.Parameters.Add(new SqlParameter("@Id",pQuestionData.Id));
+                    SqlCommand tGetQuestionSpecificData = new SqlCommand($"SELECT * FROM [{tQuestionType}] WHERE [{cIdColumn}] = @{cIdColumn}", tConn, tTransaction);
+                    tGetQuestionSpecificData.Parameters.Add(new SqlParameter($"@{cIdColumn}",pQuestionData.Id));
                     DbDataReader tReader = tGetQuestionSpecificData.ExecuteReader(CommandBehavior.CloseConnection);
                     //this needs to be fixed
                     Question tSpecificQuestionData= null;
@@ -52,15 +72,15 @@ namespace DatabaseLayer
                         switch(pQuestionData.Type)
                         {
                             case QuestionType.Stars:
-                                tSpecificQuestionData = new StarsQuestion(pQuestionData, (int)tReader["NumberOfStars"]);
+                                tSpecificQuestionData = new StarsQuestion(pQuestionData, (int)tReader[cNumberOfStarsColumn]);
                                 break;
                             case QuestionType.Smiley:
-                                tSpecificQuestionData = new SmileyQuestion(pQuestionData, (int)tReader["NumberOfFaces"]);
+                                tSpecificQuestionData = new SmileyQuestion(pQuestionData, (int)tReader[cNumberOfFacesColumn]);
                                 break;
                             case QuestionType.Slider:
                                 tSpecificQuestionData = new SliderQuestion(pQuestionData, 
-                                    (int)tReader["StartValue"], (int)tReader["EndValue"],
-                                    tReader["StartValueCaption"].ToString(), tReader["EndValueCaption"].ToString());
+                                    (int)tReader[cStartValueColumn], (int)tReader[cEndValueColumn],
+                                    tReader[cStartValueCaptionColumn].ToString(), tReader[cEndValueCaptionColumn ].ToString());
                                 break;
                         }
                     }
@@ -70,10 +90,10 @@ namespace DatabaseLayer
             }
         }
 
-        public static Question AddQuestionToDB(Question pQuestionData)
+        public static int AddQuestionToDB(ref Question pQuestionData)
         {
             //change to id to status code, and return id by reference
-
+            //no need to return the question ID just add it to the question data
             //create db connection
             using (SqlConnection tConn = new SqlConnection(ConnectionString)) 
             {
@@ -83,55 +103,51 @@ namespace DatabaseLayer
                     try
                     {
                         //insert question data in the question table
-                        SqlCommand tInsertQuestionCmd = new SqlCommand($"INSERT INTO Question ([Text], [Order], [Type]) OUTPUT INSERTED.Id" +
-                        $" VALUES (@Text, @Order, @Type)",
-                        tConn, tTransaction);
-                        tInsertQuestionCmd.Parameters.Add(new SqlParameter("@Text", pQuestionData.Text));
-                        tInsertQuestionCmd.Parameters.Add(new SqlParameter("@Order", pQuestionData.Order));
-                        tInsertQuestionCmd.Parameters.Add(new SqlParameter("@Type", pQuestionData.Type));
+                        SqlCommand tInsertQuestionCmd = new SqlCommand(
+                            $"INSERT INTO {cQuestionsTableName} ([{cTextColumn}], [{cOrderColumn}], [{cTypeColumn}]) " +
+                            $"OUTPUT INSERTED.Id " +
+                            $"VALUES (@{cTextColumn}, @{cOrderColumn}, @{cTypeColumn})",
+                            tConn, tTransaction);
+                        tInsertQuestionCmd.Parameters.Add(new SqlParameter($"@{cTextColumn}", pQuestionData.Text));
+                        tInsertQuestionCmd.Parameters.Add(new SqlParameter($"@{cOrderColumn}", pQuestionData.Order));
+                        tInsertQuestionCmd.Parameters.Add(new SqlParameter($"@{cTypeColumn}", pQuestionData.Type));
 
                         //insert the row data to the question and return the id of the created question
                         int tQuestionId = (int)tInsertQuestionCmd.ExecuteScalar();
 
-                        //get the specific values for the question type
-                        string tQuestionTypeSpecificAttributes = "";
-                        string tQuestionTypeSpecificValues = "";
+                        //add the question Id to the quesiton data
+                        pQuestionData.Id = tQuestionId;
+
                         //for each type of question downcast the question to its specific type and obtain its properties
                         //make a generic function, or a specific function for each question type to make code more readable/ easier to maintain
+                        SqlCommand tInsertQuestionTypeCmd = null;
                         switch (pQuestionData.Type)
                         {
                             case QuestionType.Stars:
-                                StarsQuestion tStarsQuestionData = (StarsQuestion)pQuestionData;
-                                tQuestionTypeSpecificAttributes += "NumberOfStars";
-                                tQuestionTypeSpecificValues += $"{tStarsQuestionData.NumberOfStars}";
+                                tInsertQuestionTypeCmd = getAddStarsCommand(tQuestionId, (StarsQuestion)pQuestionData);
                                 break;
                             case QuestionType.Smiley:
-                                SmileyQuestion tSmileyQuestionData = (SmileyQuestion)pQuestionData;
-                                tQuestionTypeSpecificAttributes += "NumberOfFaces";
-                                tQuestionTypeSpecificValues += $"{tSmileyQuestionData.NumberOfSmileyFaces}";
+                                tInsertQuestionTypeCmd = getAddSmileyCommand(tQuestionId, (SmileyQuestion)pQuestionData);
                                 break;
                             case QuestionType.Slider:
-                                SliderQuestion tSliderQuestionData = (SliderQuestion)pQuestionData;
-                                tQuestionTypeSpecificAttributes += "StartValue, EndValue, StartValueCaption, EndValueCaption";
-                                tQuestionTypeSpecificValues += $"{tSliderQuestionData.StartValue}, {tSliderQuestionData.EndValue}," +
-                                    $" '{tSliderQuestionData.StartValueCaption}', '{tSliderQuestionData.EndValueCaption}'";
+                                tInsertQuestionTypeCmd = getAddSliderCommand(tQuestionId, (SliderQuestion)pQuestionData);
                                 break;
                         }
                         //add parameters
-                        SqlCommand tInsertQuestionTypeCmd = new SqlCommand($"INSERT INTO {pQuestionData.Type} (Id, {tQuestionTypeSpecificAttributes}) VALUES ({tQuestionId}, {tQuestionTypeSpecificValues})",
-                            tConn, tTransaction);
+                        tInsertQuestionTypeCmd.Connection = tConn;
+                        tInsertQuestionTypeCmd.Transaction = tTransaction;
                         tInsertQuestionTypeCmd.ExecuteNonQuery();
-
                         //commit transaction
                         tTransaction.Commit();
-
-                        //return question id to add question to UI
-                        return new Question(tQuestionId, pQuestionData.Text, pQuestionData.Order, pQuestionData.Type);
+                        return 0;
                     }
                     catch (Exception e)
                     {
-                    return null;
+                        tTransaction.Rollback();
+                        UtilityMethods.LogError(e);
+                        return -1;
                     }
+
                 }
             }
         }
@@ -149,95 +165,79 @@ namespace DatabaseLayer
                         {
                             //type of question wasn't  changed
                             //update the specific details
-                            string tQuestionUpdateArguments = "";
-                            SqlCommand tUpdateQuestionSpecificDataCmd = tConn.CreateCommand();
+                            SqlCommand tUpdateQuestionSpecificDataCmd = null;
                             switch (pOriginalQuestionType)
                             {
                                 case QuestionType.Stars:
-                                    StarsQuestion tStarsQuestionData = (StarsQuestion)pUpdatedQuestionData;
-                                    tQuestionUpdateArguments += $"NumberOfStars = {tStarsQuestionData.NumberOfStars}";
+                                    tUpdateQuestionSpecificDataCmd = getUpdateStarsCommand(pUpdatedQuestionData.Id, (StarsQuestion)pUpdatedQuestionData);
                                     break;
                                 case QuestionType.Smiley:
-                                    SmileyQuestion tSmileyQuestionData = (SmileyQuestion)pUpdatedQuestionData;
-                                    tQuestionUpdateArguments += $"NumberOfFaces = {tSmileyQuestionData.NumberOfSmileyFaces}";
+                                    tUpdateQuestionSpecificDataCmd = getUpdateSmileyCommand(pUpdatedQuestionData.Id,(SmileyQuestion)pUpdatedQuestionData);
                                     break;
                                 case QuestionType.Slider:
-                                    SliderQuestion tSliderQuestionData = (SliderQuestion)pUpdatedQuestionData;
-                                    tQuestionUpdateArguments += $"StartValue = {tSliderQuestionData.StartValue}," +
-                                        $" EndValue = {tSliderQuestionData.EndValue}," +
-                                        $" StartValueCaption = @StartValueCaption," +
-                                        $" EndValuecaption = @EndValuecaption";
-                                    tUpdateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter("@StartValueCaption", tSliderQuestionData.StartValueCaption));
-                                    tUpdateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter("@EndValuecaption", tSliderQuestionData.EndValueCaption));
+                                    tUpdateQuestionSpecificDataCmd = getUpdateSliderCommand(pUpdatedQuestionData.Id, (SliderQuestion)pUpdatedQuestionData);
                                     break;
                             }
-                            tUpdateQuestionSpecificDataCmd.CommandType = CommandType.Text;
-                            tUpdateQuestionSpecificDataCmd.CommandText = $"UPDATE {pOriginalQuestionType} SET {tQuestionUpdateArguments} WHERE Id = {pUpdatedQuestionData.Id}";
+                            tUpdateQuestionSpecificDataCmd.Connection = tConn;
                             tUpdateQuestionSpecificDataCmd.Transaction = tTransaction;
-                            //update the general question
-                            SqlCommand tUpdateQuestionDataCmd = new SqlCommand($"UPDATE Question SET [Order] = @Order, [Text] = @Text WHERE Id = {pUpdatedQuestionData.Id}",
-                                tConn, tTransaction);
-                            tUpdateQuestionDataCmd.Parameters.Add(new SqlParameter("@Text", pUpdatedQuestionData.Text));
-                            tUpdateQuestionDataCmd.Parameters.Add(new SqlParameter("@Order", pUpdatedQuestionData.Order));
-
                             tUpdateQuestionSpecificDataCmd.ExecuteNonQuery();
-                            tUpdateQuestionDataCmd.ExecuteNonQuery();
                         }
                         else
                         {
                             //type of question changed
                             //delete the questions specific old data first
-                            SqlCommand tDeleteSpecificQuestionDataCmd = new SqlCommand($"DELETE FROM {pOriginalQuestionType} WHERE Id = {pUpdatedQuestionData.Id}", tConn, tTransaction);
-
-                            //update the general question data
-                            SqlCommand tUpdateQuestionDataCmd = new SqlCommand
-                                ($"UPDATE Question SET [Order] = {pUpdatedQuestionData.Order}, [Text] = @Text," +
-                                $" [Type] = '{(int)pUpdatedQuestionData.Type}' WHERE Id = {pUpdatedQuestionData.Id}",
+                            SqlCommand tDeleteSpecificQuestionDataCmd = new SqlCommand(
+                                $"DELETE FROM {pOriginalQuestionType} " +
+                                $"WHERE [{cIdColumn}] = @{cIdColumn}",
                                 tConn, tTransaction);
-                            tUpdateQuestionDataCmd.Parameters.Add(new SqlParameter("@Text", pUpdatedQuestionData.Text));
-
+                            tDeleteSpecificQuestionDataCmd.Parameters.Add(new SqlParameter($@"{cIdColumn}",pUpdatedQuestionData.Id));
+                            
                             //create a new row in the specific question type table
-                            SqlCommand tInsertQuestionTypeCmd = tConn.CreateCommand();
-                            //get the specific values for the question type
-                            string tQuestionTypeSpecificAttributes = "";
-                            string tQuestionTypeSpecificValues = "";
+                            SqlCommand tInsertQuestionTypeCmd = null;
 
                             //for each type of question downcast the question to its specific type
                             switch (pUpdatedQuestionData.Type)
                             {
                                 case QuestionType.Stars:
-                                    StarsQuestion tStarsQuestionData = (StarsQuestion)pUpdatedQuestionData;
-                                    tQuestionTypeSpecificAttributes += "NumberOfStars";
-                                    tQuestionTypeSpecificValues += $"{tStarsQuestionData.NumberOfStars}";
+                                    tInsertQuestionTypeCmd = getAddStarsCommand(pUpdatedQuestionData.Id, (StarsQuestion)pUpdatedQuestionData);
                                     break;
                                 case QuestionType.Smiley:
-                                    SmileyQuestion tSmileyQuestionData = (SmileyQuestion)pUpdatedQuestionData;
-                                    tQuestionTypeSpecificAttributes += "NumberOfFaces";
-                                    tQuestionTypeSpecificValues += $"{tSmileyQuestionData.NumberOfSmileyFaces}";
+                                    tInsertQuestionTypeCmd = getAddSmileyCommand(pUpdatedQuestionData.Id, (SmileyQuestion)pUpdatedQuestionData);
                                     break;
                                 case QuestionType.Slider:
-                                    SliderQuestion tSliderQuestionData = (SliderQuestion)pUpdatedQuestionData;
-                                    tQuestionTypeSpecificAttributes += "StartValue, EndValue, StartValueCaption, EndValueCaption";
-                                    tQuestionTypeSpecificValues += $"{tSliderQuestionData.StartValue}, {tSliderQuestionData.EndValue}," +
-                                        $" @StartValueCaption, @EndValueCaption";
-                                    //to ensure safety against sql injection
-                                    tInsertQuestionTypeCmd.Parameters.Add(new SqlParameter("@StartValueCaption", tSliderQuestionData.StartValueCaption));
-                                    tInsertQuestionTypeCmd.Parameters.Add(new SqlParameter("@EndValueCaption", tSliderQuestionData.EndValueCaption));
+                                    tInsertQuestionTypeCmd = getAddSliderCommand(pUpdatedQuestionData.Id, (SliderQuestion)pUpdatedQuestionData);
                                     break;
                             }
-
-                            tInsertQuestionTypeCmd.CommandType = CommandType.Text;
-                            tInsertQuestionTypeCmd.CommandText = $"INSERT INTO {pUpdatedQuestionData.Type} (Id, {tQuestionTypeSpecificAttributes}) VALUES ({pUpdatedQuestionData.Id}, {tQuestionTypeSpecificValues})";
+                            tInsertQuestionTypeCmd.Connection = tConn;
                             tInsertQuestionTypeCmd.Transaction = tTransaction;
                             //exectue commands on database
                             tDeleteSpecificQuestionDataCmd.ExecuteNonQuery();
-                            tUpdateQuestionDataCmd.ExecuteNonQuery();
                             tInsertQuestionTypeCmd.ExecuteNonQuery();
                         }
+
+                        //set the data type based on whether it changed or not
+                        int pUpdatedQuestionType = pOriginalQuestionType == pUpdatedQuestionData.Type ? (int)pOriginalQuestionType : (int)pUpdatedQuestionData.Type;
+
+                        //update the general data of the question after changing the specific data
+                        SqlCommand tUpdateQuestionDataCmd = new SqlCommand(
+                            $"UPDATE {cQuestionsTableName} SET" +
+                            $" [{cOrderColumn}] = @{cOrderColumn}," +
+                            $" [{cTextColumn}] = @{cTextColumn}, " +
+                            $" [{cTypeColumn}] = @{cTypeColumn}" +
+                            $" WHERE [{cIdColumn}] = @{cIdColumn}",
+                               tConn, tTransaction);
+                        //add parameters to the query
+                        tUpdateQuestionDataCmd.Parameters.Add(new SqlParameter($"@{cIdColumn}", pUpdatedQuestionData.Id));
+                        tUpdateQuestionDataCmd.Parameters.Add(new SqlParameter($"@{cTextColumn}", pUpdatedQuestionData.Text));
+                        tUpdateQuestionDataCmd.Parameters.Add(new SqlParameter($"@{cOrderColumn}", pUpdatedQuestionData.Order));
+                        tUpdateQuestionDataCmd.Parameters.Add(new SqlParameter($"@{cTypeColumn}", pUpdatedQuestionType));
+                        tUpdateQuestionDataCmd.ExecuteNonQuery();
+
                         tTransaction.Commit();
                     }
-                    catch (Exception e)
+                    catch (Exception ex)
                     {
+                        UtilityMethods.LogError(ex);
                         tTransaction.Rollback();
                     }
                 }
@@ -261,8 +261,10 @@ namespace DatabaseLayer
                         for (int i = 0; i < pSelectedQuestions.Count; i++)
                         {
                             Question tCurrentQuestion = pSelectedQuestions[i];
-                            tDeleteQuestionsCmd.CommandText = $"DELETE FROM {tCurrentQuestion.Type} WHERE Id = @Id";
-                            tDeleteQuestionsCmd.Parameters.Add(new SqlParameter("@Id", tCurrentQuestion.Id));
+                            tDeleteQuestionsCmd.CommandText = 
+                                $"DELETE FROM {tCurrentQuestion.Type} " +
+                                $"WHERE [{cIdColumn}] = @{cIdColumn}";
+                            tDeleteQuestionsCmd.Parameters.Add(new SqlParameter($"@{cIdColumn}", tCurrentQuestion.Id));
                             tDeleteQuestionsCmd.ExecuteNonQuery();
                             tDeleteQuestionsCmd.Parameters.Clear();
                         }
@@ -271,8 +273,10 @@ namespace DatabaseLayer
                         for (int i = 0; i < pSelectedQuestions.Count; i++)
                         {
                             Question tCurrentQuestion = pSelectedQuestions[i];
-                            tDeleteQuestionsCmd.CommandText = $"DELETE FROM Question WHERE Id = @Id";
-                            tDeleteQuestionsCmd.Parameters.Add(new SqlParameter("@Id", tCurrentQuestion.Id));
+                            tDeleteQuestionsCmd.CommandText = 
+                                $"DELETE FROM {cQuestionsTableName} " +
+                                $"WHERE [{cIdColumn}] = @{cIdColumn}";
+                            tDeleteQuestionsCmd.Parameters.Add(new SqlParameter($"@{cIdColumn}", tCurrentQuestion.Id));
                             tDeleteQuestionsCmd.ExecuteNonQuery();
                             tDeleteQuestionsCmd.Parameters.Clear();
                         }
@@ -288,14 +292,96 @@ namespace DatabaseLayer
         #endregion
 
         #region class utility functions
+        private static SqlCommand getAddStarsCommand(int pQuestionId, StarsQuestion pStarsQuestionData)
+        {
+            SqlCommand tInsertQuestionTypeCmd = new SqlCommand(
+                $"INSERT INTO {QuestionType.Stars} " +
+                $"([{cIdColumn}], [{cNumberOfStarsColumn}]) " +
+                $"VALUES ( @{cIdColumn}, @{cNumberOfStarsColumn} )");
+
+            tInsertQuestionTypeCmd.Parameters.Add(new SqlParameter($"@{cIdColumn}", pQuestionId));
+            tInsertQuestionTypeCmd.Parameters.Add(new SqlParameter($"@{cNumberOfStarsColumn}", pStarsQuestionData.NumberOfStars));
+            return tInsertQuestionTypeCmd;
+
+        }
+        private static SqlCommand getAddSmileyCommand(int pQuestionId, SmileyQuestion pSmileyQuestionData)
+        {
+            SqlCommand tInsertQuestionTypeCmd = new SqlCommand(
+                $"INSERT INTO {QuestionType.Smiley} " +
+                $"([{cIdColumn}], [{cNumberOfFacesColumn}]) " +
+                $"VALUES ( @{cIdColumn}, @{cNumberOfFacesColumn} )");
+
+            tInsertQuestionTypeCmd.Parameters.Add(new SqlParameter($"@{cIdColumn}", pQuestionId));
+            tInsertQuestionTypeCmd.Parameters.Add(new SqlParameter($"@{cNumberOfFacesColumn}", pSmileyQuestionData.NumberOfSmileyFaces));
+            return tInsertQuestionTypeCmd;
+
+        }
+        private static SqlCommand getAddSliderCommand(int pQuestionId, SliderQuestion pSliderQuestionData)
+        {
+            SqlCommand tInsertQuestionTypeCmd = new SqlCommand(
+                $"INSERT INTO {QuestionType.Slider} " +
+                $"([{cIdColumn}], [{cStartValueColumn}],[{cEndValueColumn}],[{cStartValueCaptionColumn}],[{cEndValueCaptionColumn}]) " +
+                $"VALUES (@{cIdColumn}, @{cStartValueColumn}, @{cEndValueColumn}, @{cStartValueCaptionColumn}, @{cEndValueCaptionColumn})");
+
+            tInsertQuestionTypeCmd.Parameters.Add(new SqlParameter($"@{cIdColumn}", pQuestionId));
+            tInsertQuestionTypeCmd.Parameters.Add(new SqlParameter($"@{cStartValueColumn}", pSliderQuestionData.StartValue));
+            tInsertQuestionTypeCmd.Parameters.Add(new SqlParameter($"@{cEndValueColumn}", pSliderQuestionData.EndValue));
+            tInsertQuestionTypeCmd.Parameters.Add(new SqlParameter($"@{cStartValueCaptionColumn}", pSliderQuestionData.StartValueCaption));
+            tInsertQuestionTypeCmd.Parameters.Add(new SqlParameter($"@{cEndValueCaptionColumn}", pSliderQuestionData.EndValueCaption));
+            return tInsertQuestionTypeCmd;
+        }
+
+        private static SqlCommand getUpdateStarsCommand(int pQuestionId, StarsQuestion pStarsQuestionData)
+        {
+            SqlCommand tUpdateQuestionSpecificDataCmd = new SqlCommand(
+                $"UPDATE {QuestionType.Stars} SET " +
+                $"[{cNumberOfStarsColumn}] = @{cNumberOfStarsColumn} " +
+                $"WHERE [{cIdColumn}] = @{cIdColumn}");
+
+            tUpdateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter($"@{cIdColumn}", pQuestionId));
+            tUpdateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter($"@{cNumberOfStarsColumn}", pStarsQuestionData.NumberOfStars));
+            return tUpdateQuestionSpecificDataCmd;
+
+        }
+        private static SqlCommand getUpdateSmileyCommand(int pQuestionId, SmileyQuestion pSmileyQuestionData)
+        {
+            SqlCommand tUpdateQuestionSpecificDataCmd = new SqlCommand(
+                $"UPDATE {QuestionType.Smiley} SET " +
+                $"[{cNumberOfFacesColumn}] = @{cNumberOfFacesColumn} " +
+                $"WHERE [{cIdColumn}] = @{cIdColumn}");
+
+            tUpdateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter($"@{cIdColumn}", pQuestionId));
+            tUpdateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter($"@{cNumberOfFacesColumn}", pSmileyQuestionData.NumberOfSmileyFaces));
+            return tUpdateQuestionSpecificDataCmd;
+
+        }
+        private static SqlCommand getUpdateSliderCommand(int pQuestionId, SliderQuestion pStarsQuestionData)
+        {
+            SqlCommand tUpdateQuestionSpecificDataCmd = new SqlCommand(
+                $"UPDATE {QuestionType.Slider} SET " +
+                $"[{cStartValueColumn}] = @{cStartValueColumn}, " +
+                $"[{cEndValueColumn}] = @{cEndValueColumn}, " +
+                $"[{cStartValueCaptionColumn}] = @{cStartValueCaptionColumn}, " +
+                $"[{cEndValueCaptionColumn}] = @{cEndValueCaptionColumn} " +
+                $"WHERE [{cIdColumn}] = @{cIdColumn}");
+
+            tUpdateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter($"@{cIdColumn}", pQuestionId));
+            tUpdateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter($"@{cStartValueColumn}", pStarsQuestionData.StartValue));
+            tUpdateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter($"@{cEndValueColumn}", pStarsQuestionData.EndValue));
+            tUpdateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter($"@{cStartValueCaptionColumn}", pStarsQuestionData.StartValueCaption));
+            tUpdateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter($"@{cEndValueCaptionColumn}", pStarsQuestionData.EndValueCaption));
+            return tUpdateQuestionSpecificDataCmd;
+        }
+
         public static long getChecksum()
         {
             //better handling for the null case
             using (SqlConnection tConn = new SqlConnection(ConnectionString))
                 {
                     tConn.Open();
-                    SqlCommand tGetChecksum = new SqlCommand("SELECT CHECKSUM_AGG(BINARY_CHECKSUM(*)) FROM Question WITH (NOLOCK)", tConn);
+                    SqlCommand tGetChecksum = new SqlCommand($"SELECT CHECKSUM_AGG(BINARY_CHECKSUM(*)) FROM {cQuestionsTableName} WITH (NOLOCK)", tConn);
                     var tChecksum = tGetChecksum.ExecuteScalar();
+                    //handle this in a better way
                     if (DBNull.Value.Equals(tChecksum))
                         return 0;
                     return (int)tChecksum;

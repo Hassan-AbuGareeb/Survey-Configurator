@@ -218,6 +218,8 @@ namespace Survey_Configurator
         private void QuestionOperations_DataBaseChangedEvent(object? sender, string e)
         {
             UpdateQuestionsList();
+            EditQuestionButton.Enabled=false;
+            DeleteQuestionButton.Enabled=false;
         }
         #endregion
 

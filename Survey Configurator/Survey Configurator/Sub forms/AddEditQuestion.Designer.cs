@@ -43,8 +43,8 @@
             SliderEndValueLabel = new Label();
             SliderStartValueNumeric = new NumericUpDown();
             SliderStartValueLabel = new Label();
-            Cancel = new Button();
-            Add = new Button();
+            CancelButton = new Button();
+            OperationButton = new Button();
             QuestionTypeComboBox = new ComboBox();
             QuestionOrderNumeric = new NumericUpDown();
             QuestionTextBox = new TextBox();
@@ -235,31 +235,30 @@
             SliderStartValueLabel.TabIndex = 21;
             SliderStartValueLabel.Text = "Start value";
             // 
-            // Cancel
+            // CancelButton
             // 
-            Cancel.Anchor = AnchorStyles.Left;
-            Cancel.Font = new Font("Segoe UI", 12F);
-            Cancel.Location = new Point(550, 750);
-            Cancel.Margin = new Padding(3, 4, 3, 4);
-            Cancel.Name = "Cancel";
-            Cancel.Size = new Size(120, 40);
-            Cancel.TabIndex = 9;
-            Cancel.Text = "Cancel";
-            Cancel.UseVisualStyleBackColor = true;
-            Cancel.Click += CancelButton_Click;
+            CancelButton.Anchor = AnchorStyles.Left;
+            CancelButton.Font = new Font("Segoe UI", 12F);
+            CancelButton.Location = new Point(550, 750);
+            CancelButton.Margin = new Padding(3, 4, 3, 4);
+            CancelButton.Name = "CancelButton";
+            CancelButton.Size = new Size(120, 40);
+            CancelButton.TabIndex = 9;
+            CancelButton.Text = "Cancel";
+            CancelButton.UseVisualStyleBackColor = true;
+            CancelButton.Click += CancelButton_Click;
             // 
-            // Add
+            // OperationButton
             // 
-            Add.Anchor = AnchorStyles.Left;
-            Add.Font = new Font("Segoe UI", 12F);
-            Add.Location = new Point(424, 750);
-            Add.Margin = new Padding(3, 4, 3, 4);
-            Add.Name = "Add";
-            Add.Size = new Size(120, 40);
-            Add.TabIndex = 8;
-            Add.Text = "Add";
-            Add.UseVisualStyleBackColor = true;
-            Add.Click += AddButton_Click;
+            OperationButton.Anchor = AnchorStyles.Left;
+            OperationButton.Font = new Font("Segoe UI", 12F);
+            OperationButton.Location = new Point(424, 750);
+            OperationButton.Margin = new Padding(3, 4, 3, 4);
+            OperationButton.Name = "OperationButton";
+            OperationButton.Size = new Size(120, 40);
+            OperationButton.TabIndex = 8;
+            OperationButton.Text = "Add";
+            OperationButton.UseVisualStyleBackColor = true;
             // 
             // QuestionTypeComboBox
             // 
@@ -357,8 +356,8 @@
             ClientSize = new Size(702, 853);
             Controls.Add(panel1);
             Controls.Add(AddEditLabel);
-            Controls.Add(Cancel);
-            Controls.Add(Add);
+            Controls.Add(CancelButton);
+            Controls.Add(OperationButton);
             Controls.Add(QuestionTypeComboBox);
             Controls.Add(QuestionOrderNumeric);
             Controls.Add(QuestionTextBox);
@@ -370,6 +369,7 @@
             MaximumSize = new Size(720, 900);
             MinimumSize = new Size(720, 900);
             Name = "AddEditQuestion";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Add Edit";
             FormClosing += AddEditQuestion_FormClosing;
             Load += AddEdit_Load;
@@ -392,8 +392,8 @@
         #endregion
 
         private Panel StarsQuestionOptionsPanel;
-        private Button Cancel;
-        private Button Add;
+        private Button CancelButton;
+        private Button OperationButton;
         private ComboBox QuestionTypeComboBox;
         private NumericUpDown QuestionOrderNumeric;
         private TextBox QuestionTextBox;

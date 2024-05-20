@@ -14,8 +14,6 @@ namespace QuestionServices
         public static bool IsAppRunning = true;
         //changed to true when the user is performing adding, updating or deleting operation
         public static bool OperationOngoing = false;
-        //A Datatable collection to hold data temporarly and reduce requests to database
-        public static DataTable Questions = new DataTable();
         //a list to temporarily contain the change in the database
         public static List<Question> QuestionsList = new List<Question>();
 
@@ -82,9 +80,9 @@ namespace QuestionServices
             try 
             { 
                 //add the question to the database to generate its id and obtain it
-                Question tFullQuestionData = Database.AddQuestionToDB(pQuestionData);
+                int addQuestionResult = Database.AddQuestionToDB(ref pQuestionData);
                 //on successful question addition to Database add it to the Questions List
-                QuestionsList.Add(tFullQuestionData);
+                QuestionsList.Add(pQuestionData);
                 //notify UI of change
                 DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Added a new question");
             }
