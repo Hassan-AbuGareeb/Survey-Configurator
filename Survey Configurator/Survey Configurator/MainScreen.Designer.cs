@@ -162,6 +162,7 @@
             QuestionsListView.TabIndex = 6;
             QuestionsListView.UseCompatibleStateImageBehavior = false;
             QuestionsListView.View = View.Details;
+            QuestionsListView.ColumnClick += QuestionsListView_ColumnClick;
             QuestionsListView.SelectedIndexChanged += QuestionsListView_SelectedIndexChanged;
             // 
             // QuestionOrder

@@ -10,6 +10,9 @@ namespace Survey_Configurator
 {
     public partial class MainScreen : Form
     {
+        private System.Windows.Forms.SortOrder SortingOrder = System.Windows.Forms.SortOrder.Ascending;
+
+
         public MainScreen()
         {
             InitializeComponent();
@@ -30,8 +33,9 @@ namespace Survey_Configurator
 
                 //listen to any database change event
                 QuestionOperations.DataBaseChangedEvent += QuestionOperations_DataBaseChangedEvent;
-
-
+                
+                //sort the list on first load
+                QuestionsListView.ListViewItemSorter = new ListViewItemComparer(1, SortingOrder);
             }
             catch (ArgumentException)
             {
@@ -80,8 +84,6 @@ namespace Survey_Configurator
 
         private void DeleteQuestionButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(Thread.CurrentThread.ManagedThreadId.ToString());
-
             try
             {
                 int tNumberOfSelectedQuestions = QuestionsListView.SelectedItems.Count;
@@ -96,7 +98,7 @@ namespace Survey_Configurator
                     {
                         //cast the selected grid row to dataRowView to store it in a dataRow
                         Question tCurrentQuestion = QuestionsListView.SelectedItems[i].Tag as Question;
-                        tSelectedQuestions.Add(tCurrentQuestion); 
+                        tSelectedQuestions.Add(tCurrentQuestion);
                     }
                     QuestionOperations.DeleteQuestion(tSelectedQuestions);
 
@@ -202,12 +204,27 @@ namespace Survey_Configurator
 
         private void UpdateQuestionsList()
         {
+            //check if there was any questions selected before updating the view list data on database update
+            int[] tSelectedQuestions = new int[QuestionsListView.SelectedItems.Count];
+            for (int i = 0; i < tSelectedQuestions.Length; i++)
+            {
+                Question tCurrentQuestion = (Question)QuestionsListView.SelectedItems[i].Tag;
+                tSelectedQuestions[i] = tCurrentQuestion.Id;
+            }
+
+            //re-populate database
             QuestionsListView.Items.Clear();
             foreach (Question tQuestion in QuestionOperations.QuestionsList)
             {
                 string[] tCurrentQuestionData = new[] { tQuestion.Order.ToString(), tQuestion.Text, tQuestion.Type.ToString() };
                 ListViewItem tCurrentQuestionItem = new ListViewItem(tCurrentQuestionData);
                 tCurrentQuestionItem.Tag = tQuestion;
+
+                //check if a question was selected before re populating the data
+                if (tSelectedQuestions.Contains(tQuestion.Id))
+                {
+                    tCurrentQuestionItem.Selected = true;
+                }
                 QuestionsListView.Items.Add(tCurrentQuestionItem);
             }
         }
@@ -215,11 +232,23 @@ namespace Survey_Configurator
         private void QuestionOperations_DataBaseChangedEvent(object? sender, string e)
         {
             UpdateQuestionsList();
-            EditQuestionButton.Enabled=false;
-            DeleteQuestionButton.Enabled=false;
+            EditQuestionButton.Enabled = false;
+            DeleteQuestionButton.Enabled = false;
         }
         #endregion
 
 
+        private void QuestionsListView_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            if(SortingOrder == System.Windows.Forms.SortOrder.Ascending)
+            {
+                SortingOrder = System.Windows.Forms.SortOrder.Descending; 
+            }
+            else
+            { 
+                SortingOrder = System.Windows.Forms.SortOrder.Ascending;
+            }
+            QuestionsListView.ListViewItemSorter = new ListViewItemComparer(e.Column, SortingOrder);
+        }
     }
 }

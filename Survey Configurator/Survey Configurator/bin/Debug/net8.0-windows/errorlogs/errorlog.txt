@@ -1473,3 +1473,13 @@ Stack trace:
 
 --------
 
+5/20/2024 7:56:06 AM UTC,
+Exception: InvalidCastException,
+Exception message: Unable to cast object of type 'System.Windows.Forms.ListViewItem' to type 'SharedResources.models.Question'.,
+Stack trace:
+   at Survey_Configurator.MainScreen.UpdateQuestionsList() in D:\Survey Configurator\Survey Configurator\Survey Configurator\MainScreen.cs:line 207
+   at Survey_Configurator.MainScreen.QuestionOperations_DataBaseChangedEvent(Object sender, String e) in D:\Survey Configurator\Survey Configurator\Survey Configurator\MainScreen.cs:line 226
+   at QuestionServices.QuestionOperations.AddQuestion(Question pQuestionData) in D:\Survey Configurator\Survey Configurator\Logic\QuestionOperations.cs:line 87
+
+--------
+
