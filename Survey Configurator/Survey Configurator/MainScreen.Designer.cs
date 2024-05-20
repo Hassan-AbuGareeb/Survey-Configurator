@@ -154,6 +154,7 @@
             // 
             QuestionsListView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             QuestionsListView.Columns.AddRange(new ColumnHeader[] { QuestionOrder, QuestionText, QuestionType });
+            QuestionsListView.Font = new Font("Segoe UI", 12F);
             QuestionsListView.FullRowSelect = true;
             QuestionsListView.Location = new Point(12, 39);
             QuestionsListView.Name = "QuestionsListView";
@@ -168,17 +169,17 @@
             // QuestionOrder
             // 
             QuestionOrder.Text = "Order";
-            QuestionOrder.Width = 80;
+            QuestionOrder.Width = 100;
             // 
             // QuestionText
             // 
             QuestionText.Text = "Text";
-            QuestionText.Width = 300;
+            QuestionText.Width = 800;
             // 
             // QuestionType
             // 
             QuestionType.Text = "Type";
-            QuestionType.Width = 80;
+            QuestionType.Width = 322;
             // 
             // MainScreen
             // 

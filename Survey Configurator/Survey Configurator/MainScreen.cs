@@ -36,6 +36,11 @@ namespace Survey_Configurator
                 
                 //sort the list on first load
                 QuestionsListView.ListViewItemSorter = new ListViewItemComparer(1, SortingOrder);
+
+                //for(int i= 0; i< QuestionsListView.Columns.Count; i++)
+                //{
+                //    QuestionsListView.Columns[i].Width = -2;
+                //}
             }
             catch (ArgumentException)
             {
@@ -149,47 +154,46 @@ namespace Survey_Configurator
             }
         }
 
+        private void QuestionsListView_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            if (SortingOrder == System.Windows.Forms.SortOrder.Ascending)
+            {
+                SortingOrder = System.Windows.Forms.SortOrder.Descending;
+            }
+            else
+            {
+                SortingOrder = System.Windows.Forms.SortOrder.Ascending;
+            }
+            QuestionsListView.ListViewItemSorter = new ListViewItemComparer(e.Column, SortingOrder);
+        }
+
+
         #region menu strip items functions
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            //ClearSelectedOptions();
-
-            //fontSize9StripMenuItem.Checked = true;
-            //QuestionsDataGrid.RowsDefaultCellStyle.Font = new Font(QuestionsDataGrid.Font.FontFamily, 9);
-            //for (int i = 0; i < QuestionsDataGrid.Rows.Count; i++)
-            //{
-            //    QuestionsDataGrid.Rows[i].Height = 29;
-            //}
+            ClearSelectedOptions();
+            fontSize9StripMenuItem.Checked = true;
+            QuestionsListView.Font = new Font(QuestionsListView.Font.FontFamily, 9);
         }
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
-            //ClearSelectedOptions();
-            //fontSize12StripMenuItem.Checked = true;
-            //QuestionsDataGrid.RowsDefaultCellStyle.Font = new Font(QuestionsDataGrid.Font.FontFamily, 12);
-            //for (int i = 0; i < QuestionsDataGrid.Rows.Count; i++)
-            //{
-            //    QuestionsDataGrid.Rows[i].Height = 33;
-
-            //}
+            ClearSelectedOptions();
+            fontSize12StripMenuItem.Checked = true;
+            QuestionsListView.Font = new Font(QuestionsListView.Font.FontFamily, 12);
         }
 
         private void toolStripMenuItem4_Click(object sender, EventArgs e)
         {
-            //ClearSelectedOptions();
-            //fontSize15StripMenuItem.Checked = true;
-            //QuestionsDataGrid.RowsDefaultCellStyle.Font = new Font(QuestionsDataGrid.Font.FontFamily, 15);
-            //for (int i = 0; i < QuestionsDataGrid.Rows.Count; i++)
-            //{
-            //    QuestionsDataGrid.Rows[i].Height = 39;
-
-            //}
-        }
+            ClearSelectedOptions();
+            fontSize15StripMenuItem.Checked = true;
+            QuestionsListView.Font = new Font(QuestionsListView.Font.FontFamily, 15);
+          }
         private void ClearSelectedOptions()
         {
-            //fontSize9StripMenuItem.Checked = false;
-            //fontSize12StripMenuItem.Checked = false;
-            //fontSize15StripMenuItem.Checked = false;
+            fontSize9StripMenuItem.Checked = false;
+            fontSize12StripMenuItem.Checked = false;
+            fontSize15StripMenuItem.Checked = false;
         }
         #endregion
 
@@ -238,17 +242,5 @@ namespace Survey_Configurator
         #endregion
 
 
-        private void QuestionsListView_ColumnClick(object sender, ColumnClickEventArgs e)
-        {
-            if(SortingOrder == System.Windows.Forms.SortOrder.Ascending)
-            {
-                SortingOrder = System.Windows.Forms.SortOrder.Descending; 
-            }
-            else
-            { 
-                SortingOrder = System.Windows.Forms.SortOrder.Ascending;
-            }
-            QuestionsListView.ListViewItemSorter = new ListViewItemComparer(e.Column, SortingOrder);
-        }
     }
 }
