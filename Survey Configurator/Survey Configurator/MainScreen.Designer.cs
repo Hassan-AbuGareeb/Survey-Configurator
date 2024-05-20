@@ -195,7 +195,6 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Survey Configurator";
             WindowState = FormWindowState.Maximized;
-            FormClosing += MainScreen_FormClosing;
             Load += MainScreen_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();

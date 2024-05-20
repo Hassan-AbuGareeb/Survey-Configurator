@@ -26,10 +26,11 @@ namespace Survey_Configurator
                 QuestionsListViewInit();
 
                 //launch the database change checker to monitor database for any change and reflect it to the UI
-                QuestionOperations.CheckDataBaseChange();
+                QuestionOperations.StartCheckingDataBaseChange(Thread.CurrentThread);
 
                 //listen to any database change event
                 QuestionOperations.DataBaseChangedEvent += QuestionOperations_DataBaseChangedEvent;
+
 
             }
             catch (ArgumentException)
@@ -52,12 +53,6 @@ namespace Survey_Configurator
                 MessageBox.Show($"{ex.GetType().FullName}, {ex.StackTrace}");
                 Close();
             }
-        }
-
-        private void MainScreen_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            //stop the function checking the database changes
-            QuestionOperations.IsAppRunning = false;
         }
 
         //buttons click functions
@@ -85,6 +80,8 @@ namespace Survey_Configurator
 
         private void DeleteQuestionButton_Click(object sender, EventArgs e)
         {
+            MessageBox.Show(Thread.CurrentThread.ManagedThreadId.ToString());
+
             try
             {
                 int tNumberOfSelectedQuestions = QuestionsListView.SelectedItems.Count;

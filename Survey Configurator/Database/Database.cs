@@ -62,7 +62,10 @@ namespace DatabaseLayer
                     //parameterize the query
                     string tQuestionType = pQuestionData.Type.ToString();
 
-                    SqlCommand tGetQuestionSpecificData = new SqlCommand($"SELECT * FROM [{tQuestionType}] WHERE [{cIdColumn}] = @{cIdColumn}", tConn, tTransaction);
+                    SqlCommand tGetQuestionSpecificData = new SqlCommand(
+                        $"SELECT * FROM " +
+                        $"[{tQuestionType}] " +
+                        $"WHERE [{cIdColumn}] = @{cIdColumn}", tConn, tTransaction);
                     tGetQuestionSpecificData.Parameters.Add(new SqlParameter($"@{cIdColumn}",pQuestionData.Id));
                     DbDataReader tReader = tGetQuestionSpecificData.ExecuteReader(CommandBehavior.CloseConnection);
                     //this needs to be fixed
@@ -108,9 +111,12 @@ namespace DatabaseLayer
                             $"OUTPUT INSERTED.Id " +
                             $"VALUES (@{cTextColumn}, @{cOrderColumn}, @{cTypeColumn})",
                             tConn, tTransaction);
-                        tInsertQuestionCmd.Parameters.Add(new SqlParameter($"@{cTextColumn}", pQuestionData.Text));
-                        tInsertQuestionCmd.Parameters.Add(new SqlParameter($"@{cOrderColumn}", pQuestionData.Order));
-                        tInsertQuestionCmd.Parameters.Add(new SqlParameter($"@{cTypeColumn}", pQuestionData.Type));
+                        tInsertQuestionCmd.Parameters.AddRange(
+                        [
+                            new SqlParameter($"@{cTextColumn}", pQuestionData.Text),
+                            new SqlParameter($"@{cOrderColumn}", pQuestionData.Order),
+                            new SqlParameter($"@{cTypeColumn}", pQuestionData.Type)
+                        ]);
 
                         //insert the row data to the question and return the id of the created question
                         int tQuestionId = (int)tInsertQuestionCmd.ExecuteScalar();
@@ -227,10 +233,13 @@ namespace DatabaseLayer
                             $" WHERE [{cIdColumn}] = @{cIdColumn}",
                                tConn, tTransaction);
                         //add parameters to the query
-                        tUpdateQuestionDataCmd.Parameters.Add(new SqlParameter($"@{cIdColumn}", pUpdatedQuestionData.Id));
-                        tUpdateQuestionDataCmd.Parameters.Add(new SqlParameter($"@{cTextColumn}", pUpdatedQuestionData.Text));
-                        tUpdateQuestionDataCmd.Parameters.Add(new SqlParameter($"@{cOrderColumn}", pUpdatedQuestionData.Order));
-                        tUpdateQuestionDataCmd.Parameters.Add(new SqlParameter($"@{cTypeColumn}", pUpdatedQuestionType));
+                        tUpdateQuestionDataCmd.Parameters.AddRange(
+                        [
+                            new SqlParameter($"@{cIdColumn}", pUpdatedQuestionData.Id),
+                            new SqlParameter($"@{cTextColumn}", pUpdatedQuestionData.Text),
+                            new SqlParameter($"@{cOrderColumn}", pUpdatedQuestionData.Order),
+                            new SqlParameter($"@{cTypeColumn}", pUpdatedQuestionType)
+                        ]);
                         tUpdateQuestionDataCmd.ExecuteNonQuery();
 
                         tTransaction.Commit();
@@ -299,8 +308,10 @@ namespace DatabaseLayer
                 $"([{cIdColumn}], [{cNumberOfStarsColumn}]) " +
                 $"VALUES ( @{cIdColumn}, @{cNumberOfStarsColumn} )");
 
-            tInsertQuestionTypeCmd.Parameters.Add(new SqlParameter($"@{cIdColumn}", pQuestionId));
-            tInsertQuestionTypeCmd.Parameters.Add(new SqlParameter($"@{cNumberOfStarsColumn}", pStarsQuestionData.NumberOfStars));
+            tInsertQuestionTypeCmd.Parameters.AddRange([
+                new SqlParameter($"@{cIdColumn}", pQuestionId),
+                new SqlParameter($"@{cNumberOfStarsColumn}", pStarsQuestionData.NumberOfStars)
+                ]);
             return tInsertQuestionTypeCmd;
 
         }
@@ -311,8 +322,10 @@ namespace DatabaseLayer
                 $"([{cIdColumn}], [{cNumberOfFacesColumn}]) " +
                 $"VALUES ( @{cIdColumn}, @{cNumberOfFacesColumn} )");
 
-            tInsertQuestionTypeCmd.Parameters.Add(new SqlParameter($"@{cIdColumn}", pQuestionId));
-            tInsertQuestionTypeCmd.Parameters.Add(new SqlParameter($"@{cNumberOfFacesColumn}", pSmileyQuestionData.NumberOfSmileyFaces));
+            tInsertQuestionTypeCmd.Parameters.AddRange([
+                new SqlParameter($"@{cIdColumn}", pQuestionId),
+                new SqlParameter($"@{cNumberOfFacesColumn}", pSmileyQuestionData.NumberOfSmileyFaces)
+                ]);
             return tInsertQuestionTypeCmd;
 
         }
@@ -323,11 +336,13 @@ namespace DatabaseLayer
                 $"([{cIdColumn}], [{cStartValueColumn}],[{cEndValueColumn}],[{cStartValueCaptionColumn}],[{cEndValueCaptionColumn}]) " +
                 $"VALUES (@{cIdColumn}, @{cStartValueColumn}, @{cEndValueColumn}, @{cStartValueCaptionColumn}, @{cEndValueCaptionColumn})");
 
-            tInsertQuestionTypeCmd.Parameters.Add(new SqlParameter($"@{cIdColumn}", pQuestionId));
-            tInsertQuestionTypeCmd.Parameters.Add(new SqlParameter($"@{cStartValueColumn}", pSliderQuestionData.StartValue));
-            tInsertQuestionTypeCmd.Parameters.Add(new SqlParameter($"@{cEndValueColumn}", pSliderQuestionData.EndValue));
-            tInsertQuestionTypeCmd.Parameters.Add(new SqlParameter($"@{cStartValueCaptionColumn}", pSliderQuestionData.StartValueCaption));
-            tInsertQuestionTypeCmd.Parameters.Add(new SqlParameter($"@{cEndValueCaptionColumn}", pSliderQuestionData.EndValueCaption));
+            tInsertQuestionTypeCmd.Parameters.AddRange([
+                new SqlParameter($"@{cIdColumn}", pQuestionId),
+                new SqlParameter($"@{cStartValueColumn}", pSliderQuestionData.StartValue),
+                new SqlParameter($"@{cEndValueColumn}", pSliderQuestionData.EndValue),
+                new SqlParameter($"@{cStartValueCaptionColumn}", pSliderQuestionData.StartValueCaption),
+                new SqlParameter($"@{cEndValueCaptionColumn}", pSliderQuestionData.EndValueCaption)
+                ]);
             return tInsertQuestionTypeCmd;
         }
 
@@ -338,8 +353,10 @@ namespace DatabaseLayer
                 $"[{cNumberOfStarsColumn}] = @{cNumberOfStarsColumn} " +
                 $"WHERE [{cIdColumn}] = @{cIdColumn}");
 
-            tUpdateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter($"@{cIdColumn}", pQuestionId));
-            tUpdateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter($"@{cNumberOfStarsColumn}", pStarsQuestionData.NumberOfStars));
+            tUpdateQuestionSpecificDataCmd.Parameters.AddRange([
+                new SqlParameter($"@{cIdColumn}", pQuestionId),
+                new SqlParameter($"@{cNumberOfStarsColumn}", pStarsQuestionData.NumberOfStars)
+                ]);
             return tUpdateQuestionSpecificDataCmd;
 
         }
@@ -350,8 +367,10 @@ namespace DatabaseLayer
                 $"[{cNumberOfFacesColumn}] = @{cNumberOfFacesColumn} " +
                 $"WHERE [{cIdColumn}] = @{cIdColumn}");
 
-            tUpdateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter($"@{cIdColumn}", pQuestionId));
-            tUpdateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter($"@{cNumberOfFacesColumn}", pSmileyQuestionData.NumberOfSmileyFaces));
+            tUpdateQuestionSpecificDataCmd.Parameters.AddRange([
+                new SqlParameter($"@{cIdColumn}", pQuestionId),
+                new SqlParameter($"@{cNumberOfFacesColumn}", pSmileyQuestionData.NumberOfSmileyFaces)
+                ]);
             return tUpdateQuestionSpecificDataCmd;
 
         }
@@ -365,11 +384,13 @@ namespace DatabaseLayer
                 $"[{cEndValueCaptionColumn}] = @{cEndValueCaptionColumn} " +
                 $"WHERE [{cIdColumn}] = @{cIdColumn}");
 
-            tUpdateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter($"@{cIdColumn}", pQuestionId));
-            tUpdateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter($"@{cStartValueColumn}", pStarsQuestionData.StartValue));
-            tUpdateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter($"@{cEndValueColumn}", pStarsQuestionData.EndValue));
-            tUpdateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter($"@{cStartValueCaptionColumn}", pStarsQuestionData.StartValueCaption));
-            tUpdateQuestionSpecificDataCmd.Parameters.Add(new SqlParameter($"@{cEndValueCaptionColumn}", pStarsQuestionData.EndValueCaption));
+            tUpdateQuestionSpecificDataCmd.Parameters.AddRange([
+                new SqlParameter($"@{cIdColumn}", pQuestionId),
+                new SqlParameter($"@{cStartValueColumn}", pStarsQuestionData.StartValue),
+                new SqlParameter($"@{cEndValueColumn}", pStarsQuestionData.EndValue),
+                new SqlParameter($"@{cStartValueCaptionColumn}", pStarsQuestionData.StartValueCaption),
+                new SqlParameter($"@{cEndValueCaptionColumn}", pStarsQuestionData.EndValueCaption)
+                ]);
             return tUpdateQuestionSpecificDataCmd;
         }
 

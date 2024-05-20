@@ -4,6 +4,7 @@ using SharedResources.models;
 using DatabaseLayer;
 using SharedResources;
 using System.Text.Json;
+using System.Diagnostics;
 
 namespace QuestionServices
 {
@@ -11,7 +12,6 @@ namespace QuestionServices
     {
         public static event EventHandler<string> DataBaseChangedEvent;
 
-        public static bool IsAppRunning = true;
         //changed to true when the user is performing adding, updating or deleting operation
         public static bool OperationOngoing = false;
         //a list to temporarily contain the change in the database
@@ -217,22 +217,23 @@ namespace QuestionServices
             return true;
         }
 
-        public static void StartCheckingDataBaseChange()
+        public static void StartCheckingDataBaseChange(Thread pMainThread)
         {
-            Thread checkThread = new Thread(CheckDataBaseChange);
+            Thread checkThread = new Thread(()=>CheckDataBaseChange(pMainThread));
             checkThread.IsBackground = true;
             checkThread.Start();
         }
 
-        public static async void CheckDataBaseChange()
+        public static void CheckDataBaseChange(Thread pMainThread)
         {
+
             try
             {
                 //get checksum of the database current version of data
                 long currentChecksum = Database.getChecksum();
-                while (IsAppRunning)
+                while (pMainThread.IsAlive)
                 {
-                    await Task.Delay(10000);
+                    Thread.Sleep(10000);
                     if (currentChecksum==0)
                         continue;
                     if(!OperationOngoing) 
