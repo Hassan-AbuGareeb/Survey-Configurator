@@ -22,26 +22,16 @@ namespace QuestionServices
         }
 
         #region class main functions
-        public static void GetQuestions() 
+        public static OperationResult GetQuestions() 
         {
             try
             {
-                Database.getQuestionsFromDB(ref QuestionsList);
-            }
-            catch (SqlException ex)
-            {
-                UtilityMethods.LogError(ex);
-                throw;
-            }
-            catch (InvalidOperationException ex)
-            {
-                UtilityMethods.LogError(ex);
-                throw;
+                return Database.getQuestionsFromDB(ref QuestionsList);
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                throw;
+                return new OperationResult(ErrorTypes.UnknownError, "An Unknown error occured");
             }
         }
 
@@ -166,13 +156,26 @@ namespace QuestionServices
         #endregion
 
         #region class utilty functions
-        public static bool SetConnectionString()
+        public static OperationResult TestDBConnection()
+        {
+            try 
+            { 
+                return Database.TestDataBaseConnection();
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return new OperationResult(ErrorTypes.UnknownError, "Unkown error occured");
+            }
+
+        }
+        public static OperationResult SetConnectionString()
         {
             //try to obtain the connection string from a file
             try {
                 string tConnectionString = "";
                 //check that file exists
-            string filePath = Directory.GetCurrentDirectory() + "\\connectionSettings.json";
+                string filePath = Directory.GetCurrentDirectory() + "\\connectionSettings.json";
                 if (!File.Exists(filePath))
                 {
                     //create json file and fill it with default stuff
@@ -192,81 +195,75 @@ namespace QuestionServices
                         tConnectionString = tReadConnectionString.Trim().Substring(1, tReadConnectionString.Length - 2).Replace(":","=").Replace("\"","").Replace(",",";");
                     }
                  }
+
                 Database.ConnectionString = tConnectionString;
+                return new OperationResult();
             }
             catch (UnauthorizedAccessException ex)
             {
                 UtilityMethods.LogError(ex);
                 //handle the unAuthorized access happening
-            }
-            //this exception should be removed ?
-            catch(IndexOutOfRangeException ex)//caused by incorrect connection string which in turn causes the exception by trying to access out of range indexes in the splitted string 
-            {
-                //log error 
-                UtilityMethods.LogError(ex);
-                throw new ArgumentException("Wrong connection parameters",ex);
+                return new OperationResult(ErrorTypes.UnAuthorizedAccessException, "You have restrictions on file operations please refer to your system admin");
             }
             catch (Exception ex)
             {
                 //log error
                 UtilityMethods.LogError(ex);
                 //either the file can't be created or it is a permission issue
-                return false;
+                return new OperationResult(ErrorTypes.UnknownError, "An Unknown error occured.");
             }
-            //more exceptions should be added according to the changes made to this function
-            return true;
         }
 
-        public static void StartCheckingDataBaseChange(Thread pMainThread)
+        public static OperationResult StartCheckingDataBaseChange(Thread pMainThread)
         {
-            Thread checkThread = new Thread(()=>CheckDataBaseChange(pMainThread));
-            checkThread.IsBackground = true;
-            checkThread.Start();
+            try 
+            { 
+                Thread checkThread = new Thread(()=>CheckDataBaseChange(pMainThread));
+                checkThread.IsBackground = true;
+                checkThread.Start();
+                return new OperationResult();
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return new OperationResult(ErrorTypes.UnknownError, "Unkown Error occured");
+            }
         }
 
         public static void CheckDataBaseChange(Thread pMainThread)
         {
-
             try
             {
                 //get checksum of the database current version of data
-                long currentChecksum = Database.getChecksum();
+                long tcurrentChecksum=0;
+                Database.getChecksum(ref tcurrentChecksum);
                 while (pMainThread.IsAlive)
                 {
                     Thread.Sleep(10000);
-                    if (currentChecksum==0)
+                    if (tcurrentChecksum == 0)
                         continue;
                     if(!OperationOngoing) 
                     {
                         //get checksum again to detect change
-                        long newChecksum = Database.getChecksum();
-                        if (currentChecksum != newChecksum)
-                        {
-                           //data changed
-                           currentChecksum = newChecksum;
+                        long tNewChecksum = 0;
+                        OperationResult tNewChecksumResult = Database.getChecksum(ref tNewChecksum);
+                        if(tNewChecksumResult.IsSuccess)
+                            if (tcurrentChecksum != tNewChecksum)
+                            {
+                                //data changed
+                               tcurrentChecksum = tNewChecksum;
                            
-                           QuestionsList.Clear();
-                           Database.getQuestionsFromDB(ref QuestionsList);
-                           //notify UI of database change
-                           DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Database externally changed");
-                        }
+                               QuestionsList.Clear();
+                               Database.getQuestionsFromDB(ref QuestionsList);
+                               //notify UI of database change
+                               DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Database externally changed");
+                            }
                     }
                 }
-            }
-            catch (SqlException ex)
-            {
-                UtilityMethods.LogError(ex);
-                throw;
-            }
-            catch (InvalidOperationException ex)
-            {
-                UtilityMethods.LogError(ex);
-                throw;
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                throw;
             }
         }
 

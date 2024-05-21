@@ -15,7 +15,6 @@ namespace Survey_Configurator
              Type
         }
 
-
         private int ColumnIndex;
         private SortOrder SortingOrder;
         public ListViewItemComparer(int pColumn = 0, SortOrder pSortingOrder = SortOrder.Ascending)

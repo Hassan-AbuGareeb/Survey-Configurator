@@ -32,23 +32,55 @@ namespace DatabaseLayer
 
         private Database() { }
         #region class main functions
-        public static void getQuestionsFromDB(ref List<Question> pQuestionsList)
+
+        public static OperationResult TestDataBaseConnection()
         {
-            using (SqlConnection tConn = new SqlConnection(ConnectionString)) 
+            try
             {
+                SqlConnection tConn = new SqlConnection(ConnectionString);
                 tConn.Open();
-                using (SqlTransaction tTransaction = tConn.BeginTransaction()) 
-                { 
-                    SqlCommand tGetQuestionsDataCmd = new SqlCommand($"SELECT * FROM [{cQuestionsTableName}]", tConn, tTransaction);
-                    DbDataReader tReader = tGetQuestionsDataCmd.ExecuteReader(CommandBehavior.CloseConnection);
-                    //iterate over each row in the Reader and add it to the questions list
-                    while (tReader.Read())
-                    {
-                        pQuestionsList.Add(new Question((int)tReader[cIdColumn], tReader[cTextColumn].ToString(),
-                            (int)tReader[cOrderColumn], (QuestionType)tReader[cTypeColumn]));
+                tConn.Close();
+                return new OperationResult();
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return new OperationResult(ErrorTypes.UnknownError, "Unable to connect to database, please refer to your system admin");
+            }
+        }
+
+        public static OperationResult getQuestionsFromDB(ref List<Question> pQuestionsList)
+        {
+            try 
+            { 
+                using (SqlConnection tConn = new SqlConnection(ConnectionString)) 
+                {
+                    tConn.Open();
+                    using (SqlTransaction tTransaction = tConn.BeginTransaction()) 
+                    { 
+                        SqlCommand tGetQuestionsDataCmd = new SqlCommand($"SELECT * FROM [{cQuestionsTableName}]", tConn, tTransaction);
+                        DbDataReader tReader = tGetQuestionsDataCmd.ExecuteReader(CommandBehavior.CloseConnection);
+                        //iterate over each row in the Reader and add it to the questions list
+                        while (tReader.Read())
+                        {
+                            pQuestionsList.Add(new Question((int)tReader[cIdColumn], tReader[cTextColumn].ToString(),
+                                (int)tReader[cOrderColumn], (QuestionType)tReader[cTypeColumn]));
+                        }
+                        tReader.Close();
                     }
-                    tReader.Close();
+
                 }
+                return new OperationResult();
+            }
+            catch(SqlException ex)
+            {
+                UtilityMethods.LogError(ex);
+                return new OperationResult(ErrorTypes.SqlError, "An error occured while getting data, try again and if this error persists try restarting the app");
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return new OperationResult(ErrorTypes.UnknownError, "An unknown error occured");
             }
         }
 
@@ -394,9 +426,10 @@ namespace DatabaseLayer
             return tUpdateQuestionSpecificDataCmd;
         }
 
-        public static long getChecksum()
+        public static OperationResult getChecksum(ref long pChecksum)
         {
             //better handling for the null case
+            try { 
             using (SqlConnection tConn = new SqlConnection(ConnectionString))
                 {
                     tConn.Open();
@@ -404,9 +437,16 @@ namespace DatabaseLayer
                     var tChecksum = tGetChecksum.ExecuteScalar();
                     //handle this in a better way
                     if (DBNull.Value.Equals(tChecksum))
-                        return 0;
-                    return (int)tChecksum;
+                        return new OperationResult(ErrorTypes.SqlError, "Database was just created");
+                    pChecksum = (int)tChecksum;
+                    return new OperationResult();
                 }
+            } 
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return new OperationResult(ErrorTypes.UnknownError, "An Unkown error occured");
+            }
         }
         #endregion
     }

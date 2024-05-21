@@ -1,65 +1,67 @@
 ﻿using Survey_Configurator.Sub_forms;
-using System.Data;
 using QuestionServices;
-using System.Configuration;
 using Microsoft.Data.SqlClient;
-using Microsoft.VisualBasic.Logging;
 using SharedResources;
 using SharedResources.models;
 namespace Survey_Configurator
 {
     public partial class MainScreen : Form
     {
+        //the sorting order for the questions items in the list view
         private System.Windows.Forms.SortOrder SortingOrder = System.Windows.Forms.SortOrder.Ascending;
-
 
         public MainScreen()
         {
-            InitializeComponent();
+            try {
+                //check if connection string is successfully obtained 
+                OperationResult tConnectionStringCreated = QuestionOperations.SetConnectionString();
+                if(!tConnectionStringCreated.IsSuccess)
+                {
+                    MessageBox.Show(tConnectionStringCreated.ErrorMessage, "Database connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Close();
+                }
+                //check database connectivity
+                OperationResult tDatabaseConnected = QuestionOperations.TestDBConnection();
+                if(!tDatabaseConnected.IsSuccess )
+                {
+                    MessageBox.Show(tDatabaseConnected.ErrorMessage, "Database connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Close();
+                }
+
+                InitializeComponent();
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                MessageBox.Show("an Unkown error occured", "Unkown error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
+            }
         }
 
         private void MainScreen_Load(object sender, EventArgs e)
         {
             try
             {
-                //either find a way to test connection before showing the main form or move this function from here 
-                bool tIsConnectionStringFound = QuestionOperations.SetConnectionString();
-
                 //initialize the list view with questions data
                 QuestionsListViewInit();
 
                 //launch the database change checker to monitor database for any change and reflect it to the UI
-                QuestionOperations.StartCheckingDataBaseChange(Thread.CurrentThread);
-
+                OperationResult tCheckingDataBaseResult = QuestionOperations.StartCheckingDataBaseChange(Thread.CurrentThread);
+                if(!tCheckingDataBaseResult.IsSuccess)
+                {
+                    MessageBox.Show($"An error occured \n {ex.Message}", ex.GetType().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Close();
+                }
                 //listen to any database change event
                 QuestionOperations.DataBaseChangedEvent += QuestionOperations_DataBaseChangedEvent;
                 
-                //sort the list on first load
+                //sort the questions list alphabetically on first load
                 QuestionsListView.ListViewItemSorter = new ListViewItemComparer(1, SortingOrder);
-
-                //for(int i= 0; i< QuestionsListView.Columns.Count; i++)
-                //{
-                //    QuestionsListView.Columns[i].Width = -2;
-                //}
-            }
-            catch (ArgumentException)
-            {
-                MessageBox.Show("Wrong connection parameters please check the connectionSettings.txt file");
-                Close();
-            }
-            catch (InvalidOperationException)
-            {
-                //error during getting data from database, implement a retry mechanism
-                MessageBox.Show("error occured while Loading data, please try again");
-            }
-            catch (SqlException)
-            {
-                MessageBox.Show("Database connection error, check the connection parameters or the sql server configurations");
-                Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ex.GetType().FullName}, {ex.StackTrace}");
+                UtilityMethods.LogError(ex);
+                MessageBox.Show($"An error occured \n {ex.Message}", ex.GetType().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
             }
         }
@@ -201,46 +203,72 @@ namespace Survey_Configurator
         #region class utility functions
         private void QuestionsListViewInit()
         {
-            QuestionOperations.GetQuestions();
-            UpdateQuestionsList();
-            //try and catch
+            try 
+            {
+                OperationResult tGetQuestionsSuccessful = QuestionOperations.GetQuestions();
+                if (!tGetQuestionsSuccessful.IsSuccess)
+                {
+                    MessageBox.Show(tGetQuestionsSuccessful.ErrorMessage, tGetQuestionsSuccessful.Error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    UpdateQuestionsList();
+                }
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                MessageBox.Show("An Unkown error occured", "Unkown error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void UpdateQuestionsList()
         {
-            //check if there was any questions selected before updating the view list data on database update
-            int[] tSelectedQuestions = new int[QuestionsListView.SelectedItems.Count];
-            for (int i = 0; i < tSelectedQuestions.Length; i++)
-            {
-                Question tCurrentQuestion = (Question)QuestionsListView.SelectedItems[i].Tag;
-                tSelectedQuestions[i] = tCurrentQuestion.Id;
-            }
-
-            //re-populate database
-            QuestionsListView.Items.Clear();
-            foreach (Question tQuestion in QuestionOperations.QuestionsList)
-            {
-                string[] tCurrentQuestionData = new[] { tQuestion.Order.ToString(), tQuestion.Text, tQuestion.Type.ToString() };
-                ListViewItem tCurrentQuestionItem = new ListViewItem(tCurrentQuestionData);
-                tCurrentQuestionItem.Tag = tQuestion;
-
-                //check if a question was selected before re populating the data
-                if (tSelectedQuestions.Contains(tQuestion.Id))
+            try { 
+                //check if there was any questions selected before updating the view list data on database update
+                int[] tSelectedQuestions = new int[QuestionsListView.SelectedItems.Count];
+                for (int i = 0; i < tSelectedQuestions.Length; i++)
                 {
-                    tCurrentQuestionItem.Selected = true;
+                    Question tCurrentQuestion = (Question)QuestionsListView.SelectedItems[i].Tag;
+                    tSelectedQuestions[i] = tCurrentQuestion.Id;
                 }
-                QuestionsListView.Items.Add(tCurrentQuestionItem);
+
+                //re-populate database
+                QuestionsListView.Items.Clear();
+                foreach (Question tQuestion in QuestionOperations.QuestionsList)
+                {
+                    string[] tCurrentQuestionData = new[] { tQuestion.Order.ToString(), tQuestion.Text, tQuestion.Type.ToString() };
+                    ListViewItem tCurrentQuestionItem = new ListViewItem(tCurrentQuestionData);
+                    tCurrentQuestionItem.Tag = tQuestion;
+
+                    //check if a question was selected before re populating the data
+                    if (tSelectedQuestions.Contains(tQuestion.Id))
+                    {
+                        tCurrentQuestionItem.Selected = true;
+                    }
+                    QuestionsListView.Items.Add(tCurrentQuestionItem);
+                }
+            }catch(Exception ex) 
+            { 
+                UtilityMethods.LogError(ex);
+                MessageBox.Show("An error occured while updating the questions list, please restart the app");
             }
         }
 
         private void QuestionOperations_DataBaseChangedEvent(object? sender, string e)
         {
-            UpdateQuestionsList();
-            EditQuestionButton.Enabled = false;
-            DeleteQuestionButton.Enabled = false;
+            try
+            {
+                UpdateQuestionsList();
+                EditQuestionButton.Enabled = false;
+                DeleteQuestionButton.Enabled = false;
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                MessageBox.Show("An Unknown error occured", "Unkown Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            #endregion
         }
-        #endregion
-
-
     }
 }

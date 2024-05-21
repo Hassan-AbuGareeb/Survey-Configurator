@@ -97,7 +97,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { optionsToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1250, 36);
+            menuStrip1.Size = new Size(1255, 36);
             menuStrip1.TabIndex = 5;
             menuStrip1.Text = "menuStrip1";
             // 
