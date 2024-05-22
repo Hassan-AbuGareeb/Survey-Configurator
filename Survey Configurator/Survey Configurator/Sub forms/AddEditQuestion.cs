@@ -132,7 +132,7 @@ namespace Survey_Configurator.Sub_forms
                             SliderQuestion tSliderData = new SliderQuestion(tNewQuestionData,
                                 (int)SliderStartValueNumeric.Value, (int)SliderEndValueNumeric.Value,
                                 SliderStartValueCaptionText.Text, SliderEndValueCaptionText.Text);
-                                tQuestionAddedResult = QuestionOperations.AddQuestion(tSliderData);
+                            tQuestionAddedResult = QuestionOperations.AddQuestion(tSliderData);
                             break;
                     }
                     if (tQuestionAddedResult!=null && !tQuestionAddedResult.IsSuccess)

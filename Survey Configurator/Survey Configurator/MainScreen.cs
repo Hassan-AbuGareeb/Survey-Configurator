@@ -73,8 +73,8 @@ namespace Survey_Configurator
             try
             {
                 //check connection before showing the add question form
-                OperationResult isDatabaseConnected = QuestionOperations.TestDBConnection();
-                if(isDatabaseConnected.IsSuccess) { 
+                OperationResult tIsDatabaseConnected = QuestionOperations.TestDBConnection();
+                if(tIsDatabaseConnected.IsSuccess) { 
                     AddEditQuestion tAddForm = new AddEditQuestion();
                     DialogResult tQuestionAdded = tAddForm.ShowDialog();
 
@@ -101,8 +101,8 @@ namespace Survey_Configurator
         private void EditQuestionButton_Click(object sender, EventArgs e)
         {
             try {
-                OperationResult isDatabaseConnected = QuestionOperations.TestDBConnection();
-                if (isDatabaseConnected.IsSuccess)
+                OperationResult tIsDatabaseConnected = QuestionOperations.TestDBConnection();
+                if (tIsDatabaseConnected.IsSuccess)
                 {
                     Question tSelectedQuestion = QuestionsListView.SelectedItems[0].Tag as Question;
                     AddEditQuestion tAddForm = new AddEditQuestion(tSelectedQuestion.Id);
