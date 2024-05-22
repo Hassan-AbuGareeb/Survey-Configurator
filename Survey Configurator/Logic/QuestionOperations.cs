@@ -44,7 +44,7 @@ namespace QuestionServices
         {
             try
             {
-                return Database.getQuestionsFromDB(ref QuestionsList);
+                return Database.GetQuestionsFromDB(ref QuestionsList);
             }
             catch (Exception ex)
             {
@@ -84,7 +84,7 @@ namespace QuestionServices
             {
                 //get the general question data to add to it its specific data
                 Question tQuestionData = GetQuestionData(pQuestionId);
-                OperationResult tQuestionSpecificDataResult = Database.getQuestionSpecificDataFromDB(tQuestionData, ref pQuestionSpecificData);
+                OperationResult tQuestionSpecificDataResult = Database.GetQuestionSpecificDataFromDB(tQuestionData, ref pQuestionSpecificData);
 
                 if(tQuestionSpecificDataResult.IsSuccess && pQuestionSpecificData == null)
                 {
@@ -115,7 +115,7 @@ namespace QuestionServices
             try 
             { 
                 //add the question to the database to generate its id and obtain it
-                OperationResult tAddQuestionResult = Database.AddQuestionToDB(pQuestionData);
+                OperationResult tAddQuestionResult = Database.AddQuestionToDB(ref pQuestionData);
                 //on successful question addition to Database add it to the Questions List
                 if (tAddQuestionResult.IsSuccess)
                 {
@@ -312,7 +312,7 @@ namespace QuestionServices
                 int tDatabaseConnectionRetryCount = 0;
                 //get checksum of the database current version of data
                 long tcurrentChecksum =0;
-                Database.getChecksum(ref tcurrentChecksum);
+                Database.GetChecksum(ref tcurrentChecksum);
                 //keep the function running while main thread is running
                 while (pMainThread.IsAlive)
                 {
@@ -323,7 +323,7 @@ namespace QuestionServices
                     {
                         //get checksum again to detect change
                         long tNewChecksum = 0;
-                        OperationResult tNewChecksumResult = Database.getChecksum(ref tNewChecksum);
+                        OperationResult tNewChecksumResult = Database.GetChecksum(ref tNewChecksum);
                         if (tNewChecksumResult.IsSuccess) {
                             if (tcurrentChecksum != tNewChecksum)
                             {
@@ -331,13 +331,17 @@ namespace QuestionServices
                                tcurrentChecksum = tNewChecksum;
                            
                                QuestionsList.Clear();
-                               Database.getQuestionsFromDB(ref QuestionsList);
+                               Database.GetQuestionsFromDB(ref QuestionsList);
                                //notify UI of database change
                                DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Database externally changed");
 
                                 //reset the connection retry counter on successful data change
                                 tDatabaseConnectionRetryCount = 0;
                             }
+                        }
+                        else if(tNewChecksumResult.ErrorMessage == "Database was just created")
+                        {
+                            continue;
                         }
                         else
                         {

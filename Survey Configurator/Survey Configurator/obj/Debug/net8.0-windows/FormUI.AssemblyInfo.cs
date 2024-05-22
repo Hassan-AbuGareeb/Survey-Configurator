@@ -14,11 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FormUI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9696985382453aec461374eebcbffa23bc20e4ba")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b0dd37088c17e70322d34b7a6b78fa8a439f8035")]
->>>>>>> 6fa5cc88c0582e6fe0e78a555ad00c187ee01fba
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ced6db57c3270f1e4b885342a354702c7805d5f1")]
 [assembly: System.Reflection.AssemblyProductAttribute("FormUI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FormUI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
