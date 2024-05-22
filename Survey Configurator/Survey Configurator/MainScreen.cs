@@ -33,7 +33,7 @@ namespace Survey_Configurator
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("an Unkown error occured", "Unkown error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowDefaultErrorMessage();
                 Close();
             }
         }
@@ -46,10 +46,10 @@ namespace Survey_Configurator
                 QuestionsListViewInit();
 
                 //launch the database change checker to monitor database for any change and reflect it to the UI
-                OperationResult tCheckingDataBaseResult = QuestionOperations.StartCheckingDataBaseChange(Thread.CurrentThread);
+                OperationResult tCheckingDataBaseResult = QuestionOperations.StartCheckingDataBaseChange();
                 if(!tCheckingDataBaseResult.IsSuccess)
                 {
-                    MessageBox.Show($"An error occured \n {ex.Message}", ex.GetType().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"An error occured \n {tCheckingDataBaseResult.ErrorMessage}", tCheckingDataBaseResult.Error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Close();
                 }
                 //listen to any database change event
@@ -69,24 +69,45 @@ namespace Survey_Configurator
         //buttons click functions
         private void AddQuestionButton_Click(object sender, EventArgs e)
         {
-            AddEditQuestion tAddForm = new AddEditQuestion();
-            tAddForm.ShowDialog();
-            UpdateQuestionsList();
-            //disable delete and edit button
-            DeleteQuestionButton.Enabled = false;
-            EditQuestionButton.Enabled = false;
+            try
+            {
+                AddEditQuestion tAddForm = new AddEditQuestion();
+                DialogResult tQuestionAdded = tAddForm.ShowDialog();
+
+                //disable delete and edit button
+                if (tQuestionAdded != DialogResult.Cancel)
+                {
+                    DeleteQuestionButton.Enabled = false;
+                    EditQuestionButton.Enabled = false;
+                }
+
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
         }
 
         private void EditQuestionButton_Click(object sender, EventArgs e)
         {
+            try { 
             Question tSelectedQuestion = QuestionsListView.SelectedItems[0].Tag as Question;
             AddEditQuestion tAddForm = new AddEditQuestion(tSelectedQuestion.Id);
-            tAddForm.ShowDialog();
-            UpdateQuestionsList();
+            DialogResult tQuestionEdited = tAddForm.ShowDialog();
 
-            //disable delete and edit button
-            DeleteQuestionButton.Enabled = false;
-            EditQuestionButton.Enabled = false;
+                //disable delete and edit button
+                if (tQuestionEdited != DialogResult.Cancel)
+                {
+                    DeleteQuestionButton.Enabled = false;
+                    EditQuestionButton.Enabled = false;
+                }
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
         }
 
         private void DeleteQuestionButton_Click(object sender, EventArgs e)
@@ -107,24 +128,27 @@ namespace Survey_Configurator
                         Question tCurrentQuestion = QuestionsListView.SelectedItems[i].Tag as Question;
                         tSelectedQuestions.Add(tCurrentQuestion);
                     }
-                    QuestionOperations.DeleteQuestion(tSelectedQuestions);
 
-                    //disable delete and edit button
-                    DeleteQuestionButton.Enabled = false;
-                    EditQuestionButton.Enabled = false;
+                    //check operation result here
+                    OperationResult tDeleteQuestionResult = QuestionOperations.DeleteQuestion(tSelectedQuestions);
+                    if(!tDeleteQuestionResult.IsSuccess) 
+                    {
+                        MessageBox.Show(tDeleteQuestionResult.ErrorMessage, tDeleteQuestionResult.Error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        //disable delete and edit button
+                        DeleteQuestionButton.Enabled = false;
+                        EditQuestionButton.Enabled = false;
 
-                    MessageBox.Show($"Question{(tNumberOfSelectedQuestions > 1 ? "s " : " ")}deleted successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"Question{(tNumberOfSelectedQuestions > 1 ? "s " : " ")}deleted successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
-            }
-            catch (IndexOutOfRangeException ex)
-            {
-                UtilityMethods.LogError(ex);
-                MessageBox.Show("Please select the entire row to delete a question");
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An unexpected error occured");
+                MessageBox.Show("Operation Failed, please try again", "Operation failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -218,7 +242,7 @@ namespace Survey_Configurator
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An Unkown error occured", "Unkown error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowDefaultErrorMessage();
             }
         }
 
@@ -251,7 +275,7 @@ namespace Survey_Configurator
             }catch(Exception ex) 
             { 
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An error occured while updating the questions list, please restart the app");
+                MessageBox.Show("An error occured while updating the questions list, please restart the app", "Data update error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -266,9 +290,15 @@ namespace Survey_Configurator
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An Unknown error occured", "Unkown Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowDefaultErrorMessage();
             }
-            #endregion
         }
+
+        private static void ShowDefaultErrorMessage()
+        {
+            MessageBox.Show("An Unknown error occured", "Unkown Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        #endregion
     }
 }

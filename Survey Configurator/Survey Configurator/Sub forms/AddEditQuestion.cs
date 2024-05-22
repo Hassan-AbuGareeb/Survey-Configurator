@@ -11,6 +11,7 @@ namespace Survey_Configurator.Sub_forms
 {
     public partial class AddEditQuestion : Form
     {
+        //use constants and enumssss
         private static int QuestionId;
         private static string Operation;
         public AddEditQuestion()
@@ -22,7 +23,7 @@ namespace Survey_Configurator.Sub_forms
             Operation = "Add";
             OperationButton.Click += AddButton_Click;
         }
-
+        
         public AddEditQuestion(int pQuestionId)
         {
             InitializeComponent();
@@ -44,37 +45,40 @@ namespace Survey_Configurator.Sub_forms
                 //check if the operation is edit and fill the fields with selected question data
                 if (Operation == "Edit")
                 {
-                    Question tQeneralQuestionData = QuestionOperations.GetQuestionData(QuestionId);
+                    Question tGeneralQuestionData = QuestionOperations.GetQuestionData(QuestionId);
                     //extract question data an add it to UI
-                    QuestionTextBox.Text = tQeneralQuestionData.Text;
-                    QuestionOrderNumeric.Value = tQeneralQuestionData.Order;
-                    QuestionTypeComboBox.SelectedItem = tQeneralQuestionData.Type;
+                    QuestionTextBox.Text = tGeneralQuestionData.Text;
+                    QuestionOrderNumeric.Value = tGeneralQuestionData.Order;
+                    QuestionTypeComboBox.SelectedItem = tGeneralQuestionData.Type;
 
                     //based on the combobox value further data about the question should be obtained and added to UI
-                    Question tQuestionSpecificData = QuestionOperations.GetQuestionSpecificData(QuestionId);
-                    switch (tQuestionSpecificData.Type)
+                    Question tQuestionSpecificData;
+                    OperationResult tQuestionSpecificDataResult = QuestionOperations.GetQuestionSpecificData(QuestionId, out tQuestionSpecificData);
+                    if (tQuestionSpecificDataResult.IsSuccess)
                     {
-                        //for each case Get the info and downcast it and assign it to its respective field
-                        case QuestionType.Stars:
-                            NumberOfStarsNumeric.Value = ((StarsQuestion)tQuestionSpecificData).NumberOfStars;
-                            break;
-                        case QuestionType.Smiley:
-                            NumberOfSmileysNumeric.Value = ((SmileyQuestion)tQuestionSpecificData).NumberOfSmileyFaces;
-                            break;
-                        case QuestionType.Slider:
-                            SliderStartValueNumeric.Value = ((SliderQuestion)tQuestionSpecificData).StartValue;
-                            SliderEndValueNumeric.Value = ((SliderQuestion)tQuestionSpecificData).EndValue;
-                            SliderStartValueCaptionText.Text = ((SliderQuestion)tQuestionSpecificData).StartValueCaption;
-                            SliderEndValueCaptionText.Text = ((SliderQuestion)tQuestionSpecificData).EndValueCaption;
-                            break;
+                        switch (tQuestionSpecificData.Type)
+                        {
+                            //for each case Get the info and downcast it and assign it to its respective field
+                            case QuestionType.Stars:
+                                NumberOfStarsNumeric.Value = ((StarsQuestion)tQuestionSpecificData).NumberOfStars;
+                                break;
+                            case QuestionType.Smiley:
+                                NumberOfSmileysNumeric.Value = ((SmileyQuestion)tQuestionSpecificData).NumberOfSmileyFaces;
+                                break;
+                            case QuestionType.Slider:
+                                SliderStartValueNumeric.Value = ((SliderQuestion)tQuestionSpecificData).StartValue;
+                                SliderEndValueNumeric.Value = ((SliderQuestion)tQuestionSpecificData).EndValue;
+                                SliderStartValueCaptionText.Text = ((SliderQuestion)tQuestionSpecificData).StartValueCaption;
+                                SliderEndValueCaptionText.Text = ((SliderQuestion)tQuestionSpecificData).EndValueCaption;
+                                break;
+                        }
                     }
-
+                    else
+                    {
+                        MessageBox.Show("An Unkown error occure", "Unkown error",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Close();
+                    }
                 }
-            }
-            catch (SqlException)
-            {
-                MessageBox.Show("Database connection error, check the connection parameters or the sql server configurations");
-                Close();
             }
             catch (Exception ex)
             {
@@ -99,24 +103,29 @@ namespace Survey_Configurator.Sub_forms
                     //encapsulate obtained data in a question object
                     Question tNewQuestionData = new Question(tQuestionText, tQuestionOrder, tQuestionType);
 
+                    OperationResult tQuestionAddedResult=null;
                     //add question to db and interface
                     switch (tQuestionType)
                     {
                         //decied whether to add or edit question based on the Clicked button text
                         case QuestionType.Stars:
                             StarsQuestion tStarsData = new StarsQuestion(tNewQuestionData,(int)NumberOfStarsNumeric.Value);
-                                QuestionOperations.AddQuestion(tStarsData);
+                            tQuestionAddedResult = QuestionOperations.AddQuestion(tStarsData);
                             break;
                         case QuestionType.Smiley:
                             SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)NumberOfSmileysNumeric.Value);
-                            QuestionOperations.AddQuestion(tSmileyData);
+                            tQuestionAddedResult = QuestionOperations.AddQuestion(tSmileyData);
                             break;
                         case QuestionType.Slider:
                             SliderQuestion tSliderData = new SliderQuestion(tNewQuestionData,
                                 (int)SliderStartValueNumeric.Value, (int)SliderEndValueNumeric.Value,
                                 SliderStartValueCaptionText.Text, SliderEndValueCaptionText.Text);
-                                QuestionOperations.AddQuestion(tSliderData);
+                                tQuestionAddedResult = QuestionOperations.AddQuestion(tSliderData);
                             break;
+                    }
+                    if (tQuestionAddedResult!=null && !tQuestionAddedResult.IsSuccess)
+                    {
+                        MessageBox.Show("An error occured while adding the question", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     //close form
                     Close();
@@ -140,19 +149,9 @@ namespace Survey_Configurator.Sub_forms
                     MessageBox.Show($"The following fields must have proper values: {tMissingFieldsMessage}", "Missing fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            catch (InvalidOperationException)
-            {
-                MessageBox.Show("error occured while Loading data, please try again");
-                Close();
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show(ex.StackTrace);
-                MessageBox.Show("Database connection error, check the connection parameters or the sql server configurations");
-                Close();
-            }
             catch (Exception ex)
             {
+                UtilityMethods.LogError(ex);
                 MessageBox.Show($"{ex.GetType().FullName}, {ex.StackTrace}");
                 Close();
             }
@@ -176,28 +175,31 @@ namespace Survey_Configurator.Sub_forms
                     QuestionType tQuestionType = (QuestionType)QuestionTypeComboBox.SelectedItem;
                     //encapsulate obtained data in a question object
                     Question tNewQuestionData = new Question(QuestionId, tQuestionText, tQuestionOrder, tQuestionType);
-
+                    OperationResult tQuestionUpdatedResult = null;
                     //add question to db and interface
                     switch (tQuestionType)
                     {
                         //send question data to logic layer to be updated
                         case QuestionType.Stars:
                             StarsQuestion tStarsData = new StarsQuestion(tNewQuestionData, (int)NumberOfStarsNumeric.Value);
-                            QuestionOperations.UpdateQuestion(tStarsData);
+                            tQuestionUpdatedResult = QuestionOperations.UpdateQuestion(tStarsData);
                             break;
                         case QuestionType.Smiley:
                             SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)NumberOfSmileysNumeric.Value);
-                            QuestionOperations.UpdateQuestion(tSmileyData);
+                            tQuestionUpdatedResult = QuestionOperations.UpdateQuestion(tSmileyData);
                             break;
                         case QuestionType.Slider:
                             SliderQuestion tSliderData = new SliderQuestion(tNewQuestionData,
                                 (int)SliderStartValueNumeric.Value, (int)SliderEndValueNumeric.Value,
                                 SliderStartValueCaptionText.Text, SliderEndValueCaptionText.Text);
-                                QuestionOperations.UpdateQuestion(tSliderData);
+                            tQuestionUpdatedResult = QuestionOperations.UpdateQuestion(tSliderData);
                             break;
                         
                     }
-                    //close form
+                    if (tQuestionUpdatedResult != null && !tQuestionUpdatedResult.IsSuccess)
+                    {
+                        MessageBox.Show("An error occured while adding the question", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     Close();
                 }
                 else
@@ -219,19 +221,9 @@ namespace Survey_Configurator.Sub_forms
                     MessageBox.Show($"The following fields must have proper values: {tMissingFieldsMessage}", "Missing fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            catch (InvalidOperationException)
-            {
-                MessageBox.Show("error occured while Loading data, please try again");
-                Close();
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show(ex.StackTrace);
-                MessageBox.Show("Database connection error, check the connection parameters or the sql server configurations");
-                Close();
-            }
             catch (Exception ex)
             {
+                UtilityMethods.LogError(ex);
                 MessageBox.Show($"{ex.GetType().FullName}, {ex.StackTrace}");
                 Close();
             }
@@ -252,18 +244,24 @@ namespace Survey_Configurator.Sub_forms
 
         private void QuestionTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            HideQuesitonOptionsPanel();
-            switch (QuestionTypeComboBox.SelectedItem)
+            try { 
+                HideQuesitonOptionsPanel();
+                switch (QuestionTypeComboBox.SelectedItem)
+                {
+                    case QuestionType.Stars:
+                        AddStarsOptions();
+                        break;
+                    case QuestionType.Slider:
+                        AddSliderOptions();
+                        break;
+                    case QuestionType.Smiley:
+                        AddSmileysOptions();
+                        break;
+                }
+            }catch(Exception ex)
             {
-                case QuestionType.Stars:
-                    AddStarsOptions();
-                    break;
-                case QuestionType.Slider:
-                    AddSliderOptions();
-                    break;
-                case QuestionType.Smiley:
-                    AddSmileysOptions();
-                    break;
+                UtilityMethods.LogError(ex);
+                MessageBox.Show("Question type error", "Type error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

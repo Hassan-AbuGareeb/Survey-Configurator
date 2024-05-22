@@ -1,10 +1,9 @@
-﻿using Microsoft.Data.SqlClient;
-using System.Data;
-using SharedResources.models;
-using DatabaseLayer;
+﻿using DatabaseLayer;
+using Microsoft.Data.SqlClient;
 using SharedResources;
-using System.Text.Json;
+using SharedResources.models;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace QuestionServices
 {
@@ -41,94 +40,88 @@ namespace QuestionServices
             return tQuestionGeneralData;
         }
 
-        public static Question GetQuestionSpecificData(int pQuestionId)
+        public static OperationResult GetQuestionSpecificData(int pQuestionId, Question pQuestionSpecificData)
         {
             try
             {
                 Question tQuestionData = GetQuestionData(pQuestionId);
-                return Database.getQuestionSpecificDataFromDB(tQuestionData);
-            }
-            catch (SqlException ex)
-            {
-                UtilityMethods.LogError(ex);
-                throw;
-            }
-            catch (InvalidOperationException ex)
-            {
-                UtilityMethods.LogError(ex);
-                throw new InvalidOperationException("problem in connection to database", ex);
+                pQuestionSpecificData = null;
+                OperationResult tQuestionSpecificDataResult = Database.getQuestionSpecificDataFromDB(tQuestionData, ref pQuestionSpecificData);
+                if(tQuestionSpecificDataResult.IsSuccess && pQuestionSpecificData == null)
+                {
+                    return new OperationResult(ErrorTypes.NullValueError, "couldn't get the requested question data");
+                }
+                else
+                {
+                    return tQuestionSpecificDataResult;
+                }
             }
             catch (Exception ex)
             {
                 UtilityMethods. LogError(ex);
-                throw;
+                return new OperationResult(ErrorTypes.UnknownError, "An Unknown error occured");
             }
         }
 
-        public static void AddQuestion(Question pQuestionData)
+        public static OperationResult AddQuestion(Question pQuestionData)
         {
             try 
             { 
                 //add the question to the database to generate its id and obtain it
-                int addQuestionResult = Database.AddQuestionToDB(ref pQuestionData);
+                OperationResult tAddQuestionResult = Database.AddQuestionToDB(pQuestionData);
                 //on successful question addition to Database add it to the Questions List
-                QuestionsList.Add(pQuestionData);
-                //notify UI of change
-                DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Added a new question");
-            }
-            catch (SqlException ex)
-            {
-                UtilityMethods.LogError(ex);
-                throw;
-            }
-            catch (InvalidOperationException ex)
-            {
-                UtilityMethods.LogError(ex);
-                throw new InvalidOperationException("problem in connection to database", ex);
+                if (tAddQuestionResult.IsSuccess)
+                {
+                    QuestionsList.Add(pQuestionData);
+                    //notify UI of change
+                    DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Added a new question");
+                }
+               
+                return tAddQuestionResult;
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                throw;
+                return new OperationResult(ErrorTypes.UnknownError, "An Unknown error occured.");
             }
         }
 
-        public static void UpdateQuestion(Question pUpdatedQuestionData)
+        public static OperationResult UpdateQuestion(Question pUpdatedQuestionData)
         {
             try
             {
                 QuestionType tOriginalQuestionType = GetQuestionData(pUpdatedQuestionData.Id).Type;
 
-                Database.UpdateQuestionOnDB(tOriginalQuestionType, pUpdatedQuestionData);
-                //remove from questions list
-                QuestionsList.Remove(QuestionsList.Find(question => question.Id == pUpdatedQuestionData.Id));
-                //add the new Question to the list
-                QuestionsList.Add(pUpdatedQuestionData);
-                //notify UI of change
-                DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Updated question data");
-            }
-            catch (SqlException ex)
-            {
-                UtilityMethods.LogError(ex);
-                throw;
-            }
-            catch (InvalidOperationException ex)
-            {
-                UtilityMethods.LogError(ex);
-                throw new InvalidOperationException("problem in connection to database", ex);
+                OperationResult tQuestionUpdatedResult = Database.UpdateQuestionOnDB(tOriginalQuestionType, pUpdatedQuestionData);
+                if (tQuestionUpdatedResult.IsSuccess)
+                {
+                    //remove from questions list
+                    QuestionsList.Remove(QuestionsList.Find(question => question.Id == pUpdatedQuestionData.Id));
+                    //add the new Question to the list
+                    QuestionsList.Add(pUpdatedQuestionData);
+                    //notify UI of change
+                    DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Updated question data");
+                }
+                return tQuestionUpdatedResult;
+                
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                throw;
+                return new OperationResult(ErrorTypes.UnknownError, "an unknown error occured");
             }
         }
 
-        public static void DeleteQuestion(List<Question> pSelectedQuestions)
+        public static OperationResult DeleteQuestion(List<Question> pSelectedQuestions)
         {
             try
             {
-                Database.DeleteQuestionFromDB(pSelectedQuestions);
+                OperationResult tDeleteQuestionsResult =  Database.DeleteQuestionFromDB(pSelectedQuestions);
+
+                if (!tDeleteQuestionsResult.IsSuccess)
+                {
+                    return tDeleteQuestionsResult;
+                }
                 //delete question from List (Questions)
                 foreach (Question tQuestion in pSelectedQuestions)
                 {
@@ -136,21 +129,12 @@ namespace QuestionServices
                 }
                 //notify UI of change
                 DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Deleted question");
-            }
-            catch (SqlException ex)
-            {
-                UtilityMethods.LogError(ex);
-                throw;
-            }
-            catch (InvalidOperationException ex)
-            {
-                UtilityMethods.LogError(ex);
-                throw new InvalidOperationException("problem in connection to database", ex);
+                return new OperationResult();
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                throw;
+                return new OperationResult(ErrorTypes.UnknownError, "An Unkown error occured");
             }
         }
         #endregion
@@ -169,6 +153,7 @@ namespace QuestionServices
             }
 
         }
+
         public static OperationResult SetConnectionString()
         {
             //try to obtain the connection string from a file
@@ -214,11 +199,11 @@ namespace QuestionServices
             }
         }
 
-        public static OperationResult StartCheckingDataBaseChange(Thread pMainThread)
+        public static OperationResult StartCheckingDataBaseChange()
         {
             try 
-            { 
-                Thread checkThread = new Thread(()=>CheckDataBaseChange(pMainThread));
+            {
+                Thread checkThread = new Thread(()=>CheckDataBaseChange(Thread.CurrentThread));
                 checkThread.IsBackground = true;
                 checkThread.Start();
                 return new OperationResult();
