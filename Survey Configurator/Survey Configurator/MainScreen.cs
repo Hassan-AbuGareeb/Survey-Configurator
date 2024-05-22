@@ -53,6 +53,9 @@ namespace Survey_Configurator
                 }
                 //listen to any database change event
                 QuestionOperations.DataBaseChangedEvent += QuestionOperations_DataBaseChangedEvent;
+
+                //listener for the event of database refusing to connect multiple times
+                QuestionOperations.DataBaseNotConnectedEvent += QuestionOperations_DataBaseNotConnectedEvent;
                 
                 //sort the questions list alphabetically on first load
                 QuestionsListView.ListViewItemSorter = new ListViewItemComparer(1, SortingOrder);
@@ -339,6 +342,19 @@ namespace Survey_Configurator
             }
         }
 
+        private static void ShowDefaultErrorMessage()
+        {
+            try
+            {
+                MessageBox.Show("An Unknown error occured", "Unkown Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
+        }
+
         private void QuestionOperations_DataBaseChangedEvent(object? sender, string e)
         {
             try
@@ -354,11 +370,12 @@ namespace Survey_Configurator
             }
         }
 
-        private static void ShowDefaultErrorMessage()
+        private void QuestionOperations_DataBaseNotConnectedEvent(object? sender, EventArgs e)
         {
             try
             {
-                MessageBox.Show("An Unknown error occured", "Unkown Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Database refusing to connect, refer to your system admin", "connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
             }
             catch(Exception ex)
             {
@@ -366,7 +383,6 @@ namespace Survey_Configurator
                 ShowDefaultErrorMessage();
             }
         }
-
         #endregion
     }
 }

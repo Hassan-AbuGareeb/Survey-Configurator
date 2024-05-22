@@ -9,6 +9,10 @@ namespace QuestionServices
     {
         public static event EventHandler<string> DataBaseChangedEvent;
 
+        public static event EventHandler DataBaseNotConnectedEvent;
+
+        private const int cDatabaseReconnectMaxAttempts = 3;
+
         //changed to true when the user is performing adding, updating or deleting operation
         public static bool OperationOngoing = false;
         //a list to temporarily contain the change in the database
@@ -226,6 +230,7 @@ namespace QuestionServices
             {
                 //get checksum of the database current version of data
                 long tcurrentChecksum=0;
+                int tDatabaseConnectionRetryCount = 0;
                 Database.getChecksum(ref tcurrentChecksum);
                 while (pMainThread.IsAlive)
                 {
@@ -237,7 +242,7 @@ namespace QuestionServices
                         //get checksum again to detect change
                         long tNewChecksum = 0;
                         OperationResult tNewChecksumResult = Database.getChecksum(ref tNewChecksum);
-                        if(tNewChecksumResult.IsSuccess)
+                        if (tNewChecksumResult.IsSuccess) {
                             if (tcurrentChecksum != tNewChecksum)
                             {
                                 //data changed
@@ -248,6 +253,17 @@ namespace QuestionServices
                                //notify UI of database change
                                DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Database externally changed");
                             }
+                        }
+                        else
+                        {
+                            tDatabaseConnectionRetryCount++;
+                            if (tDatabaseConnectionRetryCount > cDatabaseReconnectMaxAttempts)
+                            {
+                                DataBaseNotConnectedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
+                                break;
+                            }
+
+                        }
                     }
                 }
             }
