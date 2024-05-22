@@ -12,7 +12,10 @@ namespace SharedResources
 
      public class SharedData
     {
-
+        /// <summary>
+        /// this class contains resources used across the application layers
+        /// such as enums or constants
+        /// </summary>
 
     }
 }

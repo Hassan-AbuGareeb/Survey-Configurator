@@ -2,6 +2,10 @@
 {
     public class ConnectionString
     {
+        /// <summary>
+        /// a class to facilitate the process of obtaining the connection string
+        /// and changing/saving it in the connectionString.json file
+        /// </summary>
         public string Server {  get; set; }
         public string Database { get; set; }
         public bool Trusted_Connection { get; set; }

@@ -5,6 +5,16 @@ namespace SharedResources
 {
      public class UtilityMethods
     {
+
+        /// <summary>
+        /// Utility methods used across the application layers
+        /// </summary>
+
+
+        /// <summary>
+        /// Logs any exception in a ErrorLog text file in the application folder
+        /// </summary>
+        /// <param name="pExceptionData">data of the recieved Exception</param>
         public static void LogError(Exception pExceptionData)
         {
             try
@@ -22,10 +32,10 @@ namespace SharedResources
                     Directory.CreateDirectory(tDirectoryPath);
                 }
 
+                //create the file if it doesn't exist
                 string tFilePath = tDirectoryPath + "\\errorlog.txt";
                 if (!File.Exists(tFilePath))
                 {
-                    //create the file if it doesn't exist
                     FileStream fs = File.Create(tFilePath);
                     fs.Close();
                 }

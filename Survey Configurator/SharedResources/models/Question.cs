@@ -6,7 +6,10 @@ namespace SharedResources.models
 
     public  class Question
     {
-        //can't be initialized until the record for the quesiton is creatd in the database
+        /// <summary>
+        /// main model for the Question object used in this application
+        /// </summary>
+
         public int Id { get; set; }
         public string Text { get; set; }
         public int Order {  get; set; }
