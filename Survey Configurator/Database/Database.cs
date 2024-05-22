@@ -54,19 +54,15 @@ namespace DatabaseLayer
                 using (SqlConnection tConn = new SqlConnection(ConnectionString)) 
                 {
                     tConn.Open();
-                    using (SqlTransaction tTransaction = tConn.BeginTransaction()) 
-                    { 
-                        SqlCommand tGetQuestionsDataCmd = new SqlCommand($"SELECT * FROM [{cQuestionsTableName}]", tConn, tTransaction);
-                        DbDataReader tReader = tGetQuestionsDataCmd.ExecuteReader(CommandBehavior.CloseConnection);
-                        //iterate over each row in the Reader and add it to the questions list
-                        while (tReader.Read())
-                        {
-                            pQuestionsList.Add(new Question((int)tReader[cIdColumn], tReader[cTextColumn].ToString(),
-                                (int)tReader[cOrderColumn], (QuestionType)tReader[cTypeColumn]));
-                        }
-                        tReader.Close();
-                        tTransaction.Commit();
+                    SqlCommand tGetQuestionsDataCmd = new SqlCommand($"SELECT * FROM [{cQuestionsTableName}]", tConn);
+                    DbDataReader tReader = tGetQuestionsDataCmd.ExecuteReader(CommandBehavior.CloseConnection);
+                    //iterate over each row in the Reader and add it to the questions list
+                    while (tReader.Read())
+                    {
+                        pQuestionsList.Add(new Question((int)tReader[cIdColumn], tReader[cTextColumn].ToString(),
+                            (int)tReader[cOrderColumn], (QuestionType)tReader[cTypeColumn]));
                     }
+                    tReader.Close();
                 }
                 return new OperationResult();
             }
@@ -89,38 +85,34 @@ namespace DatabaseLayer
                 using (SqlConnection tConn = new SqlConnection(ConnectionString)) 
                 {
                     tConn.Open();
-                    using (SqlTransaction tTransaction = tConn.BeginTransaction()) 
-                    { 
-                        //parameterize the query
-                        string tQuestionType = pQuestionData.Type.ToString();
+                    //parameterize the query
+                    string tQuestionType = pQuestionData.Type.ToString();
 
-                        SqlCommand tGetQuestionSpecificData = new SqlCommand(
-                            $"SELECT * FROM " +
-                            $"[{tQuestionType}] " +
-                            $"WHERE [{cIdColumn}] = @{cIdColumn}", tConn, tTransaction);
-                        tGetQuestionSpecificData.Parameters.Add(new SqlParameter($"@{cIdColumn}",pQuestionData.Id));
-                        DbDataReader tReader = tGetQuestionSpecificData.ExecuteReader(CommandBehavior.CloseConnection);
-                        while(tReader.Read())
+                    SqlCommand tGetQuestionSpecificData = new SqlCommand(
+                        $"SELECT * FROM " +
+                        $"[{tQuestionType}] " +
+                        $"WHERE [{cIdColumn}] = @{cIdColumn}", tConn);
+                    tGetQuestionSpecificData.Parameters.Add(new SqlParameter($"@{cIdColumn}",pQuestionData.Id));
+                    DbDataReader tReader = tGetQuestionSpecificData.ExecuteReader(CommandBehavior.CloseConnection);
+                    while(tReader.Read())
+                    {
+                        switch(pQuestionData.Type)
                         {
-                            switch(pQuestionData.Type)
-                            {
-                                case QuestionType.Stars:
-                                    pQuestionSpecificData = new StarsQuestion(pQuestionData, (int)tReader[cNumberOfStarsColumn]);
-                                    break;
-                                case QuestionType.Smiley:
-                                    pQuestionSpecificData = new SmileyQuestion(pQuestionData, (int)tReader[cNumberOfFacesColumn]);
-                                    break;
-                                case QuestionType.Slider:
-                                    pQuestionSpecificData = new SliderQuestion(pQuestionData, 
-                                        (int)tReader[cStartValueColumn], (int)tReader[cEndValueColumn],
-                                        tReader[cStartValueCaptionColumn].ToString(), tReader[cEndValueCaptionColumn ].ToString());
-                                    break;
-                            }
+                            case QuestionType.Stars:
+                                pQuestionSpecificData = new StarsQuestion(pQuestionData, (int)tReader[cNumberOfStarsColumn]);
+                                break;
+                            case QuestionType.Smiley:
+                                pQuestionSpecificData = new SmileyQuestion(pQuestionData, (int)tReader[cNumberOfFacesColumn]);
+                                break;
+                            case QuestionType.Slider:
+                                pQuestionSpecificData = new SliderQuestion(pQuestionData, 
+                                    (int)tReader[cStartValueColumn], (int)tReader[cEndValueColumn],
+                                    tReader[cStartValueCaptionColumn].ToString(), tReader[cEndValueCaptionColumn ].ToString());
+                                break;
                         }
-                        tReader.Close();
-                        tTransaction.Commit();
-                        return new OperationResult();
                     }
+                    tReader.Close();
+                    return new OperationResult();
                 }
             }catch(Exception ex)
             {

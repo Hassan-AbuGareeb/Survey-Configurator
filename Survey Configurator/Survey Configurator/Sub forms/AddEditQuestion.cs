@@ -12,7 +12,7 @@ namespace Survey_Configurator.Sub_forms
         public AddEditQuestion()
         {
             try 
-            { 
+            {
                 InitializeComponent();
                 Text = "Add";
                 AddEditLabel.Text = "Add Question";

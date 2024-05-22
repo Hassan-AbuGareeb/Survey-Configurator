@@ -69,14 +69,22 @@ namespace Survey_Configurator
         {
             try
             {
-                AddEditQuestion tAddForm = new AddEditQuestion();
-                DialogResult tQuestionAdded = tAddForm.ShowDialog();
+                //check connection before showing the add question form
+                OperationResult isDatabaseConnected = QuestionOperations.TestDBConnection();
+                if(isDatabaseConnected.IsSuccess) { 
+                    AddEditQuestion tAddForm = new AddEditQuestion();
+                    DialogResult tQuestionAdded = tAddForm.ShowDialog();
 
-                //disable delete and edit button
-                if (tQuestionAdded != DialogResult.Cancel)
+                    //disable delete and edit button
+                    if (tQuestionAdded != DialogResult.Cancel)
+                    {
+                        DeleteQuestionButton.Enabled = false;
+                        EditQuestionButton.Enabled = false;
+                    }
+                }
+                else
                 {
-                    DeleteQuestionButton.Enabled = false;
-                    EditQuestionButton.Enabled = false;
+                    MessageBox.Show("Database connection error, refer to your system admin", "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
@@ -89,16 +97,24 @@ namespace Survey_Configurator
 
         private void EditQuestionButton_Click(object sender, EventArgs e)
         {
-            try { 
-            Question tSelectedQuestion = QuestionsListView.SelectedItems[0].Tag as Question;
-            AddEditQuestion tAddForm = new AddEditQuestion(tSelectedQuestion.Id);
-            DialogResult tQuestionEdited = tAddForm.ShowDialog();
-
-                //disable delete and edit button
-                if (tQuestionEdited != DialogResult.Cancel)
+            try {
+                OperationResult isDatabaseConnected = QuestionOperations.TestDBConnection();
+                if (isDatabaseConnected.IsSuccess)
                 {
-                    DeleteQuestionButton.Enabled = false;
-                    EditQuestionButton.Enabled = false;
+                    Question tSelectedQuestion = QuestionsListView.SelectedItems[0].Tag as Question;
+                    AddEditQuestion tAddForm = new AddEditQuestion(tSelectedQuestion.Id);
+                    DialogResult tQuestionEdited = tAddForm.ShowDialog();
+
+                    //disable delete and edit button
+                    if (tQuestionEdited != DialogResult.Cancel)
+                    {
+                        DeleteQuestionButton.Enabled = false;
+                        EditQuestionButton.Enabled = false;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Database connection error, refer to your system admin", "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch(Exception ex)
