@@ -64,7 +64,11 @@ namespace Survey_Configurator.Sub_forms
                     QuestionTypeComboBox.SelectedItem = tGeneralQuestionData.Type;
 
                     //based on the combobox value further data about the question should be obtained and added to UI
+<<<<<<< HEAD
                     Question tQuestionSpecificData=null;
+=======
+                    Question tQuestionSpecificData = null;
+>>>>>>> 6fa5cc88c0582e6fe0e78a555ad00c187ee01fba
                     OperationResult tQuestionSpecificDataResult = QuestionOperations.GetQuestionSpecificData(QuestionId, ref tQuestionSpecificData);
                     if (tQuestionSpecificDataResult.IsSuccess)
                     {
