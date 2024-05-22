@@ -19,13 +19,27 @@ namespace SharedResources
 
         public OperationResult()
         {
-            IsSuccess = true;
+            try
+            {
+                IsSuccess = true;
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+            }
         }
         public OperationResult(ErrorTypes pError, string pErrorMessage)
         {
-            IsSuccess = false;
-            ErrorMessage = pErrorMessage;
-            Error = pError;
+            try
+            {
+                IsSuccess = false;
+                ErrorMessage = pErrorMessage;
+                Error = pError;
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+            }
         }
 
     }

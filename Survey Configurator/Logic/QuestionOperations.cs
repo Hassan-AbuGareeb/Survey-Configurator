@@ -1,8 +1,6 @@
 ﻿using DatabaseLayer;
-using Microsoft.Data.SqlClient;
 using SharedResources;
 using SharedResources.models;
-using System.Diagnostics;
 using System.Text.Json;
 
 namespace QuestionServices
@@ -36,8 +34,16 @@ namespace QuestionServices
 
         public static Question GetQuestionData(int pQuestionId)
         {
+            try 
+            { 
             Question tQuestionGeneralData = QuestionsList.Find(question => question.Id == pQuestionId);
             return tQuestionGeneralData;
+            }
+            catch(Exception ex) 
+            {
+                UtilityMethods.LogError(ex);
+                return null;
+            }
         }
 
         public static OperationResult GetQuestionSpecificData(int pQuestionId, ref Question pQuestionSpecificData)
