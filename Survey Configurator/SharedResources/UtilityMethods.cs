@@ -40,20 +40,5 @@ namespace SharedResources
                 Console.WriteLine($"Error occurred while logging: {ex.Message}");
             }
         }
-
-        public static StarsQuestion CreateStarsQuestion(Question pQuestionData, int pNumberOfStars)
-        {
-            return new StarsQuestion(pQuestionData, pNumberOfStars);
-        }
-        public static SmileyQuestion CreateSmileyQuestion(Question pQuestionData, int pNumberOfSmileyFaces)
-        {
-            return new SmileyQuestion(pQuestionData, pNumberOfSmileyFaces);
-        }
-
-        public static SliderQuestion CreateSliderQuestion(Question pQuestionData, int pStartValue, int pEndValue,
-            string pStartCaption, string pEndCaption)
-        {
-            return new SliderQuestion(pQuestionData, pStartValue, pEndValue, pStartCaption, pEndCaption);
-        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Survey_Configurator.Sub_forms;
 using QuestionServices;
-using Microsoft.Data.SqlClient;
 using SharedResources;
 using SharedResources.models;
 namespace Survey_Configurator
@@ -8,7 +7,7 @@ namespace Survey_Configurator
     public partial class MainScreen : Form
     {
         //the sorting order for the questions items in the list view
-        private System.Windows.Forms.SortOrder SortingOrder = System.Windows.Forms.SortOrder.Ascending;
+        private SortOrder SortingOrder = SortOrder.Ascending;
 
         public MainScreen()
         {
@@ -54,6 +53,9 @@ namespace Survey_Configurator
                 }
                 //listen to any database change event
                 QuestionOperations.DataBaseChangedEvent += QuestionOperations_DataBaseChangedEvent;
+
+                //listener for the event of database refusing to connect multiple times
+                QuestionOperations.DataBaseNotConnectedEvent += QuestionOperations_DataBaseNotConnectedEvent;
                 
                 //sort the questions list alphabetically on first load
                 QuestionsListView.ListViewItemSorter = new ListViewItemComparer(1, SortingOrder);
@@ -66,19 +68,26 @@ namespace Survey_Configurator
             }
         }
 
-        //buttons click functions
         private void AddQuestionButton_Click(object sender, EventArgs e)
         {
             try
             {
-                AddEditQuestion tAddForm = new AddEditQuestion();
-                DialogResult tQuestionAdded = tAddForm.ShowDialog();
+                //check connection before showing the add question form
+                OperationResult tIsDatabaseConnected = QuestionOperations.TestDBConnection();
+                if(tIsDatabaseConnected.IsSuccess) { 
+                    AddEditQuestion tAddForm = new AddEditQuestion();
+                    DialogResult tQuestionAdded = tAddForm.ShowDialog();
 
-                //disable delete and edit button
-                if (tQuestionAdded != DialogResult.Cancel)
+                    //disable delete and edit button
+                    if (tQuestionAdded != DialogResult.Cancel)
+                    {
+                        DeleteQuestionButton.Enabled = false;
+                        EditQuestionButton.Enabled = false;
+                    }
+                }
+                else
                 {
-                    DeleteQuestionButton.Enabled = false;
-                    EditQuestionButton.Enabled = false;
+                    MessageBox.Show("Database connection error, refer to your system admin", "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
@@ -91,16 +100,24 @@ namespace Survey_Configurator
 
         private void EditQuestionButton_Click(object sender, EventArgs e)
         {
-            try { 
-            Question tSelectedQuestion = QuestionsListView.SelectedItems[0].Tag as Question;
-            AddEditQuestion tAddForm = new AddEditQuestion(tSelectedQuestion.Id);
-            DialogResult tQuestionEdited = tAddForm.ShowDialog();
-
-                //disable delete and edit button
-                if (tQuestionEdited != DialogResult.Cancel)
+            try {
+                OperationResult tIsDatabaseConnected = QuestionOperations.TestDBConnection();
+                if (tIsDatabaseConnected.IsSuccess)
                 {
-                    DeleteQuestionButton.Enabled = false;
-                    EditQuestionButton.Enabled = false;
+                    Question tSelectedQuestion = QuestionsListView.SelectedItems[0].Tag as Question;
+                    AddEditQuestion tAddForm = new AddEditQuestion(tSelectedQuestion.Id);
+                    DialogResult tQuestionEdited = tAddForm.ShowDialog();
+
+                    //disable delete and edit button
+                    if (tQuestionEdited != DialogResult.Cancel)
+                    {
+                        DeleteQuestionButton.Enabled = false;
+                        EditQuestionButton.Enabled = false;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Database connection error, refer to your system admin", "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch(Exception ex)
@@ -158,68 +175,114 @@ namespace Survey_Configurator
 
         private void QuestionsListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int tNumberOfSelectedQuestions = QuestionsListView.SelectedItems.Count;
-            //disable delete button if no questions are selected
-            if (tNumberOfSelectedQuestions > 0)
-            {
-                DeleteQuestionButton.Enabled = true;
-            }
-            else
-            {
-                DeleteQuestionButton.Enabled = false;
-            }
+            try 
+            { 
+                int tNumberOfSelectedQuestions = QuestionsListView.SelectedItems.Count;
+                //disable delete button if no questions are selected
+                if (tNumberOfSelectedQuestions > 0)
+                {
+                    DeleteQuestionButton.Enabled = true;
+                }
+                else
+                {
+                    DeleteQuestionButton.Enabled = false;
+                }
 
-            //enable the edit questions only if one question is selected
-            if (tNumberOfSelectedQuestions > 0 && tNumberOfSelectedQuestions < 2)
+                //enable the edit questions only if one question is selected
+                if (tNumberOfSelectedQuestions > 0 && tNumberOfSelectedQuestions < 2)
+                {
+                    EditQuestionButton.Enabled = true;
+                }
+                else
+                {
+                    EditQuestionButton.Enabled = false;
+                }
+            }catch (Exception ex)
             {
-                EditQuestionButton.Enabled = true;
-            }
-            else
-            {
-                EditQuestionButton.Enabled = false;
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
             }
         }
 
         private void QuestionsListView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-            if (SortingOrder == System.Windows.Forms.SortOrder.Ascending)
+            try
             {
-                SortingOrder = System.Windows.Forms.SortOrder.Descending;
+                if (SortingOrder == SortOrder.Ascending)
+                {
+                    SortingOrder = SortOrder.Descending;
+                }
+                else
+                {
+                    SortingOrder = SortOrder.Ascending;
+                }
+                QuestionsListView.ListViewItemSorter = new ListViewItemComparer(e.Column, SortingOrder);
             }
-            else
+            catch (Exception ex)
             {
-                SortingOrder = System.Windows.Forms.SortOrder.Ascending;
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
             }
-            QuestionsListView.ListViewItemSorter = new ListViewItemComparer(e.Column, SortingOrder);
         }
 
 
         #region menu strip items functions
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            ClearSelectedOptions();
-            fontSize9StripMenuItem.Checked = true;
-            QuestionsListView.Font = new Font(QuestionsListView.Font.FontFamily, 9);
+            try 
+            { 
+                ClearSelectedOptions();
+                fontSize9StripMenuItem.Checked = true;
+                QuestionsListView.Font = new Font(QuestionsListView.Font.FontFamily, 9);
+            }
+            catch(Exception ex) 
+            { 
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
         }
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
-            ClearSelectedOptions();
-            fontSize12StripMenuItem.Checked = true;
-            QuestionsListView.Font = new Font(QuestionsListView.Font.FontFamily, 12);
+            try 
+            { 
+                ClearSelectedOptions();
+                fontSize12StripMenuItem.Checked = true;
+                QuestionsListView.Font = new Font(QuestionsListView.Font.FontFamily, 12);
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
         }
 
         private void toolStripMenuItem4_Click(object sender, EventArgs e)
         {
-            ClearSelectedOptions();
-            fontSize15StripMenuItem.Checked = true;
-            QuestionsListView.Font = new Font(QuestionsListView.Font.FontFamily, 15);
+            try 
+            { 
+                ClearSelectedOptions();
+                fontSize15StripMenuItem.Checked = true;
+                QuestionsListView.Font = new Font(QuestionsListView.Font.FontFamily, 15);
+            }catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+            }
           }
+
         private void ClearSelectedOptions()
         {
-            fontSize9StripMenuItem.Checked = false;
-            fontSize12StripMenuItem.Checked = false;
-            fontSize15StripMenuItem.Checked = false;
+            try
+            {
+                fontSize9StripMenuItem.Checked = false;
+                fontSize12StripMenuItem.Checked = false;
+                fontSize15StripMenuItem.Checked = false;
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
         }
         #endregion
 
@@ -279,6 +342,19 @@ namespace Survey_Configurator
             }
         }
 
+        private static void ShowDefaultErrorMessage()
+        {
+            try
+            {
+                MessageBox.Show("An Unknown error occured", "Unkown Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
+        }
+
         private void QuestionOperations_DataBaseChangedEvent(object? sender, string e)
         {
             try
@@ -294,11 +370,19 @@ namespace Survey_Configurator
             }
         }
 
-        private static void ShowDefaultErrorMessage()
+        private void QuestionOperations_DataBaseNotConnectedEvent(object? sender, EventArgs e)
         {
-            MessageBox.Show("An Unknown error occured", "Unkown Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            try
+            {
+                MessageBox.Show("Database refusing to connect, refer to your system admin", "connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
         }
-
         #endregion
     }
 }

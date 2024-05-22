@@ -1,8 +1,6 @@
 ﻿using DatabaseLayer;
-using Microsoft.Data.SqlClient;
 using SharedResources;
 using SharedResources.models;
-using System.Diagnostics;
 using System.Text.Json;
 
 namespace QuestionServices
@@ -10,6 +8,10 @@ namespace QuestionServices
     public class QuestionOperations
     {
         public static event EventHandler<string> DataBaseChangedEvent;
+
+        public static event EventHandler DataBaseNotConnectedEvent;
+
+        private const int cDatabaseReconnectMaxAttempts = 3;
 
         //changed to true when the user is performing adding, updating or deleting operation
         public static bool OperationOngoing = false;
@@ -36,8 +38,16 @@ namespace QuestionServices
 
         public static Question GetQuestionData(int pQuestionId)
         {
+            try 
+            { 
             Question tQuestionGeneralData = QuestionsList.Find(question => question.Id == pQuestionId);
             return tQuestionGeneralData;
+            }
+            catch(Exception ex) 
+            {
+                UtilityMethods.LogError(ex);
+                return null;
+            }
         }
 
         public static OperationResult GetQuestionSpecificData(int pQuestionId, ref Question pQuestionSpecificData)
@@ -159,23 +169,23 @@ namespace QuestionServices
             try {
                 string tConnectionString = "";
                 //check that file exists
-                string filePath = Directory.GetCurrentDirectory() + "\\connectionSettings.json";
-                if (!File.Exists(filePath))
+                string tFilePath = Directory.GetCurrentDirectory() + "\\connectionSettings.json";
+                if (!File.Exists(tFilePath))
                 {
                     //create json file and fill it with default stuff
-                    using (FileStream fs = File.Create(filePath)) ;
+                    using (FileStream tFs = File.Create(tFilePath)) ;
 
-                    using(StreamWriter writer = new StreamWriter(filePath))
+                    using(StreamWriter tWriter = new StreamWriter(tFilePath))
                     {
-                        writer.Write(JsonSerializer.Serialize(new ConnectionString()));
+                        tWriter.Write(JsonSerializer.Serialize(new ConnectionString()));
                     }
                     //return a value to indicate that a file has been created and to fill it
                 }
                 else
                 { 
-                    //read connection string values from file
-                    using(StreamReader fileReader = new StreamReader(filePath)) {
-                        string tReadConnectionString = fileReader.ReadToEnd();
+                    //read connection string values from tFilePath
+                    using(StreamReader tFileReader = new StreamReader(tFilePath)) {
+                        string tReadConnectionString = tFileReader.ReadToEnd();
                         tConnectionString = tReadConnectionString.Trim().Substring(1, tReadConnectionString.Length - 2).Replace(":","=").Replace("\"","").Replace(",",";");
                     }
                  }
@@ -202,9 +212,9 @@ namespace QuestionServices
         {
             try 
             {
-                Thread checkThread = new Thread(()=>CheckDataBaseChange(Thread.CurrentThread));
-                checkThread.IsBackground = true;
-                checkThread.Start();
+                Thread tCheckThread = new Thread(()=>CheckDataBaseChange(Thread.CurrentThread));
+                tCheckThread.IsBackground = true;
+                tCheckThread.Start();
                 return new OperationResult();
             }
             catch(Exception ex)
@@ -220,6 +230,7 @@ namespace QuestionServices
             {
                 //get checksum of the database current version of data
                 long tcurrentChecksum=0;
+                int tDatabaseConnectionRetryCount = 0;
                 Database.getChecksum(ref tcurrentChecksum);
                 while (pMainThread.IsAlive)
                 {
@@ -231,7 +242,7 @@ namespace QuestionServices
                         //get checksum again to detect change
                         long tNewChecksum = 0;
                         OperationResult tNewChecksumResult = Database.getChecksum(ref tNewChecksum);
-                        if(tNewChecksumResult.IsSuccess)
+                        if (tNewChecksumResult.IsSuccess) {
                             if (tcurrentChecksum != tNewChecksum)
                             {
                                 //data changed
@@ -242,6 +253,16 @@ namespace QuestionServices
                                //notify UI of database change
                                DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Database externally changed");
                             }
+                        }
+                        else
+                        {
+                            tDatabaseConnectionRetryCount++;
+                            if (tDatabaseConnectionRetryCount > cDatabaseReconnectMaxAttempts)
+                            {
+                                DataBaseNotConnectedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
+                                break;
+                            }
+                        }
                     }
                 }
             }

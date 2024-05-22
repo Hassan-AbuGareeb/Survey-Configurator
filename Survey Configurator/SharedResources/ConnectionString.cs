@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SharedResources
+﻿namespace SharedResources
 {
     public class ConnectionString
     {
@@ -17,14 +11,21 @@ namespace SharedResources
         public int Timeout { get; set; }
 
         public ConnectionString() {
-            Server = string.Empty;
-            Database = string.Empty;
-            Trusted_Connection = false;
-            User = string.Empty;
-            Password = string.Empty;
-            Encrypt = false;
-            Timeout = 5;
+            try { 
+                Server = string.Empty;
+                Database = string.Empty;
+                Trusted_Connection = false;
+                User = string.Empty;
+                Password = string.Empty;
+                Encrypt = false;
+                Timeout = 5;
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+            }
         }
+
 
     }
 }

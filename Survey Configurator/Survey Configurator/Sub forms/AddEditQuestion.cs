@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using QuestionServices;
-using Microsoft.Data.SqlClient;
+﻿using QuestionServices;
 using SharedResources.models;
 using SharedResources;
 
@@ -16,23 +11,40 @@ namespace Survey_Configurator.Sub_forms
         private static string Operation;
         public AddEditQuestion()
         {
-            InitializeComponent();
-            Text = "Add";
-            AddEditLabel.Text = "Add Question";
-            OperationButton.Text = "Add";
-            Operation = "Add";
-            OperationButton.Click += AddButton_Click;
+            try 
+            {
+                InitializeComponent();
+                Text = "Add";
+                AddEditLabel.Text = "Add Question";
+                OperationButton.Text = "Add";
+                Operation = "Add";
+                OperationButton.Click += AddButton_Click;
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                MessageBox.Show("An UnExpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         
         public AddEditQuestion(int pQuestionId)
         {
-            InitializeComponent();
-            QuestionId = pQuestionId;
-            Text = "Edit";
-            AddEditLabel.Text = "Edit Question";
-            OperationButton.Text = "Edit";
-            Operation = "Edit";
-            OperationButton.Click += EditButton_Click;
+            try 
+            { 
+                InitializeComponent();
+                QuestionId = pQuestionId;
+                Text = "Edit";
+                AddEditLabel.Text = "Edit Question";
+                OperationButton.Text = "Edit";
+                Operation = "Edit";
+                OperationButton.Click += EditButton_Click;
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                MessageBox.Show("An UnExpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
         }
 
         private void AddEdit_Load(object sender, EventArgs e)
@@ -52,7 +64,11 @@ namespace Survey_Configurator.Sub_forms
                     QuestionTypeComboBox.SelectedItem = tGeneralQuestionData.Type;
 
                     //based on the combobox value further data about the question should be obtained and added to UI
+<<<<<<< HEAD
+                    Question tQuestionSpecificData=null;
+=======
                     Question tQuestionSpecificData = null;
+>>>>>>> 6fa5cc88c0582e6fe0e78a555ad00c187ee01fba
                     OperationResult tQuestionSpecificDataResult = QuestionOperations.GetQuestionSpecificData(QuestionId, ref tQuestionSpecificData);
                     if (tQuestionSpecificDataResult.IsSuccess)
                     {
@@ -120,7 +136,7 @@ namespace Survey_Configurator.Sub_forms
                             SliderQuestion tSliderData = new SliderQuestion(tNewQuestionData,
                                 (int)SliderStartValueNumeric.Value, (int)SliderEndValueNumeric.Value,
                                 SliderStartValueCaptionText.Text, SliderEndValueCaptionText.Text);
-                                tQuestionAddedResult = QuestionOperations.AddQuestion(tSliderData);
+                            tQuestionAddedResult = QuestionOperations.AddQuestion(tSliderData);
                             break;
                     }
                     if (tQuestionAddedResult!=null && !tQuestionAddedResult.IsSuccess)
@@ -235,10 +251,18 @@ namespace Survey_Configurator.Sub_forms
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            DialogResult tCancelCreateQuestion = MessageBox.Show("Any changes made won't be saved.", "Cancel Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (tCancelCreateQuestion == DialogResult.Yes)
-            {
-                Close();
+            try 
+            { 
+                DialogResult tCancelCreateQuestion = MessageBox.Show("Any changes made won't be saved.", "Cancel Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (tCancelCreateQuestion == DialogResult.Yes)
+                {
+                    Close();
+                }
+            }
+            catch(Exception ex) 
+            { 
+                UtilityMethods.LogError(ex);
+                MessageBox.Show("An Unexpected error occured", "Error");
             }
         }
 
@@ -267,27 +291,65 @@ namespace Survey_Configurator.Sub_forms
 
         private void AddStarsOptions()
         {
-            StarsQuestionOptionsPanel.Show();
+            try 
+            { 
+                StarsQuestionOptionsPanel.Show();
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                MessageBox.Show("An unexpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void AddSmileysOptions()
         {
-            SmileyQuestionOptionsPanel.Show();
+            try
+            {
+                SmileyQuestionOptionsPanel.Show();
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                MessageBox.Show("An unexpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void AddSliderOptions()
         {
-            SliderQuestionOptionsPanel.Show();
-        }
+            try 
+            {
+                SliderQuestionOptionsPanel.Show();
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                MessageBox.Show("An unexpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+}
 
         private void HideQuesitonOptionsPanel()
         {
-            StarsQuestionOptionsPanel.Hide();
-            SmileyQuestionOptionsPanel.Hide();
-            SliderQuestionOptionsPanel.Hide();
+            try { 
+                StarsQuestionOptionsPanel.Hide();
+                SmileyQuestionOptionsPanel.Hide();
+                SliderQuestionOptionsPanel.Hide();
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError (ex);
+                MessageBox.Show("An unexpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void AddEditQuestion_FormClosing(object sender, FormClosingEventArgs e)
         {
+            try { 
             QuestionOperations.OperationOngoing = false;
+            }
+            catch(Exception ex) 
+            { 
+                UtilityMethods.LogError(ex);
+                MessageBox.Show("An unexpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
