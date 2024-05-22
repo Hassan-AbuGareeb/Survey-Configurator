@@ -40,12 +40,11 @@ namespace QuestionServices
             return tQuestionGeneralData;
         }
 
-        public static OperationResult GetQuestionSpecificData(int pQuestionId, Question pQuestionSpecificData)
+        public static OperationResult GetQuestionSpecificData(int pQuestionId, ref Question pQuestionSpecificData)
         {
             try
             {
                 Question tQuestionData = GetQuestionData(pQuestionId);
-                pQuestionSpecificData = null;
                 OperationResult tQuestionSpecificDataResult = Database.getQuestionSpecificDataFromDB(tQuestionData, ref pQuestionSpecificData);
                 if(tQuestionSpecificDataResult.IsSuccess && pQuestionSpecificData == null)
                 {
