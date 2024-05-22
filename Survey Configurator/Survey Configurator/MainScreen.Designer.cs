@@ -28,12 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-            QuestionsDataGrid = new DataGridView();
             DeleteQuestionButton = new Button();
             EditQuestionButton = new Button();
             AddQuestionButton = new Button();
@@ -46,98 +40,50 @@
             fontSize15StripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             openManualToolStripMenuItem = new ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)QuestionsDataGrid).BeginInit();
+            QuestionsListView = new ListView();
+            QuestionOrder = new ColumnHeader();
+            QuestionText = new ColumnHeader();
+            QuestionType = new ColumnHeader();
             menuStrip1.SuspendLayout();
             SuspendLayout();
-            // 
-            // QuestionsDataGrid
-            // 
-            QuestionsDataGrid.AllowUserToAddRows = false;
-            QuestionsDataGrid.AllowUserToDeleteRows = false;
-            QuestionsDataGrid.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle6.BackColor = Color.Gainsboro;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            QuestionsDataGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
-            QuestionsDataGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            QuestionsDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            QuestionsDataGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            QuestionsDataGrid.BackgroundColor = SystemColors.Window;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = Color.FromArgb(224, 224, 224);
-            dataGridViewCellStyle7.Font = new Font("Segoe UI", 12F);
-            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            QuestionsDataGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
-            QuestionsDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = Color.FromArgb(224, 224, 224);
-            dataGridViewCellStyle8.Font = new Font("Segoe UI", 12F);
-            dataGridViewCellStyle8.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
-            QuestionsDataGrid.DefaultCellStyle = dataGridViewCellStyle8;
-            QuestionsDataGrid.GridColor = SystemColors.InfoText;
-            QuestionsDataGrid.Location = new Point(12, 53);
-            QuestionsDataGrid.Margin = new Padding(3, 4, 3, 4);
-            QuestionsDataGrid.Name = "QuestionsDataGrid";
-            QuestionsDataGrid.ReadOnly = true;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = Color.White;
-            dataGridViewCellStyle9.Font = new Font("Segoe UI", 12F);
-            dataGridViewCellStyle9.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
-            QuestionsDataGrid.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
-            QuestionsDataGrid.RowHeadersWidth = 35;
-            dataGridViewCellStyle10.BackColor = Color.White;
-            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
-            QuestionsDataGrid.RowsDefaultCellStyle = dataGridViewCellStyle10;
-            QuestionsDataGrid.RowTemplate.Height = 33;
-            QuestionsDataGrid.RowTemplate.Resizable = DataGridViewTriState.True;
-            QuestionsDataGrid.ScrollBars = ScrollBars.Vertical;
-            QuestionsDataGrid.Size = new Size(1226, 532);
-            QuestionsDataGrid.TabIndex = 9;
-            QuestionsDataGrid.SelectionChanged += QuestionsDataGrid_SelectionChanged;
             // 
             // DeleteQuestionButton
             // 
             DeleteQuestionButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             DeleteQuestionButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            DeleteQuestionButton.Font = new Font("Segoe UI", 15F);
-            DeleteQuestionButton.Location = new Point(1004, 637);
+            DeleteQuestionButton.Enabled = false;
+            DeleteQuestionButton.Font = new Font("Microsoft Sans Serif", 12F);
+            DeleteQuestionButton.Location = new Point(1117, 673);
             DeleteQuestionButton.Name = "DeleteQuestionButton";
-            DeleteQuestionButton.Size = new Size(131, 65);
-            DeleteQuestionButton.TabIndex = 7;
+            DeleteQuestionButton.Size = new Size(120, 40);
+            DeleteQuestionButton.TabIndex = 4;
             DeleteQuestionButton.Text = "Delete";
             DeleteQuestionButton.UseVisualStyleBackColor = true;
             DeleteQuestionButton.Click += DeleteQuestionButton_Click;
             // 
             // EditQuestionButton
             // 
-            EditQuestionButton.Anchor = AnchorStyles.Bottom;
+            EditQuestionButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             EditQuestionButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            EditQuestionButton.Font = new Font("Segoe UI", 15F);
-            EditQuestionButton.Location = new Point(554, 637);
+            EditQuestionButton.Enabled = false;
+            EditQuestionButton.Font = new Font("Microsoft Sans Serif", 12F);
+            EditQuestionButton.Location = new Point(990, 673);
             EditQuestionButton.Name = "EditQuestionButton";
-            EditQuestionButton.Size = new Size(131, 65);
-            EditQuestionButton.TabIndex = 6;
+            EditQuestionButton.Size = new Size(120, 40);
+            EditQuestionButton.TabIndex = 3;
             EditQuestionButton.Text = "Edit";
             EditQuestionButton.UseVisualStyleBackColor = true;
             EditQuestionButton.Click += EditQuestionButton_Click;
             // 
             // AddQuestionButton
             // 
-            AddQuestionButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            AddQuestionButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             AddQuestionButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            AddQuestionButton.Font = new Font("Segoe UI", 15F);
-            AddQuestionButton.Location = new Point(57, 637);
+            AddQuestionButton.Font = new Font("Microsoft Sans Serif", 12F);
+            AddQuestionButton.Location = new Point(863, 673);
             AddQuestionButton.Name = "AddQuestionButton";
-            AddQuestionButton.Size = new Size(141, 65);
-            AddQuestionButton.TabIndex = 5;
+            AddQuestionButton.Size = new Size(120, 40);
+            AddQuestionButton.TabIndex = 2;
             AddQuestionButton.Text = "Add";
             AddQuestionButton.UseVisualStyleBackColor = true;
             AddQuestionButton.Click += AddQuestionButton_Click;
@@ -151,8 +97,8 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { optionsToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1250, 36);
-            menuStrip1.TabIndex = 10;
+            menuStrip1.Size = new Size(1255, 36);
+            menuStrip1.TabIndex = 5;
             menuStrip1.Text = "menuStrip1";
             // 
             // optionsToolStripMenuItem
@@ -166,27 +112,27 @@
             // 
             fontSizeToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fontSize9StripMenuItem, fontSize12StripMenuItem, fontSize15StripMenuItem });
             fontSizeToolStripMenuItem.Name = "fontSizeToolStripMenuItem";
-            fontSizeToolStripMenuItem.Size = new Size(224, 28);
+            fontSizeToolStripMenuItem.Size = new Size(161, 28);
             fontSizeToolStripMenuItem.Text = "Font size";
             // 
             // fontSize9StripMenuItem
             // 
             fontSize9StripMenuItem.Name = "fontSize9StripMenuItem";
-            fontSize9StripMenuItem.Size = new Size(224, 28);
+            fontSize9StripMenuItem.Size = new Size(112, 28);
             fontSize9StripMenuItem.Text = "9";
             fontSize9StripMenuItem.Click += toolStripMenuItem2_Click;
             // 
             // fontSize12StripMenuItem
             // 
             fontSize12StripMenuItem.Name = "fontSize12StripMenuItem";
-            fontSize12StripMenuItem.Size = new Size(224, 28);
+            fontSize12StripMenuItem.Size = new Size(112, 28);
             fontSize12StripMenuItem.Text = "12";
             fontSize12StripMenuItem.Click += toolStripMenuItem3_Click;
             // 
             // fontSize15StripMenuItem
             // 
             fontSize15StripMenuItem.Name = "fontSize15StripMenuItem";
-            fontSize15StripMenuItem.Size = new Size(224, 28);
+            fontSize15StripMenuItem.Size = new Size(112, 28);
             fontSize15StripMenuItem.Text = "15";
             fontSize15StripMenuItem.Click += toolStripMenuItem4_Click;
             // 
@@ -204,13 +150,44 @@
             openManualToolStripMenuItem.Size = new Size(198, 28);
             openManualToolStripMenuItem.Text = "Open manual";
             // 
+            // QuestionsListView
+            // 
+            QuestionsListView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            QuestionsListView.Columns.AddRange(new ColumnHeader[] { QuestionOrder, QuestionText, QuestionType });
+            QuestionsListView.Font = new Font("Segoe UI", 12F);
+            QuestionsListView.FullRowSelect = true;
+            QuestionsListView.Location = new Point(12, 39);
+            QuestionsListView.Name = "QuestionsListView";
+            QuestionsListView.Size = new Size(1226, 628);
+            QuestionsListView.Sorting = SortOrder.Ascending;
+            QuestionsListView.TabIndex = 6;
+            QuestionsListView.UseCompatibleStateImageBehavior = false;
+            QuestionsListView.View = View.Details;
+            QuestionsListView.ColumnClick += QuestionsListView_ColumnClick;
+            QuestionsListView.SelectedIndexChanged += QuestionsListView_SelectedIndexChanged;
+            // 
+            // QuestionOrder
+            // 
+            QuestionOrder.Text = "Order";
+            QuestionOrder.Width = 100;
+            // 
+            // QuestionText
+            // 
+            QuestionText.Text = "Text";
+            QuestionText.Width = 800;
+            // 
+            // QuestionType
+            // 
+            QuestionType.Text = "Type";
+            QuestionType.Width = 322;
+            // 
             // MainScreen
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1250, 759);
+            ClientSize = new Size(1250, 753);
+            Controls.Add(QuestionsListView);
             Controls.Add(DeleteQuestionButton);
-            Controls.Add(QuestionsDataGrid);
             Controls.Add(EditQuestionButton);
             Controls.Add(AddQuestionButton);
             Controls.Add(menuStrip1);
@@ -220,9 +197,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Survey Configurator";
             WindowState = FormWindowState.Maximized;
-            FormClosing += MainScreen_FormClosing;
             Load += MainScreen_Load;
-            ((System.ComponentModel.ISupportInitialize)QuestionsDataGrid).EndInit();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);
@@ -232,7 +207,6 @@
         private Button AddQuestionButton;
         private Button DeleteQuestionButton;
         private Button EditQuestionButton;
-        private DataGridView QuestionsDataGrid;
         private Microsoft.Data.SqlClient.SqlCommandBuilder sqlCommandBuilder1;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem optionsToolStripMenuItem;
@@ -242,5 +216,9 @@
         private ToolStripMenuItem fontSize12StripMenuItem;
         private ToolStripMenuItem fontSize15StripMenuItem;
         private ToolStripMenuItem openManualToolStripMenuItem;
+        private ListView QuestionsListView;
+        private ColumnHeader QuestionOrder;
+        private ColumnHeader QuestionText;
+        private ColumnHeader QuestionType;
     }
 }

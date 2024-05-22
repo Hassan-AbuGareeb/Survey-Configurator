@@ -1,0 +1,16 @@
+D:\Survey Configurator\Survey Configurator\Database\bin\Debug\net8.0\QuestionDB.deps.json
+D:\Survey Configurator\Survey Configurator\Database\bin\Debug\net8.0\QuestionDB.dll
+D:\Survey Configurator\Survey Configurator\Database\bin\Debug\net8.0\QuestionDB.pdb
+D:\Survey Configurator\Survey Configurator\Database\bin\Debug\net8.0\SharedResources.dll
+D:\Survey Configurator\Survey Configurator\Database\bin\Debug\net8.0\SharedResources.pdb
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\QuestionDB.csproj.AssemblyReference.cache
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\QuestionDB.GeneratedMSBuildEditorConfig.editorconfig
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\QuestionDB.AssemblyInfoInputs.cache
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\QuestionDB.AssemblyInfo.cs
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\QuestionDB.csproj.CoreCompileInputs.cache
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\QuestionDB.sourcelink.json
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\QuestionDB.csproj.Up2Date
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\QuestionDB.dll
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\refint\QuestionDB.dll
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\QuestionDB.pdb
+D:\Survey Configurator\Survey Configurator\Database\obj\Debug\net8.0\ref\QuestionDB.dll

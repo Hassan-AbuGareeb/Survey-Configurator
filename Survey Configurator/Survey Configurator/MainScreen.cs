@@ -1,132 +1,154 @@
 ﻿using Survey_Configurator.Sub_forms;
-using System.Data;
-using Logic;
-using System.Configuration;
+using QuestionServices;
 using Microsoft.Data.SqlClient;
-using Microsoft.VisualBasic.Logging;
+using SharedResources;
+using SharedResources.models;
 namespace Survey_Configurator
 {
     public partial class MainScreen : Form
     {
+        //the sorting order for the questions items in the list view
+        private System.Windows.Forms.SortOrder SortingOrder = System.Windows.Forms.SortOrder.Ascending;
+
         public MainScreen()
         {
-            InitializeComponent();
+            try {
+                //check if connection string is successfully obtained 
+                OperationResult tConnectionStringCreated = QuestionOperations.SetConnectionString();
+                if(!tConnectionStringCreated.IsSuccess)
+                {
+                    MessageBox.Show(tConnectionStringCreated.ErrorMessage, "Database connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Close();
+                }
+                //check database connectivity
+                OperationResult tDatabaseConnected = QuestionOperations.TestDBConnection();
+                if(!tDatabaseConnected.IsSuccess )
+                {
+                    MessageBox.Show(tDatabaseConnected.ErrorMessage, "Database connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Close();
+                }
+
+                InitializeComponent();
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+                Close();
+            }
         }
 
         private void MainScreen_Load(object sender, EventArgs e)
         {
             try
             {
-                //get a default connection string stored in the app.config file
-                string defaultConnectionString = ConfigurationManager.ConnectionStrings["app"].ConnectionString;
-                bool isConnectionStringFound = QuestionOperations.SetConnectionString(defaultConnectionString);
-
-                //if the connection string isn't found for any reason the function used above will
-                //automatically try to use the connection string stored in the app.config file
-                if (!isConnectionStringFound )
-                {
-                    MessageBox.Show("File issue occured, please check your permission on creating and editing files");
-                    MessageBox.Show("Trying to connect using default connection parameters");
-                }
-
-                //notify the logic layer to fetch the questions data from the database
-                QuestionOperations.GetQuestions();
-
-                QuestionsDataGrid.DataSource = QuestionOperations.Questions;
+                //initialize the list view with questions data
+                QuestionsListViewInit();
 
                 //launch the database change checker to monitor database for any change and reflect it to the UI
-                QuestionOperations.CheckDataBaseChange();
-
-                //hide the question id column
-                QuestionsDataGrid.Columns["Q_id"].Visible = false;
-
-                //properly naming the columns in the datagrid view
-                QuestionsDataGrid.Columns["Q_order"].HeaderText = "Order";
-                QuestionsDataGrid.Columns["Q_text"].HeaderText = "Text";
-                QuestionsDataGrid.Columns["Q_type"].HeaderText = "Type";
-
-                //change the order of the columns in the grid view
-                QuestionsDataGrid.Columns["Q_order"].DisplayIndex = 0;
-                QuestionsDataGrid.Columns["Q_text"].DisplayIndex = 1;
-                QuestionsDataGrid.Columns["Q_type"].DisplayIndex = 2;
-
-            }
-            catch (ArgumentException)
-            {
-                MessageBox.Show("Wrong connection parameters please check the connectionSettings.txt file");
-                Close();
-            }
-            catch (InvalidOperationException)
-            {
-                //error during getting data from database, implement a retry mechanism
-                MessageBox.Show("error occured while Loading data, please try again");
-            }
-            catch (SqlException)
-            {
-                MessageBox.Show("Database connection error, check the connection parameters or the sql server configurations");
-                Close();
+                OperationResult tCheckingDataBaseResult = QuestionOperations.StartCheckingDataBaseChange();
+                if(!tCheckingDataBaseResult.IsSuccess)
+                {
+                    MessageBox.Show($"An error occured \n {tCheckingDataBaseResult.ErrorMessage}", tCheckingDataBaseResult.Error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Close();
+                }
+                //listen to any database change event
+                QuestionOperations.DataBaseChangedEvent += QuestionOperations_DataBaseChangedEvent;
+                
+                //sort the questions list alphabetically on first load
+                QuestionsListView.ListViewItemSorter = new ListViewItemComparer(1, SortingOrder);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ex.GetType().FullName}, {ex.StackTrace}");
+                UtilityMethods.LogError(ex);
+                MessageBox.Show($"An error occured \n {ex.Message}", ex.GetType().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
             }
-        }
-
-        private void MainScreen_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            //stop the function checking the database changes
-            QuestionOperations.IsAppRunning = false;
         }
 
         //buttons click functions
         private void AddQuestionButton_Click(object sender, EventArgs e)
         {
-            AddEditQuestion addForm = new AddEditQuestion();
-            addForm.ShowDialog();
+            try
+            {
+                AddEditQuestion tAddForm = new AddEditQuestion();
+                DialogResult tQuestionAdded = tAddForm.ShowDialog();
+
+                //disable delete and edit button
+                if (tQuestionAdded != DialogResult.Cancel)
+                {
+                    DeleteQuestionButton.Enabled = false;
+                    EditQuestionButton.Enabled = false;
+                }
+
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
         }
 
         private void EditQuestionButton_Click(object sender, EventArgs e)
         {
-            //get the selected question id 
-            int QuesitonId = (int)QuestionsDataGrid.SelectedRows[0].Cells["Q_id"].Value;
+            try { 
+            Question tSelectedQuestion = QuestionsListView.SelectedItems[0].Tag as Question;
+            AddEditQuestion tAddForm = new AddEditQuestion(tSelectedQuestion.Id);
+            DialogResult tQuestionEdited = tAddForm.ShowDialog();
 
-            AddEditQuestion addForm = new AddEditQuestion(QuesitonId);
-            addForm.ShowDialog();
+                //disable delete and edit button
+                if (tQuestionEdited != DialogResult.Cancel)
+                {
+                    DeleteQuestionButton.Enabled = false;
+                    EditQuestionButton.Enabled = false;
+                }
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
         }
 
         private void DeleteQuestionButton_Click(object sender, EventArgs e)
         {
             try
             {
-                int numberOfSelectedRows = QuestionsDataGrid.SelectedRows.Count;
-                DialogResult DeleteQuestion = MessageBox.Show($"Are you sure you want to delete {(numberOfSelectedRows > 1 ? "these " : "this ")}question{(numberOfSelectedRows > 1 ? "s" : "")}?", "Delete question", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                int tNumberOfSelectedQuestions = QuestionsListView.SelectedItems.Count;
+                DialogResult tDeleteQuestion = MessageBox.Show($"Are you sure you want to delete {(tNumberOfSelectedQuestions > 1 ? "these " : "this ")}question{(tNumberOfSelectedQuestions > 1 ? "s" : "")}?", "Delete question", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 //to prevent any interruption in deleting
                 QuestionOperations.OperationOngoing = true;
-                if (DeleteQuestion == DialogResult.Yes)
+                if (tDeleteQuestion == DialogResult.Yes)
                 {
-                    DataRow[] selectedQuestions = new DataRow[numberOfSelectedRows];
+                    List<Question> tSelectedQuestions = new List<Question>();
                     //obtain the selected questions and store them
-                    for (int i = 0; i < numberOfSelectedRows; i++)
+                    for (int i = 0; i < tNumberOfSelectedQuestions; i++)
                     {
                         //cast the selected grid row to dataRowView to store it in a dataRow
-                        DataRow currentQuestion = ((DataRowView)QuestionsDataGrid.SelectedRows[i].DataBoundItem).Row;
-                        selectedQuestions[i] = currentQuestion;
+                        Question tCurrentQuestion = QuestionsListView.SelectedItems[i].Tag as Question;
+                        tSelectedQuestions.Add(tCurrentQuestion);
                     }
-                    //delete the questions from database and ui
-                    QuestionOperations.DeleteQuestion(selectedQuestions);
-                    MessageBox.Show($"Question{(numberOfSelectedRows > 1 ? "s " : " ")}deleted successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    //check operation result here
+                    OperationResult tDeleteQuestionResult = QuestionOperations.DeleteQuestion(tSelectedQuestions);
+                    if(!tDeleteQuestionResult.IsSuccess) 
+                    {
+                        MessageBox.Show(tDeleteQuestionResult.ErrorMessage, tDeleteQuestionResult.Error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        //disable delete and edit button
+                        DeleteQuestionButton.Enabled = false;
+                        EditQuestionButton.Enabled = false;
+
+                        MessageBox.Show($"Question{(tNumberOfSelectedQuestions > 1 ? "s " : " ")}deleted successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
-            }
-            catch(IndexOutOfRangeException ex)
-            {
-                QuestionOperations.LogError(ex);
-                MessageBox.Show("Please select the entire row to delete a question");
             }
             catch (Exception ex)
             {
-                QuestionOperations.LogError(ex);
-                MessageBox.Show("An unexpected error occured");
+                UtilityMethods.LogError(ex);
+                MessageBox.Show("Operation Failed, please try again", "Operation failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -134,12 +156,11 @@ namespace Survey_Configurator
             }
         }
 
-
-        private void QuestionsDataGrid_SelectionChanged(object sender, EventArgs e)
+        private void QuestionsListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int numberOfSelectedQuestions = QuestionsDataGrid.SelectedRows.Count;
+            int tNumberOfSelectedQuestions = QuestionsListView.SelectedItems.Count;
             //disable delete button if no questions are selected
-            if (numberOfSelectedQuestions > 0)
+            if (tNumberOfSelectedQuestions > 0)
             {
                 DeleteQuestionButton.Enabled = true;
             }
@@ -149,7 +170,7 @@ namespace Survey_Configurator
             }
 
             //enable the edit questions only if one question is selected
-            if (numberOfSelectedQuestions > 0 && numberOfSelectedQuestions < 2)
+            if (tNumberOfSelectedQuestions > 0 && tNumberOfSelectedQuestions < 2)
             {
                 EditQuestionButton.Enabled = true;
             }
@@ -159,48 +180,125 @@ namespace Survey_Configurator
             }
         }
 
-        //menu strip items functions
+        private void QuestionsListView_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            if (SortingOrder == System.Windows.Forms.SortOrder.Ascending)
+            {
+                SortingOrder = System.Windows.Forms.SortOrder.Descending;
+            }
+            else
+            {
+                SortingOrder = System.Windows.Forms.SortOrder.Ascending;
+            }
+            QuestionsListView.ListViewItemSorter = new ListViewItemComparer(e.Column, SortingOrder);
+        }
+
+
+        #region menu strip items functions
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             ClearSelectedOptions();
-
             fontSize9StripMenuItem.Checked = true;
-            QuestionsDataGrid.RowsDefaultCellStyle.Font = new Font(QuestionsDataGrid.Font.FontFamily, 9);
-            for (int i = 0; i < QuestionsDataGrid.Rows.Count; i++)
-            {
-                QuestionsDataGrid.Rows[i].Height = 29;
-            }
+            QuestionsListView.Font = new Font(QuestionsListView.Font.FontFamily, 9);
         }
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
             ClearSelectedOptions();
             fontSize12StripMenuItem.Checked = true;
-            QuestionsDataGrid.RowsDefaultCellStyle.Font = new Font(QuestionsDataGrid.Font.FontFamily, 12);
-            for (int i = 0; i < QuestionsDataGrid.Rows.Count; i++)
-            {
-                QuestionsDataGrid.Rows[i].Height = 33;
-
-            }
+            QuestionsListView.Font = new Font(QuestionsListView.Font.FontFamily, 12);
         }
 
         private void toolStripMenuItem4_Click(object sender, EventArgs e)
         {
             ClearSelectedOptions();
             fontSize15StripMenuItem.Checked = true;
-            QuestionsDataGrid.RowsDefaultCellStyle.Font = new Font(QuestionsDataGrid.Font.FontFamily, 15);
-            for (int i = 0; i < QuestionsDataGrid.Rows.Count; i++)
-            {
-                QuestionsDataGrid.Rows[i].Height = 39;
-
-            }
-        }
+            QuestionsListView.Font = new Font(QuestionsListView.Font.FontFamily, 15);
+          }
         private void ClearSelectedOptions()
         {
             fontSize9StripMenuItem.Checked = false;
             fontSize12StripMenuItem.Checked = false;
             fontSize15StripMenuItem.Checked = false;
         }
+        #endregion
 
+
+        #region class utility functions
+        private void QuestionsListViewInit()
+        {
+            try 
+            {
+                OperationResult tGetQuestionsSuccessful = QuestionOperations.GetQuestions();
+                if (!tGetQuestionsSuccessful.IsSuccess)
+                {
+                    MessageBox.Show(tGetQuestionsSuccessful.ErrorMessage, tGetQuestionsSuccessful.Error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    UpdateQuestionsList();
+                }
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
+        }
+
+        private void UpdateQuestionsList()
+        {
+            try { 
+                //check if there was any questions selected before updating the view list data on database update
+                int[] tSelectedQuestions = new int[QuestionsListView.SelectedItems.Count];
+                for (int i = 0; i < tSelectedQuestions.Length; i++)
+                {
+                    Question tCurrentQuestion = (Question)QuestionsListView.SelectedItems[i].Tag;
+                    tSelectedQuestions[i] = tCurrentQuestion.Id;
+                }
+
+                //re-populate database
+                QuestionsListView.Items.Clear();
+                foreach (Question tQuestion in QuestionOperations.QuestionsList)
+                {
+                    string[] tCurrentQuestionData = new[] { tQuestion.Order.ToString(), tQuestion.Text, tQuestion.Type.ToString() };
+                    ListViewItem tCurrentQuestionItem = new ListViewItem(tCurrentQuestionData);
+                    tCurrentQuestionItem.Tag = tQuestion;
+
+                    //check if a question was selected before re populating the data
+                    if (tSelectedQuestions.Contains(tQuestion.Id))
+                    {
+                        tCurrentQuestionItem.Selected = true;
+                    }
+                    QuestionsListView.Items.Add(tCurrentQuestionItem);
+                }
+            }catch(Exception ex) 
+            { 
+                UtilityMethods.LogError(ex);
+                MessageBox.Show("An error occured while updating the questions list, please restart the app", "Data update error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void QuestionOperations_DataBaseChangedEvent(object? sender, string e)
+        {
+            try
+            {
+                UpdateQuestionsList();
+                EditQuestionButton.Enabled = false;
+                DeleteQuestionButton.Enabled = false;
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
+        }
+
+        private static void ShowDefaultErrorMessage()
+        {
+            MessageBox.Show("An Unknown error occured", "Unkown Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        #endregion
     }
 }

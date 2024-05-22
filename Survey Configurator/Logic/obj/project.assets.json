@@ -637,17 +637,28 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
-      "DataBase/1.0.0": {
+      "QuestionDB/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
-          "Microsoft.Data.SqlClient": "5.2.0"
+          "Microsoft.Data.SqlClient": "5.2.0",
+          "SharedResources": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/DataBase.dll": {}
+          "bin/placeholder/QuestionDB.dll": {}
         },
         "runtime": {
-          "bin/placeholder/DataBase.dll": {}
+          "bin/placeholder/QuestionDB.dll": {}
+        }
+      },
+      "SharedResources/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/SharedResources.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SharedResources.dll": {}
         }
       }
     }
@@ -1891,16 +1902,22 @@
         "version.txt"
       ]
     },
-    "DataBase/1.0.0": {
+    "QuestionDB/1.0.0": {
       "type": "project",
-      "path": "../Database/DataBase.csproj",
-      "msbuildProject": "../Database/DataBase.csproj"
+      "path": "../Database/QuestionDB.csproj",
+      "msbuildProject": "../Database/QuestionDB.csproj"
+    },
+    "SharedResources/1.0.0": {
+      "type": "project",
+      "path": "../SharedResources/SharedResources.csproj",
+      "msbuildProject": "../SharedResources/SharedResources.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "DataBase >= 1.0.0",
-      "Microsoft.Data.SqlClient >= 5.2.0"
+      "Microsoft.Data.SqlClient >= 5.2.0",
+      "QuestionDB >= 1.0.0",
+      "SharedResources >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -1909,9 +1926,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Survey Configurator\\Survey Configurator\\Logic\\Logic.csproj",
-      "projectName": "Logic",
-      "projectPath": "D:\\Survey Configurator\\Survey Configurator\\Logic\\Logic.csproj",
+      "projectUniqueName": "D:\\Survey Configurator\\Survey Configurator\\Logic\\QuestionServices.csproj",
+      "projectName": "QuestionServices",
+      "projectPath": "D:\\Survey Configurator\\Survey Configurator\\Logic\\QuestionServices.csproj",
       "packagesPath": "C:\\Users\\hassan\\.nuget\\packages\\",
       "outputPath": "D:\\Survey Configurator\\Survey Configurator\\Logic\\obj\\",
       "projectStyle": "PackageReference",
@@ -1930,8 +1947,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\Survey Configurator\\Survey Configurator\\Database\\DataBase.csproj": {
-              "projectPath": "D:\\Survey Configurator\\Survey Configurator\\Database\\DataBase.csproj"
+            "D:\\Survey Configurator\\Survey Configurator\\Database\\QuestionDB.csproj": {
+              "projectPath": "D:\\Survey Configurator\\Survey Configurator\\Database\\QuestionDB.csproj"
+            },
+            "D:\\Survey Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj": {
+              "projectPath": "D:\\Survey Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj"
             }
           }
         }

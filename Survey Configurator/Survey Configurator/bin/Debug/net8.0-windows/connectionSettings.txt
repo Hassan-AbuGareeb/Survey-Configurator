@@ -1,7 +1,0 @@
-Server : HASSANABUGHREEB,
-Database : Questions_DB,
-Trusted_Connection : true,
-User : ,
-Password : ,
-Encrypt : false,
-Timeout : 4

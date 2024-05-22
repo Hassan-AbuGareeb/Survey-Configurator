@@ -1,301 +1,257 @@
-﻿using Microsoft.Data.SqlClient;
-using System.Data;
-using DatabaseLayer.models;
-using DatabaseLayer;
-using System.Runtime.CompilerServices;
+﻿using DatabaseLayer;
+using Microsoft.Data.SqlClient;
+using SharedResources;
+using SharedResources.models;
 using System.Diagnostics;
-using System.Reflection.PortableExecutable;
+using System.Text.Json;
 
-namespace Logic
+namespace QuestionServices
 {
     public class QuestionOperations
     {
-        public static bool IsAppRunning = true;
+        public static event EventHandler<string> DataBaseChangedEvent;
+
         //changed to true when the user is performing adding, updating or deleting operation
         public static bool OperationOngoing = false;
-        //A Datatable collection to hold data temporarly and reduce requests to database
-        public static DataTable Questions = new DataTable();
+        //a list to temporarily contain the change in the database
+        public static List<Question> QuestionsList = new List<Question>();
 
         private QuestionOperations() 
         {
         }
 
-        public static void GetQuestions() 
+        #region class main functions
+        public static OperationResult GetQuestions() 
         {
             try
             {
-                Questions = Database.getQuestionsFromDB();
-            }
-            catch (SqlException ex)
-            {
-                LogError(ex);
-                throw;
-            }
-            catch (InvalidOperationException ex)
-            {
-                LogError(ex);
-                throw;
+                return Database.getQuestionsFromDB(ref QuestionsList);
             }
             catch (Exception ex)
             {
-                LogError(ex);
-                throw;
+                UtilityMethods.LogError(ex);
+                return new OperationResult(ErrorTypes.UnknownError, "An Unknown error occured");
             }
         }
 
-        public static DataRow GetQuestionData(int questionId)
+        public static Question GetQuestionData(int pQuestionId)
         {
-            DataRow questionGeneralData = Questions.Select($"Q_id = {questionId}")[0];
-            return questionGeneralData;
+            Question tQuestionGeneralData = QuestionsList.Find(question => question.Id == pQuestionId);
+            return tQuestionGeneralData;
         }
 
-        public static DataRow GetQuestionSpecificData(int questionId, string questionType)
+        public static OperationResult GetQuestionSpecificData(int pQuestionId, Question pQuestionSpecificData)
         {
             try
             {
-                return Database.getQuestionSpecificDataFromDB(questionId, questionType);
-            }
-            catch (SqlException ex)
-            {
-                LogError(ex);
-                throw;
-            }
-            catch (InvalidOperationException ex)
-            {
-                LogError(ex);
-                throw new InvalidOperationException("problem in connection to database", ex);
+                Question tQuestionData = GetQuestionData(pQuestionId);
+                pQuestionSpecificData = null;
+                OperationResult tQuestionSpecificDataResult = Database.getQuestionSpecificDataFromDB(tQuestionData, ref pQuestionSpecificData);
+                if(tQuestionSpecificDataResult.IsSuccess && pQuestionSpecificData == null)
+                {
+                    return new OperationResult(ErrorTypes.NullValueError, "couldn't get the requested question data");
+                }
+                else
+                {
+                    return tQuestionSpecificDataResult;
+                }
             }
             catch (Exception ex)
             {
-                LogError(ex);
-                throw;
+                UtilityMethods. LogError(ex);
+                return new OperationResult(ErrorTypes.UnknownError, "An Unknown error occured");
             }
         }
 
-        public static void AddQuestion(Question questionData)
+        public static OperationResult AddQuestion(Question pQuestionData)
         {
             try 
             { 
                 //add the question to the database to generate its id and obtain it
-                int questionId = Database.AddQuestionToDB(questionData);
-                string questionType = questionData.GetType().Name.Split("Q")[0];
-                //add question to UI
-                Questions.Rows.Add(questionId, questionData.Text, questionData.Order, questionType);
-            }
-            catch (SqlException ex)
-            {
-                LogError(ex);
-                throw;
-            }
-            catch (InvalidOperationException ex)
-            {
-                LogError(ex);
-                throw new InvalidOperationException("problem in connection to database", ex);
+                OperationResult tAddQuestionResult = Database.AddQuestionToDB(pQuestionData);
+                //on successful question addition to Database add it to the Questions List
+                if (tAddQuestionResult.IsSuccess)
+                {
+                    QuestionsList.Add(pQuestionData);
+                    //notify UI of change
+                    DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Added a new question");
+                }
+               
+                return tAddQuestionResult;
             }
             catch (Exception ex)
             {
-                LogError(ex);
-                throw;
+                UtilityMethods.LogError(ex);
+                return new OperationResult(ErrorTypes.UnknownError, "An Unknown error occured.");
             }
         }
 
-        public static void UpdateQuestion(int questionId, Question updatedQuestionData)
-        {
-            try 
-            { 
-                string originalQuestionType = GetQuestionData(questionId)["Q_type"].ToString();
-                string updatedQuestionType = updatedQuestionData.GetType().Name.Split("Q")[0];
-
-                Database.UpdateQuestionOnDB( questionId, originalQuestionType, updatedQuestionData);
-
-                //update UI
-                Questions.Rows.Remove(Questions.Select($"Q_id = {questionId}")[0]);
-                Questions.Rows.Add(questionId,
-                updatedQuestionData.Text,
-                updatedQuestionData.Order,
-                //decide the type of the question on whether it was changed or not
-                (updatedQuestionType.Equals(originalQuestionType) ? originalQuestionType : updatedQuestionType));
-            }
-            catch (SqlException ex)
-            {
-                LogError(ex);
-                throw;
-            }
-            catch (InvalidOperationException ex)
-            {
-                LogError(ex);
-                throw new InvalidOperationException("problem in connection to database", ex);
-            }
-            catch (Exception ex)
-            {
-                LogError(ex);
-                throw;
-            }
-        }
-
-        public static void DeleteQuestion(DataRow[] selectedQuestions)
+        public static OperationResult UpdateQuestion(Question pUpdatedQuestionData)
         {
             try
             {
-                Database.DeleteQuestionFromDB(selectedQuestions);
-                //delete question from interface (Questions)
-                foreach (DataRow question in selectedQuestions)
+                QuestionType tOriginalQuestionType = GetQuestionData(pUpdatedQuestionData.Id).Type;
+
+                OperationResult tQuestionUpdatedResult = Database.UpdateQuestionOnDB(tOriginalQuestionType, pUpdatedQuestionData);
+                if (tQuestionUpdatedResult.IsSuccess)
                 {
-                    Questions.Rows.Remove(question);
+                    //remove from questions list
+                    QuestionsList.Remove(QuestionsList.Find(question => question.Id == pUpdatedQuestionData.Id));
+                    //add the new Question to the list
+                    QuestionsList.Add(pUpdatedQuestionData);
+                    //notify UI of change
+                    DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Updated question data");
                 }
-            }
-            catch (SqlException ex)
-            {
-                LogError(ex);
-                throw;
-            }
-            catch (InvalidOperationException ex)
-            {
-                LogError(ex);
-                throw new InvalidOperationException("problem in connection to database", ex);
+                return tQuestionUpdatedResult;
+                
             }
             catch (Exception ex)
             {
-                LogError(ex);
-                throw;
+                UtilityMethods.LogError(ex);
+                return new OperationResult(ErrorTypes.UnknownError, "an unknown error occured");
             }
         }
 
-        public static bool SetConnectionString(string defaultConenctionString)
+        public static OperationResult DeleteQuestion(List<Question> pSelectedQuestions)
+        {
+            try
+            {
+                OperationResult tDeleteQuestionsResult =  Database.DeleteQuestionFromDB(pSelectedQuestions);
+
+                if (!tDeleteQuestionsResult.IsSuccess)
+                {
+                    return tDeleteQuestionsResult;
+                }
+                //delete question from List (Questions)
+                foreach (Question tQuestion in pSelectedQuestions)
+                {
+                    QuestionsList.Remove(tQuestion);
+                }
+                //notify UI of change
+                DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Deleted question");
+                return new OperationResult();
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return new OperationResult(ErrorTypes.UnknownError, "An Unkown error occured");
+            }
+        }
+        #endregion
+
+        #region class utilty functions
+        public static OperationResult TestDBConnection()
+        {
+            try 
+            { 
+                return Database.TestDataBaseConnection();
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return new OperationResult(ErrorTypes.UnknownError, "Unkown error occured");
+            }
+
+        }
+
+        public static OperationResult SetConnectionString()
         {
             //try to obtain the connection string from a file
             try {
-                string connectionString = "";
-
+                string tConnectionString = "";
                 //check that file exists
-            string filePath = Directory.GetCurrentDirectory() + "\\connectionSettings.txt";
+                string filePath = Directory.GetCurrentDirectory() + "\\connectionSettings.json";
                 if (!File.Exists(filePath))
                 {
-                    using (FileStream fs = File.Create(filePath));
+                    //create json file and fill it with default stuff
+                    using (FileStream fs = File.Create(filePath)) ;
 
-                    //add the default values to the file
-                    using (StreamWriter writer = new StreamWriter(filePath))
+                    using(StreamWriter writer = new StreamWriter(filePath))
                     {
-                        writer.WriteLine(defaultConenctionString);
+                        writer.Write(JsonSerializer.Serialize(new ConnectionString()));
                     }
+                    //return a value to indicate that a file has been created and to fill it
                 }
                 else
                 { 
                     //read connection string values from file
                     using(StreamReader fileReader = new StreamReader(filePath)) {
-
-                    string[] connectionStringParameters = fileReader.ReadToEnd().Split(",");
-                        foreach (string parameter in connectionStringParameters)
-                        {
-                            string property = parameter.Split(':')[0].Trim();
-                            string value = parameter.Split(':')[1].Trim();
-                            connectionString += $"{property} = {value};\n";
-                        }
+                        string tReadConnectionString = fileReader.ReadToEnd();
+                        tConnectionString = tReadConnectionString.Trim().Substring(1, tReadConnectionString.Length - 2).Replace(":","=").Replace("\"","").Replace(",",";");
                     }
                  }
-                Database.ConnectionString = connectionString;
+
+                Database.ConnectionString = tConnectionString;
+                return new OperationResult();
             }
-            catch(IndexOutOfRangeException ex)//caused by incorrect connection string which in turn causes the exception by trying to access out of range indexes in the splitted string 
+            catch (UnauthorizedAccessException ex)
             {
-                //log error 
-                LogError(ex);
-                throw new ArgumentException("Wrong connection parameters",ex);
+                UtilityMethods.LogError(ex);
+                //handle the unAuthorized access happening
+                return new OperationResult(ErrorTypes.UnAuthorizedAccessException, "You have restrictions on file operations please refer to your system admin");
             }
             catch (Exception ex)
             {
                 //log error
-                LogError(ex);
+                UtilityMethods.LogError(ex);
                 //either the file can't be created or it is a permission issue
-                Database.ConnectionString=defaultConenctionString;
-                return false;
+                return new OperationResult(ErrorTypes.UnknownError, "An Unknown error occured.");
             }
-            return true;
         }
 
-        public static async void CheckDataBaseChange()
+        public static OperationResult StartCheckingDataBaseChange()
+        {
+            try 
+            {
+                Thread checkThread = new Thread(()=>CheckDataBaseChange(Thread.CurrentThread));
+                checkThread.IsBackground = true;
+                checkThread.Start();
+                return new OperationResult();
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                return new OperationResult(ErrorTypes.UnknownError, "Unkown Error occured");
+            }
+        }
+
+        public static void CheckDataBaseChange(Thread pMainThread)
         {
             try
             {
                 //get checksum of the database current version of data
-                long currentChecksum = Database.getChecksum();
-                while (IsAppRunning)
+                long tcurrentChecksum=0;
+                Database.getChecksum(ref tcurrentChecksum);
+                while (pMainThread.IsAlive)
                 {
-                    await Task.Delay(10000);
-                    if (currentChecksum==0)
+                    Thread.Sleep(10000);
+                    if (tcurrentChecksum == 0)
                         continue;
                     if(!OperationOngoing) 
                     {
                         //get checksum again to detect change
-                        long newChecksum = Database.getChecksum();
-                        if (currentChecksum != newChecksum)
-                        {
-                            //data changed
-
-                            currentChecksum = newChecksum;
-                            DataTable updatedQuestions = Database.getQuestionsFromDB();
-                            Questions.Clear();
-                            //fill Questions collection with updated data from db
-                            for (int i = 0; i < updatedQuestions.Rows.Count; i++)
+                        long tNewChecksum = 0;
+                        OperationResult tNewChecksumResult = Database.getChecksum(ref tNewChecksum);
+                        if(tNewChecksumResult.IsSuccess)
+                            if (tcurrentChecksum != tNewChecksum)
                             {
-                                DataRow currentQuestion = updatedQuestions.Rows[i];
-                                Questions.Rows.Add(currentQuestion["Q_id"], currentQuestion["Q_text"], currentQuestion["Q_order"], currentQuestion["Q_type"]);
+                                //data changed
+                               tcurrentChecksum = tNewChecksum;
+                           
+                               QuestionsList.Clear();
+                               Database.getQuestionsFromDB(ref QuestionsList);
+                               //notify UI of database change
+                               DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Database externally changed");
                             }
-                        }
                     }
                 }
             }
-            catch (SqlException ex)
-            {
-                LogError(ex);
-                throw;
-            }
-            catch (InvalidOperationException ex)
-            {
-                LogError(ex);
-                throw;
-            }
             catch (Exception ex)
             {
-                LogError(ex);
-                throw;
+                UtilityMethods.LogError(ex);
             }
         }
 
-        public static void LogError(Exception exceptionData)
-        {
-            try
-            {
-                //collect the error info to log to the file
-                string[] exceptionDetails = [
-                    $"{DateTime.Now.ToUniversalTime()} UTC",
-                    $"Exception: {exceptionData.GetType().Name}",
-                    $"Exception message: {exceptionData.Message}",
-                    $"Stack trace:\n{exceptionData.StackTrace}"];
-                //check that file exists
-                string directoryPath = Directory.GetCurrentDirectory() + "\\errorlogs";
-                if (!Directory.Exists(directoryPath))
-                {
-                    Directory.CreateDirectory(directoryPath);
-                }
-
-                string filePath = directoryPath + "\\errorlog.txt";
-                if (!File.Exists(filePath))
-                {
-                    //create the file if it doesn't exist
-                    FileStream fs = File.Create(filePath);
-                    fs.Close();
-                }
-
-                //add the default values to the file
-                StreamWriter writer = File.AppendText(filePath);
-                writer.WriteLine(string.Join(",\n", exceptionDetails) + "\n\n--------\n");
-                writer.Close();
-            }
-            catch (Exception ex)
-            {
-
-                Console.WriteLine($"Error occurred while logging: {ex.Message}");
-            }
-        }
+        #endregion
     }
 }

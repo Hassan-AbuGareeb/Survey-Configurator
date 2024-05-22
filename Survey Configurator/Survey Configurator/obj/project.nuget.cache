@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wKz5KiV6YCKsPvhQZeyRrwBoxw+8+1JKmbUvUCUIZ7QuEQdpuex/OgiksWZNjEgHqOhmUdGrSQGdM8e0LKRb+g==",
+  "dgSpecHash": "H26gIwkXsnmmJELdmFHNoq1cyROpjsIeBSV91cYuKNyQILAsy4aOAFYw7avW2xlI2R5Zlan3PUYe7MyNaTgd+w==",
   "success": true,
-  "projectFilePath": "D:\\Survey Configurator\\Survey Configurator\\Survey Configurator\\Presentation.csproj",
+  "projectFilePath": "D:\\Survey Configurator\\Survey Configurator\\Survey Configurator\\FormUI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hassan\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\hassan\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
