@@ -6,9 +6,23 @@ namespace Survey_Configurator
 {
     public partial class MainScreen : Form
     {
+
+        /// <summary>
+        /// This is the main class and the main window that will appear first thing when openning the app
+        /// it contains all the event handlers and some class utility functions each will have explaination and summary.
+        /// </summary>
+
+
+
         //the sorting order for the questions items in the list view
         private SortOrder SortingOrder = SortOrder.Ascending;
 
+
+        /// <summary>
+        /// constructor for the main form, it checks whether the connection string can obtained from the
+        /// connectionString.json file and checks if the a connection to the database can be created if
+        /// either fails the application closes immediatly
+        /// </summary>
         public MainScreen()
         {
             try {
@@ -37,6 +51,15 @@ namespace Survey_Configurator
             }
         }
 
+
+        /// <summary>
+        /// This function initializes the ListView control with questions objects 
+        /// and calls a function to start montitoring the database for changes,
+        /// intializes all the event listeners and set the sorting order for the 
+        /// ListView control
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainScreen_Load(object sender, EventArgs e)
         {
             try
@@ -45,10 +68,10 @@ namespace Survey_Configurator
                 QuestionsListViewInit();
 
                 //launch the database change checker to monitor database for any change and reflect it to the UI
-                OperationResult tCheckingDataBaseResult = QuestionOperations.StartCheckingDataBaseChange();
-                if(!tCheckingDataBaseResult.IsSuccess)
+                OperationResult tStartDatabaseCheckResult = QuestionOperations.StartCheckingDataBaseChange();
+                if(!tStartDatabaseCheckResult.IsSuccess)
                 {
-                    MessageBox.Show($"An error occured \n {tCheckingDataBaseResult.ErrorMessage}", tCheckingDataBaseResult.Error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"An error occured \n {tStartDatabaseCheckResult.ErrorMessage}", tStartDatabaseCheckResult.Error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Close();
                 }
                 //listen to any database change event
@@ -68,6 +91,14 @@ namespace Survey_Configurator
             }
         }
 
+        /// <summary>
+        /// instantiate a form to add a new question object to the listView control
+        /// if the database is not connected the form won't show at all,
+        /// the disabling of the edit and delete button is because they
+        /// gets automatically enabled after adding a question which causes problems
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddQuestionButton_Click(object sender, EventArgs e)
         {
             try
@@ -75,6 +106,7 @@ namespace Survey_Configurator
                 //check connection before showing the add question form
                 OperationResult tIsDatabaseConnected = QuestionOperations.TestDBConnection();
                 if(tIsDatabaseConnected.IsSuccess) { 
+
                     AddEditQuestion tAddForm = new AddEditQuestion();
                     DialogResult tQuestionAdded = tAddForm.ShowDialog();
 
@@ -98,6 +130,16 @@ namespace Survey_Configurator
             }
         }
 
+        /// <summary>
+        /// instantiate a form to edit an existing question object 
+        /// have a similar structure to the AddQuestion function but this
+        /// one gets the quesion Id which is stored in the Tag property of the
+        /// selected ListView item which in turn contains the question object info
+        /// the reason for disabling the edit and delete button is the same as the
+        /// previous function
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EditQuestionButton_Click(object sender, EventArgs e)
         {
             try {
@@ -127,12 +169,21 @@ namespace Survey_Configurator
             }
         }
 
+        /// <summary>
+        /// delete a quesiton object, from the List view control and database
+        /// and disables the edit and delete buttons for the same reason in the 
+        /// addQuestion function
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteQuestionButton_Click(object sender, EventArgs e)
         {
             try
             {
                 int tNumberOfSelectedQuestions = QuestionsListView.SelectedItems.Count;
+                
                 DialogResult tDeleteQuestion = MessageBox.Show($"Are you sure you want to delete {(tNumberOfSelectedQuestions > 1 ? "these " : "this ")}question{(tNumberOfSelectedQuestions > 1 ? "s" : "")}?", "Delete question", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                
                 //to prevent any interruption in deleting
                 QuestionOperations.OperationOngoing = true;
                 if (tDeleteQuestion == DialogResult.Yes)
@@ -173,6 +224,14 @@ namespace Survey_Configurator
             }
         }
 
+        /// <summary>
+        /// this functions enables and disables the edit and delete buttons 
+        /// whenever the selected question changes in the ListView control
+        /// as the user can't edit more than one question at a time
+        /// but delete as many questions as the user wants
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void QuestionsListView_SelectedIndexChanged(object sender, EventArgs e)
         {
             try 
@@ -204,6 +263,11 @@ namespace Survey_Configurator
             }
         }
 
+        /// <summary>
+        /// sorts the questions ListView when any column header is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void QuestionsListView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             try
@@ -216,6 +280,7 @@ namespace Survey_Configurator
                 {
                     SortingOrder = SortOrder.Ascending;
                 }
+                //change the itemSorter of the listview based on what column is clicked
                 QuestionsListView.ListViewItemSorter = new ListViewItemComparer(e.Column, SortingOrder);
             }
             catch (Exception ex)
@@ -227,6 +292,12 @@ namespace Survey_Configurator
 
 
         #region menu strip items functions
+        /// <summary>
+        /// these fucntions are concerned with the toolStrip menu
+        /// and changning the font size of the ListView control only
+        /// 
+        /// </summary>
+
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             try 
@@ -288,6 +359,12 @@ namespace Survey_Configurator
 
 
         #region class utility functions
+
+        /// <summary>
+        /// initailaize the List view control with questions objects through the UpdateQuestionFunction
+        /// if the initialization fails for any reason the application will show an error message and 
+        /// close the app
+        /// </summary>
         private void QuestionsListViewInit()
         {
             try 
@@ -296,6 +373,7 @@ namespace Survey_Configurator
                 if (!tGetQuestionsSuccessful.IsSuccess)
                 {
                     MessageBox.Show(tGetQuestionsSuccessful.ErrorMessage, tGetQuestionsSuccessful.Error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Close();
                 }
                 else
                 {
@@ -306,13 +384,19 @@ namespace Survey_Configurator
             {
                 UtilityMethods.LogError(ex);
                 ShowDefaultErrorMessage();
+                Close();
             }
         }
 
+        /// <summary>
+        /// this funciton is responsible for populating the ListView control with 
+        /// Questions Data
+        /// </summary>
         private void UpdateQuestionsList()
         {
             try { 
                 //check if there was any questions selected before updating the view list data on database update
+                //to keep them selected after any change happening to the database
                 int[] tSelectedQuestions = new int[QuestionsListView.SelectedItems.Count];
                 for (int i = 0; i < tSelectedQuestions.Length; i++)
                 {
@@ -324,15 +408,19 @@ namespace Survey_Configurator
                 QuestionsListView.Items.Clear();
                 foreach (Question tQuestion in QuestionOperations.QuestionsList)
                 {
+                    //foreach question add its info to a listViewItem and also to the listViewItem.tag property 
+                    // to be able to access that info later on
                     string[] tCurrentQuestionData = new[] { tQuestion.Order.ToString(), tQuestion.Text, tQuestion.Type.ToString() };
                     ListViewItem tCurrentQuestionItem = new ListViewItem(tCurrentQuestionData);
                     tCurrentQuestionItem.Tag = tQuestion;
 
-                    //check if a question was selected before re populating the data
+                    //selectes the questions if it was selected before the ListView data was changed
+                    //if a question was selected before re populating the data
                     if (tSelectedQuestions.Contains(tQuestion.Id))
                     {
                         tCurrentQuestionItem.Selected = true;
                     }
+                    //add question to the listview control
                     QuestionsListView.Items.Add(tCurrentQuestionItem);
                 }
             }catch(Exception ex) 
@@ -342,6 +430,9 @@ namespace Survey_Configurator
             }
         }
 
+        /// <summary>
+        /// a default message error for any unknown error
+        /// </summary>
         private static void ShowDefaultErrorMessage()
         {
             try
@@ -355,6 +446,12 @@ namespace Survey_Configurator
             }
         }
 
+        /// <summary>
+        /// called on any database change from any source
+        /// and update the viewList control with the updated data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void QuestionOperations_DataBaseChangedEvent(object? sender, string e)
         {
             try
@@ -370,6 +467,12 @@ namespace Survey_Configurator
             }
         }
 
+        /// <summary>
+        /// called when a connection with the data base cannot be
+        /// established for at least 3 times to terminate the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void QuestionOperations_DataBaseNotConnectedEvent(object? sender, EventArgs e)
         {
             try

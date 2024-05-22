@@ -7,15 +7,27 @@ namespace QuestionServices
 {
     public class QuestionOperations
     {
-        public static event EventHandler<string> DataBaseChangedEvent;
+        /// <summary>
+        /// this class is the one responsible for the communication between the UI layer
+        /// and the database, it gets the requested data from the database and applies 
+        /// any kind of logic to it before sending it to the UI layer.
+        /// it's also responsible for doing other operations such as mointoring the database
+        /// for any change and informing the UI layer when it occurs, and more operations mentioned below.
+        /// </summary>
 
+
+
+        //event handler for any change that happens to the database from any source
+        public static event EventHandler<string> DataBaseChangedEvent;
+        //event handler for when the database stops responding
         public static event EventHandler DataBaseNotConnectedEvent;
 
         private const int cDatabaseReconnectMaxAttempts = 3;
 
         //changed to true when the user is performing adding, updating or deleting operation
         public static bool OperationOngoing = false;
-        //a list to temporarily contain the change in the database
+        //a list to temporarily contain the questions data fetched from the database, 
+        //and acts as a data source for the UI to faciltate data transfer and fetching.
         public static List<Question> QuestionsList = new List<Question>();
 
         private QuestionOperations() 
@@ -23,11 +35,16 @@ namespace QuestionServices
         }
 
         #region class main functions
+        /// <summary>
+        /// this function is responsible for fetching the General Question info (Id, text, order, type)
+        /// from the database, it fills the QuestionList field with the obtained questions data.
+        /// </summary>
+        /// <returns>OperationResult to indicate whether the info got fetched from the database or not</returns>
         public static OperationResult GetQuestions() 
         {
             try
             {
-                return Database.getQuestionsFromDB(ref QuestionsList);
+                return Database.GetQuestionsFromDB(ref QuestionsList);
             }
             catch (Exception ex)
             {
@@ -36,6 +53,11 @@ namespace QuestionServices
             }
         }
 
+        /// <summary>
+        /// responsible for fetching the question general data
+        /// </summary>
+        /// <param name="pQuestionId">the Id of the quesiton whose information must be fetched</param>
+        /// <returns>OperationResult to indicate whether the info got fetched from the database or not</returns>
         public static Question GetQuestionData(int pQuestionId)
         {
             try 
@@ -50,12 +72,20 @@ namespace QuestionServices
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pQuestionId">the Id of the quesiton whose information must be fetched</param>
+        /// <param name="pQuestionSpecificData">a reference question object to fill with the full question info</param>
+        /// <returns>OperationResult to indicate whether the info got fetched from the database or not</returns>
         public static OperationResult GetQuestionSpecificData(int pQuestionId, ref Question pQuestionSpecificData)
         {
             try
             {
+                //get the general question data to add to it its specific data
                 Question tQuestionData = GetQuestionData(pQuestionId);
-                OperationResult tQuestionSpecificDataResult = Database.getQuestionSpecificDataFromDB(tQuestionData, ref pQuestionSpecificData);
+                OperationResult tQuestionSpecificDataResult = Database.GetQuestionSpecificDataFromDB(tQuestionData, ref pQuestionSpecificData);
+
                 if(tQuestionSpecificDataResult.IsSuccess && pQuestionSpecificData == null)
                 {
                     return new OperationResult(ErrorTypes.NullValueError, "couldn't get the requested question data");
@@ -72,12 +102,20 @@ namespace QuestionServices
             }
         }
 
+        /// <summary>
+        /// adds a new question object to the database, and the QuestionsList collection
+        /// and notify the UI layer to update its data, note that the question won't
+        /// be added to the QuesitonsList nor will the UI be notified if it isn't
+        /// added to the database
+        /// </summary>
+        /// <param name="pQuestionData">full data of the question</param>
+        /// <returns>OperationResult to indicate whether the question got added to the database or not</returns>
         public static OperationResult AddQuestion(Question pQuestionData)
         {
             try 
             { 
                 //add the question to the database to generate its id and obtain it
-                OperationResult tAddQuestionResult = Database.AddQuestionToDB(pQuestionData);
+                OperationResult tAddQuestionResult = Database.AddQuestionToDB(ref pQuestionData);
                 //on successful question addition to Database add it to the Questions List
                 if (tAddQuestionResult.IsSuccess)
                 {
@@ -95,6 +133,14 @@ namespace QuestionServices
             }
         }
 
+        /// <summary>
+        /// edit the question data, by getting its original type from the QuestionsList 
+        /// collection and sending it along with the updated data to determine whether
+        /// its type was changed or not, and as the previous one, the UI won't be 
+        /// changed unless the database operation was successful.
+        /// </summary>
+        /// <param name="pUpdatedQuestionData">updated question data</param>
+        /// <returns>OperationResult to indicate whether the question data go edited or not</returns>
         public static OperationResult UpdateQuestion(Question pUpdatedQuestionData)
         {
             try
@@ -121,6 +167,12 @@ namespace QuestionServices
             }
         }
 
+        /// <summary>
+        /// delete the selected question/questions from db, notify UI of deletion
+        /// only if it was successfull.
+        /// </summary>
+        /// <param name="pSelectedQuestions"></param>
+        /// <returns>OperationResult to indicate whether the question data go deleted or not</returns>
         public static OperationResult DeleteQuestion(List<Question> pSelectedQuestions)
         {
             try
@@ -149,6 +201,10 @@ namespace QuestionServices
         #endregion
 
         #region class utilty functions
+        /// <summary>
+        /// this function tests whether a connection can be established to the database
+        /// </summary>
+        /// <returns>OperationResult object to indicate the success or failure of the connection to database</returns>
         public static OperationResult TestDBConnection()
         {
             try 
@@ -163,6 +219,12 @@ namespace QuestionServices
 
         }
 
+        /// <summary>
+        /// this function obtains the connection string from the connectionString.json file
+        /// if it exists, otherwise create the file if it doesn't exist and fill it with the 
+        /// default values for the connection string properties.
+        /// </summary>
+        /// <returns>OperationResult object to indicate the success or failure of the connection to database</returns>
         public static OperationResult SetConnectionString()
         {
             //try to obtain the connection string from a file
@@ -186,6 +248,7 @@ namespace QuestionServices
                     //read connection string values from tFilePath
                     using(StreamReader tFileReader = new StreamReader(tFilePath)) {
                         string tReadConnectionString = tFileReader.ReadToEnd();
+                        //re-format the connection string obtained from the file in the correct connection string format
                         tConnectionString = tReadConnectionString.Trim().Substring(1, tReadConnectionString.Length - 2).Replace(":","=").Replace("\"","").Replace(",",";");
                     }
                  }
@@ -208,6 +271,13 @@ namespace QuestionServices
             }
         }
 
+        /// <summary>
+        /// this function create a thread and starts a funciton on it to start monitoring the database
+        /// the thread runs in the background as to not block the main thread it the function on the 
+        /// thread, this function only ever returns a result in case the thread won't start at all
+        /// or an error occured within the funciton called on the thread.
+        /// </summary>
+        /// <returns>OperationResult object to indicate whether the database monitoring is successful or failed</returns>
         public static OperationResult StartCheckingDataBaseChange()
         {
             try 
@@ -224,14 +294,26 @@ namespace QuestionServices
             }
         }
 
+        /// <summary>
+        /// this function keeps checking the database every 10 seconds
+        /// for any change, it uses the database checksum as the base
+        /// for comparison, as it changes and produce a unique value 
+        /// on every change, also the database won't be checked if 
+        /// there's any operation going on (add, edit, delete) as to 
+        /// avoid any errors or conflits in changing data.
+        /// in the case of the database refusing to connect multiple times
+        /// this function raises an event and returns a failed operationResult object.
+        /// </summary>
+        /// <param name="pMainThread"></param>
         public static void CheckDataBaseChange(Thread pMainThread)
         {
             try
             {
-                //get checksum of the database current version of data
-                long tcurrentChecksum=0;
                 int tDatabaseConnectionRetryCount = 0;
-                Database.getChecksum(ref tcurrentChecksum);
+                //get checksum of the database current version of data
+                long tcurrentChecksum =0;
+                Database.GetChecksum(ref tcurrentChecksum);
+                //keep the function running while main thread is running
                 while (pMainThread.IsAlive)
                 {
                     Thread.Sleep(10000);
@@ -241,7 +323,7 @@ namespace QuestionServices
                     {
                         //get checksum again to detect change
                         long tNewChecksum = 0;
-                        OperationResult tNewChecksumResult = Database.getChecksum(ref tNewChecksum);
+                        OperationResult tNewChecksumResult = Database.GetChecksum(ref tNewChecksum);
                         if (tNewChecksumResult.IsSuccess) {
                             if (tcurrentChecksum != tNewChecksum)
                             {
@@ -249,10 +331,17 @@ namespace QuestionServices
                                tcurrentChecksum = tNewChecksum;
                            
                                QuestionsList.Clear();
-                               Database.getQuestionsFromDB(ref QuestionsList);
+                               Database.GetQuestionsFromDB(ref QuestionsList);
                                //notify UI of database change
                                DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Database externally changed");
+
+                                //reset the connection retry counter on successful data change
+                                tDatabaseConnectionRetryCount = 0;
                             }
+                        }
+                        else if(tNewChecksumResult.ErrorMessage == "Database was just created")
+                        {
+                            continue;
                         }
                         else
                         {
