@@ -52,10 +52,10 @@
             DeleteQuestionButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             DeleteQuestionButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             DeleteQuestionButton.Enabled = false;
-            DeleteQuestionButton.Font = new Font("Microsoft Sans Serif", 12F);
-            DeleteQuestionButton.Location = new Point(1117, 673);
+            DeleteQuestionButton.Font = new Font("Microsoft Sans Serif", 9F);
+            DeleteQuestionButton.Location = new Point(1138, 705);
             DeleteQuestionButton.Name = "DeleteQuestionButton";
-            DeleteQuestionButton.Size = new Size(120, 40);
+            DeleteQuestionButton.Size = new Size(100, 36);
             DeleteQuestionButton.TabIndex = 4;
             DeleteQuestionButton.Text = "Delete";
             DeleteQuestionButton.UseVisualStyleBackColor = true;
@@ -66,10 +66,10 @@
             EditQuestionButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             EditQuestionButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             EditQuestionButton.Enabled = false;
-            EditQuestionButton.Font = new Font("Microsoft Sans Serif", 12F);
-            EditQuestionButton.Location = new Point(990, 673);
+            EditQuestionButton.Font = new Font("Microsoft Sans Serif", 9F);
+            EditQuestionButton.Location = new Point(1032, 705);
             EditQuestionButton.Name = "EditQuestionButton";
-            EditQuestionButton.Size = new Size(120, 40);
+            EditQuestionButton.Size = new Size(100, 36);
             EditQuestionButton.TabIndex = 3;
             EditQuestionButton.Text = "Edit";
             EditQuestionButton.UseVisualStyleBackColor = true;
@@ -79,10 +79,10 @@
             // 
             AddQuestionButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             AddQuestionButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            AddQuestionButton.Font = new Font("Microsoft Sans Serif", 12F);
-            AddQuestionButton.Location = new Point(863, 673);
+            AddQuestionButton.Font = new Font("Microsoft Sans Serif", 9F);
+            AddQuestionButton.Location = new Point(926, 705);
             AddQuestionButton.Name = "AddQuestionButton";
-            AddQuestionButton.Size = new Size(120, 40);
+            AddQuestionButton.Size = new Size(100, 36);
             AddQuestionButton.TabIndex = 2;
             AddQuestionButton.Text = "Add";
             AddQuestionButton.UseVisualStyleBackColor = true;
@@ -97,7 +97,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { optionsToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1255, 36);
+            menuStrip1.Size = new Size(1250, 36);
             menuStrip1.TabIndex = 5;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -158,7 +158,7 @@
             QuestionsListView.FullRowSelect = true;
             QuestionsListView.Location = new Point(12, 39);
             QuestionsListView.Name = "QuestionsListView";
-            QuestionsListView.Size = new Size(1226, 628);
+            QuestionsListView.Size = new Size(1226, 658);
             QuestionsListView.Sorting = SortOrder.Ascending;
             QuestionsListView.TabIndex = 6;
             QuestionsListView.UseCompatibleStateImageBehavior = false;

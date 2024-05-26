@@ -51,7 +51,6 @@
             QuestionOrderType = new Label();
             QuestionOrderLabel = new Label();
             QuestionTextLabel = new Label();
-            AddEditLabel = new Label();
             panel1 = new Panel();
             StarsQuestionOptionsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)NumberOfStarsNumeric).BeginInit();
@@ -237,12 +236,12 @@
             // 
             // CancelButton
             // 
-            CancelButton.Anchor = AnchorStyles.Left;
-            CancelButton.Font = new Font("Segoe UI", 12F);
-            CancelButton.Location = new Point(550, 750);
+            CancelButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            CancelButton.Font = new Font("Microsoft Sans Serif", 9F);
+            CancelButton.Location = new Point(580, 698);
             CancelButton.Margin = new Padding(3, 4, 3, 4);
             CancelButton.Name = "CancelButton";
-            CancelButton.Size = new Size(120, 40);
+            CancelButton.Size = new Size(100, 36);
             CancelButton.TabIndex = 9;
             CancelButton.Text = "Cancel";
             CancelButton.UseVisualStyleBackColor = true;
@@ -250,12 +249,12 @@
             // 
             // OperationButton
             // 
-            OperationButton.Anchor = AnchorStyles.Left;
-            OperationButton.Font = new Font("Segoe UI", 12F);
-            OperationButton.Location = new Point(424, 750);
+            OperationButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            OperationButton.Font = new Font("Microsoft Sans Serif", 9F);
+            OperationButton.Location = new Point(474, 698);
             OperationButton.Margin = new Padding(3, 4, 3, 4);
             OperationButton.Name = "OperationButton";
-            OperationButton.Size = new Size(120, 40);
+            OperationButton.Size = new Size(100, 36);
             OperationButton.TabIndex = 8;
             OperationButton.Text = "Add";
             OperationButton.UseVisualStyleBackColor = true;
@@ -266,7 +265,7 @@
             QuestionTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             QuestionTypeComboBox.FormattingEnabled = true;
             QuestionTypeComboBox.Items.AddRange(new object[] { SharedResources.QuestionType.Stars, SharedResources.QuestionType.Smiley, SharedResources.QuestionType.Slider });
-            QuestionTypeComboBox.Location = new Point(31, 393);
+            QuestionTypeComboBox.Location = new Point(31, 340);
             QuestionTypeComboBox.Margin = new Padding(3, 4, 3, 4);
             QuestionTypeComboBox.Name = "QuestionTypeComboBox";
             QuestionTypeComboBox.Size = new Size(235, 28);
@@ -276,7 +275,7 @@
             // QuestionOrderNumeric
             // 
             QuestionOrderNumeric.Anchor = AnchorStyles.Left;
-            QuestionOrderNumeric.Location = new Point(31, 310);
+            QuestionOrderNumeric.Location = new Point(31, 257);
             QuestionOrderNumeric.Margin = new Padding(3, 4, 3, 4);
             QuestionOrderNumeric.Maximum = new decimal(new int[] { 120, 0, 0, 0 });
             QuestionOrderNumeric.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
@@ -288,56 +287,47 @@
             // QuestionTextBox
             // 
             QuestionTextBox.Anchor = AnchorStyles.Left;
-            QuestionTextBox.Location = new Point(31, 116);
+            QuestionTextBox.Location = new Point(68, 48);
             QuestionTextBox.Margin = new Padding(3, 4, 3, 4);
             QuestionTextBox.MaxLength = 350;
             QuestionTextBox.Multiline = true;
             QuestionTextBox.Name = "QuestionTextBox";
-            QuestionTextBox.Size = new Size(559, 140);
+            QuestionTextBox.Size = new Size(492, 66);
             QuestionTextBox.TabIndex = 1;
             // 
             // QuestionOrderType
             // 
             QuestionOrderType.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             QuestionOrderType.AutoSize = true;
-            QuestionOrderType.Font = new Font("Segoe UI", 14.25F);
-            QuestionOrderType.Location = new Point(31, 357);
+            QuestionOrderType.Font = new Font("Segoe UI", 12F);
+            QuestionOrderType.Location = new Point(31, 304);
             QuestionOrderType.Name = "QuestionOrderType";
-            QuestionOrderType.Size = new Size(65, 32);
+            QuestionOrderType.Size = new Size(57, 28);
             QuestionOrderType.TabIndex = 12;
-            QuestionOrderType.Text = "Type";
+            QuestionOrderType.Text = "Type:";
             // 
             // QuestionOrderLabel
             // 
             QuestionOrderLabel.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             QuestionOrderLabel.AutoSize = true;
-            QuestionOrderLabel.Font = new Font("Segoe UI", 14.25F);
-            QuestionOrderLabel.Location = new Point(31, 274);
+            QuestionOrderLabel.Font = new Font("Segoe UI", 12F);
+            QuestionOrderLabel.Location = new Point(31, 221);
             QuestionOrderLabel.Name = "QuestionOrderLabel";
-            QuestionOrderLabel.Size = new Size(75, 32);
+            QuestionOrderLabel.Size = new Size(67, 28);
             QuestionOrderLabel.TabIndex = 11;
-            QuestionOrderLabel.Text = "Order";
+            QuestionOrderLabel.Text = "Order:";
             // 
             // QuestionTextLabel
             // 
             QuestionTextLabel.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             QuestionTextLabel.AutoSize = true;
-            QuestionTextLabel.Font = new Font("Segoe UI", 14.25F);
-            QuestionTextLabel.Location = new Point(31, 80);
+            QuestionTextLabel.Font = new Font("Segoe UI", 12F);
+            QuestionTextLabel.Location = new Point(12, 44);
             QuestionTextLabel.Name = "QuestionTextLabel";
-            QuestionTextLabel.Size = new Size(57, 32);
+            QuestionTextLabel.Size = new Size(50, 28);
             QuestionTextLabel.TabIndex = 10;
-            QuestionTextLabel.Text = "Text";
-            // 
-            // AddEditLabel
-            // 
-            AddEditLabel.AutoSize = true;
-            AddEditLabel.Font = new Font("Segoe UI", 21F);
-            AddEditLabel.Location = new Point(31, 18);
-            AddEditLabel.Name = "AddEditLabel";
-            AddEditLabel.Size = new Size(235, 47);
-            AddEditLabel.TabIndex = 20;
-            AddEditLabel.Text = "Add Question";
+            QuestionTextLabel.Text = "Text:";
+            QuestionTextLabel.Click += QuestionTextLabel_Click;
             // 
             // panel1
             // 
@@ -353,9 +343,8 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(702, 853);
+            ClientSize = new Size(692, 747);
             Controls.Add(panel1);
-            Controls.Add(AddEditLabel);
             Controls.Add(CancelButton);
             Controls.Add(OperationButton);
             Controls.Add(QuestionTypeComboBox);
@@ -366,8 +355,6 @@
             Controls.Add(QuestionTextLabel);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Margin = new Padding(3, 4, 3, 4);
-            MaximumSize = new Size(720, 900);
-            MinimumSize = new Size(720, 900);
             Name = "AddEditQuestion";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Add Edit";
@@ -400,7 +387,6 @@
         private Label QuestionOrderType;
         private Label QuestionOrderLabel;
         private Label QuestionTextLabel;
-        private Label AddEditLabel;
         private Label NumberOfStarsLabel;
         private NumericUpDown NumberOfStarsNumeric;
         private Panel SmileyQuestionOptionsPanel;
