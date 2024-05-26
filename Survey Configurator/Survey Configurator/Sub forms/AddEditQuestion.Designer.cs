@@ -28,73 +28,48 @@
         /// </summary>
         private void InitializeComponent()
         {
-            CancelButton = new Button();
-            OperationButton = new Button();
             QuestionTypeComboBox = new ComboBox();
             QuestionOrderNumeric = new NumericUpDown();
             QuestionTextBox = new TextBox();
             QuestionOrderType = new Label();
             QuestionOrderLabel = new Label();
             QuestionTextLabel = new Label();
+            OperationButton = new Button();
+            CancelButton = new Button();
             ((System.ComponentModel.ISupportInitialize)QuestionOrderNumeric).BeginInit();
             SuspendLayout();
-            // 
-            // CancelButton
-            // 
-            CancelButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            CancelButton.Font = new Font("Microsoft Sans Serif", 9F);
-            CancelButton.Location = new Point(580, 354);
-            CancelButton.Margin = new Padding(3, 4, 3, 4);
-            CancelButton.Name = "CancelButton";
-            CancelButton.Size = new Size(100, 36);
-            CancelButton.TabIndex = 9;
-            CancelButton.Text = "Cancel";
-            CancelButton.UseVisualStyleBackColor = true;
-            CancelButton.Click += CancelButton_Click;
-            // 
-            // OperationButton
-            // 
-            OperationButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            OperationButton.Font = new Font("Microsoft Sans Serif", 9F);
-            OperationButton.Location = new Point(474, 354);
-            OperationButton.Margin = new Padding(3, 4, 3, 4);
-            OperationButton.Name = "OperationButton";
-            OperationButton.Size = new Size(100, 36);
-            OperationButton.TabIndex = 8;
-            OperationButton.Text = "Add";
-            OperationButton.UseVisualStyleBackColor = true;
             // 
             // QuestionTypeComboBox
             // 
             QuestionTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             QuestionTypeComboBox.FormattingEnabled = true;
             QuestionTypeComboBox.Items.AddRange(new object[] { SharedResources.QuestionType.Stars, SharedResources.QuestionType.Smiley, SharedResources.QuestionType.Slider });
-            QuestionTypeComboBox.Location = new Point(188, 129);
+            QuestionTypeComboBox.Location = new Point(191, 129);
             QuestionTypeComboBox.Margin = new Padding(3, 4, 3, 4);
             QuestionTypeComboBox.Name = "QuestionTypeComboBox";
-            QuestionTypeComboBox.Size = new Size(492, 28);
+            QuestionTypeComboBox.Size = new Size(386, 28);
             QuestionTypeComboBox.TabIndex = 3;
             QuestionTypeComboBox.SelectedIndexChanged += QuestionTypeComboBox_SelectedIndexChanged;
             // 
             // QuestionOrderNumeric
             // 
-            QuestionOrderNumeric.Location = new Point(188, 83);
+            QuestionOrderNumeric.Location = new Point(191, 83);
             QuestionOrderNumeric.Margin = new Padding(3, 4, 3, 4);
             QuestionOrderNumeric.Maximum = new decimal(new int[] { 120, 0, 0, 0 });
             QuestionOrderNumeric.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             QuestionOrderNumeric.Name = "QuestionOrderNumeric";
-            QuestionOrderNumeric.Size = new Size(492, 27);
+            QuestionOrderNumeric.Size = new Size(386, 27);
             QuestionOrderNumeric.TabIndex = 2;
             QuestionOrderNumeric.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // QuestionTextBox
             // 
-            QuestionTextBox.Location = new Point(188, 13);
+            QuestionTextBox.Location = new Point(191, 13);
             QuestionTextBox.Margin = new Padding(3, 4, 3, 4);
             QuestionTextBox.MaxLength = 350;
             QuestionTextBox.Multiline = true;
             QuestionTextBox.Name = "QuestionTextBox";
-            QuestionTextBox.Size = new Size(492, 51);
+            QuestionTextBox.Size = new Size(386, 51);
             QuestionTextBox.TabIndex = 1;
             // 
             // QuestionOrderType
@@ -127,11 +102,36 @@
             QuestionTextLabel.TabIndex = 10;
             QuestionTextLabel.Text = "Text:";
             // 
+            // OperationButton
+            // 
+            OperationButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            OperationButton.Font = new Font("Microsoft Sans Serif", 9F);
+            OperationButton.Location = new Point(371, 360);
+            OperationButton.Margin = new Padding(3, 4, 3, 4);
+            OperationButton.Name = "OperationButton";
+            OperationButton.Size = new Size(100, 30);
+            OperationButton.TabIndex = 8;
+            OperationButton.Text = "Add";
+            OperationButton.UseVisualStyleBackColor = true;
+            // 
+            // CancelButton
+            // 
+            CancelButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            CancelButton.Font = new Font("Microsoft Sans Serif", 9F);
+            CancelButton.Location = new Point(477, 360);
+            CancelButton.Margin = new Padding(3, 4, 3, 4);
+            CancelButton.Name = "CancelButton";
+            CancelButton.Size = new Size(100, 30);
+            CancelButton.TabIndex = 9;
+            CancelButton.Text = "Cancel";
+            CancelButton.UseVisualStyleBackColor = true;
+            CancelButton.Click += CancelButton_Click;
+            // 
             // AddEditQuestion
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(692, 403);
+            ClientSize = new Size(589, 403);
             Controls.Add(CancelButton);
             Controls.Add(OperationButton);
             Controls.Add(QuestionTypeComboBox);
@@ -153,13 +153,13 @@
         }
 
         #endregion
-        private Button CancelButton;
-        private Button OperationButton;
         private ComboBox QuestionTypeComboBox;
         private NumericUpDown QuestionOrderNumeric;
         private TextBox QuestionTextBox;
         private Label QuestionOrderType;
         private Label QuestionOrderLabel;
         private Label QuestionTextLabel;
+        private Button OperationButton;
+        private Button CancelButton;
     }
 }

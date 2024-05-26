@@ -36,12 +36,12 @@
             // NumberOfSmileysNumeric
             // 
             NumberOfSmileysNumeric.Anchor = AnchorStyles.Top;
-            NumberOfSmileysNumeric.Location = new Point(178, 0);
+            NumberOfSmileysNumeric.Location = new Point(180, 0);
             NumberOfSmileysNumeric.Margin = new Padding(3, 4, 3, 4);
             NumberOfSmileysNumeric.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
             NumberOfSmileysNumeric.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             NumberOfSmileysNumeric.Name = "NumberOfSmileysNumeric";
-            NumberOfSmileysNumeric.Size = new Size(492, 27);
+            NumberOfSmileysNumeric.Size = new Size(386, 27);
             NumberOfSmileysNumeric.TabIndex = 22;
             NumberOfSmileysNumeric.Value = new decimal(new int[] { 2, 0, 0, 0 });
             // 
@@ -63,7 +63,7 @@
             Controls.Add(NumberOfSmileysNumeric);
             Controls.Add(NumberOfSmileysLabel);
             Name = "SmileyQuestionOptions";
-            Size = new Size(670, 28);
+            Size = new Size(670, 35);
             Load += SmileyQuestionOptions_Load;
             ((System.ComponentModel.ISupportInitialize)NumberOfSmileysNumeric).EndInit();
             ResumeLayout(false);

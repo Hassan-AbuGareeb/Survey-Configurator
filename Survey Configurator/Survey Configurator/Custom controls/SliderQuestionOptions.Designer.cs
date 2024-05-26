@@ -42,19 +42,19 @@
             // 
             // SliderEndValueCaptionText
             // 
-            SliderEndValueCaptionText.Location = new Point(175, 135);
+            SliderEndValueCaptionText.Location = new Point(182, 135);
             SliderEndValueCaptionText.MaxLength = 40;
             SliderEndValueCaptionText.Name = "SliderEndValueCaptionText";
-            SliderEndValueCaptionText.Size = new Size(492, 27);
+            SliderEndValueCaptionText.Size = new Size(386, 27);
             SliderEndValueCaptionText.TabIndex = 35;
             SliderEndValueCaptionText.Text = "Max";
             // 
             // SliderStartValueCaptionText
             // 
-            SliderStartValueCaptionText.Location = new Point(175, 90);
+            SliderStartValueCaptionText.Location = new Point(182, 90);
             SliderStartValueCaptionText.MaxLength = 40;
             SliderStartValueCaptionText.Name = "SliderStartValueCaptionText";
-            SliderStartValueCaptionText.Size = new Size(492, 27);
+            SliderStartValueCaptionText.Size = new Size(386, 27);
             SliderStartValueCaptionText.TabIndex = 34;
             SliderStartValueCaptionText.Text = "Min";
             // 
@@ -80,11 +80,11 @@
             // 
             // SliderEndValueNumeric
             // 
-            SliderEndValueNumeric.Location = new Point(175, 46);
+            SliderEndValueNumeric.Location = new Point(182, 46);
             SliderEndValueNumeric.Margin = new Padding(3, 4, 3, 4);
             SliderEndValueNumeric.Minimum = new decimal(new int[] { 50, 0, 0, 0 });
             SliderEndValueNumeric.Name = "SliderEndValueNumeric";
-            SliderEndValueNumeric.Size = new Size(492, 27);
+            SliderEndValueNumeric.Size = new Size(386, 27);
             SliderEndValueNumeric.TabIndex = 30;
             SliderEndValueNumeric.Value = new decimal(new int[] { 100, 0, 0, 0 });
             // 
@@ -111,11 +111,11 @@
             // SliderStartValueNumeric
             // 
             SliderStartValueNumeric.Anchor = AnchorStyles.Top;
-            SliderStartValueNumeric.Location = new Point(175, 2);
+            SliderStartValueNumeric.Location = new Point(182, 2);
             SliderStartValueNumeric.Margin = new Padding(3, 4, 3, 4);
             SliderStartValueNumeric.Maximum = new decimal(new int[] { 50, 0, 0, 0 });
             SliderStartValueNumeric.Name = "SliderStartValueNumeric";
-            SliderStartValueNumeric.Size = new Size(492, 27);
+            SliderStartValueNumeric.Size = new Size(386, 27);
             SliderStartValueNumeric.TabIndex = 36;
             // 
             // SliderQuestionOptions

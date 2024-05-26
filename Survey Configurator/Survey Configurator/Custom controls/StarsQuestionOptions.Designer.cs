@@ -36,12 +36,12 @@
             // NumberOfStarsNumeric
             // 
             NumberOfStarsNumeric.Anchor = AnchorStyles.Top;
-            NumberOfStarsNumeric.Location = new Point(176, 0);
+            NumberOfStarsNumeric.Location = new Point(181, 0);
             NumberOfStarsNumeric.Margin = new Padding(3, 4, 3, 4);
             NumberOfStarsNumeric.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             NumberOfStarsNumeric.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             NumberOfStarsNumeric.Name = "NumberOfStarsNumeric";
-            NumberOfStarsNumeric.Size = new Size(492, 27);
+            NumberOfStarsNumeric.Size = new Size(386, 27);
             NumberOfStarsNumeric.TabIndex = 24;
             NumberOfStarsNumeric.Value = new decimal(new int[] { 5, 0, 0, 0 });
             // 
