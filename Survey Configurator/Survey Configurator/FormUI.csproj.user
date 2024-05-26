@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Compile Update="Custom controls\SliderQuestionOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Custom controls\SmileyQuestionOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Custom controls\StarsQuestionOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="MainScreen.cs">
       <SubType>Form</SubType>
     </Compile>
