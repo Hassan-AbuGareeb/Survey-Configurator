@@ -2,6 +2,7 @@
 using QuestionServices;
 using SharedResources;
 using SharedResources.models;
+
 namespace Survey_Configurator
 {
     public partial class MainScreen : Form
@@ -11,7 +12,6 @@ namespace Survey_Configurator
         /// This is the main class and the main window that will appear first thing when openning the app
         /// it contains all the event handlers and some class utility functions each will have explaination and summary.
         /// </summary>
-
 
 
         //the sorting order for the questions items in the list view
@@ -30,14 +30,14 @@ namespace Survey_Configurator
                 OperationResult tConnectionStringCreated = QuestionOperations.SetConnectionString();
                 if(!tConnectionStringCreated.IsSuccess)
                 {
-                    MessageBox.Show(tConnectionStringCreated.ErrorMessage, "Database connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.SqlError], $"{ErrorTypes.SqlError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Close();
                 }
                 //check database connectivity
                 OperationResult tDatabaseConnected = QuestionOperations.TestDBConnection();
                 if(!tDatabaseConnected.IsSuccess )
                 {
-                    MessageBox.Show(tDatabaseConnected.ErrorMessage, "Database connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.SqlError], $"{ErrorTypes.SqlError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Close();
                 }
 
@@ -71,7 +71,7 @@ namespace Survey_Configurator
                 OperationResult tStartDatabaseCheckResult = QuestionOperations.StartCheckingDataBaseChange();
                 if(!tStartDatabaseCheckResult.IsSuccess)
                 {
-                    MessageBox.Show($"An error occured \n {tStartDatabaseCheckResult.ErrorMessage}", tStartDatabaseCheckResult.Error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.SqlError], $"{ErrorTypes.SqlError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Close();
                 }
                 //listen to any database change event
@@ -86,7 +86,7 @@ namespace Survey_Configurator
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show($"An error occured \n {ex.Message}", ex.GetType().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
             }
         }
@@ -119,7 +119,7 @@ namespace Survey_Configurator
                 }
                 else
                 {
-                    MessageBox.Show("Database connection error, refer to your system admin", "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.SqlError], $"{ErrorTypes.SqlError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
@@ -159,7 +159,7 @@ namespace Survey_Configurator
                 }
                 else
                 {
-                    MessageBox.Show("Database connection error, refer to your system admin", "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.SqlError], $"{ErrorTypes.SqlError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch(Exception ex)
@@ -216,7 +216,7 @@ namespace Survey_Configurator
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("Operation Failed, please try again", "Operation failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.OperationError], $"{ErrorTypes.OperationError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -290,6 +290,46 @@ namespace Survey_Configurator
             }
         }
 
+        /// <summary>
+        /// called on any database change from any source
+        /// and update the viewList control with the updated data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void QuestionOperations_DataBaseChangedEvent(object? sender, EventArgs e)
+        {
+            try
+            {
+                UpdateQuestionsList();
+                EditQuestionButton.Enabled = false;
+                DeleteQuestionButton.Enabled = false;
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
+        }
+
+        /// <summary>
+        /// called when a connection with the data base cannot be
+        /// established for at least 3 times to terminate the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void QuestionOperations_DataBaseNotConnectedEvent(object? sender, EventArgs e)
+        {
+            try
+            {
+                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.SqlError], $"{ErrorTypes.SqlError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
+        }
 
         #region menu strip items functions
         /// <summary>
@@ -426,7 +466,7 @@ namespace Survey_Configurator
             }catch(Exception ex) 
             { 
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An error occured while updating the questions list, please restart the app", "Data update error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.DataFetchingError], $"{ErrorTypes.DataFetchingError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -437,7 +477,7 @@ namespace Survey_Configurator
         {
             try
             {
-                MessageBox.Show("An Unknown error occured", "Unkown Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
@@ -446,46 +486,6 @@ namespace Survey_Configurator
             }
         }
 
-        /// <summary>
-        /// called on any database change from any source
-        /// and update the viewList control with the updated data
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void QuestionOperations_DataBaseChangedEvent(object? sender, string e)
-        {
-            try
-            {
-                UpdateQuestionsList();
-                EditQuestionButton.Enabled = false;
-                DeleteQuestionButton.Enabled = false;
-            }
-            catch (Exception ex)
-            {
-                UtilityMethods.LogError(ex);
-                ShowDefaultErrorMessage();
-            }
-        }
-
-        /// <summary>
-        /// called when a connection with the data base cannot be
-        /// established for at least 3 times to terminate the application
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void QuestionOperations_DataBaseNotConnectedEvent(object? sender, EventArgs e)
-        {
-            try
-            {
-                MessageBox.Show("Database refusing to connect, refer to your system admin", "connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Close();
-            }
-            catch(Exception ex)
-            {
-                UtilityMethods.LogError(ex);
-                ShowDefaultErrorMessage();
-            }
-        }
         #endregion
     }
 }

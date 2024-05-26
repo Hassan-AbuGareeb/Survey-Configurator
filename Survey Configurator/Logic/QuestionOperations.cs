@@ -18,7 +18,7 @@ namespace QuestionServices
 
             //event handlers
         //event handler for any change that happens to the database from any source
-        public static event EventHandler<string> DataBaseChangedEvent;
+        public static event EventHandler DataBaseChangedEvent;
         //event handler for when the database stops responding
         public static event EventHandler DataBaseNotConnectedEvent;
 
@@ -52,7 +52,7 @@ namespace QuestionServices
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, "An Unknown error occured");
+                return new OperationResult(ErrorTypes.UnknownError, SharedData.ErrorMessages[ErrorTypes.UnknownError]);
             }
         }
 
@@ -91,7 +91,7 @@ namespace QuestionServices
 
                 if(tQuestionSpecificDataResult.IsSuccess && pQuestionSpecificData == null)
                 {
-                    return new OperationResult(ErrorTypes.NullValueError, "couldn't get the requested question data");
+                    return new OperationResult(ErrorTypes.NullValueError, SharedData.ErrorMessages[ErrorTypes.NullValueError]);
                 }
                 else
                 {
@@ -101,7 +101,7 @@ namespace QuestionServices
             catch (Exception ex)
             {
                 UtilityMethods. LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, "An Unknown error occured");
+                return new OperationResult(ErrorTypes.UnknownError, SharedData.ErrorMessages[ErrorTypes.UnknownError]);
             }
         }
 
@@ -124,7 +124,7 @@ namespace QuestionServices
                 {
                     QuestionsList.Add(pQuestionData);
                     //notify UI of change
-                    DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Added a new question");
+                    DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
                 }
                
                 return tAddQuestionResult;
@@ -132,7 +132,7 @@ namespace QuestionServices
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, "An Unknown error occured.");
+                return new OperationResult(ErrorTypes.UnknownError, SharedData.ErrorMessages[ErrorTypes.UnknownError]);
             }
         }
 
@@ -158,7 +158,7 @@ namespace QuestionServices
                     //add the new Question to the list
                     QuestionsList.Add(pUpdatedQuestionData);
                     //notify UI of change
-                    DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Updated question data");
+                    DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
                 }
                 return tQuestionUpdatedResult;
                 
@@ -166,7 +166,7 @@ namespace QuestionServices
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, "an unknown error occured");
+                return new OperationResult(ErrorTypes.UnknownError, SharedData.ErrorMessages[ErrorTypes.UnknownError]);
             }
         }
 
@@ -192,13 +192,13 @@ namespace QuestionServices
                     QuestionsList.Remove(tQuestion);
                 }
                 //notify UI of change
-                DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Deleted question");
+                DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
                 return new OperationResult();
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, "An Unkown error occured");
+                return new OperationResult(ErrorTypes.UnknownError, SharedData.ErrorMessages[ErrorTypes.UnknownError]);
             }
         }
         #endregion
@@ -217,7 +217,7 @@ namespace QuestionServices
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, "Unkown error occured");
+                return new OperationResult(ErrorTypes.UnknownError, SharedData.ErrorMessages[ErrorTypes.UnknownError]);
             }
 
         }
@@ -266,14 +266,14 @@ namespace QuestionServices
             {
                 UtilityMethods.LogError(ex);
                 //handle the unAuthorized access happening
-                return new OperationResult(ErrorTypes.UnAuthorizedAccessException, "You have restrictions on file operations please refer to your system admin");
+                return new OperationResult(ErrorTypes.UnAuthorizedAccessError, SharedData.ErrorMessages[ErrorTypes.UnAuthorizedAccessError]);
             }
             catch (Exception ex)
             {
                 //log error
                 UtilityMethods.LogError(ex);
                 //either the file can't be created or it is a permission issue
-                return new OperationResult(ErrorTypes.UnknownError, "An Unknown error occured.");
+                return new OperationResult(ErrorTypes.UnknownError, SharedData.ErrorMessages[ErrorTypes.UnknownError]);
             }
         }
 
@@ -296,7 +296,7 @@ namespace QuestionServices
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, "Unkown Error occured");
+                return new OperationResult(ErrorTypes.UnknownError, SharedData.ErrorMessages[ErrorTypes.UnknownError]);
             }
         }
 
@@ -339,7 +339,7 @@ namespace QuestionServices
                                QuestionsList.Clear();
                                Database.GetQuestionsFromDB(ref QuestionsList);
                                //notify UI of database change
-                               DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), "Database externally changed");
+                               DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
 
                                 //reset the connection retry counter on successful data change
                                 tDatabaseConnectionRetryCount = 0;

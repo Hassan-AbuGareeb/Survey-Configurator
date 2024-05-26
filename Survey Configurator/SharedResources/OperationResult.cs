@@ -2,14 +2,7 @@
 
 namespace SharedResources
 {
-    public enum ErrorTypes
-    {
-        SqlError,
-        IOError,
-        NullValueError,
-        UnAuthorizedAccessException,
-        UnknownError
-    }
+
     public class OperationResult
     {
         /// <summary>

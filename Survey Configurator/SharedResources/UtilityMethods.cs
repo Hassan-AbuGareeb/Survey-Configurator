@@ -10,6 +10,8 @@ namespace SharedResources
         /// Utility methods used across the application layers
         /// </summary>
 
+        //constants
+        private const string cErrorLogFileName = "\\errorlogs";
 
         /// <summary>
         /// Logs any exception in a ErrorLog text file in the application folder
@@ -26,14 +28,14 @@ namespace SharedResources
                     $"Exception message: {pExceptionData.Message}",
                     $"Stack trace:\n{pExceptionData.StackTrace}"];
                 //check that file exists
-                string tDirectoryPath = Directory.GetCurrentDirectory() + "\\errorlogs";
+                string tDirectoryPath = Directory.GetCurrentDirectory() + cErrorLogFileName;
                 if (!Directory.Exists(tDirectoryPath))
                 {
                     Directory.CreateDirectory(tDirectoryPath);
                 }
 
                 //create the file if it doesn't exist
-                string tFilePath = tDirectoryPath + "\\errorlog.txt";
+                string tFilePath = tDirectoryPath + cErrorLogFileName;
                 if (!File.Exists(tFilePath))
                 {
                     FileStream fs = File.Create(tFilePath);
@@ -47,7 +49,7 @@ namespace SharedResources
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error occurred while logging: {ex.Message}");
+                Console.WriteLine(SharedData.ErrorMessages[ErrorTypes.LoggingError] + $": {ex.Message}");
             }
         }
     }

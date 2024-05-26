@@ -14,6 +14,7 @@ namespace Survey_Configurator.Sub_forms
         /// to be edited
         /// </summary>
 
+
         //the id of the question to be edited
         private static int QuestionId;
         //current operation add/edit
@@ -23,6 +24,9 @@ namespace Survey_Configurator.Sub_forms
         private StarsQuestionOptions StarsQuestionOptionsPanel;
         private SmileyQuestionOptions SmileyQuestionOptionsPanel;
         private SliderQuestionOptions SliderQuestionOptionsPanel;
+        //location of the question options panel
+        private Point QuestionOptionsPanelLocation = new Point(12, 175);
+
 
         /// <summary>
         /// add operation constructor, assign the AddButton click function
@@ -41,7 +45,7 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An UnExpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -64,8 +68,7 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An UnExpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -120,7 +123,7 @@ namespace Survey_Configurator.Sub_forms
                     }
                     else
                     {
-                        MessageBox.Show("An Unkown error occure", "Unkown error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Close();
                     }
                 }
@@ -183,7 +186,7 @@ namespace Survey_Configurator.Sub_forms
                     }
                     if (tQuestionAddedResult != null && !tQuestionAddedResult.IsSuccess)
                     {
-                        MessageBox.Show("An error occured while adding the question", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     //close form
                     Close();
@@ -265,7 +268,7 @@ namespace Survey_Configurator.Sub_forms
                     }
                     if (tQuestionUpdatedResult != null && !tQuestionUpdatedResult.IsSuccess)
                     {
-                        MessageBox.Show("An error occured while adding the question", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     Close();
                 }
@@ -315,7 +318,7 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An Unexpected error occured", "Error");
+                MessageBox.Show("SharedData.ErrorMessages[ErrorTypes.UnknownError]", $"{ ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -345,7 +348,7 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("Question type error", "Type error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -364,7 +367,7 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An unexpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -381,13 +384,13 @@ namespace Survey_Configurator.Sub_forms
             {
                 //StarsQuestionOptionsPanel.Show();
                 StarsQuestionOptionsPanel = new StarsQuestionOptions();
-                StarsQuestionOptionsPanel.Location = new Point(12, 175);
+                StarsQuestionOptionsPanel.Location = QuestionOptionsPanelLocation;
                 Controls.Add(StarsQuestionOptionsPanel);
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An unexpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void AddSmileysOptions()
@@ -395,13 +398,13 @@ namespace Survey_Configurator.Sub_forms
             try
             {
                 SmileyQuestionOptionsPanel= new SmileyQuestionOptions();
-                SmileyQuestionOptionsPanel.Location = new Point(12, 175);
+                SmileyQuestionOptionsPanel.Location = QuestionOptionsPanelLocation;
                 Controls.Add(SmileyQuestionOptionsPanel);
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An unexpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void AddSliderOptions()
@@ -409,13 +412,13 @@ namespace Survey_Configurator.Sub_forms
             try
             {
                 SliderQuestionOptionsPanel= new SliderQuestionOptions();
-                SliderQuestionOptionsPanel.Location = new Point(12, 175);
+                SliderQuestionOptionsPanel.Location = QuestionOptionsPanelLocation;
                 Controls.Add(SliderQuestionOptionsPanel);
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An unexpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void HideQuesitonOptionsPanel()
@@ -429,7 +432,7 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An unexpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
