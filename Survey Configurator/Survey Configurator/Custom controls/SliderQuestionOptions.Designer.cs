@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SliderQuestionOptions));
             SliderEndValueCaptionText = new TextBox();
             SliderStartValueCaptionText = new TextBox();
             SliderEndValueCaptionLabel = new Label();
@@ -42,85 +43,50 @@
             // 
             // SliderEndValueCaptionText
             // 
-            SliderEndValueCaptionText.Location = new Point(182, 135);
-            SliderEndValueCaptionText.MaxLength = 40;
+            resources.ApplyResources(SliderEndValueCaptionText, "SliderEndValueCaptionText");
             SliderEndValueCaptionText.Name = "SliderEndValueCaptionText";
-            SliderEndValueCaptionText.Size = new Size(386, 27);
-            SliderEndValueCaptionText.TabIndex = 35;
-            SliderEndValueCaptionText.Text = "Max";
             // 
             // SliderStartValueCaptionText
             // 
-            SliderStartValueCaptionText.Location = new Point(182, 90);
-            SliderStartValueCaptionText.MaxLength = 40;
+            resources.ApplyResources(SliderStartValueCaptionText, "SliderStartValueCaptionText");
             SliderStartValueCaptionText.Name = "SliderStartValueCaptionText";
-            SliderStartValueCaptionText.Size = new Size(386, 27);
-            SliderStartValueCaptionText.TabIndex = 34;
-            SliderStartValueCaptionText.Text = "Min";
             // 
             // SliderEndValueCaptionLabel
             // 
-            SliderEndValueCaptionLabel.AutoSize = true;
-            SliderEndValueCaptionLabel.Font = new Font("Segoe UI", 9F);
-            SliderEndValueCaptionLabel.Location = new Point(3, 142);
+            resources.ApplyResources(SliderEndValueCaptionLabel, "SliderEndValueCaptionLabel");
             SliderEndValueCaptionLabel.Name = "SliderEndValueCaptionLabel";
-            SliderEndValueCaptionLabel.Size = new Size(130, 20);
-            SliderEndValueCaptionLabel.TabIndex = 33;
-            SliderEndValueCaptionLabel.Text = "End value caption:";
             // 
             // SliderStartValueCaptionLabel
             // 
-            SliderStartValueCaptionLabel.AutoSize = true;
-            SliderStartValueCaptionLabel.Font = new Font("Segoe UI", 9F);
-            SliderStartValueCaptionLabel.Location = new Point(3, 93);
+            resources.ApplyResources(SliderStartValueCaptionLabel, "SliderStartValueCaptionLabel");
             SliderStartValueCaptionLabel.Name = "SliderStartValueCaptionLabel";
-            SliderStartValueCaptionLabel.Size = new Size(136, 20);
-            SliderStartValueCaptionLabel.TabIndex = 32;
-            SliderStartValueCaptionLabel.Text = "Start value caption:";
             // 
             // SliderEndValueNumeric
             // 
-            SliderEndValueNumeric.Location = new Point(182, 46);
-            SliderEndValueNumeric.Margin = new Padding(3, 4, 3, 4);
+            resources.ApplyResources(SliderEndValueNumeric, "SliderEndValueNumeric");
             SliderEndValueNumeric.Minimum = new decimal(new int[] { 50, 0, 0, 0 });
             SliderEndValueNumeric.Name = "SliderEndValueNumeric";
-            SliderEndValueNumeric.Size = new Size(386, 27);
-            SliderEndValueNumeric.TabIndex = 30;
             SliderEndValueNumeric.Value = new decimal(new int[] { 100, 0, 0, 0 });
             // 
             // SliderEndValueLabel
             // 
-            SliderEndValueLabel.AutoSize = true;
-            SliderEndValueLabel.Font = new Font("Segoe UI", 9F);
-            SliderEndValueLabel.Location = new Point(3, 48);
+            resources.ApplyResources(SliderEndValueLabel, "SliderEndValueLabel");
             SliderEndValueLabel.Name = "SliderEndValueLabel";
-            SliderEndValueLabel.Size = new Size(76, 20);
-            SliderEndValueLabel.TabIndex = 31;
-            SliderEndValueLabel.Text = "End value:";
             // 
             // SliderStartValueLabel
             // 
-            SliderStartValueLabel.AutoSize = true;
-            SliderStartValueLabel.Font = new Font("Segoe UI", 9F);
-            SliderStartValueLabel.Location = new Point(3, 2);
+            resources.ApplyResources(SliderStartValueLabel, "SliderStartValueLabel");
             SliderStartValueLabel.Name = "SliderStartValueLabel";
-            SliderStartValueLabel.Size = new Size(82, 20);
-            SliderStartValueLabel.TabIndex = 29;
-            SliderStartValueLabel.Text = "Start value:";
             // 
             // SliderStartValueNumeric
             // 
-            SliderStartValueNumeric.Anchor = AnchorStyles.Top;
-            SliderStartValueNumeric.Location = new Point(182, 2);
-            SliderStartValueNumeric.Margin = new Padding(3, 4, 3, 4);
+            resources.ApplyResources(SliderStartValueNumeric, "SliderStartValueNumeric");
             SliderStartValueNumeric.Maximum = new decimal(new int[] { 50, 0, 0, 0 });
             SliderStartValueNumeric.Name = "SliderStartValueNumeric";
-            SliderStartValueNumeric.Size = new Size(386, 27);
-            SliderStartValueNumeric.TabIndex = 36;
             // 
             // SliderQuestionOptions
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(SliderStartValueNumeric);
             Controls.Add(SliderEndValueCaptionText);
@@ -131,7 +97,6 @@
             Controls.Add(SliderEndValueLabel);
             Controls.Add(SliderStartValueLabel);
             Name = "SliderQuestionOptions";
-            Size = new Size(679, 188);
             Load += SliderQuestionOptions_Load;
             ((System.ComponentModel.ISupportInitialize)SliderEndValueNumeric).EndInit();
             ((System.ComponentModel.ISupportInitialize)SliderStartValueNumeric).EndInit();

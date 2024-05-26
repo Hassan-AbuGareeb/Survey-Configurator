@@ -11,7 +11,7 @@ namespace SharedResources
         /// </summary>
 
         //constants
-        private const string cErrorLogFileName = "\\errorlogs";
+        private const string cErrorLogFileName = "\\errorlogs.txt";
 
         /// <summary>
         /// Logs any exception in a ErrorLog text file in the application folder

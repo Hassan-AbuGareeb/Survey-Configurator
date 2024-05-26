@@ -2,6 +2,7 @@
 using QuestionServices;
 using SharedResources;
 using SharedResources.models;
+using System.Diagnostics;
 
 namespace Survey_Configurator
 {
@@ -19,13 +20,18 @@ namespace Survey_Configurator
 
 
         /// <summary>
-        /// constructor for the main form, it checks whether the connection string can obtained from the
-        /// connectionString.json file and checks if the a connection to the database can be created if
-        /// either fails the application closes immediatly
+        /// constructor for the main form,first it sets the language of the app to what last saved in the app.config file,
+        /// then it checks whether the connection string can obtained from the
+        /// connectionString.json file and checks if the a connection to the database 
+        /// can be created if either fails the application closes immediatly
         /// </summary>
         public MainScreen()
         {
             try {
+
+                Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo("ar");
+                Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo("ar");
+
                 //check if connection string is successfully obtained 
                 OperationResult tConnectionStringCreated = QuestionOperations.SetConnectionString();
                 if(!tConnectionStringCreated.IsSuccess)
@@ -64,6 +70,8 @@ namespace Survey_Configurator
         {
             try
             {
+
+
                 //initialize the list view with questions data
                 QuestionsListViewInit();
 
@@ -82,6 +90,7 @@ namespace Survey_Configurator
                 
                 //sort the questions list alphabetically on first load
                 QuestionsListView.ListViewItemSorter = new ListViewItemComparer(1, SortingOrder);
+                Debug.Write(Thread.CurrentThread.CurrentUICulture.ToString());
             }
             catch (Exception ex)
             {
