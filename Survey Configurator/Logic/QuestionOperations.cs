@@ -16,14 +16,17 @@ namespace QuestionServices
         /// </summary>
 
 
-
+            //event handlers
         //event handler for any change that happens to the database from any source
         public static event EventHandler<string> DataBaseChangedEvent;
         //event handler for when the database stops responding
         public static event EventHandler DataBaseNotConnectedEvent;
 
+            //contsatns
         private const int cDatabaseReconnectMaxAttempts = 3;
+        private const string cConnectionStringFileName = "\\connectionSettings.json";
 
+            //class variables
         //changed to true when the user is performing adding, updating or deleting operation
         public static bool OperationOngoing = false;
         //a list to temporarily contain the questions data fetched from the database, 
@@ -228,30 +231,33 @@ namespace QuestionServices
         public static OperationResult SetConnectionString()
         {
             //try to obtain the connection string from a file
-            try {
+            try
+            {
                 string tConnectionString = "";
                 //check that file exists
-                string tFilePath = Directory.GetCurrentDirectory() + "\\connectionSettings.json";
+                string tFilePath = Directory.GetCurrentDirectory() + cConnectionStringFileName;
                 if (!File.Exists(tFilePath))
                 {
                     //create json file and fill it with default stuff
                     using (FileStream tFs = File.Create(tFilePath)) ;
 
-                    using(StreamWriter tWriter = new StreamWriter(tFilePath))
+                    using (StreamWriter tWriter = new StreamWriter(tFilePath))
                     {
                         tWriter.Write(JsonSerializer.Serialize(new ConnectionString()));
                     }
                     //return a value to indicate that a file has been created and to fill it
                 }
                 else
-                { 
+                {
                     //read connection string values from tFilePath
-                    using(StreamReader tFileReader = new StreamReader(tFilePath)) {
+                    using (StreamReader tFileReader = new StreamReader(tFilePath))
+                    {
                         string tReadConnectionString = tFileReader.ReadToEnd();
-                        //re-format the connection string obtained from the file in the correct connection string format
-                        tConnectionString = tReadConnectionString.Trim().Substring(1, tReadConnectionString.Length - 2).Replace(":","=").Replace("\"","").Replace(",",";");
+                        //de-serialize the obtained connection string and transform it to the correct format
+                        ConnectionString tDesrializedConnStrign = JsonSerializer.Deserialize<ConnectionString>(tReadConnectionString);
+                        tConnectionString = tDesrializedConnStrign.GetFormattedConnectionString();
                     }
-                 }
+                }
 
                 Database.ConnectionString = tConnectionString;
                 return new OperationResult();
