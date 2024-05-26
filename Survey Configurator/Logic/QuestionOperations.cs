@@ -15,7 +15,7 @@ namespace QuestionServices
         /// for any change and informing the UI layer when it occurs, and more operations mentioned below.
         /// </summary>
 
-
+        private const string cConnectionStringFileName = "\\connectionSettings.json";
 
         //event handler for any change that happens to the database from any source
         public static event EventHandler<string> DataBaseChangedEvent;
@@ -231,7 +231,7 @@ namespace QuestionServices
             try {
                 string tConnectionString = "";
                 //check that file exists
-                string tFilePath = Directory.GetCurrentDirectory() + "\\connectionSettings.json";
+                string tFilePath = Directory.GetCurrentDirectory() + cConnectionStringFileName;
                 if (!File.Exists(tFilePath))
                 {
                     //create json file and fill it with default stuff
@@ -248,8 +248,9 @@ namespace QuestionServices
                     //read connection string values from tFilePath
                     using(StreamReader tFileReader = new StreamReader(tFilePath)) {
                         string tReadConnectionString = tFileReader.ReadToEnd();
-                        //re-format the connection string obtained from the file in the correct connection string format
-                        tConnectionString = tReadConnectionString.Trim().Substring(1, tReadConnectionString.Length - 2).Replace(":","=").Replace("\"","").Replace(",",";");
+                        //de-serialize the obtained connection string and transform it to the correct format
+                        ConnectionString tDesrializedConnStrign = JsonSerializer.Deserialize<ConnectionString>(tReadConnectionString);
+                        tConnectionString = tDesrializedConnStrign.GetFormattedConnectionString();
                     }
                  }
 

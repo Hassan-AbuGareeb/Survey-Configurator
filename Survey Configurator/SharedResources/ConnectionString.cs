@@ -30,7 +30,22 @@
             }
         }
 
-
+        /// <summary>
+        /// return a connection string in its correct format
+        /// </summary>
+        /// <returns>correctly formatted connection string</returns>
+        public string GetFormattedConnectionString()
+        {
+            try
+            {
+                return $"Server={Server}; Database={Database}; Trusted_Connection={Trusted_Connection}; User={User}; Password={Password}; Encrypt={Encrypt}; Timeout={Timeout}";
+            }
+            catch(Exception ex) 
+            {
+                UtilityMethods.LogError(ex);
+                return string.Empty;
+            }
+        }
     }
 }
 
