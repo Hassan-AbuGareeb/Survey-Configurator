@@ -1,6 +1,7 @@
 ﻿using QuestionServices;
 using SharedResources.models;
 using SharedResources;
+using Survey_Configurator.Custom_controls;
 
 namespace Survey_Configurator.Sub_forms
 {
@@ -17,6 +18,11 @@ namespace Survey_Configurator.Sub_forms
         private static int QuestionId;
         //current operation add/edit
         private static string Operation;
+
+        //user-control questions objects
+        private StarsQuestionOptions StarsQuestionOptionsPanel;
+        private SmileyQuestionOptions SmileyQuestionOptionsPanel;
+        private SliderQuestionOptions SliderQuestionOptionsPanel;
 
         /// <summary>
         /// add operation constructor, assign the AddButton click function
@@ -99,16 +105,16 @@ namespace Survey_Configurator.Sub_forms
                         {
                             //for each case Get the info and downcast it and assign it to its respective field
                             case QuestionType.Stars:
-                                NumberOfStarsNumeric.Value = ((StarsQuestion)tQuestionSpecificData).NumberOfStars;
+                                StarsQuestionOptionsPanel.NumberOfStarsNumeric.Value = ((StarsQuestion)tQuestionSpecificData).NumberOfStars;
                                 break;
                             case QuestionType.Smiley:
-                                NumberOfSmileysNumeric.Value = ((SmileyQuestion)tQuestionSpecificData).NumberOfSmileyFaces;
+                                SmileyQuestionOptionsPanel.NumberOfSmileysNumeric.Value = ((SmileyQuestion)tQuestionSpecificData).NumberOfSmileyFaces;
                                 break;
                             case QuestionType.Slider:
-                                SliderStartValueNumeric.Value = ((SliderQuestion)tQuestionSpecificData).StartValue;
-                                SliderEndValueNumeric.Value = ((SliderQuestion)tQuestionSpecificData).EndValue;
-                                SliderStartValueCaptionText.Text = ((SliderQuestion)tQuestionSpecificData).StartValueCaption;
-                                SliderEndValueCaptionText.Text = ((SliderQuestion)tQuestionSpecificData).EndValueCaption;
+                                SliderQuestionOptionsPanel.SliderStartValueNumeric.Value = ((SliderQuestion)tQuestionSpecificData).StartValue;
+                                SliderQuestionOptionsPanel.SliderEndValueNumeric.Value = ((SliderQuestion)tQuestionSpecificData).EndValue;
+                                SliderQuestionOptionsPanel.SliderStartValueCaptionText.Text = ((SliderQuestion)tQuestionSpecificData).StartValueCaption;
+                                SliderQuestionOptionsPanel.SliderEndValueCaptionText.Text = ((SliderQuestion)tQuestionSpecificData).EndValueCaption;
                                 break;
                         }
                     }
@@ -158,17 +164,20 @@ namespace Survey_Configurator.Sub_forms
                     {
                         //create a question object based on the chosen type and add it to the database
                         case QuestionType.Stars:
-                            StarsQuestion tStarsData = new StarsQuestion(tNewQuestionData, (int)NumberOfStarsNumeric.Value);
+                            StarsQuestion tStarsData = new StarsQuestion(tNewQuestionData, (int)StarsQuestionOptionsPanel.NumberOfStarsNumeric.Value);
                             tQuestionAddedResult = QuestionOperations.AddQuestion(tStarsData);
                             break;
                         case QuestionType.Smiley:
-                            SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)NumberOfSmileysNumeric.Value);
+                            SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)SmileyQuestionOptionsPanel.NumberOfSmileysNumeric.Value);
                             tQuestionAddedResult = QuestionOperations.AddQuestion(tSmileyData);
                             break;
                         case QuestionType.Slider:
-                            SliderQuestion tSliderData = new SliderQuestion(tNewQuestionData,
-                                (int)SliderStartValueNumeric.Value, (int)SliderEndValueNumeric.Value,
-                                SliderStartValueCaptionText.Text, SliderEndValueCaptionText.Text);
+                            SliderQuestion tSliderData = new SliderQuestion(
+                                tNewQuestionData,
+                                (int)SliderQuestionOptionsPanel.SliderStartValueNumeric.Value,
+                                (int)SliderQuestionOptionsPanel.SliderEndValueNumeric.Value,
+                                SliderQuestionOptionsPanel.SliderStartValueCaptionText.Text,
+                                SliderQuestionOptionsPanel.SliderEndValueCaptionText.Text);
                             tQuestionAddedResult = QuestionOperations.AddQuestion(tSliderData);
                             break;
                     }
@@ -236,17 +245,20 @@ namespace Survey_Configurator.Sub_forms
                     {
                         //send question data to be updated
                         case QuestionType.Stars:
-                            StarsQuestion tStarsData = new StarsQuestion(tNewQuestionData, (int)NumberOfStarsNumeric.Value);
+                            StarsQuestion tStarsData = new StarsQuestion(tNewQuestionData, (int)StarsQuestionOptionsPanel.NumberOfStarsNumeric.Value);
                             tQuestionUpdatedResult = QuestionOperations.UpdateQuestion(tStarsData);
                             break;
                         case QuestionType.Smiley:
-                            SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)NumberOfSmileysNumeric.Value);
+                            SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)SmileyQuestionOptionsPanel.NumberOfSmileysNumeric.Value);
                             tQuestionUpdatedResult = QuestionOperations.UpdateQuestion(tSmileyData);
                             break;
                         case QuestionType.Slider:
-                            SliderQuestion tSliderData = new SliderQuestion(tNewQuestionData,
-                                (int)SliderStartValueNumeric.Value, (int)SliderEndValueNumeric.Value,
-                                SliderStartValueCaptionText.Text, SliderEndValueCaptionText.Text);
+                            SliderQuestion tSliderData = new SliderQuestion(
+                                tNewQuestionData,
+                                (int)SliderQuestionOptionsPanel.SliderStartValueNumeric.Value,
+                                (int)SliderQuestionOptionsPanel.SliderEndValueNumeric.Value,
+                                SliderQuestionOptionsPanel.SliderStartValueCaptionText.Text,
+                                SliderQuestionOptionsPanel.SliderEndValueCaptionText.Text);
                             tQuestionUpdatedResult = QuestionOperations.UpdateQuestion(tSliderData);
                             break;
 
@@ -367,7 +379,10 @@ namespace Survey_Configurator.Sub_forms
         {
             try
             {
-                StarsQuestionOptionsPanel.Show();
+                //StarsQuestionOptionsPanel.Show();
+                StarsQuestionOptionsPanel = new StarsQuestionOptions();
+                StarsQuestionOptionsPanel.Location = new Point(12, 175);
+                Controls.Add(StarsQuestionOptionsPanel);
             }
             catch (Exception ex)
             {
@@ -379,7 +394,9 @@ namespace Survey_Configurator.Sub_forms
         {
             try
             {
-                SmileyQuestionOptionsPanel.Show();
+                SmileyQuestionOptionsPanel= new SmileyQuestionOptions();
+                SmileyQuestionOptionsPanel.Location = new Point(12, 175);
+                Controls.Add(SmileyQuestionOptionsPanel);
             }
             catch (Exception ex)
             {
@@ -391,7 +408,9 @@ namespace Survey_Configurator.Sub_forms
         {
             try
             {
-                SliderQuestionOptionsPanel.Show();
+                SliderQuestionOptionsPanel= new SliderQuestionOptions();
+                SliderQuestionOptionsPanel.Location = new Point(12, 175);
+                Controls.Add(SliderQuestionOptionsPanel);
             }
             catch (Exception ex)
             {
@@ -403,9 +422,9 @@ namespace Survey_Configurator.Sub_forms
         {
             try
             {
-                StarsQuestionOptionsPanel.Hide();
-                SmileyQuestionOptionsPanel.Hide();
-                SliderQuestionOptionsPanel.Hide();
+                Controls.Remove(StarsQuestionOptionsPanel);
+                Controls.Remove(SmileyQuestionOptionsPanel);
+                Controls.Remove(SliderQuestionOptionsPanel);
             }
             catch (Exception ex)
             {
@@ -413,11 +432,7 @@ namespace Survey_Configurator.Sub_forms
                 MessageBox.Show("An unexpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         #endregion
-
-        private void QuestionTextLabel_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
