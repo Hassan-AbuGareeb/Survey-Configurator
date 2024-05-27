@@ -1,4 +1,3 @@
-D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\QuestionServices.dll.config
 D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\QuestionServices.deps.json
 D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\QuestionServices.dll
 D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\QuestionServices.pdb

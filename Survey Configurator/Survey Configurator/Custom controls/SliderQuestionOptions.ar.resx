@@ -125,11 +125,17 @@
   <data name="SliderEndValueCaptionText.Location" type="System.Drawing.Point, System.Drawing">
     <value>671, 140</value>
   </data>
+  <data name="SliderEndValueCaptionText.Text" xml:space="preserve">
+    <value>ممتاز</value>
+  </data>
   <data name="SliderStartValueCaptionText.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
   </data>
   <data name="SliderStartValueCaptionText.Location" type="System.Drawing.Point, System.Drawing">
     <value>671, 95</value>
+  </data>
+  <data name="SliderStartValueCaptionText.Text" xml:space="preserve">
+    <value>سيء</value>
   </data>
   <data name="SliderEndValueCaptionLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
