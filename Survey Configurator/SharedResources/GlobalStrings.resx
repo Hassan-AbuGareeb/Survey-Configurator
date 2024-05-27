@@ -150,6 +150,12 @@
   <data name="SqlErrorTitle" xml:space="preserve">
     <value>Database Error</value>
   </data>
+  <data name="UnAuthorizedAccessError" xml:space="preserve">
+    <value>Unauthorized access error</value>
+  </data>
+  <data name="UnAuthorizedAccessErrorTitle" xml:space="preserve">
+    <value>You have restrictions on file operations please refer to your system admin</value>
+  </data>
   <data name="UnknownError" xml:space="preserve">
     <value>An Unknown error occured</value>
   </data>

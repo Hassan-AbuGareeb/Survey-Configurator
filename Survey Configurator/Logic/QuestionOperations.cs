@@ -52,7 +52,7 @@ namespace QuestionServices
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, SharedData.ErrorMessages[ErrorTypes.UnknownError]);
+                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
             }
         }
 
@@ -91,7 +91,7 @@ namespace QuestionServices
 
                 if(tQuestionSpecificDataResult.IsSuccess && pQuestionSpecificData == null)
                 {
-                    return new OperationResult(ErrorTypes.NullValueError, SharedData.ErrorMessages[ErrorTypes.NullValueError]);
+                    return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
                 }
                 else
                 {
@@ -101,7 +101,7 @@ namespace QuestionServices
             catch (Exception ex)
             {
                 UtilityMethods. LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, SharedData.ErrorMessages[ErrorTypes.UnknownError]);
+                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
             }
         }
 
@@ -132,7 +132,7 @@ namespace QuestionServices
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, SharedData.ErrorMessages[ErrorTypes.UnknownError]);
+                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
             }
         }
 
@@ -166,7 +166,7 @@ namespace QuestionServices
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, SharedData.ErrorMessages[ErrorTypes.UnknownError]);
+                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
             }
         }
 
@@ -198,7 +198,7 @@ namespace QuestionServices
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, SharedData.ErrorMessages[ErrorTypes.UnknownError]);
+                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
             }
         }
         #endregion
@@ -217,7 +217,7 @@ namespace QuestionServices
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, SharedData.ErrorMessages[ErrorTypes.UnknownError]);
+                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
             }
 
         }
@@ -266,14 +266,14 @@ namespace QuestionServices
             {
                 UtilityMethods.LogError(ex);
                 //handle the unAuthorized access happening
-                return new OperationResult(ErrorTypes.UnAuthorizedAccessError, SharedData.ErrorMessages[ErrorTypes.UnAuthorizedAccessError]);
+                return new OperationResult(GlobalStrings.UnAuthorizedAccessErrorTitle, GlobalStrings.UnAuthorizedAccessError);
             }
             catch (Exception ex)
             {
                 //log error
                 UtilityMethods.LogError(ex);
                 //either the file can't be created or it is a permission issue
-                return new OperationResult(ErrorTypes.UnknownError, SharedData.ErrorMessages[ErrorTypes.UnknownError]);
+                return new OperationResult(GlobalStrings.UnknownErrorTitle , GlobalStrings.UnknownError);
             }
         }
 
@@ -296,7 +296,7 @@ namespace QuestionServices
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, SharedData.ErrorMessages[ErrorTypes.UnknownError]);
+                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
             }
         }
 

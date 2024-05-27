@@ -36,14 +36,14 @@ namespace Survey_Configurator
                 OperationResult tConnectionStringCreated = QuestionOperations.SetConnectionString();
                 if(!tConnectionStringCreated.IsSuccess)
                 {
-                    MessageBox.Show(GlobalStrings.SqlError, GlobalStrings.SqlErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(tConnectionStringCreated.ErrorMessage, tConnectionStringCreated.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Close();
                 }
                 //check database connectivity
                 OperationResult tDatabaseConnected = QuestionOperations.TestDBConnection();
                 if(!tDatabaseConnected.IsSuccess )
                 {
-                    MessageBox.Show(GlobalStrings.SqlError, GlobalStrings.SqlErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(tDatabaseConnected.ErrorMessage, tDatabaseConnected.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Close();
                 }
 
@@ -77,7 +77,7 @@ namespace Survey_Configurator
                 OperationResult tStartDatabaseCheckResult = QuestionOperations.StartCheckingDataBaseChange();
                 if(!tStartDatabaseCheckResult.IsSuccess)
                 {
-                    MessageBox.Show(GlobalStrings.SqlError, GlobalStrings.SqlErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(tStartDatabaseCheckResult.ErrorMessage, tStartDatabaseCheckResult.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Close();
                 }
                 //listen to any database change event
@@ -126,7 +126,7 @@ namespace Survey_Configurator
                 }
                 else
                 {
-                    MessageBox.Show(GlobalStrings.SqlError, GlobalStrings.SqlErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(tIsDatabaseConnected.ErrorMessage, tIsDatabaseConnected.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
@@ -166,7 +166,7 @@ namespace Survey_Configurator
                 }
                 else
                 {
-                    MessageBox.Show(GlobalStrings.SqlError, GlobalStrings.SqlErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(tIsDatabaseConnected.ErrorMessage, tIsDatabaseConnected.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch(Exception ex)
@@ -328,7 +328,7 @@ namespace Survey_Configurator
         {
             try
             {
-                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.SqlError], $"{ErrorTypes.SqlError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(GlobalStrings.SqlError, GlobalStrings.SqlErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
             }
             catch (Exception ex)

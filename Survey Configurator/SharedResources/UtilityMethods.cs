@@ -49,7 +49,7 @@ namespace SharedResources
             }
             catch (Exception ex)
             {
-                Console.WriteLine(SharedData.ErrorMessages[ErrorTypes.LoggingError] + $": {ex.Message}");
+                Console.WriteLine("An error occured while loggin the error" + $": {ex.Message}");
             }
         }
     }

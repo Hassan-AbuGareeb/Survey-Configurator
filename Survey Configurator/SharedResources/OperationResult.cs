@@ -12,7 +12,7 @@ namespace SharedResources
         /// and the data can be changed by refernece.
         /// </summary>
 
-        public ErrorTypes Error { get; set; }
+        public string Error { get; set; }
         public string ErrorMessage {  get; set; }
         public bool IsSuccess { get; set; }
 
@@ -30,7 +30,7 @@ namespace SharedResources
         }
 
         //failed operation with error type and message
-        public OperationResult(ErrorTypes pError, string pErrorMessage)
+        public OperationResult(string pError, string pErrorMessage)
         {
             try
             {

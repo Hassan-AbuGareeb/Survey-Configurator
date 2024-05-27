@@ -123,7 +123,7 @@ namespace Survey_Configurator.Sub_forms
                     }
                     else
                     {
-                        MainScreen.ShowDefaultErrorMessage();
+                        MessageBox.Show(tQuestionSpecificDataResult.ErrorMessage, tQuestionSpecificDataResult.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Close();
                     }
                 }
@@ -186,7 +186,7 @@ namespace Survey_Configurator.Sub_forms
                     }
                     if (tQuestionAddedResult != null && !tQuestionAddedResult.IsSuccess)
                     {
-                        MainScreen.ShowDefaultErrorMessage();
+                        MessageBox.Show(tQuestionAddedResult.ErrorMessage, tQuestionAddedResult.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     //close form
                     Close();
@@ -268,7 +268,7 @@ namespace Survey_Configurator.Sub_forms
                     }
                     if (tQuestionUpdatedResult != null && !tQuestionUpdatedResult.IsSuccess)
                     {
-                        MainScreen.ShowDefaultErrorMessage();
+                        MessageBox.Show(tQuestionUpdatedResult.ErrorMessage, tQuestionUpdatedResult.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     Close();
                 }

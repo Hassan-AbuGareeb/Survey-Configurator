@@ -160,6 +160,24 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unauthorized access error.
+        /// </summary>
+        public static string UnAuthorizedAccessError {
+            get {
+                return ResourceManager.GetString("UnAuthorizedAccessError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have restrictions on file operations please refer to your system admin.
+        /// </summary>
+        public static string UnAuthorizedAccessErrorTitle {
+            get {
+                return ResourceManager.GetString("UnAuthorizedAccessErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An Unknown error occured.
         /// </summary>
         public static string UnknownError {
