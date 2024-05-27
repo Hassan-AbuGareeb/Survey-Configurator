@@ -16,3 +16,4 @@ D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\QuestionServic
 D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\refint\QuestionServices.dll
 D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\QuestionServices.pdb
 D:\Survey Configurator\Survey Configurator\Logic\obj\Debug\net8.0\ref\QuestionServices.dll
+D:\Survey Configurator\Survey Configurator\Logic\bin\Debug\net8.0\ar\SharedResources.resources.dll

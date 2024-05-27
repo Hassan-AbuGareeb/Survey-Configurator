@@ -2,6 +2,7 @@
 using SharedResources.models;
 using SharedResources;
 using Survey_Configurator.Custom_controls;
+using System.ComponentModel;
 
 namespace Survey_Configurator.Sub_forms
 {
@@ -27,7 +28,6 @@ namespace Survey_Configurator.Sub_forms
         //location of the question options panel
         private Point QuestionOptionsPanelLocation = new Point(12, 175);
 
-
         /// <summary>
         /// add operation constructor, assign the AddButton click function
         /// for the button click event
@@ -37,15 +37,15 @@ namespace Survey_Configurator.Sub_forms
             try
             {
                 InitializeComponent();
-                Text = "Add question";
-                OperationButton.Text = "Add";
-                Operation = "Add";
+                Text = GlobalStrings.AddQuestion;
+                OperationButton.Text = GlobalStrings.AddOperation;
+                Operation = GlobalStrings.AddOperation;
                 OperationButton.Click += AddButton_Click;
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MainScreen.ShowDefaultErrorMessage();
             }
         }
 
@@ -60,15 +60,15 @@ namespace Survey_Configurator.Sub_forms
             {
                 InitializeComponent();
                 QuestionId = pQuestionId;
-                Text = "Edit question";
-                OperationButton.Text = "Edit";
-                Operation = "Edit";
+                Text = GlobalStrings.EditQuestion;
+                OperationButton.Text = GlobalStrings.EditOperation;
+                Operation = GlobalStrings.EditOperation;
                 OperationButton.Click += EditButton_Click;
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MainScreen.ShowDefaultErrorMessage();
             }
         }
 
@@ -88,7 +88,7 @@ namespace Survey_Configurator.Sub_forms
                 QuestionOperations.OperationOngoing = true;
 
                 //check if the operation is edit and fill the fields with selected question data
-                if (Operation == "Edit")
+                if (Operation == GlobalStrings.EditOperation)
                 {
                     Question tGeneralQuestionData = QuestionOperations.GetQuestionData(QuestionId);
                     //extract question data an add it to UI
@@ -123,7 +123,7 @@ namespace Survey_Configurator.Sub_forms
                     }
                     else
                     {
-                        MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MainScreen.ShowDefaultErrorMessage();
                         Close();
                     }
                 }
@@ -131,7 +131,7 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show($"{ex.GetType().FullName}, {ex.StackTrace}");
+                MainScreen.ShowDefaultErrorMessage();
                 Close();
             }
         }
@@ -186,7 +186,7 @@ namespace Survey_Configurator.Sub_forms
                     }
                     if (tQuestionAddedResult != null && !tQuestionAddedResult.IsSuccess)
                     {
-                        MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MainScreen.ShowDefaultErrorMessage();
                     }
                     //close form
                     Close();
@@ -213,7 +213,7 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show($"{ex.GetType().FullName}, {ex.StackTrace}");
+                MainScreen.ShowDefaultErrorMessage();
                 Close();
             }
         }
@@ -268,7 +268,7 @@ namespace Survey_Configurator.Sub_forms
                     }
                     if (tQuestionUpdatedResult != null && !tQuestionUpdatedResult.IsSuccess)
                     {
-                        MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MainScreen.ShowDefaultErrorMessage();
                     }
                     Close();
                 }
@@ -294,7 +294,7 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show($"{ex.GetType().FullName}, {ex.StackTrace}");
+                MainScreen.ShowDefaultErrorMessage();
                 Close();
             }
         }
@@ -318,7 +318,7 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("SharedData.ErrorMessages[ErrorTypes.UnknownError]", $"{ ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MainScreen.ShowDefaultErrorMessage();
             }
         }
 
@@ -348,7 +348,7 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MainScreen.ShowDefaultErrorMessage();
             }
         }
 
@@ -367,7 +367,7 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MainScreen.ShowDefaultErrorMessage();
             }
         }
 
@@ -390,7 +390,7 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MainScreen.ShowDefaultErrorMessage();
             }
         }
         private void AddSmileysOptions()
@@ -404,7 +404,7 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MainScreen.ShowDefaultErrorMessage();
             }
         }
         private void AddSliderOptions()
@@ -418,7 +418,7 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MainScreen.ShowDefaultErrorMessage();
             }
         }
         private void HideQuesitonOptionsPanel()
@@ -432,10 +432,9 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MainScreen.ShowDefaultErrorMessage();
             }
         }
-
         #endregion
     }
 }

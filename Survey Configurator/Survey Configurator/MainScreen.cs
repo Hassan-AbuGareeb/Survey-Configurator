@@ -36,14 +36,14 @@ namespace Survey_Configurator
                 OperationResult tConnectionStringCreated = QuestionOperations.SetConnectionString();
                 if(!tConnectionStringCreated.IsSuccess)
                 {
-                    MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.SqlError], $"{ErrorTypes.SqlError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalStrings.SqlError, GlobalStrings.SqlErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Close();
                 }
                 //check database connectivity
                 OperationResult tDatabaseConnected = QuestionOperations.TestDBConnection();
                 if(!tDatabaseConnected.IsSuccess )
                 {
-                    MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.SqlError], $"{ErrorTypes.SqlError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalStrings.SqlError, GlobalStrings.SqlErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Close();
                 }
 
@@ -70,8 +70,6 @@ namespace Survey_Configurator
         {
             try
             {
-
-
                 //initialize the list view with questions data
                 QuestionsListViewInit();
 
@@ -79,7 +77,7 @@ namespace Survey_Configurator
                 OperationResult tStartDatabaseCheckResult = QuestionOperations.StartCheckingDataBaseChange();
                 if(!tStartDatabaseCheckResult.IsSuccess)
                 {
-                    MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.SqlError], $"{ErrorTypes.SqlError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalStrings.SqlError, GlobalStrings.SqlErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Close();
                 }
                 //listen to any database change event
@@ -95,7 +93,7 @@ namespace Survey_Configurator
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowDefaultErrorMessage();
                 Close();
             }
         }
@@ -128,7 +126,7 @@ namespace Survey_Configurator
                 }
                 else
                 {
-                    MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.SqlError], $"{ErrorTypes.SqlError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalStrings.SqlError, GlobalStrings.SqlErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
@@ -168,7 +166,7 @@ namespace Survey_Configurator
                 }
                 else
                 {
-                    MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.SqlError], $"{ErrorTypes.SqlError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalStrings.SqlError, GlobalStrings.SqlErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch(Exception ex)
@@ -225,7 +223,7 @@ namespace Survey_Configurator
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.OperationError], $"{ErrorTypes.OperationError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(GlobalStrings.OperationError, GlobalStrings.OperationErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -475,18 +473,18 @@ namespace Survey_Configurator
             }catch(Exception ex) 
             { 
                 UtilityMethods.LogError(ex);
-                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.DataFetchingError], $"{ErrorTypes.DataFetchingError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(GlobalStrings.DataFetchingError, GlobalStrings.DataFetchingErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         /// <summary>
         /// a default message error for any unknown error
         /// </summary>
-        private static void ShowDefaultErrorMessage()
+        public static void ShowDefaultErrorMessage()
         {
             try
             {
-                MessageBox.Show(SharedData.ErrorMessages[ErrorTypes.UnknownError], $"{ErrorTypes.UnknownError} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(GlobalStrings.UnknownError, GlobalStrings.UnknownErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
