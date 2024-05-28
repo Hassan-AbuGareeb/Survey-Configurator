@@ -37,7 +37,11 @@
             QuestionTextLabel = new Label();
             OperationButton = new Button();
             CancelButton = new Button();
+            GeneralInformationGroupBox = new GroupBox();
+            TypeInformationGroupBox = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)QuestionOrderNumeric).BeginInit();
+            GeneralInformationGroupBox.SuspendLayout();
+            TypeInformationGroupBox.SuspendLayout();
             SuspendLayout();
             // 
             // QuestionTypeComboBox
@@ -90,25 +94,42 @@
             CancelButton.UseVisualStyleBackColor = true;
             CancelButton.Click += CancelButton_Click;
             // 
+            // GeneralInformationGroupBox
+            // 
+            resources.ApplyResources(GeneralInformationGroupBox, "GeneralInformationGroupBox");
+            GeneralInformationGroupBox.Controls.Add(QuestionTextLabel);
+            GeneralInformationGroupBox.Controls.Add(QuestionOrderLabel);
+            GeneralInformationGroupBox.Controls.Add(QuestionTextBox);
+            GeneralInformationGroupBox.Controls.Add(QuestionOrderNumeric);
+            GeneralInformationGroupBox.Name = "GeneralInformationGroupBox";
+            GeneralInformationGroupBox.TabStop = false;
+            // 
+            // TypeInformationGroupBox
+            // 
+            resources.ApplyResources(TypeInformationGroupBox, "TypeInformationGroupBox");
+            TypeInformationGroupBox.Controls.Add(QuestionTypeComboBox);
+            TypeInformationGroupBox.Controls.Add(QuestionOrderType);
+            TypeInformationGroupBox.Name = "TypeInformationGroupBox";
+            TypeInformationGroupBox.TabStop = false;
+            // 
             // AddEditQuestion
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(TypeInformationGroupBox);
+            Controls.Add(GeneralInformationGroupBox);
             Controls.Add(CancelButton);
             Controls.Add(OperationButton);
-            Controls.Add(QuestionTypeComboBox);
-            Controls.Add(QuestionOrderNumeric);
-            Controls.Add(QuestionTextBox);
-            Controls.Add(QuestionOrderType);
-            Controls.Add(QuestionOrderLabel);
-            Controls.Add(QuestionTextLabel);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "AddEditQuestion";
             FormClosing += AddEditQuestion_FormClosing;
             Load += AddEdit_Load;
             ((System.ComponentModel.ISupportInitialize)QuestionOrderNumeric).EndInit();
+            GeneralInformationGroupBox.ResumeLayout(false);
+            GeneralInformationGroupBox.PerformLayout();
+            TypeInformationGroupBox.ResumeLayout(false);
+            TypeInformationGroupBox.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -120,5 +141,7 @@
         private Label QuestionTextLabel;
         private Button OperationButton;
         private Button CancelButton;
+        private GroupBox GeneralInformationGroupBox;
+        private GroupBox TypeInformationGroupBox;
     }
 }

@@ -126,15 +126,33 @@
   <data name="QuestionTypeComboBox.Items2" xml:space="preserve">
     <value>الشريط المنزلق</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="QuestionTypeComboBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 41</value>
+  </data>
+  <data name="QuestionOrderNumeric.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 98</value>
+  </data>
+  <data name="QuestionTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 33</value>
+  </data>
+  <data name="QuestionOrderType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>501, 41</value>
+  </data>
   <data name="QuestionOrderType.Text" xml:space="preserve">
     <value>النوع:</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="QuestionOrderLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>504, 100</value>
+  </data>
   <data name="QuestionOrderLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 20</value>
+    <value>43, 20</value>
   </data>
   <data name="QuestionOrderLabel.Text" xml:space="preserve">
-    <value>الرقم</value>
+    <value>الرقم:</value>
+  </data>
+  <data name="QuestionTextLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>498, 36</value>
   </data>
   <data name="QuestionTextLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>46, 20</value>
@@ -147,6 +165,12 @@
   </data>
   <data name="CancelButton.Text" xml:space="preserve">
     <value>إلغاء الأمر</value>
+  </data>
+  <data name="GeneralInformationGroupBox.Text" xml:space="preserve">
+    <value>البيانات العامة</value>
+  </data>
+  <data name="TypeInformationGroupBox.Text" xml:space="preserve">
+    <value>بيانات النوع</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="$this.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">

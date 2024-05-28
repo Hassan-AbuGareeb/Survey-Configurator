@@ -25,7 +25,7 @@ namespace Survey_Configurator.Sub_forms
         private SmileyQuestionOptions SmileyQuestionOptionsPanel;
         private SliderQuestionOptions SliderQuestionOptionsPanel;
         //location of the question options panel
-        private Point QuestionOptionsPanelLocation = new Point(12, 175);
+        private Point QuestionOptionsPanelLocation = new Point(12, 85);
 
         /// <summary>
         /// add operation constructor, assign the AddButton click function
@@ -92,7 +92,7 @@ namespace Survey_Configurator.Sub_forms
                     //extract question data an add it to UI
                     QuestionTextBox.Text = tGeneralQuestionData.Text;
                     QuestionOrderNumeric.Value = tGeneralQuestionData.Order;
-                    QuestionTypeComboBox.SelectedIndex = (int) tGeneralQuestionData.Type;
+                    QuestionTypeComboBox.SelectedIndex = (int)tGeneralQuestionData.Type;
 
                     //based on the combobox value further data about the question should be obtained and added to UI
 
@@ -185,6 +185,10 @@ namespace Survey_Configurator.Sub_forms
                     if (tQuestionAddedResult != null && !tQuestionAddedResult.IsSuccess)
                     {
                         MessageBox.Show(tQuestionAddedResult.ErrorMessage, tQuestionAddedResult.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+
                     }
                     //close form
                     Close();
@@ -384,7 +388,7 @@ namespace Survey_Configurator.Sub_forms
                 //StarsQuestionOptionsPanel.Show();
                 StarsQuestionOptionsPanel = new StarsQuestionOptions();
                 StarsQuestionOptionsPanel.Location = QuestionOptionsPanelLocation;
-                Controls.Add(StarsQuestionOptionsPanel);
+                TypeInformationGroupBox.Controls.Add(StarsQuestionOptionsPanel);
             }
             catch (Exception ex)
             {
@@ -396,9 +400,9 @@ namespace Survey_Configurator.Sub_forms
         {
             try
             {
-                SmileyQuestionOptionsPanel= new SmileyQuestionOptions();
+                SmileyQuestionOptionsPanel = new SmileyQuestionOptions();
                 SmileyQuestionOptionsPanel.Location = QuestionOptionsPanelLocation;
-                Controls.Add(SmileyQuestionOptionsPanel);
+                TypeInformationGroupBox.Controls.Add(SmileyQuestionOptionsPanel);
             }
             catch (Exception ex)
             {
@@ -410,9 +414,9 @@ namespace Survey_Configurator.Sub_forms
         {
             try
             {
-                SliderQuestionOptionsPanel= new SliderQuestionOptions();
+                SliderQuestionOptionsPanel = new SliderQuestionOptions();
                 SliderQuestionOptionsPanel.Location = QuestionOptionsPanelLocation;
-                Controls.Add(SliderQuestionOptionsPanel);
+                TypeInformationGroupBox.Controls.Add(SliderQuestionOptionsPanel);
             }
             catch (Exception ex)
             {
@@ -424,9 +428,9 @@ namespace Survey_Configurator.Sub_forms
         {
             try
             {
-                Controls.Remove(StarsQuestionOptionsPanel);
-                Controls.Remove(SmileyQuestionOptionsPanel);
-                Controls.Remove(SliderQuestionOptionsPanel);
+                TypeInformationGroupBox.Controls.Remove(StarsQuestionOptionsPanel);
+                TypeInformationGroupBox.Controls.Remove(SmileyQuestionOptionsPanel);
+                TypeInformationGroupBox.Controls.Remove(SliderQuestionOptionsPanel);
             }
             catch (Exception ex)
             {
@@ -435,6 +439,6 @@ namespace Survey_Configurator.Sub_forms
             }
         }
 
-        #endregion
+#endregion
     }
 }
