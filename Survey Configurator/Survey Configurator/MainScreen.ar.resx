@@ -137,16 +137,25 @@
     <value>إضافة</value>
   </data>
   <data name="fontSizeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>224, 28</value>
+    <value>163, 28</value>
   </data>
   <data name="fontSizeToolStripMenuItem.Text" xml:space="preserve">
     <value>حجم الخط</value>
   </data>
+  <data name="EnglishToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 28</value>
+  </data>
   <data name="EnglishToolStripMenuItem.Text" xml:space="preserve">
     <value>English</value>
   </data>
+  <data name="ArabicToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 28</value>
+  </data>
   <data name="ArabicToolStripMenuItem.Text" xml:space="preserve">
     <value>العريبة</value>
+  </data>
+  <data name="languageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 28</value>
   </data>
   <data name="languageToolStripMenuItem.Text" xml:space="preserve">
     <value>اللغة</value>
@@ -169,6 +178,10 @@
   <data name="helpToolStripMenuItem.Text" xml:space="preserve">
     <value>مساعدة</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="menuStrip1.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>Yes</value>
+  </data>
   <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
     <value>1691, 36</value>
   </data>
@@ -178,7 +191,6 @@
   <data name="QuestionText.Text" xml:space="preserve">
     <value>النص</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="QuestionText.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Right</value>
   </data>

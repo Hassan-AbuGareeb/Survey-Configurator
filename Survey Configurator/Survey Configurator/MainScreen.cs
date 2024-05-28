@@ -4,6 +4,8 @@ using SharedResources;
 using SharedResources.models;
 using System.Diagnostics;
 using System.Configuration;
+using System.ComponentModel;
+using System.Globalization;
 
 namespace Survey_Configurator
 {
@@ -416,9 +418,8 @@ namespace Survey_Configurator
         {
             try
             {
-                ClearLanguageSelectedOptions();
-                EnglishToolStripMenuItem.Checked = true;
                 ChangeAppLanguage(cEnglishLanguageSettings);
+                Application.Restart();
             }
             catch (Exception ex)
             {
@@ -431,27 +432,14 @@ namespace Survey_Configurator
         {
             try
             {
-                ClearLanguageSelectedOptions();
-                ArabicToolStripMenuItem.Checked = true;
                 ChangeAppLanguage(cArabicLanguageSettings);
+                Application.Restart();
+
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
 
-            }
-        }
-
-        private void ClearLanguageSelectedOptions()
-        {
-            try
-            {
-                EnglishToolStripMenuItem.Checked = false;
-                ArabicToolStripMenuItem.Checked = false;
-            }
-            catch (Exception ex)
-            {
-                UtilityMethods.LogError(ex);
             }
         }
 
