@@ -117,27 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="DeleteQuestionButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1579, 851</value>
+  </data>
   <data name="DeleteQuestionButton.Text" xml:space="preserve">
     <value>حذف</value>
+  </data>
+  <data name="EditQuestionButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1473, 851</value>
   </data>
   <data name="EditQuestionButton.Text" xml:space="preserve">
     <value>تعديل</value>
   </data>
+  <data name="AddQuestionButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1367, 851</value>
+  </data>
   <data name="AddQuestionButton.Text" xml:space="preserve">
     <value>إضافة</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="fontSize9StripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>224, 28</value>
-  </data>
-  <data name="fontSize12StripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>224, 28</value>
-  </data>
-  <data name="fontSize15StripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>224, 28</value>
-  </data>
   <data name="fontSizeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>224, 28</value>
+    <value>163, 28</value>
   </data>
   <data name="fontSizeToolStripMenuItem.Text" xml:space="preserve">
     <value>حجم الخط</value>
@@ -149,7 +149,7 @@
     <value>خيارات</value>
   </data>
   <data name="openManualToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>224, 28</value>
+    <value>200, 28</value>
   </data>
   <data name="openManualToolStripMenuItem.Text" xml:space="preserve">
     <value>دليل المستخدم</value>
@@ -159,6 +159,9 @@
   </data>
   <data name="helpToolStripMenuItem.Text" xml:space="preserve">
     <value>مساعدة</value>
+  </data>
+  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1691, 36</value>
   </data>
   <data name="QuestionOrder.Text" xml:space="preserve">
     <value>الرقم</value>
@@ -176,7 +179,17 @@
   <data name="QuestionType.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Right</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="QuestionType.Width" type="System.Int32, mscorlib">
+    <value>760</value>
+  </data>
   <data name="QuestionsListView.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
     <value>Yes</value>
+  </data>
+  <data name="QuestionsListView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1667, 806</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>1691, 893</value>
   </data>
 </root>

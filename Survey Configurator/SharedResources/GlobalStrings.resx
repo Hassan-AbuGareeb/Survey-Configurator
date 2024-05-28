@@ -123,11 +123,23 @@
   <data name="AddQuestion" xml:space="preserve">
     <value>Add Question</value>
   </data>
+  <data name="CancelOperation" xml:space="preserve">
+    <value>Any changes made won't be saved</value>
+  </data>
+  <data name="CancelOperationTitle" xml:space="preserve">
+    <value>Cancel Operation</value>
+  </data>
   <data name="DataFetchingError" xml:space="preserve">
     <value>An error occured while loading data please try again.\nif you keep getting this error restart the app</value>
   </data>
   <data name="DataFetchingErrorTitle" xml:space="preserve">
     <value>Data Loading Error</value>
+  </data>
+  <data name="DeleteOperationTitle" xml:space="preserve">
+    <value>Delete question</value>
+  </data>
+  <data name="DeleteQuestionConfirm" xml:space="preserve">
+    <value>Are you sure you want to delete the selected questions?</value>
   </data>
   <data name="EditOperation" xml:space="preserve">
     <value>Edit</value>
@@ -138,11 +150,29 @@
   <data name="Error" xml:space="preserve">
     <value>error</value>
   </data>
+  <data name="MissingFields" xml:space="preserve">
+    <value>The following fields must have proper values:</value>
+  </data>
   <data name="OperationError" xml:space="preserve">
     <value>Operation Error</value>
   </data>
   <data name="OperationErrorTitle" xml:space="preserve">
     <value>Operation Failed, please try again</value>
+  </data>
+  <data name="OperationSuccessful" xml:space="preserve">
+    <value>Operation completed successfully!</value>
+  </data>
+  <data name="OperationSuccessfulTitle" xml:space="preserve">
+    <value>Operation successful</value>
+  </data>
+  <data name="QuestionText" xml:space="preserve">
+    <value>Question text</value>
+  </data>
+  <data name="QuestionType" xml:space="preserve">
+    <value>Question type</value>
+  </data>
+  <data name="RequiredFields" xml:space="preserve">
+    <value>Missing fields</value>
   </data>
   <data name="SqlError" xml:space="preserve">
     <value>Database related error, refer to your system admin</value>

@@ -189,7 +189,7 @@ namespace Survey_Configurator
             {
                 int tNumberOfSelectedQuestions = QuestionsListView.SelectedItems.Count;
                 
-                DialogResult tDeleteQuestion = MessageBox.Show($"Are you sure you want to delete {(tNumberOfSelectedQuestions > 1 ? "these " : "this ")}question{(tNumberOfSelectedQuestions > 1 ? "s" : "")}?", "Delete question", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult tDeleteQuestion = MessageBox.Show(GlobalStrings.DeleteQuestionConfirm, GlobalStrings.DeleteOperationTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 
                 //to prevent any interruption in deleting
                 QuestionOperations.OperationOngoing = true;
@@ -216,7 +216,7 @@ namespace Survey_Configurator
                         DeleteQuestionButton.Enabled = false;
                         EditQuestionButton.Enabled = false;
 
-                        MessageBox.Show($"Question{(tNumberOfSelectedQuestions > 1 ? "s " : " ")}deleted successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(GlobalStrings.OperationSuccessful, GlobalStrings.OperationSuccessfulTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }

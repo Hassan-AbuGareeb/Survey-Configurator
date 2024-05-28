@@ -2,7 +2,6 @@
 using SharedResources.models;
 using SharedResources;
 using Survey_Configurator.Custom_controls;
-using System.ComponentModel;
 
 namespace Survey_Configurator.Sub_forms
 {
@@ -86,7 +85,6 @@ namespace Survey_Configurator.Sub_forms
             {
                 //to prevent any interruption in adding/updating
                 QuestionOperations.OperationOngoing = true;
-
                 //check if the operation is edit and fill the fields with selected question data
                 if (Operation == GlobalStrings.EditOperation)
                 {
@@ -94,7 +92,7 @@ namespace Survey_Configurator.Sub_forms
                     //extract question data an add it to UI
                     QuestionTextBox.Text = tGeneralQuestionData.Text;
                     QuestionOrderNumeric.Value = tGeneralQuestionData.Order;
-                    QuestionTypeComboBox.SelectedItem = tGeneralQuestionData.Type;
+                    QuestionTypeComboBox.SelectedIndex = (int) tGeneralQuestionData.Type;
 
                     //based on the combobox value further data about the question should be obtained and added to UI
 
@@ -157,7 +155,7 @@ namespace Survey_Configurator.Sub_forms
                     string tQuestionText = QuestionTextBox.Text;
                     int tQuestionOrder = (int)QuestionOrderNumeric.Value;
                     //get the enum value of the question type
-                    QuestionType tQuestionType = (QuestionType)QuestionTypeComboBox.SelectedItem;
+                    QuestionType tQuestionType = (QuestionType)QuestionTypeComboBox.SelectedIndex;
                     //encapsulate obtained data in a question object
                     Question tNewQuestionData = new Question(tQuestionText, tQuestionOrder, tQuestionType);
 
@@ -197,17 +195,17 @@ namespace Survey_Configurator.Sub_forms
                     string tMissingFieldsMessage = "";
                     if (QuestionTextBox.Text.Length == 0 && QuestionTypeComboBox.SelectedItem == null)
                     {
-                        tMissingFieldsMessage += "Question text, Question type ";
+                        tMissingFieldsMessage += $"{GlobalStrings.QuestionText}, {GlobalStrings.QuestionType}";
                     }
                     else if (QuestionTextBox.Text.Length == 0)
                     {
-                        tMissingFieldsMessage += "Question text";
+                        tMissingFieldsMessage += GlobalStrings.QuestionText;
                     }
                     else
                     {
-                        tMissingFieldsMessage += "Question type";
+                        tMissingFieldsMessage += GlobalStrings.QuestionType;
                     }
-                    MessageBox.Show($"The following fields must have proper values: {tMissingFieldsMessage}", "Missing fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"{GlobalStrings.MissingFields} {tMissingFieldsMessage}", GlobalStrings.RequiredFields, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -238,7 +236,7 @@ namespace Survey_Configurator.Sub_forms
                     string tQuestionText = QuestionTextBox.Text;
                     int tQuestionOrder = (int)QuestionOrderNumeric.Value;
                     //get the enum value of the question type
-                    QuestionType tQuestionType = (QuestionType)QuestionTypeComboBox.SelectedItem;
+                    QuestionType tQuestionType = (QuestionType)QuestionTypeComboBox.SelectedIndex;
                     //encapsulate obtained data in a question object
                     Question tNewQuestionData = new Question(QuestionId, tQuestionText, tQuestionOrder, tQuestionType);
 
@@ -278,17 +276,17 @@ namespace Survey_Configurator.Sub_forms
                     string tMissingFieldsMessage = "";
                     if (QuestionTextBox.Text.Length == 0 && QuestionTypeComboBox.SelectedItem == null)
                     {
-                        tMissingFieldsMessage += "Question text, Question type ";
+                        tMissingFieldsMessage += $"{GlobalStrings.QuestionText}, {GlobalStrings.QuestionType}";
                     }
                     else if (QuestionTextBox.Text.Length == 0)
                     {
-                        tMissingFieldsMessage += "Question text";
+                        tMissingFieldsMessage += GlobalStrings.QuestionText;
                     }
                     else
                     {
-                        tMissingFieldsMessage += "Question type";
+                        tMissingFieldsMessage += GlobalStrings.QuestionType;
                     }
-                    MessageBox.Show($"The following fields must have proper values: {tMissingFieldsMessage}", "Missing fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"{GlobalStrings.MissingFields} {tMissingFieldsMessage}", GlobalStrings.RequiredFields, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -309,7 +307,7 @@ namespace Survey_Configurator.Sub_forms
         {
             try
             {
-                DialogResult tCancelCreateQuestion = MessageBox.Show("Any changes made won't be saved.", "Cancel Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult tCancelCreateQuestion = MessageBox.Show(GlobalStrings.CancelOperation, GlobalStrings.CancelOperationTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (tCancelCreateQuestion == DialogResult.Yes)
                 {
                     Close();
@@ -332,7 +330,8 @@ namespace Survey_Configurator.Sub_forms
             try
             {
                 HideQuesitonOptionsPanel();
-                switch (QuestionTypeComboBox.SelectedItem)
+                QuestionType tSelectedItemValue = (QuestionType)QuestionTypeComboBox.SelectedIndex;
+                switch (tSelectedItemValue)
                 {
                     case QuestionType.Stars:
                         AddStarsOptions();
@@ -435,6 +434,7 @@ namespace Survey_Configurator.Sub_forms
                 MainScreen.ShowDefaultErrorMessage();
             }
         }
+
         #endregion
     }
 }

@@ -45,7 +45,7 @@
             resources.ApplyResources(QuestionTypeComboBox, "QuestionTypeComboBox");
             QuestionTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             QuestionTypeComboBox.FormattingEnabled = true;
-            QuestionTypeComboBox.Items.AddRange(new object[] { resources.GetObject("QuestionTypeComboBox.Items"), resources.GetObject("QuestionTypeComboBox.Items1"), resources.GetObject("QuestionTypeComboBox.Items2") });
+            QuestionTypeComboBox.Items.AddRange(new object[] { resources.GetString("QuestionTypeComboBox.Items"), resources.GetString("QuestionTypeComboBox.Items1"), resources.GetString("QuestionTypeComboBox.Items2") });
             QuestionTypeComboBox.Name = "QuestionTypeComboBox";
             QuestionTypeComboBox.SelectedIndexChanged += QuestionTypeComboBox_SelectedIndexChanged;
             // 

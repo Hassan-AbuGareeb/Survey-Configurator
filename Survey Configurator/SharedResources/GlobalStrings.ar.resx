@@ -123,11 +123,23 @@
   <data name="AddQuestion" xml:space="preserve">
     <value>إضافة سؤال</value>
   </data>
+  <data name="CancelOperation" xml:space="preserve">
+    <value>لن يتم الإحتفاظ بأية تعديلات تم القيام بها</value>
+  </data>
+  <data name="CancelOperationTitle" xml:space="preserve">
+    <value>إلغاء العملية</value>
+  </data>
   <data name="DataFetchingError" xml:space="preserve">
     <value>حدث خطأ اثناء تحميل البيانات, قم بإعادة تشغيل البرنامج اذا تكرر حدوث هذا الخطأ</value>
   </data>
   <data name="DataFetchingErrorTitle" xml:space="preserve">
     <value>خطأ في تحميل البيانات</value>
+  </data>
+  <data name="DeleteOperationTitle" xml:space="preserve">
+    <value>حذف سؤال</value>
+  </data>
+  <data name="DeleteQuestionConfirm" xml:space="preserve">
+    <value>هل أنت متأكد من تنفيذ عملية الحذف؟</value>
   </data>
   <data name="EditOperation" xml:space="preserve">
     <value>تعديل</value>
@@ -138,11 +150,29 @@
   <data name="Error" xml:space="preserve">
     <value>خطأ</value>
   </data>
+  <data name="MissingFields" xml:space="preserve">
+    <value>الحقول التالية مطلوبة:</value>
+  </data>
   <data name="OperationError" xml:space="preserve">
     <value>فشلت العملية</value>
   </data>
   <data name="OperationErrorTitle" xml:space="preserve">
     <value>فشلت العملية, قم بإعادة المحاولة مرة اخرى</value>
+  </data>
+  <data name="OperationSuccessful" xml:space="preserve">
+    <value>!تمت العملية بنجاح</value>
+  </data>
+  <data name="OperationSuccessfulTitle" xml:space="preserve">
+    <value>نجحت العملية</value>
+  </data>
+  <data name="QuestionText" xml:space="preserve">
+    <value>نص السؤال</value>
+  </data>
+  <data name="QuestionType" xml:space="preserve">
+    <value>نوع السؤال</value>
+  </data>
+  <data name="RequiredFields" xml:space="preserve">
+    <value>حقول مطلوبة</value>
   </data>
   <data name="SqlError" xml:space="preserve">
     <value>خطأ متعلق بقاعدة البيانات, اطلب المساعدة من مشرف النظام</value>

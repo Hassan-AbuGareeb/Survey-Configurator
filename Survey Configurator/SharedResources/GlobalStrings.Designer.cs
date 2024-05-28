@@ -79,6 +79,24 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Any changes made won&apos;t be saved.
+        /// </summary>
+        public static string CancelOperation {
+            get {
+                return ResourceManager.GetString("CancelOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel Operation.
+        /// </summary>
+        public static string CancelOperationTitle {
+            get {
+                return ResourceManager.GetString("CancelOperationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occured while loading data please try again.\nif you keep getting this error restart the app.
         /// </summary>
         public static string DataFetchingError {
@@ -93,6 +111,24 @@ namespace SharedResources {
         public static string DataFetchingErrorTitle {
             get {
                 return ResourceManager.GetString("DataFetchingErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete question.
+        /// </summary>
+        public static string DeleteOperationTitle {
+            get {
+                return ResourceManager.GetString("DeleteOperationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete the selected questions?.
+        /// </summary>
+        public static string DeleteQuestionConfirm {
+            get {
+                return ResourceManager.GetString("DeleteQuestionConfirm", resourceCulture);
             }
         }
         
@@ -124,6 +160,15 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The following fields must have proper values:.
+        /// </summary>
+        public static string MissingFields {
+            get {
+                return ResourceManager.GetString("MissingFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operation Error.
         /// </summary>
         public static string OperationError {
@@ -138,6 +183,51 @@ namespace SharedResources {
         public static string OperationErrorTitle {
             get {
                 return ResourceManager.GetString("OperationErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operation completed successfully!.
+        /// </summary>
+        public static string OperationSuccessful {
+            get {
+                return ResourceManager.GetString("OperationSuccessful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operation successful.
+        /// </summary>
+        public static string OperationSuccessfulTitle {
+            get {
+                return ResourceManager.GetString("OperationSuccessfulTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question text.
+        /// </summary>
+        public static string QuestionText {
+            get {
+                return ResourceManager.GetString("QuestionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question type.
+        /// </summary>
+        public static string QuestionType {
+            get {
+                return ResourceManager.GetString("QuestionType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing fields.
+        /// </summary>
+        public static string RequiredFields {
+            get {
+                return ResourceManager.GetString("RequiredFields", resourceCulture);
             }
         }
         
