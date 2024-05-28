@@ -128,7 +128,7 @@
     <value>عدد الوجوه المبتسمة:</value>
   </data>
   <data name="NumberOfSmileysNumeric.Location" type="System.Drawing.Point, System.Drawing">
-    <value>576, 4</value>
+    <value>608, 4</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="NumberOfSmileysNumeric.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">

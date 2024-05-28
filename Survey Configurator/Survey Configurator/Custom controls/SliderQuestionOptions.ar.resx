@@ -123,7 +123,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="SliderEndValueCaptionText.Location" type="System.Drawing.Point, System.Drawing">
-    <value>671, 140</value>
+    <value>703, 140</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="SliderEndValueCaptionText.TabIndex" type="System.Int32, mscorlib">
@@ -136,7 +136,7 @@
     <value>None</value>
   </data>
   <data name="SliderStartValueCaptionText.Location" type="System.Drawing.Point, System.Drawing">
-    <value>671, 95</value>
+    <value>703, 95</value>
   </data>
   <data name="SliderStartValueCaptionText.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -178,7 +178,7 @@
     <value>None</value>
   </data>
   <data name="SliderEndValueNumeric.Location" type="System.Drawing.Point, System.Drawing">
-    <value>671, 51</value>
+    <value>703, 51</value>
   </data>
   <data name="SliderEndValueNumeric.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -217,7 +217,7 @@
     <value>None</value>
   </data>
   <data name="SliderStartValueNumeric.Location" type="System.Drawing.Point, System.Drawing">
-    <value>671, 7</value>
+    <value>703, 4</value>
   </data>
   <data name="SliderStartValueNumeric.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>

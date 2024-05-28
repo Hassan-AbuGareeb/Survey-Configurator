@@ -119,7 +119,7 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="NumberOfStarsNumeric.Location" type="System.Drawing.Point, System.Drawing">
-    <value>400, 4</value>
+    <value>430, 4</value>
   </data>
   <data name="NumberOfStarsLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>884, 6</value>
