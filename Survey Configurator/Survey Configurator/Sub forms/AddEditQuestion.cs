@@ -14,6 +14,7 @@ namespace Survey_Configurator.Sub_forms
         /// to be edited
         /// </summary>
 
+
         //the id of the question to be edited
         private static int QuestionId;
         //current operation add/edit
@@ -23,6 +24,8 @@ namespace Survey_Configurator.Sub_forms
         private StarsQuestionOptions StarsQuestionOptionsPanel;
         private SmileyQuestionOptions SmileyQuestionOptionsPanel;
         private SliderQuestionOptions SliderQuestionOptionsPanel;
+        //location of the question options panel
+        private Point QuestionOptionsPanelLocation = new Point(12, 175);
 
         /// <summary>
         /// add operation constructor, assign the AddButton click function
@@ -33,15 +36,15 @@ namespace Survey_Configurator.Sub_forms
             try
             {
                 InitializeComponent();
-                Text = "Add question";
-                OperationButton.Text = "Add";
-                Operation = "Add";
+                Text = GlobalStrings.AddQuestion;
+                OperationButton.Text = GlobalStrings.AddOperation;
+                Operation = GlobalStrings.AddOperation;
                 OperationButton.Click += AddButton_Click;
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An UnExpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MainScreen.ShowDefaultErrorMessage();
             }
         }
 
@@ -56,16 +59,15 @@ namespace Survey_Configurator.Sub_forms
             {
                 InitializeComponent();
                 QuestionId = pQuestionId;
-                Text = "Edit question";
-                OperationButton.Text = "Edit";
-                Operation = "Edit";
+                Text = GlobalStrings.EditQuestion;
+                OperationButton.Text = GlobalStrings.EditOperation;
+                Operation = GlobalStrings.EditOperation;
                 OperationButton.Click += EditButton_Click;
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An UnExpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                MainScreen.ShowDefaultErrorMessage();
             }
         }
 
@@ -83,15 +85,14 @@ namespace Survey_Configurator.Sub_forms
             {
                 //to prevent any interruption in adding/updating
                 QuestionOperations.OperationOngoing = true;
-
                 //check if the operation is edit and fill the fields with selected question data
-                if (Operation == "Edit")
+                if (Operation == GlobalStrings.EditOperation)
                 {
                     Question tGeneralQuestionData = QuestionOperations.GetQuestionData(QuestionId);
                     //extract question data an add it to UI
                     QuestionTextBox.Text = tGeneralQuestionData.Text;
                     QuestionOrderNumeric.Value = tGeneralQuestionData.Order;
-                    QuestionTypeComboBox.SelectedItem = tGeneralQuestionData.Type;
+                    QuestionTypeComboBox.SelectedIndex = (int) tGeneralQuestionData.Type;
 
                     //based on the combobox value further data about the question should be obtained and added to UI
 
@@ -120,7 +121,7 @@ namespace Survey_Configurator.Sub_forms
                     }
                     else
                     {
-                        MessageBox.Show("An Unkown error occure", "Unkown error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(tQuestionSpecificDataResult.ErrorMessage, tQuestionSpecificDataResult.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Close();
                     }
                 }
@@ -128,7 +129,7 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show($"{ex.GetType().FullName}, {ex.StackTrace}");
+                MainScreen.ShowDefaultErrorMessage();
                 Close();
             }
         }
@@ -154,7 +155,7 @@ namespace Survey_Configurator.Sub_forms
                     string tQuestionText = QuestionTextBox.Text;
                     int tQuestionOrder = (int)QuestionOrderNumeric.Value;
                     //get the enum value of the question type
-                    QuestionType tQuestionType = (QuestionType)QuestionTypeComboBox.SelectedItem;
+                    QuestionType tQuestionType = (QuestionType)QuestionTypeComboBox.SelectedIndex;
                     //encapsulate obtained data in a question object
                     Question tNewQuestionData = new Question(tQuestionText, tQuestionOrder, tQuestionType);
 
@@ -183,7 +184,7 @@ namespace Survey_Configurator.Sub_forms
                     }
                     if (tQuestionAddedResult != null && !tQuestionAddedResult.IsSuccess)
                     {
-                        MessageBox.Show("An error occured while adding the question", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(tQuestionAddedResult.ErrorMessage, tQuestionAddedResult.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     //close form
                     Close();
@@ -194,23 +195,23 @@ namespace Survey_Configurator.Sub_forms
                     string tMissingFieldsMessage = "";
                     if (QuestionTextBox.Text.Length == 0 && QuestionTypeComboBox.SelectedItem == null)
                     {
-                        tMissingFieldsMessage += "Question text, Question type ";
+                        tMissingFieldsMessage += $"{GlobalStrings.QuestionText}, {GlobalStrings.QuestionType}";
                     }
                     else if (QuestionTextBox.Text.Length == 0)
                     {
-                        tMissingFieldsMessage += "Question text";
+                        tMissingFieldsMessage += GlobalStrings.QuestionText;
                     }
                     else
                     {
-                        tMissingFieldsMessage += "Question type";
+                        tMissingFieldsMessage += GlobalStrings.QuestionType;
                     }
-                    MessageBox.Show($"The following fields must have proper values: {tMissingFieldsMessage}", "Missing fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"{GlobalStrings.MissingFields} {tMissingFieldsMessage}", GlobalStrings.RequiredFields, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show($"{ex.GetType().FullName}, {ex.StackTrace}");
+                MainScreen.ShowDefaultErrorMessage();
                 Close();
             }
         }
@@ -235,7 +236,7 @@ namespace Survey_Configurator.Sub_forms
                     string tQuestionText = QuestionTextBox.Text;
                     int tQuestionOrder = (int)QuestionOrderNumeric.Value;
                     //get the enum value of the question type
-                    QuestionType tQuestionType = (QuestionType)QuestionTypeComboBox.SelectedItem;
+                    QuestionType tQuestionType = (QuestionType)QuestionTypeComboBox.SelectedIndex;
                     //encapsulate obtained data in a question object
                     Question tNewQuestionData = new Question(QuestionId, tQuestionText, tQuestionOrder, tQuestionType);
 
@@ -265,7 +266,7 @@ namespace Survey_Configurator.Sub_forms
                     }
                     if (tQuestionUpdatedResult != null && !tQuestionUpdatedResult.IsSuccess)
                     {
-                        MessageBox.Show("An error occured while adding the question", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(tQuestionUpdatedResult.ErrorMessage, tQuestionUpdatedResult.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     Close();
                 }
@@ -275,23 +276,23 @@ namespace Survey_Configurator.Sub_forms
                     string tMissingFieldsMessage = "";
                     if (QuestionTextBox.Text.Length == 0 && QuestionTypeComboBox.SelectedItem == null)
                     {
-                        tMissingFieldsMessage += "Question text, Question type ";
+                        tMissingFieldsMessage += $"{GlobalStrings.QuestionText}, {GlobalStrings.QuestionType}";
                     }
                     else if (QuestionTextBox.Text.Length == 0)
                     {
-                        tMissingFieldsMessage += "Question text";
+                        tMissingFieldsMessage += GlobalStrings.QuestionText;
                     }
                     else
                     {
-                        tMissingFieldsMessage += "Question type";
+                        tMissingFieldsMessage += GlobalStrings.QuestionType;
                     }
-                    MessageBox.Show($"The following fields must have proper values: {tMissingFieldsMessage}", "Missing fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"{GlobalStrings.MissingFields} {tMissingFieldsMessage}", GlobalStrings.RequiredFields, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show($"{ex.GetType().FullName}, {ex.StackTrace}");
+                MainScreen.ShowDefaultErrorMessage();
                 Close();
             }
         }
@@ -306,7 +307,7 @@ namespace Survey_Configurator.Sub_forms
         {
             try
             {
-                DialogResult tCancelCreateQuestion = MessageBox.Show("Any changes made won't be saved.", "Cancel Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult tCancelCreateQuestion = MessageBox.Show(GlobalStrings.CancelOperation, GlobalStrings.CancelOperationTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (tCancelCreateQuestion == DialogResult.Yes)
                 {
                     Close();
@@ -315,7 +316,7 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An Unexpected error occured", "Error");
+                MainScreen.ShowDefaultErrorMessage();
             }
         }
 
@@ -329,7 +330,8 @@ namespace Survey_Configurator.Sub_forms
             try
             {
                 HideQuesitonOptionsPanel();
-                switch (QuestionTypeComboBox.SelectedItem)
+                QuestionType tSelectedItemValue = (QuestionType)QuestionTypeComboBox.SelectedIndex;
+                switch (tSelectedItemValue)
                 {
                     case QuestionType.Stars:
                         AddStarsOptions();
@@ -345,7 +347,7 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("Question type error", "Type error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MainScreen.ShowDefaultErrorMessage();
             }
         }
 
@@ -364,7 +366,7 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An unexpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MainScreen.ShowDefaultErrorMessage();
             }
         }
 
@@ -381,13 +383,13 @@ namespace Survey_Configurator.Sub_forms
             {
                 //StarsQuestionOptionsPanel.Show();
                 StarsQuestionOptionsPanel = new StarsQuestionOptions();
-                StarsQuestionOptionsPanel.Location = new Point(12, 175);
+                StarsQuestionOptionsPanel.Location = QuestionOptionsPanelLocation;
                 Controls.Add(StarsQuestionOptionsPanel);
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An unexpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MainScreen.ShowDefaultErrorMessage();
             }
         }
         private void AddSmileysOptions()
@@ -395,13 +397,13 @@ namespace Survey_Configurator.Sub_forms
             try
             {
                 SmileyQuestionOptionsPanel= new SmileyQuestionOptions();
-                SmileyQuestionOptionsPanel.Location = new Point(12, 175);
+                SmileyQuestionOptionsPanel.Location = QuestionOptionsPanelLocation;
                 Controls.Add(SmileyQuestionOptionsPanel);
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An unexpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MainScreen.ShowDefaultErrorMessage();
             }
         }
         private void AddSliderOptions()
@@ -409,13 +411,13 @@ namespace Survey_Configurator.Sub_forms
             try
             {
                 SliderQuestionOptionsPanel= new SliderQuestionOptions();
-                SliderQuestionOptionsPanel.Location = new Point(12, 175);
+                SliderQuestionOptionsPanel.Location = QuestionOptionsPanelLocation;
                 Controls.Add(SliderQuestionOptionsPanel);
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An unexpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MainScreen.ShowDefaultErrorMessage();
             }
         }
         private void HideQuesitonOptionsPanel()
@@ -429,7 +431,7 @@ namespace Survey_Configurator.Sub_forms
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                MessageBox.Show("An unexpected error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MainScreen.ShowDefaultErrorMessage();
             }
         }
 

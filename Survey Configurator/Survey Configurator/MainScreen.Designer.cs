@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainScreen));
             DeleteQuestionButton = new Button();
             EditQuestionButton = new Button();
             AddQuestionButton = new Button();
@@ -38,6 +39,9 @@
             fontSize9StripMenuItem = new ToolStripMenuItem();
             fontSize12StripMenuItem = new ToolStripMenuItem();
             fontSize15StripMenuItem = new ToolStripMenuItem();
+            languageToolStripMenuItem = new ToolStripMenuItem();
+            EnglishToolStripMenuItem = new ToolStripMenuItem();
+            ArabicToolStripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             openManualToolStripMenuItem = new ToolStripMenuItem();
             QuestionsListView = new ListView();
@@ -49,118 +53,100 @@
             // 
             // DeleteQuestionButton
             // 
-            DeleteQuestionButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            DeleteQuestionButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            DeleteQuestionButton.Enabled = false;
-            DeleteQuestionButton.Font = new Font("Microsoft Sans Serif", 9F);
-            DeleteQuestionButton.Location = new Point(1138, 711);
+            resources.ApplyResources(DeleteQuestionButton, "DeleteQuestionButton");
             DeleteQuestionButton.Name = "DeleteQuestionButton";
-            DeleteQuestionButton.Size = new Size(100, 30);
-            DeleteQuestionButton.TabIndex = 4;
-            DeleteQuestionButton.Text = "Delete";
             DeleteQuestionButton.UseVisualStyleBackColor = true;
             DeleteQuestionButton.Click += DeleteQuestionButton_Click;
             // 
             // EditQuestionButton
             // 
-            EditQuestionButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            EditQuestionButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            EditQuestionButton.Enabled = false;
-            EditQuestionButton.Font = new Font("Microsoft Sans Serif", 9F);
-            EditQuestionButton.Location = new Point(1032, 711);
+            resources.ApplyResources(EditQuestionButton, "EditQuestionButton");
             EditQuestionButton.Name = "EditQuestionButton";
-            EditQuestionButton.Size = new Size(100, 30);
-            EditQuestionButton.TabIndex = 3;
-            EditQuestionButton.Text = "Edit";
             EditQuestionButton.UseVisualStyleBackColor = true;
             EditQuestionButton.Click += EditQuestionButton_Click;
             // 
             // AddQuestionButton
             // 
-            AddQuestionButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            AddQuestionButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            AddQuestionButton.Font = new Font("Microsoft Sans Serif", 9F);
-            AddQuestionButton.Location = new Point(926, 711);
+            resources.ApplyResources(AddQuestionButton, "AddQuestionButton");
             AddQuestionButton.Name = "AddQuestionButton";
-            AddQuestionButton.Size = new Size(100, 30);
-            AddQuestionButton.TabIndex = 2;
-            AddQuestionButton.Text = "Add";
             AddQuestionButton.UseVisualStyleBackColor = true;
             AddQuestionButton.Click += AddQuestionButton_Click;
             // 
             // menuStrip1
             // 
-            menuStrip1.AutoSize = false;
+            resources.ApplyResources(menuStrip1, "menuStrip1");
             menuStrip1.BackColor = SystemColors.ButtonFace;
-            menuStrip1.Font = new Font("Segoe UI", 10F);
             menuStrip1.ImageScalingSize = new Size(20, 20);
             menuStrip1.Items.AddRange(new ToolStripItem[] { optionsToolStripMenuItem, helpToolStripMenuItem });
-            menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1250, 36);
-            menuStrip1.TabIndex = 5;
-            menuStrip1.Text = "menuStrip1";
             // 
             // optionsToolStripMenuItem
             // 
-            optionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fontSizeToolStripMenuItem });
+            resources.ApplyResources(optionsToolStripMenuItem, "optionsToolStripMenuItem");
+            optionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fontSizeToolStripMenuItem, languageToolStripMenuItem });
             optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            optionsToolStripMenuItem.Size = new Size(84, 32);
-            optionsToolStripMenuItem.Text = "Options";
             // 
             // fontSizeToolStripMenuItem
             // 
+            resources.ApplyResources(fontSizeToolStripMenuItem, "fontSizeToolStripMenuItem");
             fontSizeToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fontSize9StripMenuItem, fontSize12StripMenuItem, fontSize15StripMenuItem });
             fontSizeToolStripMenuItem.Name = "fontSizeToolStripMenuItem";
-            fontSizeToolStripMenuItem.Size = new Size(161, 28);
-            fontSizeToolStripMenuItem.Text = "Font size";
             // 
             // fontSize9StripMenuItem
             // 
+            resources.ApplyResources(fontSize9StripMenuItem, "fontSize9StripMenuItem");
             fontSize9StripMenuItem.Name = "fontSize9StripMenuItem";
-            fontSize9StripMenuItem.Size = new Size(112, 28);
-            fontSize9StripMenuItem.Text = "9";
             fontSize9StripMenuItem.Click += toolStripMenuItem2_Click;
             // 
             // fontSize12StripMenuItem
             // 
+            resources.ApplyResources(fontSize12StripMenuItem, "fontSize12StripMenuItem");
             fontSize12StripMenuItem.Name = "fontSize12StripMenuItem";
-            fontSize12StripMenuItem.Size = new Size(112, 28);
-            fontSize12StripMenuItem.Text = "12";
             fontSize12StripMenuItem.Click += toolStripMenuItem3_Click;
             // 
             // fontSize15StripMenuItem
             // 
+            resources.ApplyResources(fontSize15StripMenuItem, "fontSize15StripMenuItem");
             fontSize15StripMenuItem.Name = "fontSize15StripMenuItem";
-            fontSize15StripMenuItem.Size = new Size(112, 28);
-            fontSize15StripMenuItem.Text = "15";
             fontSize15StripMenuItem.Click += toolStripMenuItem4_Click;
+            // 
+            // languageToolStripMenuItem
+            // 
+            resources.ApplyResources(languageToolStripMenuItem, "languageToolStripMenuItem");
+            languageToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { EnglishToolStripMenuItem, ArabicToolStripMenuItem });
+            languageToolStripMenuItem.Name = "languageToolStripMenuItem";
+            // 
+            // EnglishToolStripMenuItem
+            // 
+            resources.ApplyResources(EnglishToolStripMenuItem, "EnglishToolStripMenuItem");
+            EnglishToolStripMenuItem.Name = "EnglishToolStripMenuItem";
+            EnglishToolStripMenuItem.Click += EnglishToolStripMenuItem_Click;
+            // 
+            // ArabicToolStripMenuItem
+            // 
+            resources.ApplyResources(ArabicToolStripMenuItem, "ArabicToolStripMenuItem");
+            ArabicToolStripMenuItem.Name = "ArabicToolStripMenuItem";
+            ArabicToolStripMenuItem.Click += ArabicToolStripMenuItem_Click;
             // 
             // helpToolStripMenuItem
             // 
+            resources.ApplyResources(helpToolStripMenuItem, "helpToolStripMenuItem");
             helpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { openManualToolStripMenuItem });
             helpToolStripMenuItem.Margin = new Padding(10, 0, 0, 0);
             helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            helpToolStripMenuItem.Size = new Size(59, 32);
-            helpToolStripMenuItem.Text = "Help";
             // 
             // openManualToolStripMenuItem
             // 
+            resources.ApplyResources(openManualToolStripMenuItem, "openManualToolStripMenuItem");
             openManualToolStripMenuItem.Name = "openManualToolStripMenuItem";
-            openManualToolStripMenuItem.Size = new Size(198, 28);
-            openManualToolStripMenuItem.Text = "Open manual";
             // 
             // QuestionsListView
             // 
-            QuestionsListView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            resources.ApplyResources(QuestionsListView, "QuestionsListView");
             QuestionsListView.Columns.AddRange(new ColumnHeader[] { QuestionOrder, QuestionText, QuestionType });
-            QuestionsListView.Font = new Font("Segoe UI", 12F);
             QuestionsListView.FullRowSelect = true;
-            QuestionsListView.Location = new Point(12, 39);
             QuestionsListView.Name = "QuestionsListView";
-            QuestionsListView.Size = new Size(1226, 666);
             QuestionsListView.Sorting = SortOrder.Ascending;
-            QuestionsListView.TabIndex = 6;
             QuestionsListView.UseCompatibleStateImageBehavior = false;
             QuestionsListView.View = View.Details;
             QuestionsListView.ColumnClick += QuestionsListView_ColumnClick;
@@ -168,34 +154,27 @@
             // 
             // QuestionOrder
             // 
-            QuestionOrder.Text = "Order";
-            QuestionOrder.Width = 100;
+            resources.ApplyResources(QuestionOrder, "QuestionOrder");
             // 
             // QuestionText
             // 
-            QuestionText.Text = "Text";
-            QuestionText.Width = 800;
+            resources.ApplyResources(QuestionText, "QuestionText");
             // 
             // QuestionType
             // 
-            QuestionType.Text = "Type";
-            QuestionType.Width = 322;
+            resources.ApplyResources(QuestionType, "QuestionType");
             // 
             // MainScreen
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1250, 753);
             Controls.Add(QuestionsListView);
             Controls.Add(DeleteQuestionButton);
             Controls.Add(EditQuestionButton);
             Controls.Add(AddQuestionButton);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
-            MinimumSize = new Size(1000, 800);
             Name = "MainScreen";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "Survey Configurator";
             WindowState = FormWindowState.Maximized;
             Load += MainScreen_Load;
             menuStrip1.ResumeLayout(false);
@@ -220,5 +199,8 @@
         private ColumnHeader QuestionOrder;
         private ColumnHeader QuestionText;
         private ColumnHeader QuestionType;
+        private ToolStripMenuItem languageToolStripMenuItem;
+        private ToolStripMenuItem EnglishToolStripMenuItem;
+        private ToolStripMenuItem ArabicToolStripMenuItem;
     }
 }

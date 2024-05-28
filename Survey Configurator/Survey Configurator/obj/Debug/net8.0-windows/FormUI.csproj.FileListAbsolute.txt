@@ -47,7 +47,6 @@ D:\Survey Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-
 D:\Survey Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows\QuestionServices.dll
 D:\Survey Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows\SharedResources.dll
 D:\Survey Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows\QuestionServices.pdb
-D:\Survey Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows\QuestionServices.dll.config
 D:\Survey Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows\SharedResources.pdb
 D:\Survey Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows\QuestionDB.pdb
 D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\FormUI.csproj.AssemblyReference.cache
@@ -72,3 +71,19 @@ D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-
 D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey_Configurator.Custom_controls.SliderQuestionOptions.resources
 D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey_Configurator.Custom_controls.SmileyQuestionOptions.resources
 D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey_Configurator.Custom_controls.StarsQuestionOptions.resources
+D:\Survey Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows\ar\FormUI.resources.dll
+D:\Survey Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows\en\FormUI.resources.dll
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey_Configurator.MainScreen.ar.resources
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey_Configurator.MainScreen.en.resources
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\ar\FormUI.resources.dll
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\en\FormUI.resources.dll
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey_Configurator.Custom_controls.SliderQuestionOptions.ar.resources
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey_Configurator.Custom_controls.SliderQuestionOptions.en.resources
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey_Configurator.Custom_controls.SmileyQuestionOptions.ar.resources
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey_Configurator.Custom_controls.SmileyQuestionOptions.en.resources
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey_Configurator.Custom_controls.StarsQuestionOptions.ar.resources
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey_Configurator.Custom_controls.StarsQuestionOptions.en.resources
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey_Configurator.Sub_forms.AddEditQuestion.ar.resources
+D:\Survey Configurator\Survey Configurator\Survey Configurator\obj\Debug\net8.0-windows\Survey_Configurator.Sub_forms.AddEditQuestion.en.resources
+D:\Survey Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows\FormUI.dll.config
+D:\Survey Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows\ar\SharedResources.resources.dll

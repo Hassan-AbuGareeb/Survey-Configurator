@@ -28,42 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            NumberOfSmileysNumeric = new NumericUpDown();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SmileyQuestionOptions));
             NumberOfSmileysLabel = new Label();
+            NumberOfSmileysNumeric = new NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)NumberOfSmileysNumeric).BeginInit();
             SuspendLayout();
             // 
+            // NumberOfSmileysLabel
+            // 
+            resources.ApplyResources(NumberOfSmileysLabel, "NumberOfSmileysLabel");
+            NumberOfSmileysLabel.Name = "NumberOfSmileysLabel";
+            // 
             // NumberOfSmileysNumeric
             // 
-            NumberOfSmileysNumeric.Anchor = AnchorStyles.Top;
-            NumberOfSmileysNumeric.Location = new Point(180, 0);
-            NumberOfSmileysNumeric.Margin = new Padding(3, 4, 3, 4);
+            resources.ApplyResources(NumberOfSmileysNumeric, "NumberOfSmileysNumeric");
             NumberOfSmileysNumeric.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
             NumberOfSmileysNumeric.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             NumberOfSmileysNumeric.Name = "NumberOfSmileysNumeric";
-            NumberOfSmileysNumeric.Size = new Size(386, 27);
-            NumberOfSmileysNumeric.TabIndex = 22;
             NumberOfSmileysNumeric.Value = new decimal(new int[] { 2, 0, 0, 0 });
-            // 
-            // NumberOfSmileysLabel
-            // 
-            NumberOfSmileysLabel.Anchor = AnchorStyles.Top;
-            NumberOfSmileysLabel.AutoSize = true;
-            NumberOfSmileysLabel.Font = new Font("Segoe UI", 9F);
-            NumberOfSmileysLabel.Location = new Point(3, 0);
-            NumberOfSmileysLabel.Name = "NumberOfSmileysLabel";
-            NumberOfSmileysLabel.Size = new Size(138, 20);
-            NumberOfSmileysLabel.TabIndex = 23;
-            NumberOfSmileysLabel.Text = "Number of Smileys:";
             // 
             // SmileyQuestionOptions
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(NumberOfSmileysNumeric);
             Controls.Add(NumberOfSmileysLabel);
             Name = "SmileyQuestionOptions";
-            Size = new Size(670, 35);
             Load += SmileyQuestionOptions_Load;
             ((System.ComponentModel.ISupportInitialize)NumberOfSmileysNumeric).EndInit();
             ResumeLayout(false);
@@ -71,8 +61,7 @@
         }
 
         #endregion
-
-        public NumericUpDown NumberOfSmileysNumeric;
         private Label NumberOfSmileysLabel;
+        public NumericUpDown NumberOfSmileysNumeric;
     }
 }

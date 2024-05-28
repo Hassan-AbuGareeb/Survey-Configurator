@@ -54,7 +54,7 @@ namespace DatabaseLayer
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, "Unable to connect to database, please refer to your system admin");
+                return new OperationResult(GlobalStrings.SqlErrorTitle, GlobalStrings.SqlError);
             }
         }
 
@@ -87,12 +87,12 @@ namespace DatabaseLayer
             catch(SqlException ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.SqlError, "An error occured while getting data, try again and if this error persists try restarting the app");
+                return new OperationResult(GlobalStrings.SqlErrorTitle, GlobalStrings.SqlError);
             }
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, "An unknown error occured");
+                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
             }
         }
 
@@ -140,7 +140,7 @@ namespace DatabaseLayer
             }catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, "An Unkown error occured");
+                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
             }
         }
 
@@ -208,7 +208,7 @@ namespace DatabaseLayer
                         {
                             tTransaction.Rollback();
                             UtilityMethods.LogError(ex);
-                            return new OperationResult(ErrorTypes.UnknownError, "An Unknown error occured");
+                            return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
                         }
 
                     }
@@ -217,12 +217,12 @@ namespace DatabaseLayer
             catch(SqlException ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.SqlError, "Database connection error, refer to your system admin");
+                return new OperationResult(GlobalStrings.SqlErrorTitle, GlobalStrings.SqlError);
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, "An Unknown error occured");
+                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);;
             }
         }
 
@@ -328,7 +328,7 @@ namespace DatabaseLayer
                         {
                             UtilityMethods.LogError(ex);
                             tTransaction.Rollback();
-                            return new OperationResult(ErrorTypes.UnknownError, "An Unknow error occured");
+                            return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
                         }
                     }
                 }
@@ -336,12 +336,12 @@ namespace DatabaseLayer
             catch(SqlException ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.SqlError, "Database connection error, refer to your system admin");
+                return new OperationResult(GlobalStrings.SqlErrorTitle, GlobalStrings.SqlError);
             }
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, "An Unkown error occured");
+                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
             }
         }
 
@@ -395,7 +395,7 @@ namespace DatabaseLayer
                         {
                             tTransaction.Rollback();
                             UtilityMethods.LogError(ex);
-                            return new OperationResult(ErrorTypes.UnknownError, "An Unknown error occured");
+                            return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
                         }
                     }
                 }
@@ -403,12 +403,12 @@ namespace DatabaseLayer
             catch(SqlException ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.SqlError, "Database connection error, please refer to your system admin");
+                return new OperationResult(GlobalStrings.SqlErrorTitle, GlobalStrings.SqlError);
             }
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, "An Unkown error occured");
+                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
             }
         }
         #endregion
@@ -581,7 +581,7 @@ namespace DatabaseLayer
                     SqlCommand tGetChecksum = new SqlCommand($"SELECT CHECKSUM_AGG(BINARY_CHECKSUM(*)) FROM {cQuestionsTableName} WITH (NOLOCK)", tConn);
                     var tChecksum = tGetChecksum.ExecuteScalar();
                     if (DBNull.Value.Equals(tChecksum))
-                        return new OperationResult(ErrorTypes.SqlError, "Database was just created");
+                        return new OperationResult(GlobalStrings.SqlErrorTitle, "Database was just created");
                     pChecksum = (int)tChecksum;
                     return new OperationResult();
                 }
@@ -589,7 +589,7 @@ namespace DatabaseLayer
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(ErrorTypes.UnknownError, "An Unkown error occured");
+                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
             }
         }
         #endregion

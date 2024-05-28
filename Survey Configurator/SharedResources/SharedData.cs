@@ -10,7 +10,7 @@ namespace SharedResources
         Slider=2
     }
 
-     public class SharedData
+    public class SharedData
     {
         /// <summary>
         /// this class contains resources used across the application layers
