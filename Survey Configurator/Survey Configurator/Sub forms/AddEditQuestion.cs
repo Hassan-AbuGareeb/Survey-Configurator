@@ -21,9 +21,9 @@ namespace Survey_Configurator.Sub_forms
         private static string Operation;
 
         //user-control questions objects
-        private StarsQuestionOptions StarsQuestionOptionsPanel;
-        private SmileyQuestionOptions SmileyQuestionOptionsPanel;
-        private SliderQuestionOptions SliderQuestionOptionsPanel;
+        private static StarsQuestionOptions StarsQuestionOptionsPanel;
+        private static SmileyQuestionOptions SmileyQuestionOptionsPanel;
+        private static SliderQuestionOptions SliderQuestionOptionsPanel;
         //location of the question options panel
         private Point QuestionOptionsPanelLocation = new Point(12, 85);
 
@@ -159,39 +159,42 @@ namespace Survey_Configurator.Sub_forms
                     //encapsulate obtained data in a question object
                     Question tNewQuestionData = new Question(tQuestionText, tQuestionOrder, tQuestionType);
 
-                    OperationResult tQuestionAddedResult = null;
-                    //add question to db and interface
-                    switch (tQuestionType)
-                    {
-                        //create a question object based on the chosen type and add it to the database
-                        case QuestionType.Stars:
-                            StarsQuestion tStarsData = new StarsQuestion(tNewQuestionData, (int)StarsQuestionOptionsPanel.NumberOfStarsNumeric.Value);
-                            tQuestionAddedResult = QuestionOperations.AddQuestion(tStarsData);
-                            break;
-                        case QuestionType.Smiley:
-                            SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)SmileyQuestionOptionsPanel.NumberOfSmileysNumeric.Value);
-                            tQuestionAddedResult = QuestionOperations.AddQuestion(tSmileyData);
-                            break;
-                        case QuestionType.Slider:
-                            SliderQuestion tSliderData = new SliderQuestion(
-                                tNewQuestionData,
-                                (int)SliderQuestionOptionsPanel.SliderStartValueNumeric.Value,
-                                (int)SliderQuestionOptionsPanel.SliderEndValueNumeric.Value,
-                                SliderQuestionOptionsPanel.SliderStartValueCaptionText.Text,
-                                SliderQuestionOptionsPanel.SliderEndValueCaptionText.Text);
-                            tQuestionAddedResult = QuestionOperations.AddQuestion(tSliderData);
-                            break;
-                    }
-                    if (tQuestionAddedResult != null && !tQuestionAddedResult.IsSuccess)
-                    {
-                        MessageBox.Show(tQuestionAddedResult.ErrorMessage, tQuestionAddedResult.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                    {
+                        
+                        //check validity of input
+                    bool tIsInputValid = ValidateInput(tQuestionType);
+                    if (tIsInputValid) 
+                    { 
+                            OperationResult tQuestionAddedResult = null;
+                        //add question to db and interface
+                        switch (tQuestionType)
+                        {
+                            //create a question object based on the chosen type and add it to the database
+                            case QuestionType.Stars:
+                                StarsQuestion tStarsData = new StarsQuestion(tNewQuestionData, (int)StarsQuestionOptionsPanel.NumberOfStarsNumeric.Value);
+                                tQuestionAddedResult = QuestionOperations.AddQuestion(tStarsData);
+                                break;
+                            case QuestionType.Smiley:
+                                SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)SmileyQuestionOptionsPanel.NumberOfSmileysNumeric.Value);
+                                tQuestionAddedResult = QuestionOperations.AddQuestion(tSmileyData);
+                                break;
+                            case QuestionType.Slider:
+                                SliderQuestion tSliderData = new SliderQuestion(
+                                    tNewQuestionData,
+                                    (int)SliderQuestionOptionsPanel.SliderStartValueNumeric.Value,
+                                    (int)SliderQuestionOptionsPanel.SliderEndValueNumeric.Value,
+                                    SliderQuestionOptionsPanel.SliderStartValueCaptionText.Text,
+                                    SliderQuestionOptionsPanel.SliderEndValueCaptionText.Text);
+                                tQuestionAddedResult = QuestionOperations.AddQuestion(tSliderData);
+                                break;
+                        }
 
+                        if (tQuestionAddedResult != null && !tQuestionAddedResult.IsSuccess)
+                        {
+                            MessageBox.Show(tQuestionAddedResult.ErrorMessage, tQuestionAddedResult.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        //close form
+                        Close();
                     }
-                    //close form
-                    Close();
                 }
                 else
                 {
@@ -244,8 +247,11 @@ namespace Survey_Configurator.Sub_forms
                     //encapsulate obtained data in a question object
                     Question tNewQuestionData = new Question(QuestionId, tQuestionText, tQuestionOrder, tQuestionType);
 
+                    bool tIsInputValid = ValidateInput(tQuestionType);
+                    if (tIsInputValid) { 
                     OperationResult tQuestionUpdatedResult = null;
                     //add question to db and interface
+
                     switch (tQuestionType)
                     {
                         //send question data to be updated
@@ -268,11 +274,12 @@ namespace Survey_Configurator.Sub_forms
                             break;
 
                     }
-                    if (tQuestionUpdatedResult != null && !tQuestionUpdatedResult.IsSuccess)
-                    {
-                        MessageBox.Show(tQuestionUpdatedResult.ErrorMessage, tQuestionUpdatedResult.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        if (tQuestionUpdatedResult != null && !tQuestionUpdatedResult.IsSuccess)
+                        {
+                            MessageBox.Show(tQuestionUpdatedResult.ErrorMessage, tQuestionUpdatedResult.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        Close();
                     }
-                    Close();
                 }
                 else
                 {
@@ -439,6 +446,32 @@ namespace Survey_Configurator.Sub_forms
             }
         }
 
-#endregion
+        #endregion
+
+        #region class utility functions
+
+        private static bool ValidateInput(QuestionType tQuestionType)
+        {
+            bool tInputIsValid = true;
+            switch (tQuestionType)
+            {
+                case QuestionType.Slider:
+                    tInputIsValid = ValidateSliderQuestionData();
+                    break;
+            }
+
+            return tInputIsValid;
+        }
+
+        private static bool ValidateSliderQuestionData()
+        {
+            if (SliderQuestionOptionsPanel.SliderStartValueNumeric.Value > SliderQuestionOptionsPanel.SliderEndValueNumeric.Value)
+            {
+                MessageBox.Show(GlobalStrings.SliderInvalidInput, GlobalStrings.InvalidInputTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+        }
+        #endregion
     }
 }

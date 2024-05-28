@@ -150,6 +150,9 @@
   <data name="Error" xml:space="preserve">
     <value>خطأ</value>
   </data>
+  <data name="InvalidInputTitle" xml:space="preserve">
+    <value>بينانات خاطئة</value>
+  </data>
   <data name="MissingFields" xml:space="preserve">
     <value>الحقول التالية مطلوبة:</value>
   </data>
@@ -173,6 +176,9 @@
   </data>
   <data name="RequiredFields" xml:space="preserve">
     <value>حقول مطلوبة</value>
+  </data>
+  <data name="SliderInvalidInput" xml:space="preserve">
+    <value>لا يمكن للقيمة العظمى ان تكون اصغر من القيمة الصغرى</value>
   </data>
   <data name="SqlError" xml:space="preserve">
     <value>خطأ متعلق بقاعدة البيانات, اطلب المساعدة من مشرف النظام</value>

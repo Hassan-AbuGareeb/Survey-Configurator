@@ -413,8 +413,13 @@ namespace Survey_Configurator
         {
             try
             {
-                ChangeAppLanguage(cEnglishLanguageSettings);
-                Application.Restart();
+                string tAppLanguage = ConfigurationManager.AppSettings[cLanguageSettginsKey];
+                if (tAppLanguage != cEnglishLanguageSettings)
+                { 
+
+                    ChangeAppLanguage(cEnglishLanguageSettings);
+                    Application.Restart();
+                }
             }
             catch (Exception ex)
             {
@@ -427,9 +432,12 @@ namespace Survey_Configurator
         {
             try
             {
-                ChangeAppLanguage(cArabicLanguageSettings);
-                Application.Restart();
-
+                string tAppLanguage = ConfigurationManager.AppSettings[cLanguageSettginsKey];
+                if(tAppLanguage != cArabicLanguageSettings) 
+                { 
+                    ChangeAppLanguage(cArabicLanguageSettings);
+                    Application.Restart();
+                }
             }
             catch (Exception ex)
             {

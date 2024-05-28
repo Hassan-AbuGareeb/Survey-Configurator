@@ -160,6 +160,15 @@ namespace SharedResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid input.
+        /// </summary>
+        public static string InvalidInputTitle {
+            get {
+                return ResourceManager.GetString("InvalidInputTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The following fields must have proper values:.
         /// </summary>
         public static string MissingFields {
@@ -228,6 +237,15 @@ namespace SharedResources {
         public static string RequiredFields {
             get {
                 return ResourceManager.GetString("RequiredFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start value cannot be greater than end value.
+        /// </summary>
+        public static string SliderInvalidInput {
+            get {
+                return ResourceManager.GetString("SliderInvalidInput", resourceCulture);
             }
         }
         

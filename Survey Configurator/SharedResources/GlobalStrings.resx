@@ -150,6 +150,9 @@
   <data name="Error" xml:space="preserve">
     <value>error</value>
   </data>
+  <data name="InvalidInputTitle" xml:space="preserve">
+    <value>Invalid input</value>
+  </data>
   <data name="MissingFields" xml:space="preserve">
     <value>The following fields must have proper values:</value>
   </data>
@@ -173,6 +176,9 @@
   </data>
   <data name="RequiredFields" xml:space="preserve">
     <value>Missing fields</value>
+  </data>
+  <data name="SliderInvalidInput" xml:space="preserve">
+    <value>Start value cannot be greater than end value</value>
   </data>
   <data name="SqlError" xml:space="preserve">
     <value>Database related error, refer to your system admin</value>
