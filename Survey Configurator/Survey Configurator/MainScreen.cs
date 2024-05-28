@@ -160,24 +160,7 @@ namespace Survey_Configurator
         {
             try
             {
-                OperationResult tIsDatabaseConnected = QuestionOperations.TestDBConnection();
-                if (tIsDatabaseConnected.IsSuccess)
-                {
-                    Question tSelectedQuestion = QuestionsListView.SelectedItems[0].Tag as Question;
-                    AddEditQuestion tAddForm = new AddEditQuestion(tSelectedQuestion.Id);
-                    DialogResult tQuestionEdited = tAddForm.ShowDialog();
-
-                    //disable delete and edit button
-                    if (tQuestionEdited != DialogResult.Cancel)
-                    {
-                        DeleteQuestionButton.Enabled = false;
-                        EditQuestionButton.Enabled = false;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(tIsDatabaseConnected.ErrorMessage, tIsDatabaseConnected.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                EditQuestion();
             }
             catch (Exception ex)
             {
@@ -349,6 +332,18 @@ namespace Survey_Configurator
             }
         }
 
+        private void QuestionsListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ListViewHitTestInfo tClickedQuestionInfo = QuestionsListView.HitTest(e.X, e.Y);
+            ListViewItem tSelectedQuestion = tClickedQuestionInfo.Item;
+
+            if (tSelectedQuestion != null)
+            {
+                EditQuestion();
+            }
+
+        }
+
         #region menu strip items functions
         /// <summary>
         /// these fucntions are concerned with the toolStrip menu
@@ -418,8 +413,13 @@ namespace Survey_Configurator
         {
             try
             {
-                ChangeAppLanguage(cEnglishLanguageSettings);
-                Application.Restart();
+                string tAppLanguage = ConfigurationManager.AppSettings[cLanguageSettginsKey];
+                if (tAppLanguage != cEnglishLanguageSettings)
+                { 
+
+                    ChangeAppLanguage(cEnglishLanguageSettings);
+                    Application.Restart();
+                }
             }
             catch (Exception ex)
             {
@@ -432,9 +432,12 @@ namespace Survey_Configurator
         {
             try
             {
-                ChangeAppLanguage(cArabicLanguageSettings);
-                Application.Restart();
-
+                string tAppLanguage = ConfigurationManager.AppSettings[cLanguageSettginsKey];
+                if(tAppLanguage != cArabicLanguageSettings) 
+                { 
+                    ChangeAppLanguage(cArabicLanguageSettings);
+                    Application.Restart();
+                }
             }
             catch (Exception ex)
             {
@@ -446,6 +449,39 @@ namespace Survey_Configurator
         #endregion
 
         #region class utility functions
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void EditQuestion()
+        {
+            try
+            {
+                OperationResult tIsDatabaseConnected = QuestionOperations.TestDBConnection();
+                if (tIsDatabaseConnected.IsSuccess)
+                {
+                    Question tSelectedQuestion = QuestionsListView.SelectedItems[0].Tag as Question;
+                    AddEditQuestion tAddForm = new AddEditQuestion(tSelectedQuestion.Id);
+                    DialogResult tQuestionEdited = tAddForm.ShowDialog();
+
+                    //disable delete and edit button
+                    if (tQuestionEdited != DialogResult.Cancel)
+                    {
+                        DeleteQuestionButton.Enabled = false;
+                        EditQuestionButton.Enabled = false;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(tIsDatabaseConnected.ErrorMessage, tIsDatabaseConnected.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
+        }
 
         /// <summary>
         /// initailaize the List view control with questions objects through the UpdateQuestionFunction
@@ -583,5 +619,6 @@ namespace Survey_Configurator
 
         #endregion
 
+        
     }
 }

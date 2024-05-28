@@ -64,7 +64,6 @@
             // SliderEndValueNumeric
             // 
             resources.ApplyResources(SliderEndValueNumeric, "SliderEndValueNumeric");
-            SliderEndValueNumeric.Minimum = new decimal(new int[] { 50, 0, 0, 0 });
             SliderEndValueNumeric.Name = "SliderEndValueNumeric";
             SliderEndValueNumeric.Value = new decimal(new int[] { 100, 0, 0, 0 });
             // 
@@ -81,7 +80,6 @@
             // SliderStartValueNumeric
             // 
             resources.ApplyResources(SliderStartValueNumeric, "SliderStartValueNumeric");
-            SliderStartValueNumeric.Maximum = new decimal(new int[] { 50, 0, 0, 0 });
             SliderStartValueNumeric.Name = "SliderStartValueNumeric";
             // 
             // SliderQuestionOptions
