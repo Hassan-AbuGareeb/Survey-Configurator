@@ -117,331 +117,376 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>MainScreen</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 20</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Survey Configurator</value>
+  </data>
   <data name="menuStrip1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 10pt</value>
   </data>
-  <data name="&gt;&gt;DeleteQuestionButton.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="AddQuestionButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>926, 711</value>
   </data>
-  <data name="DeleteQuestionButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 30</value>
+  <data name="AddQuestionButton.Text" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="EditQuestionButton.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+  <data name="DeleteQuestionButton.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
     <value>GrowAndShrink</value>
-  </data>
-  <data name="&gt;&gt;sqlCommandBuilder1.Name" xml:space="preserve">
-    <value>sqlCommandBuilder1</value>
   </data>
   <data name="&gt;&gt;EditQuestionButton.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;fontSizeToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;sqlCommandBuilder1.Name" xml:space="preserve">
+    <value>sqlCommandBuilder1</value>
+  </data>
+  <data name="EditQuestionButton.Text" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="&gt;&gt;helpToolStripMenuItem.Name" xml:space="preserve">
+    <value>helpToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="EnglishToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>224, 28</value>
+  </data>
+  <data name="&gt;&gt;helpToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;QuestionsListView.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="openManualToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>198, 28</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;العربيةToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;fontSize9StripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AddQuestionButton.Name" xml:space="preserve">
+    <value>AddQuestionButton</value>
+  </data>
+  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1250, 36</value>
+  </data>
+  <data name="&gt;&gt;DeleteQuestionButton.Name" xml:space="preserve">
+    <value>DeleteQuestionButton</value>
+  </data>
+  <data name="EditQuestionButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 30</value>
+  </data>
+  <data name="&gt;&gt;fontSize15StripMenuItem.Name" xml:space="preserve">
+    <value>fontSize15StripMenuItem</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="AddQuestionButton.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;QuestionsListView.Name" xml:space="preserve">
+    <value>QuestionsListView</value>
+  </data>
+  <data name="EditQuestionButton.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;EditQuestionButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DeleteQuestionButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 30</value>
+  </data>
+  <data name="AddQuestionButton.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="QuestionsListView.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="&gt;&gt;ArabicToolStripMenuItem.Name" xml:space="preserve">
+    <value>ArabicToolStripMenuItem</value>
+  </data>
+  <data name="fontSize12StripMenuItem.Text" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="QuestionsListView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1226, 666</value>
+  </data>
+  <data name="DeleteQuestionButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9pt</value>
+  </data>
+  <data name="&gt;&gt;fontSizeToolStripMenuItem.Name" xml:space="preserve">
+    <value>fontSizeToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;DeleteQuestionButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="menuStrip1.Text" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;QuestionOrder.Name" xml:space="preserve">
+    <value>QuestionOrder</value>
+  </data>
+  <data name="&gt;&gt;ArabicToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="QuestionsListView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 39</value>
+  </data>
+  <data name="&gt;&gt;sqlCommandBuilder1.Type" xml:space="preserve">
+    <value>Microsoft.Data.SqlClient.SqlCommandBuilder, Microsoft.Data.SqlClient, Culture=neutral, PublicKeyToken=23ec7fc2d6eaa4a5</value>
+  </data>
+  <data name="&gt;&gt;fontSize12StripMenuItem.Name" xml:space="preserve">
+    <value>fontSize12StripMenuItem</value>
+  </data>
+  <data name="menuStrip1.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;QuestionsListView.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="DeleteQuestionButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1138, 711</value>
+  </data>
+  <data name="&gt;&gt;العربيةToolStripMenuItem.Name" xml:space="preserve">
+    <value>العربيةToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;EditQuestionButton.Name" xml:space="preserve">
+    <value>EditQuestionButton</value>
+  </data>
+  <data name="&gt;&gt;QuestionOrder.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;QuestionText.Name" xml:space="preserve">
+    <value>QuestionText</value>
+  </data>
+  <data name="EditQuestionButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9pt</value>
+  </data>
+  <data name="fontSize15StripMenuItem.Text" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="EditQuestionButton.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="&gt;&gt;fontSize12StripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;openManualToolStripMenuItem.Name" xml:space="preserve">
     <value>openManualToolStripMenuItem</value>
   </data>
-  <data name="fontSize12StripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>112, 28</value>
+  <data name="optionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>84, 32</value>
   </data>
-  <data name="QuestionText.Text" xml:space="preserve">
-    <value>Text</value>
+  <data name="fontSize9StripMenuItem.Text" xml:space="preserve">
+    <value>9</value>
   </data>
-  <data name="&gt;&gt;openManualToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;englishToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="QuestionType.Width" type="System.Int32, mscorlib">
-    <value>322</value>
-  </data>
-  <data name="QuestionType.Text" xml:space="preserve">
-    <value>Type</value>
   </data>
   <data name="DeleteQuestionButton.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="&gt;&gt;optionsToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;EditQuestionButton.Name" xml:space="preserve">
-    <value>EditQuestionButton</value>
-  </data>
-  <data name="&gt;&gt;AddQuestionButton.Name" xml:space="preserve">
-    <value>AddQuestionButton</value>
-  </data>
-  <data name="optionsToolStripMenuItem.Text" xml:space="preserve">
-    <value>Options</value>
-  </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterScreen</value>
-  </data>
-  <data name="&gt;&gt;AddQuestionButton.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="helpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 32</value>
-  </data>
-  <data name="EditQuestionButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="AddQuestionButton.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowAndShrink</value>
-  </data>
-  <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="&gt;&gt;QuestionsListView.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="helpToolStripMenuItem.Text" xml:space="preserve">
-    <value>Help</value>
-  </data>
-  <data name="&gt;&gt;sqlCommandBuilder1.Type" xml:space="preserve">
-    <value>Microsoft.Data.SqlClient.SqlCommandBuilder, Microsoft.Data.SqlClient, Culture=neutral, PublicKeyToken=23ec7fc2d6eaa4a5</value>
-  </data>
-  <data name="QuestionOrder.Width" type="System.Int32, mscorlib">
-    <value>100</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;fontSize12StripMenuItem.Name" xml:space="preserve">
-    <value>fontSize12StripMenuItem</value>
-  </data>
-  <data name="DeleteQuestionButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 9pt</value>
-  </data>
-  <data name="EditQuestionButton.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="EditQuestionButton.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;QuestionType.Name" xml:space="preserve">
-    <value>QuestionType</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;QuestionType.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;DeleteQuestionButton.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="QuestionsListView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 39</value>
-  </data>
-  <data name="AddQuestionButton.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;QuestionsListView.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="DeleteQuestionButton.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowAndShrink</value>
-  </data>
-  <data name="QuestionsListView.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="&gt;&gt;fontSizeToolStripMenuItem.Name" xml:space="preserve">
-    <value>fontSizeToolStripMenuItem</value>
-  </data>
-  <data name="EditQuestionButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 30</value>
-  </data>
-  <data name="AddQuestionButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 30</value>
-  </data>
-  <data name="fontSizeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 28</value>
-  </data>
-  <data name="&gt;&gt;EditQuestionButton.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;AddQuestionButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="EditQuestionButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1032, 711</value>
-  </data>
-  <data name="fontSize15StripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="fontSize9StripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>112, 28</value>
   </data>
-  <data name="fontSize15StripMenuItem.Text" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="&gt;&gt;DeleteQuestionButton.Name" xml:space="preserve">
-    <value>DeleteQuestionButton</value>
-  </data>
-  <data name="&gt;&gt;QuestionsListView.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;fontSize9StripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;EnglishToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>1250, 753</value>
   </data>
-  <data name="&gt;&gt;DeleteQuestionButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="QuestionsListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1226, 666</value>
-  </data>
-  <data name="DeleteQuestionButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1138, 711</value>
-  </data>
-  <data name="QuestionsListView.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 12pt</value>
-  </data>
-  <data name="fontSize9StripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>112, 28</value>
-  </data>
-  <data name="&gt;&gt;fontSize12StripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="optionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>84, 32</value>
-  </data>
-  <data name="&gt;&gt;helpToolStripMenuItem.Name" xml:space="preserve">
-    <value>helpToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;helpToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="QuestionText.Width" type="System.Int32, mscorlib">
-    <value>800</value>
-  </data>
-  <data name="AddQuestionButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>926, 711</value>
-  </data>
-  <data name="menuStrip1.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>8, 20</value>
-  </data>
-  <data name="fontSize9StripMenuItem.Text" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>MainScreen</value>
-  </data>
-  <data name="&gt;&gt;QuestionOrder.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;fontSize15StripMenuItem.Name" xml:space="preserve">
-    <value>fontSize15StripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;EditQuestionButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;QuestionText.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;fontSize15StripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="EditQuestionButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 9pt</value>
-  </data>
-  <data name="openManualToolStripMenuItem.Text" xml:space="preserve">
-    <value>Open manual</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;QuestionOrder.Name" xml:space="preserve">
-    <value>QuestionOrder</value>
-  </data>
-  <data name="AddQuestionButton.Text" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="QuestionOrder.Text" xml:space="preserve">
-    <value>Order</value>
-  </data>
-  <data name="menuStrip1.Text" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
-  <data name="fontSize12StripMenuItem.Text" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="DeleteQuestionButton.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;QuestionsListView.Name" xml:space="preserve">
-    <value>QuestionsListView</value>
-  </data>
-  <data name="fontSizeToolStripMenuItem.Text" xml:space="preserve">
-    <value>Font size</value>
-  </data>
-  <data name="&gt;&gt;QuestionText.Name" xml:space="preserve">
-    <value>QuestionText</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Survey Configurator</value>
-  </data>
-  <data name="QuestionsListView.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;AddQuestionButton.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="AddQuestionButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1250, 36</value>
-  </data>
-  <data name="DeleteQuestionButton.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+  <data name="QuestionType.Text" xml:space="preserve">
+    <value>Type</value>
   </data>
   <data name="DeleteQuestionButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
-  <data name="EditQuestionButton.Text" xml:space="preserve">
-    <value>Edit</value>
+  <data name="&gt;&gt;EnglishToolStripMenuItem.Name" xml:space="preserve">
+    <value>EnglishToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="QuestionType.Width" type="System.Int32, mscorlib">
+    <value>322</value>
+  </data>
+  <data name="&gt;&gt;AddQuestionButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;languageToolStripMenuItem.Name" xml:space="preserve">
+    <value>languageToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;AddQuestionButton.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;QuestionType.Name" xml:space="preserve">
+    <value>QuestionType</value>
+  </data>
+  <data name="&gt;&gt;DeleteQuestionButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;languageToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;englishToolStripMenuItem.Name" xml:space="preserve">
+    <value>englishToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;openManualToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EditQuestionButton.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;fontSizeToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EditQuestionButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="DeleteQuestionButton.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="fontSize15StripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>112, 28</value>
+  </data>
+  <data name="helpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 32</value>
+  </data>
+  <data name="QuestionOrder.Width" type="System.Int32, mscorlib">
+    <value>100</value>
+  </data>
+  <data name="&gt;&gt;QuestionType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ArabicToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>224, 28</value>
+  </data>
+  <data name="&gt;&gt;QuestionsListView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="QuestionsListView.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterScreen</value>
+  </data>
+  <data name="openManualToolStripMenuItem.Text" xml:space="preserve">
+    <value>Open manual</value>
+  </data>
+  <data name="&gt;&gt;optionsToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EditQuestionButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="EditQuestionButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1032, 711</value>
+  </data>
+  <data name="QuestionText.Text" xml:space="preserve">
+    <value>Text</value>
   </data>
   <data name="&gt;&gt;optionsToolStripMenuItem.Name" xml:space="preserve">
     <value>optionsToolStripMenuItem</value>
   </data>
-  <data name="openManualToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 28</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="optionsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="العربيةToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>224, 28</value>
+  </data>
+  <data name="helpToolStripMenuItem.Text" xml:space="preserve">
+    <value>Help</value>
   </data>
   <data name="&gt;&gt;fontSize9StripMenuItem.Name" xml:space="preserve">
     <value>fontSize9StripMenuItem</value>
   </data>
-  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
   <data name="AddQuestionButton.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 9pt</value>
   </data>
-  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="QuestionsListView.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;fontSize15StripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fontSizeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>161, 28</value>
+  </data>
+  <data name="&gt;&gt;DeleteQuestionButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fontSize12StripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>112, 28</value>
+  </data>
+  <data name="&gt;&gt;QuestionText.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
+    <value>menuStrip1</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>1000, 800</value>
   </data>
-  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>216, 17</value>
-  </metadata>
+  <data name="englishToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>224, 28</value>
+  </data>
+  <data name="&gt;&gt;AddQuestionButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AddQuestionButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="QuestionOrder.Text" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="fontSizeToolStripMenuItem.Text" xml:space="preserve">
+    <value>Font size</value>
+  </data>
+  <data name="languageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>224, 28</value>
+  </data>
+  <data name="DeleteQuestionButton.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="AddQuestionButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 30</value>
+  </data>
+  <data name="QuestionText.Width" type="System.Int32, mscorlib">
+    <value>800</value>
+  </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>55</value>
   </metadata>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
+  <metadata name="sqlCommandBuilder1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>216, 17</value>
   </metadata>
   <metadata name="$this.Language" type="System.Globalization.CultureInfo, System.Private.CoreLib, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
     <value>ar</value>
   </metadata>
-  <metadata name="sqlCommandBuilder1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
   </metadata>
 </root>

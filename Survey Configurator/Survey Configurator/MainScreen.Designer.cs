@@ -39,6 +39,9 @@
             fontSize9StripMenuItem = new ToolStripMenuItem();
             fontSize12StripMenuItem = new ToolStripMenuItem();
             fontSize15StripMenuItem = new ToolStripMenuItem();
+            languageToolStripMenuItem = new ToolStripMenuItem();
+            EnglishToolStripMenuItem = new ToolStripMenuItem();
+            ArabicToolStripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             openManualToolStripMenuItem = new ToolStripMenuItem();
             QuestionsListView = new ListView();
@@ -80,7 +83,7 @@
             // optionsToolStripMenuItem
             // 
             resources.ApplyResources(optionsToolStripMenuItem, "optionsToolStripMenuItem");
-            optionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fontSizeToolStripMenuItem });
+            optionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fontSizeToolStripMenuItem, languageToolStripMenuItem });
             optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             // 
             // fontSizeToolStripMenuItem
@@ -106,6 +109,24 @@
             resources.ApplyResources(fontSize15StripMenuItem, "fontSize15StripMenuItem");
             fontSize15StripMenuItem.Name = "fontSize15StripMenuItem";
             fontSize15StripMenuItem.Click += toolStripMenuItem4_Click;
+            // 
+            // languageToolStripMenuItem
+            // 
+            resources.ApplyResources(languageToolStripMenuItem, "languageToolStripMenuItem");
+            languageToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { EnglishToolStripMenuItem, ArabicToolStripMenuItem });
+            languageToolStripMenuItem.Name = "languageToolStripMenuItem";
+            // 
+            // EnglishToolStripMenuItem
+            // 
+            resources.ApplyResources(EnglishToolStripMenuItem, "EnglishToolStripMenuItem");
+            EnglishToolStripMenuItem.Name = "EnglishToolStripMenuItem";
+            EnglishToolStripMenuItem.Click += EnglishToolStripMenuItem_Click;
+            // 
+            // ArabicToolStripMenuItem
+            // 
+            resources.ApplyResources(ArabicToolStripMenuItem, "ArabicToolStripMenuItem");
+            ArabicToolStripMenuItem.Name = "ArabicToolStripMenuItem";
+            ArabicToolStripMenuItem.Click += ArabicToolStripMenuItem_Click;
             // 
             // helpToolStripMenuItem
             // 
@@ -178,5 +199,8 @@
         private ColumnHeader QuestionOrder;
         private ColumnHeader QuestionText;
         private ColumnHeader QuestionType;
+        private ToolStripMenuItem languageToolStripMenuItem;
+        private ToolStripMenuItem EnglishToolStripMenuItem;
+        private ToolStripMenuItem ArabicToolStripMenuItem;
     }
 }
