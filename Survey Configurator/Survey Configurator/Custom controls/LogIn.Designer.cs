@@ -57,6 +57,7 @@
             PasswordTextBox.Name = "PasswordTextBox";
             PasswordTextBox.Size = new Size(400, 27);
             PasswordTextBox.TabIndex = 7;
+            PasswordTextBox.UseSystemPasswordChar = true;
             // 
             // PasswordLabel
             // 
@@ -84,9 +85,9 @@
 
         #endregion
 
-        private TextBox LoginTextBox;
+        public TextBox LoginTextBox;
         private Label LoginLabel;
-        private TextBox PasswordTextBox;
+        public TextBox PasswordTextBox;
         private Label PasswordLabel;
     }
 }

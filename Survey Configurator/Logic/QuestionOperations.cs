@@ -20,15 +20,17 @@ namespace QuestionServices
         //event handler for any change that happens to the database from any source
         public static event EventHandler DataBaseChangedEvent;
         //event handler for when the database stops responding
-        public static event EventHandler DataBaseNotConnectedEvent;
 
-            //contsatns
+        public static event EventHandler DataBaseNotConnectedEvent;
+        //contsants
         private const int cDatabaseReconnectMaxAttempts = 3;
         private const string cConnectionStringFileName = "\\connectionSettings.json";
 
-            //class variables
+        //class members
         //changed to true when the user is performing adding, updating or deleting operation
         public static bool OperationOngoing = false;
+        private static string mFilePath = Directory.GetCurrentDirectory() + cConnectionStringFileName;
+
         //a list to temporarily contain the questions data fetched from the database, 
         //and acts as a data source for the UI to faciltate data transfer and fetching.
         public static List<Question> QuestionsList = new List<Question>();
@@ -228,28 +230,27 @@ namespace QuestionServices
         /// default values for the connection string properties.
         /// </summary>
         /// <returns>OperationResult object to indicate the success or failure of the connection to database</returns>
-        public static bool SetConnectionString()
+        public static bool GetConnectionString()
         {
             //try to obtain the connection string from a file
             try
             {
                 //check that file exists
-                string tFilePath = Directory.GetCurrentDirectory() + cConnectionStringFileName;
-                if (!File.Exists(tFilePath))
+                if (!File.Exists(mFilePath))
                 {
                     //create json file and fill it with default stuff
-                    using (FileStream tFs = File.Create(tFilePath));
+                    using (FileStream tFs = File.Create(mFilePath));
                     return false;
                 }
                 
                 //check file content
-                if(new FileInfo(tFilePath).Length == 0)
+                if(new FileInfo(mFilePath).Length == 0)
                 {
                     return false;
                 }
 
                 //assuming that the file exists and it contains a connection string
-                using (StreamReader tFileReader = new StreamReader(tFilePath))
+                using (StreamReader tFileReader = new StreamReader(mFilePath))
                 {
                     string tReadConnectionString = tFileReader.ReadToEnd();
                     //de-serialize the obtained connection string and transform it to the correct format
@@ -271,6 +272,23 @@ namespace QuestionServices
                 UtilityMethods.LogError(ex);
                 //either the file can't be created or it is a permission issue
                 return false;
+            }
+        }
+
+        public static void SetConnectionString(ConnectionString connectionString)
+        {
+            try
+            {
+                using (StreamWriter tWriter = new StreamWriter(mFilePath))
+                {
+                    string tSerializedConnectionString = JsonSerializer.Serialize<ConnectionString>(connectionString);
+                    tWriter.Write(tSerializedConnectionString);
+                }
+                Database.ConnectionString = connectionString.GetFormattedConnectionString();
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
             }
         }
 

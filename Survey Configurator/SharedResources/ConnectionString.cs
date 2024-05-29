@@ -1,4 +1,6 @@
-﻿namespace SharedResources
+﻿using Microsoft.Data.SqlClient;
+
+namespace SharedResources
 {
     public class ConnectionString
     {
@@ -11,8 +13,10 @@
         public bool Trusted_Connection { get; set; }
         public string User {  get; set; }
         public string Password { get; set; }
-        public bool Encrypt { get; set; }
+        public SqlConnectionEncryptOption Encrypt { get; set; }
         public int Timeout { get; set; }
+        public bool TrustServerCertificate { get; set; }
+        public string HostNameInCertificate { get; set; }
 
         public ConnectionString() {
             try { 
@@ -21,8 +25,10 @@
                 Trusted_Connection = false;
                 User = string.Empty;
                 Password = string.Empty;
-                Encrypt = false;
+                Encrypt = SqlConnectionEncryptOption.Optional;
+                TrustServerCertificate = true;
                 Timeout = 5;
+                HostNameInCertificate = String.Empty;
             }
             catch(Exception ex)
             {
@@ -38,7 +44,7 @@
         {
             try
             {
-                return $"Server={Server}; Database={Database}; Trusted_Connection={Trusted_Connection}; User={User}; Password={Password}; Encrypt={Encrypt}; Timeout={Timeout}";
+                return $"Server={Server}; Database={Database}; Trusted_Connection={Trusted_Connection}; User={User}; Password={Password}; Encrypt={Encrypt}; Timeout={Timeout}; TrustServerCertificate={TrustServerCertificate}";
             }
             catch (Exception ex)
             {

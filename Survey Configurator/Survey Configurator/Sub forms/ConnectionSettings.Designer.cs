@@ -93,7 +93,7 @@
             // 
             EncryptionComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             EncryptionComboBox.FormattingEnabled = true;
-            EncryptionComboBox.Items.AddRange(new object[] { "Optional", "Mendatory", "Strict" });
+            EncryptionComboBox.Items.AddRange(new object[] { "Optional", "Mandatory", "Strict" });
             EncryptionComboBox.Location = new Point(194, 36);
             EncryptionComboBox.Name = "EncryptionComboBox";
             EncryptionComboBox.Size = new Size(400, 28);
@@ -152,6 +152,7 @@
             DatabaseNameTextBox.Name = "DatabaseNameTextBox";
             DatabaseNameTextBox.Size = new Size(400, 27);
             DatabaseNameTextBox.TabIndex = 3;
+            DatabaseNameTextBox.TextChanged += DatabaseNameTextBox_TextChanged;
             // 
             // DatabaseNameLabel
             // 
@@ -169,6 +170,7 @@
             ServerNameTestBox.Name = "ServerNameTestBox";
             ServerNameTestBox.Size = new Size(400, 27);
             ServerNameTestBox.TabIndex = 1;
+            ServerNameTestBox.TextChanged += ServerNameTestBox_TextChanged;
             // 
             // ServerNameLabel
             // 
@@ -198,6 +200,7 @@
             // 
             ConnectButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             ConnectButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            ConnectButton.Enabled = false;
             ConnectButton.Font = new Font("Microsoft Sans Serif", 9F);
             ConnectButton.ImeMode = ImeMode.NoControl;
             ConnectButton.Location = new Point(403, 468);

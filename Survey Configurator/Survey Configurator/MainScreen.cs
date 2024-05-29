@@ -621,7 +621,7 @@ namespace Survey_Configurator
             }
         }
 
-        private static bool CheckDatabaseConnection()
+        public static bool CheckDatabaseConnection()
         {
             OperationResult tDatabaseConnected = QuestionOperations.TestDBConnection();
             return tDatabaseConnected.IsSuccess;

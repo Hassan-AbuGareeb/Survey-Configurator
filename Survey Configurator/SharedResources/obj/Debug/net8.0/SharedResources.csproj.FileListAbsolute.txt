@@ -15,3 +15,4 @@ D:\Survey Configurator\Survey Configurator\SharedResources\obj\Debug\net8.0\Shar
 D:\Survey Configurator\Survey Configurator\SharedResources\obj\Debug\net8.0\SharedResources.GlobalStrings.ar.resources
 D:\Survey Configurator\Survey Configurator\SharedResources\obj\Debug\net8.0\SharedResources.csproj.GenerateResource.cache
 D:\Survey Configurator\Survey Configurator\SharedResources\obj\Debug\net8.0\ar\SharedResources.resources.dll
+D:\Survey Configurator\Survey Configurator\SharedResources\obj\Debug\net8.0\SharedResources.csproj.AssemblyReference.cache
