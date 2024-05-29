@@ -36,30 +36,46 @@ namespace Survey_Configurator
         {
             try
             {
-                ConnectionSettings tConnectionSettingsForm = new ConnectionSettings();
-                tConnectionSettingsForm.ShowDialog();
+                //check if connection string is successfully obtained 
+                bool tConnectionStringExists = QuestionOperations.GetConnectionString();
+                if (!tConnectionStringExists)
+                {
+                    //show conn settings form
+                    ConnectionSettings tConnectionSettingsForm = new ConnectionSettings();
+                    DialogResult tContinueToAppResult = tConnectionSettingsForm.ShowDialog();
+                    //decied based on dialogue result
+                    if(tContinueToAppResult == DialogResult.Cancel)
+                    {
+                        Close();
+                    }
+                    else if( tContinueToAppResult == DialogResult.Continue)
+                    {//user decieded to continue anyway
 
-                ////check if connection string is successfully obtained 
-                //bool tConnectionStringExists = QuestionOperations.SetConnectionString();
-                //if (!tConnectionStringExists)
-                //{
-                //    //show conn settings form
-                //    ConnectionSettings tConnectionSettingsForm = new ConnectionSettings();
-                //    tConnectionSettingsForm.ShowDialog();
-                //}
-                //else
-                //{
-                //    //test database connection
-                //        //connected ? proceed normally, else tell user that something is
-                //        //wrong and as if the user want to proceed 
-                //}
-                ////check database connectivity //allow user to proceed while disabling every functionality
+                    }
+                }
+                else
+                {
+                    //test database connection
+                    bool tIsDatabaseConnected = CheckDatabaseConnection();
+                    if(!tIsDatabaseConnected)
+                    {
+                        DialogResult tContinueToAppResult = MessageBox.Show("An error occured while connecting to database, the application may not work properly.\nwould like to continue?", "Database error",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if(tContinueToAppResult == DialogResult.No || tContinueToAppResult == DialogResult.Cancel)
+                        {
+                            Close();
+                        }
+                        else
+                        {
+                            //disable functionalities
+                        }
+                    }
+                }
 
+                //set the language for the app
+                SetAppLanguage();
 
-                ////set the language for the app
-                //SetAppLanguage();
-
-                //InitializeComponent();
+                InitializeComponent();
             }
             catch (Exception ex)
             {
