@@ -228,52 +228,49 @@ namespace QuestionServices
         /// default values for the connection string properties.
         /// </summary>
         /// <returns>OperationResult object to indicate the success or failure of the connection to database</returns>
-        public static OperationResult SetConnectionString()
+        public static bool SetConnectionString()
         {
             //try to obtain the connection string from a file
             try
             {
-                string tConnectionString = "";
                 //check that file exists
                 string tFilePath = Directory.GetCurrentDirectory() + cConnectionStringFileName;
                 if (!File.Exists(tFilePath))
                 {
                     //create json file and fill it with default stuff
-                    using (FileStream tFs = File.Create(tFilePath)) ;
-
-                    using (StreamWriter tWriter = new StreamWriter(tFilePath))
-                    {
-                        tWriter.Write(JsonSerializer.Serialize(new ConnectionString()));
-                    }
-                    //return a value to indicate that a file has been created and to fill it
+                    using (FileStream tFs = File.Create(tFilePath));
+                    return false;
                 }
-                else
+                
+                //check file content
+                if(new FileInfo(tFilePath).Length == 0)
                 {
-                    //read connection string values from tFilePath
-                    using (StreamReader tFileReader = new StreamReader(tFilePath))
-                    {
-                        string tReadConnectionString = tFileReader.ReadToEnd();
-                        //de-serialize the obtained connection string and transform it to the correct format
-                        ConnectionString tDesrializedConnStrign = JsonSerializer.Deserialize<ConnectionString>(tReadConnectionString);
-                        tConnectionString = tDesrializedConnStrign.GetFormattedConnectionString();
-                    }
+                    return false;
                 }
 
-                Database.ConnectionString = tConnectionString;
-                return new OperationResult();
+                //assuming that the file exists and it contains a connection string
+                using (StreamReader tFileReader = new StreamReader(tFilePath))
+                {
+                    string tReadConnectionString = tFileReader.ReadToEnd();
+                    //de-serialize the obtained connection string and transform it to the correct format
+                    ConnectionString tDesrializedConnStrign = JsonSerializer.Deserialize<ConnectionString>(tReadConnectionString);
+                    Database.ConnectionString = tDesrializedConnStrign.GetFormattedConnectionString();
+                }
+
+                return true;
             }
             catch (UnauthorizedAccessException ex)
             {
                 UtilityMethods.LogError(ex);
                 //handle the unAuthorized access happening
-                return new OperationResult(GlobalStrings.UnAuthorizedAccessErrorTitle, GlobalStrings.UnAuthorizedAccessError);
+                return false;
             }
             catch (Exception ex)
             {
                 //log error
                 UtilityMethods.LogError(ex);
                 //either the file can't be created or it is a permission issue
-                return new OperationResult(GlobalStrings.UnknownErrorTitle , GlobalStrings.UnknownError);
+                return false;
             }
         }
 

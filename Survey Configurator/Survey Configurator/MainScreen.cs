@@ -36,26 +36,30 @@ namespace Survey_Configurator
         {
             try
             {
+                ConnectionSettings tConnectionSettingsForm = new ConnectionSettings();
+                tConnectionSettingsForm.ShowDialog();
 
-                //check if connection string is successfully obtained 
-                OperationResult tConnectionStringCreated = QuestionOperations.SetConnectionString();
-                if (!tConnectionStringCreated.IsSuccess)
-                {
-                    MessageBox.Show(tConnectionStringCreated.ErrorMessage, tConnectionStringCreated.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Close();
-                }
-                //check database connectivity
-                OperationResult tDatabaseConnected = QuestionOperations.TestDBConnection();
-                if (!tDatabaseConnected.IsSuccess)
-                {
-                    MessageBox.Show(tDatabaseConnected.ErrorMessage, tDatabaseConnected.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Close();
-                }
+                ////check if connection string is successfully obtained 
+                //bool tConnectionStringExists = QuestionOperations.SetConnectionString();
+                //if (!tConnectionStringExists)
+                //{
+                //    //show conn settings form
+                //    ConnectionSettings tConnectionSettingsForm = new ConnectionSettings();
+                //    tConnectionSettingsForm.ShowDialog();
+                //}
+                //else
+                //{
+                //    //test database connection
+                //        //connected ? proceed normally, else tell user that something is
+                //        //wrong and as if the user want to proceed 
+                //}
+                ////check database connectivity //allow user to proceed while disabling every functionality
 
-                //set the language for the app
-                SetAppLanguage();
 
-                InitializeComponent();
+                ////set the language for the app
+                //SetAppLanguage();
+
+                //InitializeComponent();
             }
             catch (Exception ex)
             {
@@ -576,7 +580,7 @@ namespace Survey_Configurator
         /// the language stored in the app config in case of any error
         /// sets the language to english;
         /// </summary>
-        private void SetAppLanguage()
+        private static void SetAppLanguage()
         {
             try
             {
@@ -602,7 +606,7 @@ namespace Survey_Configurator
         /// <summary>
         /// change the language of the application
         /// </summary>
-        private void ChangeAppLanguage(string pLanguage)
+        private static void ChangeAppLanguage(string pLanguage)
         {
             try
             {
@@ -615,6 +619,12 @@ namespace Survey_Configurator
             {
                 UtilityMethods.LogError(ex);
             }
+        }
+
+        private static bool CheckDatabaseConnection()
+        {
+            OperationResult tDatabaseConnected = QuestionOperations.TestDBConnection();
+            return tDatabaseConnected.IsSuccess;
         }
 
         #endregion
