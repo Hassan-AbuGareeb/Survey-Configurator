@@ -15,7 +15,7 @@ namespace DatabaseLayer
         /// </summary>
 
 
-        public static string ConnectionString;
+        public static string mConnectionString;
 
         //constants
             //Question table constants
@@ -46,7 +46,7 @@ namespace DatabaseLayer
         {
             try
             {
-                SqlConnection tConn = new SqlConnection(ConnectionString);
+                SqlConnection tConn = new SqlConnection(mConnectionString);
                 tConn.Open();
                 tConn.Close();
                 return new OperationResult();
@@ -68,7 +68,7 @@ namespace DatabaseLayer
         {
             try 
             { 
-                using (SqlConnection tConn = new SqlConnection(ConnectionString)) 
+                using (SqlConnection tConn = new SqlConnection(mConnectionString)) 
                 {
                     tConn.Open();
                     SqlCommand tGetQuestionsDataCmd = new SqlCommand($"SELECT * FROM [{cQuestionsTableName}]", tConn);
@@ -78,7 +78,7 @@ namespace DatabaseLayer
                     while (tReader.Read())
                     {
                         pQuestionsList.Add(new Question((int)tReader[cIdColumn], tReader[cTextColumn].ToString(),
-                            (int)tReader[cOrderColumn], (QuestionType)tReader[cTypeColumn]));
+                            (int)tReader[cOrderColumn], (eQuestionType)tReader[cTypeColumn]));
                     }
                     tReader.Close();
                 }
@@ -107,7 +107,7 @@ namespace DatabaseLayer
         {
             try 
             { 
-                using (SqlConnection tConn = new SqlConnection(ConnectionString)) 
+                using (SqlConnection tConn = new SqlConnection(mConnectionString)) 
                 {
                     tConn.Open();
                     SqlCommand tGetQuestionSpecificData = new SqlCommand(
@@ -121,13 +121,13 @@ namespace DatabaseLayer
                     {
                         switch(pQuestionData.Type)
                         {
-                            case QuestionType.Stars:
+                            case eQuestionType.Stars:
                                 pQuestionSpecificData = new StarsQuestion(pQuestionData, (int)tReader[cNumberOfStarsColumn]);
                                 break;
-                            case QuestionType.Smiley:
+                            case eQuestionType.Smiley:
                                 pQuestionSpecificData = new SmileyQuestion(pQuestionData, (int)tReader[cNumberOfFacesColumn]);
                                 break;
-                            case QuestionType.Slider:
+                            case eQuestionType.Slider:
                                 pQuestionSpecificData = new SliderQuestion(pQuestionData, 
                                     (int)tReader[cStartValueColumn], (int)tReader[cEndValueColumn],
                                     tReader[cStartValueCaptionColumn].ToString(), tReader[cEndValueCaptionColumn ].ToString());
@@ -156,7 +156,7 @@ namespace DatabaseLayer
         {
             try { 
             //create db connection
-                using (SqlConnection tConn = new SqlConnection(ConnectionString)) 
+                using (SqlConnection tConn = new SqlConnection(mConnectionString)) 
                 {
                     tConn.Open();
                     using (SqlTransaction tTransaction = tConn.BeginTransaction())
@@ -186,13 +186,13 @@ namespace DatabaseLayer
                             SqlCommand tInsertQuestionTypeCmd = null;
                             switch (pQuestionData.Type)
                             {
-                                case QuestionType.Stars:
+                                case eQuestionType.Stars:
                                     tInsertQuestionTypeCmd = GetAddStarsCommand(tQuestionId, (StarsQuestion)pQuestionData);
                                     break;
-                                case QuestionType.Smiley:
+                                case eQuestionType.Smiley:
                                     tInsertQuestionTypeCmd = GetAddSmileyCommand(tQuestionId, (SmileyQuestion)pQuestionData);
                                     break;
-                                case QuestionType.Slider:
+                                case eQuestionType.Slider:
                                     tInsertQuestionTypeCmd = GetAddSliderCommand(tQuestionId, (SliderQuestion)pQuestionData);
                                     break;
                             }
@@ -235,10 +235,10 @@ namespace DatabaseLayer
         /// <param name="pOriginalQuestionType"></param>
         /// <param name="pUpdatedQuestionData"></param>
         /// <returns>OperationResult to indicate whether data updated on the database</returns>
-        public static OperationResult UpdateQuestionOnDB(QuestionType pOriginalQuestionType, Question pUpdatedQuestionData)
+        public static OperationResult UpdateQuestionOnDB(eQuestionType pOriginalQuestionType, Question pUpdatedQuestionData)
         {
             try { 
-                using (SqlConnection tConn = new SqlConnection(ConnectionString))
+                using (SqlConnection tConn = new SqlConnection(mConnectionString))
                 {
                     tConn.Open();
                     using (SqlTransaction tTransaction = tConn.BeginTransaction())
@@ -252,13 +252,13 @@ namespace DatabaseLayer
                                 SqlCommand tUpdateQuestionSpecificDataCmd = null;
                                 switch (pOriginalQuestionType)
                                 {
-                                    case QuestionType.Stars:
+                                    case eQuestionType.Stars:
                                         tUpdateQuestionSpecificDataCmd = GetUpdateStarsCommand(pUpdatedQuestionData.Id, (StarsQuestion)pUpdatedQuestionData);
                                         break;
-                                    case QuestionType.Smiley:
+                                    case eQuestionType.Smiley:
                                         tUpdateQuestionSpecificDataCmd = GetUpdateSmileyCommand(pUpdatedQuestionData.Id,(SmileyQuestion)pUpdatedQuestionData);
                                         break;
-                                    case QuestionType.Slider:
+                                    case eQuestionType.Slider:
                                         tUpdateQuestionSpecificDataCmd = GetUpdateSliderCommand(pUpdatedQuestionData.Id, (SliderQuestion)pUpdatedQuestionData);
                                         break;
                                 }
@@ -283,13 +283,13 @@ namespace DatabaseLayer
                                 //for each type of question downcast the question to its specific type
                                 switch (pUpdatedQuestionData.Type)
                                 {
-                                    case QuestionType.Stars:
+                                    case eQuestionType.Stars:
                                         tInsertQuestionTypeCmd = GetAddStarsCommand(pUpdatedQuestionData.Id, (StarsQuestion)pUpdatedQuestionData);
                                         break;
-                                    case QuestionType.Smiley:
+                                    case eQuestionType.Smiley:
                                         tInsertQuestionTypeCmd = GetAddSmileyCommand(pUpdatedQuestionData.Id, (SmileyQuestion)pUpdatedQuestionData);
                                         break;
-                                    case QuestionType.Slider:
+                                    case eQuestionType.Slider:
                                         tInsertQuestionTypeCmd = GetAddSliderCommand(pUpdatedQuestionData.Id, (SliderQuestion)pUpdatedQuestionData);
                                         break;
                                 }
@@ -355,7 +355,7 @@ namespace DatabaseLayer
         public static OperationResult DeleteQuestionFromDB(List<Question> pSelectedQuestions)
         {
             try { 
-                using (SqlConnection tConn = new SqlConnection(ConnectionString))
+                using (SqlConnection tConn = new SqlConnection(mConnectionString))
                 {
                     tConn.Open();
                     using (SqlTransaction tTransaction = tConn.BeginTransaction())
@@ -425,7 +425,7 @@ namespace DatabaseLayer
             try 
             { 
                 SqlCommand tInsertQuestionTypeCmd = new SqlCommand(
-                    $"INSERT INTO {QuestionType.Stars} " +
+                    $"INSERT INTO {eQuestionType.Stars} " +
                     $"([{cIdColumn}], [{cNumberOfStarsColumn}]) " +
                     $"VALUES ( @{cIdColumn}, @{cNumberOfStarsColumn} )");
 
@@ -446,7 +446,7 @@ namespace DatabaseLayer
             try 
             { 
                 SqlCommand tInsertQuestionTypeCmd = new SqlCommand(
-                    $"INSERT INTO {QuestionType.Smiley} " +
+                    $"INSERT INTO {eQuestionType.Smiley} " +
                     $"([{cIdColumn}], [{cNumberOfFacesColumn}]) " +
                     $"VALUES ( @{cIdColumn}, @{cNumberOfFacesColumn} )");
 
@@ -468,7 +468,7 @@ namespace DatabaseLayer
             try 
             { 
                 SqlCommand tInsertQuestionTypeCmd = new SqlCommand(
-                    $"INSERT INTO {QuestionType.Slider} " +
+                    $"INSERT INTO {eQuestionType.Slider} " +
                     $"([{cIdColumn}], [{cStartValueColumn}],[{cEndValueColumn}],[{cStartValueCaptionColumn}],[{cEndValueCaptionColumn}]) " +
                     $"VALUES (@{cIdColumn}, @{cStartValueColumn}, @{cEndValueColumn}, @{cStartValueCaptionColumn}, @{cEndValueCaptionColumn})");
 
@@ -500,7 +500,7 @@ namespace DatabaseLayer
             try 
             { 
                 SqlCommand tUpdateQuestionSpecificDataCmd = new SqlCommand(
-                    $"UPDATE {QuestionType.Stars} SET " +
+                    $"UPDATE {eQuestionType.Stars} SET " +
                     $"[{cNumberOfStarsColumn}] = @{cNumberOfStarsColumn} " +
                     $"WHERE [{cIdColumn}] = @{cIdColumn}");
 
@@ -522,7 +522,7 @@ namespace DatabaseLayer
             try 
             { 
                 SqlCommand tUpdateQuestionSpecificDataCmd = new SqlCommand(
-                    $"UPDATE {QuestionType.Smiley} SET " +
+                    $"UPDATE {eQuestionType.Smiley} SET " +
                     $"[{cNumberOfFacesColumn}] = @{cNumberOfFacesColumn} " +
                     $"WHERE [{cIdColumn}] = @{cIdColumn}");
 
@@ -544,7 +544,7 @@ namespace DatabaseLayer
             try 
             { 
                 SqlCommand tUpdateQuestionSpecificDataCmd = new SqlCommand(
-                    $"UPDATE {QuestionType.Slider} SET " +
+                    $"UPDATE {eQuestionType.Slider} SET " +
                     $"[{cStartValueColumn}] = @{cStartValueColumn}, " +
                     $"[{cEndValueColumn}] = @{cEndValueColumn}, " +
                     $"[{cStartValueCaptionColumn}] = @{cStartValueCaptionColumn}, " +
@@ -575,7 +575,7 @@ namespace DatabaseLayer
         public static OperationResult GetChecksum(ref long pChecksum)
         {
             try { 
-                using (SqlConnection tConn = new SqlConnection(ConnectionString))
+                using (SqlConnection tConn = new SqlConnection(mConnectionString))
                 {
                     tConn.Open();
                     SqlCommand tGetChecksum = new SqlCommand($"SELECT CHECKSUM_AGG(BINARY_CHECKSUM(*)) FROM {cQuestionsTableName} WITH (NOLOCK)", tConn);

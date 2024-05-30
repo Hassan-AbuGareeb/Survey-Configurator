@@ -12,8 +12,8 @@ namespace SharedResources
         /// and the data can be changed by refernece.
         /// </summary>
 
-        public string Error { get; set; }
-        public string ErrorMessage {  get; set; }
+        public string mError { get; set; }
+        public string mErrorMessage {  get; set; }
         public bool IsSuccess { get; set; }
 
         //successful operation
@@ -35,8 +35,8 @@ namespace SharedResources
             try
             {
                 IsSuccess = false;
-                ErrorMessage = pErrorMessage;
-                Error = pError;
+                mErrorMessage = pErrorMessage;
+                mError = pError;
             }
             catch (Exception ex)
             {

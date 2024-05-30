@@ -8,12 +8,12 @@ namespace SharedResources.models
         public int Order { get; set; }
         public int NumberOfSmileyFaces { get; set; }
 
-        public SmileyQuestion(int pId, string pText, int pOrder, int pNumberOfSmileyFaces = 2) : base(pId, pText, pOrder, QuestionType.Smiley)
+        public SmileyQuestion(int pId, string pText, int pOrder, int pNumberOfSmileyFaces = 2) : base(pId, pText, pOrder, eQuestionType.Smiley)
         {
             NumberOfSmileyFaces = pNumberOfSmileyFaces;
         }
 
-        public SmileyQuestion(Question pQuestionData, int pNumberOfSmileyFaces) : base(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order, QuestionType.Smiley)
+        public SmileyQuestion(Question pQuestionData, int pNumberOfSmileyFaces) : base(pQuestionData.Id, pQuestionData.Text, pQuestionData.Order, eQuestionType.Smiley)
         {
             NumberOfSmileyFaces = pNumberOfSmileyFaces;
         }
