@@ -81,7 +81,7 @@ namespace Survey_Configurator.Sub_forms
                     mConnectionString.User = mLogInControl.LoginTextBox.Text;
                     mConnectionString.Password = mLogInControl.PasswordTextBox.Text;
                 }
-                mConnectionString.Encrypt = SqlConnectionEncryptOption.Optional;
+                mConnectionString.Encrypt = SqlConnectionEncryptOption.Optional.ToString();
                 mConnectionString.TrustServerCertificate = TrustServerCertificateCheckBox.Checked;
                 if (HostNameInCertificateTextbox.Enabled)
                 {

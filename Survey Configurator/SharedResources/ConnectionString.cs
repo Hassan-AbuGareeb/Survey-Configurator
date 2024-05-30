@@ -13,7 +13,7 @@ namespace SharedResources
         public bool Trusted_Connection { get; set; }
         public string User {  get; set; }
         public string Password { get; set; }
-        public SqlConnectionEncryptOption Encrypt { get; set; }
+        public string Encrypt { get; set; }
         public int Timeout { get; set; }
         public bool TrustServerCertificate { get; set; }
         public string HostNameInCertificate { get; set; }
@@ -25,10 +25,10 @@ namespace SharedResources
                 Trusted_Connection = false;
                 User = string.Empty;
                 Password = string.Empty;
-                Encrypt = SqlConnectionEncryptOption.Optional;
+                Encrypt = "Optional";
                 TrustServerCertificate = true;
                 Timeout = 5;
-                HostNameInCertificate = String.Empty;
+                HostNameInCertificate = string.Empty;
             }
             catch(Exception ex)
             {

@@ -254,8 +254,8 @@ namespace QuestionServices
                 {
                     string tReadConnectionString = tFileReader.ReadToEnd();
                     //de-serialize the obtained connection string and transform it to the correct format
-                    ConnectionString tDesrializedConnStrign = JsonSerializer.Deserialize<ConnectionString>(tReadConnectionString);
-                    Database.ConnectionString = tDesrializedConnStrign.GetFormattedConnectionString();
+                    ConnectionString tDesrializedConnString = JsonSerializer.Deserialize<ConnectionString>(tReadConnectionString);
+                    Database.ConnectionString = tDesrializedConnString.GetFormattedConnectionString();
                 }
 
                 return true;

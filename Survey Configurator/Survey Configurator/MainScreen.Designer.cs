@@ -48,6 +48,7 @@
             QuestionOrder = new ColumnHeader();
             QuestionText = new ColumnHeader();
             QuestionType = new ColumnHeader();
+            DatabaseConnectionIsseuesLabel = new Label();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -165,10 +166,17 @@
             // 
             resources.ApplyResources(QuestionType, "QuestionType");
             // 
+            // DatabaseConnectionIsseuesLabel
+            // 
+            resources.ApplyResources(DatabaseConnectionIsseuesLabel, "DatabaseConnectionIsseuesLabel");
+            DatabaseConnectionIsseuesLabel.ForeColor = Color.Firebrick;
+            DatabaseConnectionIsseuesLabel.Name = "DatabaseConnectionIsseuesLabel";
+            // 
             // MainScreen
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(DatabaseConnectionIsseuesLabel);
             Controls.Add(QuestionsListView);
             Controls.Add(DeleteQuestionButton);
             Controls.Add(EditQuestionButton);
@@ -181,6 +189,7 @@
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -203,5 +212,6 @@
         private ToolStripMenuItem languageToolStripMenuItem;
         private ToolStripMenuItem EnglishToolStripMenuItem;
         private ToolStripMenuItem ArabicToolStripMenuItem;
+        private Label DatabaseConnectionIsseuesLabel;
     }
 }

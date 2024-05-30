@@ -220,6 +220,8 @@
             Controls.Add(ConnectButton);
             Controls.Add(ServerGroupBox);
             Controls.Add(CancelButton);
+            MaximumSize = new Size(643, 557);
+            MinimumSize = new Size(643, 557);
             Name = "ConnectionSettings";
             Text = "Connection settings";
             ConnectionSecurityGroupBox.ResumeLayout(false);

@@ -44,30 +44,31 @@ namespace Survey_Configurator
                     ConnectionSettings tConnectionSettingsForm = new ConnectionSettings();
                     DialogResult tContinueToAppResult = tConnectionSettingsForm.ShowDialog();
                     //decied based on dialogue result
-                    if(tContinueToAppResult == DialogResult.Cancel)
+                    if (tContinueToAppResult == DialogResult.Cancel)
                     {
                         Close();
                     }
-                    else if( tContinueToAppResult == DialogResult.Continue)
+                    else if (tContinueToAppResult == DialogResult.Continue)
                     {//user decieded to continue anyway
-
+                        DisableUIElements();
                     }
                 }
                 else
                 {
                     //test database connection
                     bool tIsDatabaseConnected = CheckDatabaseConnection();
-                    if(!tIsDatabaseConnected)
+                    if (!tIsDatabaseConnected)
                     {
                         DialogResult tContinueToAppResult = MessageBox.Show("An error occured while connecting to database, the application may not work properly.\nwould like to continue?", "Database error",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                        if(tContinueToAppResult == DialogResult.No || tContinueToAppResult == DialogResult.Cancel)
+                        if (tContinueToAppResult == DialogResult.No || tContinueToAppResult == DialogResult.Cancel)
                         {
                             Close();
                         }
                         else
                         {
                             //disable functionalities
+                            DisableUIElements();
                         }
                     }
                 }
@@ -116,7 +117,7 @@ namespace Survey_Configurator
 
                 //sort the questions list alphabetically on first load
                 QuestionsListView.ListViewItemSorter = new ListViewItemComparer(1, SortingOrder);
-                Debug.Write(Thread.CurrentThread.CurrentUICulture.ToString());
+
             }
             catch (Exception ex)
             {
@@ -435,7 +436,7 @@ namespace Survey_Configurator
             {
                 string tAppLanguage = ConfigurationManager.AppSettings[cLanguageSettginsKey];
                 if (tAppLanguage != cEnglishLanguageSettings)
-                { 
+                {
 
                     ChangeAppLanguage(cEnglishLanguageSettings);
                     Application.Restart();
@@ -453,8 +454,8 @@ namespace Survey_Configurator
             try
             {
                 string tAppLanguage = ConfigurationManager.AppSettings[cLanguageSettginsKey];
-                if(tAppLanguage != cArabicLanguageSettings) 
-                { 
+                if (tAppLanguage != cArabicLanguageSettings)
+                {
                     ChangeAppLanguage(cArabicLanguageSettings);
                     Application.Restart();
                 }
@@ -637,6 +638,50 @@ namespace Survey_Configurator
             }
         }
 
+        private void DisableUIElements()
+        {
+            try
+            {
+                QuestionsListView.Enabled = false;
+                AddQuestionButton.Enabled = false;
+                EditQuestionButton.Enabled = false;
+                DeleteQuestionButton.Enabled = false;
+                DatabaseConnectionIsseuesLabel.Show();
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
+        }
+
+        private void EnableUIElements()
+        {
+            try
+            {
+                QuestionsListView.Enabled = true;
+                AddQuestionButton.Enabled = true;
+                DatabaseConnectionIsseuesLabel.Hide();
+                if (QuestionsListView.SelectedItems.Count>0)
+                {
+                    DeleteQuestionButton.Enabled = false;
+                }
+
+                if (QuestionsListView.SelectedItems.Count > 0 && QuestionsListView.SelectedItems.Count < 2)
+                {
+                    EditQuestionButton.Enabled = false;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
+        }
+
+
         public static bool CheckDatabaseConnection()
         {
             OperationResult tDatabaseConnected = QuestionOperations.TestDBConnection();
@@ -644,7 +689,5 @@ namespace Survey_Configurator
         }
 
         #endregion
-
-        
     }
 }
