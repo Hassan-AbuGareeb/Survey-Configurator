@@ -107,7 +107,7 @@ namespace Survey_Configurator
             {
                 UtilityMethods.LogError(ex);
                 ShowDefaultErrorMessage();
-                Close();
+                DisableUIElements();
             }
         }
 
@@ -313,6 +313,7 @@ namespace Survey_Configurator
             {
                 UtilityMethods.LogError(ex);
                 ShowDefaultErrorMessage();
+                DisableUIElements();
             }
         }
 
@@ -506,19 +507,31 @@ namespace Survey_Configurator
         /// </summary>
         private void ConnectionSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ConnectionSettings tConnectionSettingsForm = new ConnectionSettings(true);
-            DialogResult tContinueToAppResult = tConnectionSettingsForm.ShowDialog();
-            //decied based on dialogue result
-            if (tContinueToAppResult == DialogResult.Continue)
-            {
-                //user decieded to continue anyway
-                mIsDatabaseConnected = false;
-                DisableUIElements();
+            try 
+            { 
+                ConnectionSettings tConnectionSettingsForm = new ConnectionSettings(true);
+                DialogResult tContinueToAppResult = tConnectionSettingsForm.ShowDialog();
+                //decied based on dialogue result
+                if (tContinueToAppResult == DialogResult.Continue)
+                {
+                    //user decieded to continue anyway
+                    mIsDatabaseConnected = false;
+                    DisableUIElements();
+                }
+                else if (tContinueToAppResult == DialogResult.OK)
+                {
+                    mIsDatabaseConnected= true;
+                    LoadApplication();
+                    EnableUIElements();
+
+                }
             }
-            else if (tContinueToAppResult == DialogResult.OK)
+            catch(Exception ex)
             {
-                mIsDatabaseConnected= true;
-                LoadApplication();
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+                DisableUIElements();
+
             }
         }
         #endregion
@@ -549,7 +562,7 @@ namespace Survey_Configurator
             {
                 UtilityMethods.LogError(ex);
                 ShowDefaultErrorMessage();
-                Close();
+                DisableUIElements();
             }
         }
 
@@ -594,6 +607,7 @@ namespace Survey_Configurator
             {
                 UtilityMethods.LogError(ex);
                 MessageBox.Show(GlobalStrings.DataFetchingError, GlobalStrings.DataFetchingErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DisableUIElements();
             }
         }
 
@@ -713,8 +727,17 @@ namespace Survey_Configurator
         /// <returns>bool value indicating whether the connection succeded or not</returns>
         public static bool CheckDatabaseConnection()
         {
-            OperationResult tDatabaseConnected = QuestionOperations.TestDBConnection();
-            return tDatabaseConnected.IsSuccess;
+            try 
+            {
+                OperationResult tDatabaseConnected = QuestionOperations.TestDBConnection();
+                return tDatabaseConnected.IsSuccess;
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+                return false;
+            }
         }
 
         /// <summary>
@@ -725,29 +748,36 @@ namespace Survey_Configurator
         /// </summary>
         private void LoadApplication()
         {
-            if (mIsDatabaseConnected)
-            {
-                //initialize the list view with questions data
-                QuestionsListViewInit();
+            try 
+            { 
+                if (mIsDatabaseConnected)
+                {
+                    //initialize the list view with questions data
+                    QuestionsListViewInit();
 
-                //launch the database change checker to monitor database for any change and reflect it to the UI
-                QuestionOperations.StartCheckingDataBaseChange();
+                    //launch the database change checker to monitor database for any change and reflect it to the UI
+                    QuestionOperations.StartCheckingDataBaseChange();
 
-                EnableUIElements();
+                }
+                else
+                {
+                    DisableUIElements();
+                }
+
+                //listen to any database change event
+                QuestionOperations.DataBaseChangedEvent += QuestionOperations_DataBaseChangedEvent;
+
+                //listener for the event of database refusing to connect multiple times
+                QuestionOperations.DataBaseNotConnectedEvent += QuestionOperations_DataBaseNotConnectedEvent;
+
+                //sort the questions list alphabetically on first load
+                QuestionsListView.ListViewItemSorter = new ListViewItemComparer(1, mSortingOrder);
             }
-            else
+            catch(Exception ex)
             {
-                DisableUIElements();
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
             }
-
-            //listen to any database change event
-            QuestionOperations.DataBaseChangedEvent += QuestionOperations_DataBaseChangedEvent;
-
-            //listener for the event of database refusing to connect multiple times
-            QuestionOperations.DataBaseNotConnectedEvent += QuestionOperations_DataBaseNotConnectedEvent;
-
-            //sort the questions list alphabetically on first load
-            QuestionsListView.ListViewItemSorter = new ListViewItemComparer(1, mSortingOrder);
         }
         #endregion
 
