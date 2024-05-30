@@ -299,19 +299,17 @@ namespace QuestionServices
         /// or an error occured within the funciton called on the thread.
         /// </summary>
         /// <returns>OperationResult object to indicate whether the database monitoring is successful or failed</returns>
-        public static OperationResult StartCheckingDataBaseChange()
+        public static void StartCheckingDataBaseChange()
         {
             try 
             {
                 Thread tCheckThread = new Thread(()=>CheckDataBaseChange(Thread.CurrentThread));
                 tCheckThread.IsBackground = true;
                 tCheckThread.Start();
-                return new OperationResult();
             }
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
             }
         }
 

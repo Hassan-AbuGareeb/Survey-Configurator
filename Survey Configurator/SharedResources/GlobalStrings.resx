@@ -129,6 +129,12 @@
   <data name="CancelOperationTitle" xml:space="preserve">
     <value>Cancel Operation</value>
   </data>
+  <data name="DatabaseNotConnectedError" xml:space="preserve">
+    <value>Lost connection to database, refer to your system admin</value>
+  </data>
+  <data name="DatabaseNotConnectedErrorTitle" xml:space="preserve">
+    <value>Database not connected</value>
+  </data>
   <data name="DataFetchingError" xml:space="preserve">
     <value>An error occured while loading data please try again.\nif you keep getting this error restart the app</value>
   </data>

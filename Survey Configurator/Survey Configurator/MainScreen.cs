@@ -2,10 +2,7 @@
 using QuestionServices;
 using SharedResources;
 using SharedResources.models;
-using System.Diagnostics;
 using System.Configuration;
-using System.ComponentModel;
-using System.Globalization;
 
 namespace Survey_Configurator
 {
@@ -19,7 +16,8 @@ namespace Survey_Configurator
 
 
         //the sorting order for the questions items in the list view
-        private SortOrder SortingOrder = SortOrder.Ascending;
+        private static SortOrder mSortingOrder = SortOrder.Ascending;
+        private static bool mIsDatabaseConnected = true;
 
         //constants    
         private const string cEnglishLanguageSettings = "en";
@@ -50,7 +48,7 @@ namespace Survey_Configurator
                     }
                     else if (tContinueToAppResult == DialogResult.Continue)
                     {//user decieded to continue anyway
-                        DisableUIElements();
+                        mIsDatabaseConnected = false;
                     }
                 }
                 else
@@ -68,7 +66,7 @@ namespace Survey_Configurator
                         else
                         {
                             //disable functionalities
-                            DisableUIElements();
+                            mIsDatabaseConnected= false;
                         }
                     }
                 }
@@ -99,16 +97,19 @@ namespace Survey_Configurator
         {
             try
             {
-                //initialize the list view with questions data
-                QuestionsListViewInit();
+                if (mIsDatabaseConnected) 
+                { 
+                    //initialize the list view with questions data
+                    QuestionsListViewInit();
 
-                //launch the database change checker to monitor database for any change and reflect it to the UI
-                OperationResult tStartDatabaseCheckResult = QuestionOperations.StartCheckingDataBaseChange();
-                if (!tStartDatabaseCheckResult.IsSuccess)
-                {
-                    MessageBox.Show(tStartDatabaseCheckResult.ErrorMessage, tStartDatabaseCheckResult.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Close();
+                    //launch the database change checker to monitor database for any change and reflect it to the UI
+                    QuestionOperations.StartCheckingDataBaseChange();
                 }
+                else 
+                { 
+                    DisableUIElements();
+                }
+
                 //listen to any database change event
                 QuestionOperations.DataBaseChangedEvent += QuestionOperations_DataBaseChangedEvent;
 
@@ -116,7 +117,7 @@ namespace Survey_Configurator
                 QuestionOperations.DataBaseNotConnectedEvent += QuestionOperations_DataBaseNotConnectedEvent;
 
                 //sort the questions list alphabetically on first load
-                QuestionsListView.ListViewItemSorter = new ListViewItemComparer(1, SortingOrder);
+                QuestionsListView.ListViewItemSorter = new ListViewItemComparer(1, mSortingOrder);
 
             }
             catch (Exception ex)
@@ -294,16 +295,16 @@ namespace Survey_Configurator
         {
             try
             {
-                if (SortingOrder == SortOrder.Ascending)
+                if (mSortingOrder == SortOrder.Ascending)
                 {
-                    SortingOrder = SortOrder.Descending;
+                    mSortingOrder = SortOrder.Descending;
                 }
                 else
                 {
-                    SortingOrder = SortOrder.Ascending;
+                    mSortingOrder = SortOrder.Ascending;
                 }
                 //change the itemSorter of the listview based on what column is clicked
-                QuestionsListView.ListViewItemSorter = new ListViewItemComparer(e.Column, SortingOrder);
+                QuestionsListView.ListViewItemSorter = new ListViewItemComparer(e.Column, mSortingOrder);
             }
             catch (Exception ex)
             {
@@ -339,12 +340,13 @@ namespace Survey_Configurator
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        
         private void QuestionOperations_DataBaseNotConnectedEvent(object? sender, EventArgs e)
         {
             try
             {
-                MessageBox.Show(GlobalStrings.SqlError, GlobalStrings.SqlErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Close();
+                MessageBox.Show(GlobalStrings.DatabaseNotConnectedError, GlobalStrings.DatabaseNotConnectedErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DisableUIElements();
             }
             catch (Exception ex)
             {
@@ -517,7 +519,7 @@ namespace Survey_Configurator
                 if (!tGetQuestionsSuccessful.IsSuccess)
                 {
                     MessageBox.Show(tGetQuestionsSuccessful.ErrorMessage, tGetQuestionsSuccessful.Error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Close();
+                    DisableUIElements();
                 }
                 else
                 {
