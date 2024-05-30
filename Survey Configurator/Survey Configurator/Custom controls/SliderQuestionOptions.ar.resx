@@ -123,7 +123,10 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="SliderEndValueCaptionText.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 138</value>
+    <value>3, 136</value>
+  </data>
+  <data name="SliderEndValueCaptionText.Size" type="System.Drawing.Size, System.Drawing">
+    <value>373, 27</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="SliderEndValueCaptionText.TabIndex" type="System.Int32, mscorlib">
@@ -136,7 +139,10 @@
     <value>Right</value>
   </data>
   <data name="SliderStartValueCaptionText.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 93</value>
+    <value>3, 91</value>
+  </data>
+  <data name="SliderStartValueCaptionText.Size" type="System.Drawing.Size, System.Drawing">
+    <value>373, 27</value>
   </data>
   <data name="SliderStartValueCaptionText.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -151,7 +157,7 @@
     <value>NoControl</value>
   </data>
   <data name="SliderEndValueCaptionLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>418, 143</value>
+    <value>398, 143</value>
   </data>
   <data name="SliderEndValueCaptionLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>137, 20</value>
@@ -166,7 +172,7 @@
     <value>NoControl</value>
   </data>
   <data name="SliderStartValueCaptionLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>422, 98</value>
+    <value>402, 98</value>
   </data>
   <data name="SliderStartValueCaptionLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>133, 20</value>
@@ -178,7 +184,10 @@
     <value>Right</value>
   </data>
   <data name="SliderEndValueNumeric.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 49</value>
+    <value>3, 47</value>
+  </data>
+  <data name="SliderEndValueNumeric.Size" type="System.Drawing.Size, System.Drawing">
+    <value>373, 27</value>
   </data>
   <data name="SliderEndValueNumeric.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -190,7 +199,7 @@
     <value>NoControl</value>
   </data>
   <data name="SliderEndValueLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>447, 53</value>
+    <value>427, 53</value>
   </data>
   <data name="SliderEndValueLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>108, 20</value>
@@ -205,7 +214,7 @@
     <value>NoControl</value>
   </data>
   <data name="SliderStartValueLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>451, 9</value>
+    <value>431, 9</value>
   </data>
   <data name="SliderStartValueLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>104, 20</value>
@@ -217,7 +226,10 @@
     <value>Right</value>
   </data>
   <data name="SliderStartValueNumeric.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 2</value>
+    <value>3, 0</value>
+  </data>
+  <data name="SliderStartValueNumeric.Size" type="System.Drawing.Size, System.Drawing">
+    <value>373, 27</value>
   </data>
   <data name="SliderStartValueNumeric.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -226,6 +238,6 @@
     <value>Yes</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>555, 188</value>
+    <value>535, 188</value>
   </data>
 </root>

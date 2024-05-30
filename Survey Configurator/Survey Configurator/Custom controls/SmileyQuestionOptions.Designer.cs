@@ -51,7 +51,7 @@
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.Transparent;
+            BackColor = SystemColors.ButtonFace;
             Controls.Add(NumberOfSmileysNumeric);
             Controls.Add(NumberOfSmileysLabel);
             Name = "SmileyQuestionOptions";
