@@ -34,12 +34,16 @@ namespace Survey_Configurator
         {
             try
             {
+
+                //set the language for the app
+                SetAppLanguage();
+
                 //check if connection string is successfully obtained 
                 bool tConnectionStringExists = QuestionOperations.GetConnectionString();
                 if (!tConnectionStringExists)
                 {
                     //show conn settings form
-                    ConnectionSettings tConnectionSettingsForm = new ConnectionSettings();
+                    ConnectionSettings tConnectionSettingsForm = new ConnectionSettings(false);
                     DialogResult tContinueToAppResult = tConnectionSettingsForm.ShowDialog();
                     //decied based on dialogue result
                     if (tContinueToAppResult == DialogResult.Cancel)
@@ -57,7 +61,7 @@ namespace Survey_Configurator
                     bool tIsDatabaseConnected = CheckDatabaseConnection();
                     if (!tIsDatabaseConnected)
                     {
-                        DialogResult tContinueToAppResult = MessageBox.Show("An error occured while connecting to database, the application may not work properly.\nwould like to continue?", "Database error",
+                        DialogResult tContinueToAppResult = MessageBox.Show(GlobalStrings.DataBaseConnectionError, GlobalStrings.DataBaseConnectionErrortitle,
                             MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                         if (tContinueToAppResult == DialogResult.No || tContinueToAppResult == DialogResult.Cancel)
                         {
@@ -66,13 +70,11 @@ namespace Survey_Configurator
                         else
                         {
                             //disable functionalities
-                            mIsDatabaseConnected= false;
+                            mIsDatabaseConnected = false;
                         }
                     }
                 }
 
-                //set the language for the app
-                SetAppLanguage();
 
                 InitializeComponent();
             }
@@ -97,27 +99,7 @@ namespace Survey_Configurator
         {
             try
             {
-                if (mIsDatabaseConnected) 
-                { 
-                    //initialize the list view with questions data
-                    QuestionsListViewInit();
-
-                    //launch the database change checker to monitor database for any change and reflect it to the UI
-                    QuestionOperations.StartCheckingDataBaseChange();
-                }
-                else 
-                { 
-                    DisableUIElements();
-                }
-
-                //listen to any database change event
-                QuestionOperations.DataBaseChangedEvent += QuestionOperations_DataBaseChangedEvent;
-
-                //listener for the event of database refusing to connect multiple times
-                QuestionOperations.DataBaseNotConnectedEvent += QuestionOperations_DataBaseNotConnectedEvent;
-
-                //sort the questions list alphabetically on first load
-                QuestionsListView.ListViewItemSorter = new ListViewItemComparer(1, mSortingOrder);
+                LoadApplication();
 
             }
             catch (Exception ex)
@@ -340,7 +322,7 @@ namespace Survey_Configurator
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        
+
         private void QuestionOperations_DataBaseNotConnectedEvent(object? sender, EventArgs e)
         {
             try
@@ -469,6 +451,21 @@ namespace Survey_Configurator
             }
         }
 
+        private void ConnectionSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConnectionSettings tConnectionSettingsForm = new ConnectionSettings(true);
+            DialogResult tContinueToAppResult = tConnectionSettingsForm.ShowDialog();
+            //decied based on dialogue result
+            if (tContinueToAppResult == DialogResult.Continue)
+            {//user decieded to continue anyway
+                mIsDatabaseConnected = false;
+            }
+            else if (tContinueToAppResult == DialogResult.OK)
+            {
+                mIsDatabaseConnected= true;
+                LoadApplication();
+            }
+        }
         #endregion
 
         #region class utility functions
@@ -664,7 +661,7 @@ namespace Survey_Configurator
                 QuestionsListView.Enabled = true;
                 AddQuestionButton.Enabled = true;
                 DatabaseConnectionIsseuesLabel.Hide();
-                if (QuestionsListView.SelectedItems.Count>0)
+                if (QuestionsListView.SelectedItems.Count > 0)
                 {
                     DeleteQuestionButton.Enabled = false;
                 }
@@ -683,13 +680,39 @@ namespace Survey_Configurator
             }
         }
 
-
         public static bool CheckDatabaseConnection()
         {
             OperationResult tDatabaseConnected = QuestionOperations.TestDBConnection();
             return tDatabaseConnected.IsSuccess;
         }
 
+        private void LoadApplication()
+        {
+            if (mIsDatabaseConnected)
+            {
+                //initialize the list view with questions data
+                QuestionsListViewInit();
+
+                //launch the database change checker to monitor database for any change and reflect it to the UI
+                QuestionOperations.StartCheckingDataBaseChange();
+
+                EnableUIElements();
+            }
+            else
+            {
+                DisableUIElements();
+            }
+
+            //listen to any database change event
+            QuestionOperations.DataBaseChangedEvent += QuestionOperations_DataBaseChangedEvent;
+
+            //listener for the event of database refusing to connect multiple times
+            QuestionOperations.DataBaseNotConnectedEvent += QuestionOperations_DataBaseNotConnectedEvent;
+
+            //sort the questions list alphabetically on first load
+            QuestionsListView.ListViewItemSorter = new ListViewItemComparer(1, mSortingOrder);
+        }
         #endregion
+
     }
 }

@@ -119,7 +119,7 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="fontSizeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 28</value>
+    <value>246, 28</value>
   </data>
   <data name="EnglishToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>148, 28</value>
@@ -134,9 +134,12 @@
     <value>العربية</value>
   </data>
   <data name="languageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 28</value>
+    <value>246, 28</value>
   </data>
   <data name="languageToolStripMenuItem.Text" xml:space="preserve">
     <value>Language</value>
+  </data>
+  <data name="ConnectionSettingsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Connection settings</value>
   </data>
 </root>

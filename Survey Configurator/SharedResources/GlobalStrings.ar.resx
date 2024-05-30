@@ -129,6 +129,13 @@
   <data name="CancelOperationTitle" xml:space="preserve">
     <value>إلغاء العملية</value>
   </data>
+  <data name="DataBaseConnectionError" xml:space="preserve">
+    <value>حدث خطأ أثناء الاتصال بقاعدة البيانات, قد لا يعمل البرنامج بشكل صحيح
+ هل ترغب بالاستمرار؟</value>
+  </data>
+  <data name="DataBaseConnectionErrortitle" xml:space="preserve">
+    <value>خطأ في الاتصال بقاعدة البيانات</value>
+  </data>
   <data name="DatabaseNotConnectedError" xml:space="preserve">
     <value>فُقد الاتصال بقاعدة البيانات, اطلب المساعدة من مشرف النظام</value>
   </data>

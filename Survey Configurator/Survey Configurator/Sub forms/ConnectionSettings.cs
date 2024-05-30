@@ -9,6 +9,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,25 +18,46 @@ namespace Survey_Configurator.Sub_forms
     public partial class ConnectionSettings : Form
     {
         //class members
-        LogIn mLogInControl;
+        private LogIn mLogInControl;
         //SqlConnectionStringBuilder mConnectionString = new SqlConnectionStringBuilder();
-        ConnectionString mConnectionString = new ConnectionString();
+        private ConnectionString mConnectionString = new ConnectionString();
 
         //constants
         //authentication type
         private const string cWindowsAuthentication = "Windows Authentication";
         private const string cSQLServerAuthentication = "SQL Server Authentication";
+        private const string cConnectionStringFileName = "\\connectionSettings.json";
+        private static string mFilePath = Directory.GetCurrentDirectory() + cConnectionStringFileName;
         //encrytion options
 
-        public ConnectionSettings()
+        public ConnectionSettings(bool isOpenedFromSettings)
         {
             try
             {
                 InitializeComponent();
+                if (!isOpenedFromSettings)
+                {
+                    //some default settings
+                    AuthenticationComboBox.SelectedItem = cWindowsAuthentication;
+                    EncryptionComboBox.SelectedItem = SqlConnectionEncryptOption.Strict.ToString();
+                }
+                else
+                {
+                    PopulateConnectionString();
 
-                //some default settings
-                AuthenticationComboBox.SelectedItem = cWindowsAuthentication;
-                EncryptionComboBox.SelectedItem = SqlConnectionEncryptOption.Strict.ToString();
+                    //fill the form with the existing data from the connection string
+                    ServerNameTestBox.Text = mConnectionString.Server;
+                    DatabaseNameTextBox.Text = mConnectionString.Database;
+                    AuthenticationComboBox.SelectedItem = mConnectionString.Trusted_Connection;
+                    if(AuthenticationComboBox.SelectedItem == cSQLServerAuthentication)
+                    {
+                        mLogInControl.LoginTextBox.Text = mConnectionString.User;
+                        mLogInControl.PasswordTextBox.Text = mConnectionString.Password;
+                    }
+                    EncryptionComboBox.SelectedItem = mConnectionString.Encrypt;
+                    TrustServerCertificateCheckBox.Checked = mConnectionString.TrustServerCertificate;
+                    HostNameInCertificateTextbox.Text = mConnectionString.HostNameInCertificate;
+                }
             }
             catch(Exception ex)
             {
@@ -199,6 +221,20 @@ namespace Survey_Configurator.Sub_forms
                 UtilityMethods.LogError(ex);
                 MainScreen.ShowDefaultErrorMessage();
             }
+        }
+
+        private void PopulateConnectionString()
+        {
+            using (StreamReader tFileReader = new StreamReader(mFilePath))
+            {
+                string tReadConnectionString = tFileReader.ReadToEnd();
+                //de-serialize the obtained connection string and transform it to the correct format
+                ConnectionString tDesrializedConnString = JsonSerializer.Deserialize<ConnectionString>(tReadConnectionString);
+                mConnectionString = tDesrializedConnString;
+            }
+
+
+
         }
     }
 }

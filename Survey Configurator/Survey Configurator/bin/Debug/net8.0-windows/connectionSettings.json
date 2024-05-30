@@ -1,1 +1,1 @@
-{"Server":"HASSANABUGHREEB","Database":"Questions_DB","Trusted_Connection":true,"User":"","Password":"","Encrypt":"Optional","Timeout":5,"TrustServerCertificate":false,"HostNameInCertificate":""}
+{"Server":"HASSANABUGHREEB","Database":"Questions_DB","Trusted_Connection":false,"User":"sa","Password":"sedco123","Encrypt":"False","Timeout":5,"TrustServerCertificate":true,"HostNameInCertificate":""}

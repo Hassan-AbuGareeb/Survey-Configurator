@@ -129,6 +129,13 @@
   <data name="CancelOperationTitle" xml:space="preserve">
     <value>Cancel Operation</value>
   </data>
+  <data name="DataBaseConnectionError" xml:space="preserve">
+    <value>An error occured while connecting to database, the application may not work properly.
+would like to continue?</value>
+  </data>
+  <data name="DataBaseConnectionErrortitle" xml:space="preserve">
+    <value>Database connection error</value>
+  </data>
   <data name="DatabaseNotConnectedError" xml:space="preserve">
     <value>Lost connection to database, refer to your system admin</value>
   </data>
@@ -136,7 +143,8 @@
     <value>Database not connected</value>
   </data>
   <data name="DataFetchingError" xml:space="preserve">
-    <value>An error occured while loading data please try again.\nif you keep getting this error restart the app</value>
+    <value>An error occured while loading data please try again.
+if you keep getting this error restart the app</value>
   </data>
   <data name="DataFetchingErrorTitle" xml:space="preserve">
     <value>Data Loading Error</value>
@@ -190,7 +198,7 @@
     <value>Database related error, refer to your system admin</value>
   </data>
   <data name="SqlErrorTitle" xml:space="preserve">
-    <value>Database Error</value>
+    <value>Database error</value>
   </data>
   <data name="UnAuthorizedAccessError" xml:space="preserve">
     <value>Unauthorized access error</value>

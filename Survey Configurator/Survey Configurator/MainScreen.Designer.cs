@@ -42,6 +42,7 @@
             languageToolStripMenuItem = new ToolStripMenuItem();
             EnglishToolStripMenuItem = new ToolStripMenuItem();
             ArabicToolStripMenuItem = new ToolStripMenuItem();
+            ConnectionSettingsToolStripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             openManualToolStripMenuItem = new ToolStripMenuItem();
             QuestionsListView = new ListView();
@@ -83,63 +84,69 @@
             // 
             // optionsToolStripMenuItem
             // 
-            optionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fontSizeToolStripMenuItem, languageToolStripMenuItem });
-            optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             resources.ApplyResources(optionsToolStripMenuItem, "optionsToolStripMenuItem");
+            optionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fontSizeToolStripMenuItem, languageToolStripMenuItem, ConnectionSettingsToolStripMenuItem });
+            optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             // 
             // fontSizeToolStripMenuItem
             // 
+            resources.ApplyResources(fontSizeToolStripMenuItem, "fontSizeToolStripMenuItem");
             fontSizeToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fontSize9StripMenuItem, fontSize12StripMenuItem, fontSize15StripMenuItem });
             fontSizeToolStripMenuItem.Name = "fontSizeToolStripMenuItem";
-            resources.ApplyResources(fontSizeToolStripMenuItem, "fontSizeToolStripMenuItem");
             // 
             // fontSize9StripMenuItem
             // 
-            fontSize9StripMenuItem.Name = "fontSize9StripMenuItem";
             resources.ApplyResources(fontSize9StripMenuItem, "fontSize9StripMenuItem");
+            fontSize9StripMenuItem.Name = "fontSize9StripMenuItem";
             fontSize9StripMenuItem.Click += toolStripMenuItem2_Click;
             // 
             // fontSize12StripMenuItem
             // 
-            fontSize12StripMenuItem.Name = "fontSize12StripMenuItem";
             resources.ApplyResources(fontSize12StripMenuItem, "fontSize12StripMenuItem");
+            fontSize12StripMenuItem.Name = "fontSize12StripMenuItem";
             fontSize12StripMenuItem.Click += toolStripMenuItem3_Click;
             // 
             // fontSize15StripMenuItem
             // 
-            fontSize15StripMenuItem.Name = "fontSize15StripMenuItem";
             resources.ApplyResources(fontSize15StripMenuItem, "fontSize15StripMenuItem");
+            fontSize15StripMenuItem.Name = "fontSize15StripMenuItem";
             fontSize15StripMenuItem.Click += toolStripMenuItem4_Click;
             // 
             // languageToolStripMenuItem
             // 
+            resources.ApplyResources(languageToolStripMenuItem, "languageToolStripMenuItem");
             languageToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { EnglishToolStripMenuItem, ArabicToolStripMenuItem });
             languageToolStripMenuItem.Name = "languageToolStripMenuItem";
-            resources.ApplyResources(languageToolStripMenuItem, "languageToolStripMenuItem");
             // 
             // EnglishToolStripMenuItem
             // 
-            EnglishToolStripMenuItem.Name = "EnglishToolStripMenuItem";
             resources.ApplyResources(EnglishToolStripMenuItem, "EnglishToolStripMenuItem");
+            EnglishToolStripMenuItem.Name = "EnglishToolStripMenuItem";
             EnglishToolStripMenuItem.Click += EnglishToolStripMenuItem_Click;
             // 
             // ArabicToolStripMenuItem
             // 
-            ArabicToolStripMenuItem.Name = "ArabicToolStripMenuItem";
             resources.ApplyResources(ArabicToolStripMenuItem, "ArabicToolStripMenuItem");
+            ArabicToolStripMenuItem.Name = "ArabicToolStripMenuItem";
             ArabicToolStripMenuItem.Click += ArabicToolStripMenuItem_Click;
+            // 
+            // ConnectionSettingsToolStripMenuItem
+            // 
+            resources.ApplyResources(ConnectionSettingsToolStripMenuItem, "ConnectionSettingsToolStripMenuItem");
+            ConnectionSettingsToolStripMenuItem.Name = "ConnectionSettingsToolStripMenuItem";
+            ConnectionSettingsToolStripMenuItem.Click += ConnectionSettingsToolStripMenuItem_Click;
             // 
             // helpToolStripMenuItem
             // 
+            resources.ApplyResources(helpToolStripMenuItem, "helpToolStripMenuItem");
             helpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { openManualToolStripMenuItem });
             helpToolStripMenuItem.Margin = new Padding(10, 0, 0, 0);
             helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            resources.ApplyResources(helpToolStripMenuItem, "helpToolStripMenuItem");
             // 
             // openManualToolStripMenuItem
             // 
-            openManualToolStripMenuItem.Name = "openManualToolStripMenuItem";
             resources.ApplyResources(openManualToolStripMenuItem, "openManualToolStripMenuItem");
+            openManualToolStripMenuItem.Name = "openManualToolStripMenuItem";
             // 
             // QuestionsListView
             // 
@@ -213,5 +220,6 @@
         private ToolStripMenuItem EnglishToolStripMenuItem;
         private ToolStripMenuItem ArabicToolStripMenuItem;
         private Label DatabaseConnectionIsseuesLabel;
+        private ToolStripMenuItem ConnectionSettingsToolStripMenuItem;
     }
 }
