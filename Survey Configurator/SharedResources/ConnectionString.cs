@@ -1,4 +1,6 @@
-﻿namespace SharedResources
+﻿using Microsoft.Data.SqlClient;
+
+namespace SharedResources
 {
     public class ConnectionString
     {
@@ -6,23 +8,23 @@
         /// a class to facilitate the process of obtaining the connection string
         /// and changing/saving it in the connectionString.json file
         /// </summary>
-        public string Server {  get; set; }
-        public string Database { get; set; }
-        public bool Trusted_Connection { get; set; }
-        public string User {  get; set; }
-        public string Password { get; set; }
-        public bool Encrypt { get; set; }
-        public int Timeout { get; set; }
+        public string mServer {  get; set; }
+        public string mDatabase { get; set; }
+        public string mUser {  get; set; }
+        public string mPassword { get; set; }
+        public bool mEncrypt { get; set; }
+        public int mTimeout { get; set; }
+        public bool mIntegratedSecurity { get; set; }
 
         public ConnectionString() {
             try { 
-                Server = string.Empty;
-                Database = string.Empty;
-                Trusted_Connection = false;
-                User = string.Empty;
-                Password = string.Empty;
-                Encrypt = false;
-                Timeout = 5;
+                mServer = string.Empty;
+                mDatabase = string.Empty;
+                mUser = string.Empty;
+                mPassword = string.Empty;
+                mEncrypt = false;
+                mTimeout = 5;
+                mIntegratedSecurity = true;
             }
             catch(Exception ex)
             {
@@ -38,7 +40,7 @@
         {
             try
             {
-                return $"Server={Server}; Database={Database}; Trusted_Connection={Trusted_Connection}; User={User}; Password={Password}; Encrypt={Encrypt}; Timeout={Timeout}";
+                return $"Server={mServer}; Database={mDatabase}; Integrated Security={mIntegratedSecurity}; User={mUser}; Password={mPassword}; Encrypt={mEncrypt}; Timeout={mTimeout}";
             }
             catch (Exception ex)
             {

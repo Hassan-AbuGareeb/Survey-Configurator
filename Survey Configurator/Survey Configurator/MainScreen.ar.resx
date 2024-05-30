@@ -117,49 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="DeleteQuestionButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="DeleteQuestionButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1579, 851</value>
+    <value>12, 851</value>
   </data>
   <data name="DeleteQuestionButton.Text" xml:space="preserve">
     <value>حذف</value>
   </data>
+  <data name="EditQuestionButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
   <data name="EditQuestionButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1473, 851</value>
+    <value>118, 851</value>
   </data>
   <data name="EditQuestionButton.Text" xml:space="preserve">
     <value>تعديل</value>
   </data>
+  <data name="AddQuestionButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
   <data name="AddQuestionButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1367, 851</value>
+    <value>224, 851</value>
   </data>
   <data name="AddQuestionButton.Text" xml:space="preserve">
     <value>إضافة</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="menuStrip1.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>Yes</value>
-  </data>
-  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1691, 36</value>
-  </data>
-  <data name="optionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 32</value>
-  </data>
-  <data name="optionsToolStripMenuItem.Text" xml:space="preserve">
-    <value>خيارات</value>
-  </data>
   <data name="fontSizeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>163, 28</value>
+    <value>207, 28</value>
   </data>
   <data name="fontSizeToolStripMenuItem.Text" xml:space="preserve">
     <value>حجم الخط</value>
-  </data>
-  <data name="languageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>163, 28</value>
-  </data>
-  <data name="languageToolStripMenuItem.Text" xml:space="preserve">
-    <value>اللغة</value>
   </data>
   <data name="EnglishToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>148, 28</value>
@@ -173,11 +164,23 @@
   <data name="ArabicToolStripMenuItem.Text" xml:space="preserve">
     <value>العريبة</value>
   </data>
-  <data name="helpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 32</value>
+  <data name="languageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 28</value>
   </data>
-  <data name="helpToolStripMenuItem.Text" xml:space="preserve">
-    <value>مساعدة</value>
+  <data name="languageToolStripMenuItem.Text" xml:space="preserve">
+    <value>اللغة</value>
+  </data>
+  <data name="ConnectionSettingsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 28</value>
+  </data>
+  <data name="ConnectionSettingsToolStripMenuItem.Text" xml:space="preserve">
+    <value>إعدادات الاتصال</value>
+  </data>
+  <data name="optionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 32</value>
+  </data>
+  <data name="optionsToolStripMenuItem.Text" xml:space="preserve">
+    <value>خيارات</value>
   </data>
   <data name="openManualToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>200, 28</value>
@@ -185,11 +188,17 @@
   <data name="openManualToolStripMenuItem.Text" xml:space="preserve">
     <value>دليل المستخدم</value>
   </data>
-  <data name="QuestionsListView.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+  <data name="helpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 32</value>
+  </data>
+  <data name="helpToolStripMenuItem.Text" xml:space="preserve">
+    <value>مساعدة</value>
+  </data>
+  <data name="menuStrip1.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
     <value>Yes</value>
   </data>
-  <data name="QuestionsListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1667, 806</value>
+  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1691, 36</value>
   </data>
   <data name="QuestionOrder.Text" xml:space="preserve">
     <value>الرقم</value>
@@ -209,6 +218,21 @@
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="QuestionType.Width" type="System.Int32, mscorlib">
     <value>760</value>
+  </data>
+  <data name="QuestionsListView.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>Yes</value>
+  </data>
+  <data name="QuestionsListView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1667, 806</value>
+  </data>
+  <data name="DatabaseConnectionIsseuesLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1108, 857</value>
+  </data>
+  <data name="DatabaseConnectionIsseuesLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>571, 18</value>
+  </data>
+  <data name="DatabaseConnectionIsseuesLabel.Text" xml:space="preserve">
+    <value>البرنامج لا يعمل بشكل صحيح بسبب وجود مشكلة في الاتصال بقاعدة البيانات, اطلب المساعدة من مشرف النظام *</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>1691, 893</value>

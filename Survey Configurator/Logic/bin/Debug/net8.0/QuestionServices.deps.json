@@ -384,8 +384,16 @@
         }
       },
       "SharedResources/1.0.0": {
+        "dependencies": {
+          "Microsoft.Data.SqlClient": "5.2.0"
+        },
         "runtime": {
           "SharedResources.dll": {}
+        },
+        "resources": {
+          "ar/SharedResources.resources.dll": {
+            "locale": "ar"
+          }
         }
       }
     }

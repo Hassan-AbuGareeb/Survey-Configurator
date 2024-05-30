@@ -8,12 +8,12 @@ namespace SharedResources.models
         public int Order { get; set; }
         public int NumberOfStars { get; set; }
 
-        public StarsQuestion(int pId, string pText, int pOrder, int pNumberOfStars = 5) : base(pId, pText, pOrder, QuestionType.Stars)
+        public StarsQuestion(int pId, string pText, int pOrder, int pNumberOfStars = 5) : base(pId, pText, pOrder, eQuestionType.Stars)
         {
             NumberOfStars = pNumberOfStars;
         }
 
-        public StarsQuestion(Question pQuestionData, int pNumberOfstars):base(pQuestionData.Id,pQuestionData.Text, pQuestionData.Order, QuestionType.Stars)
+        public StarsQuestion(Question pQuestionData, int pNumberOfstars):base(pQuestionData.Id,pQuestionData.Text, pQuestionData.Order, eQuestionType.Stars)
         {
             NumberOfStars = pNumberOfstars;
         }

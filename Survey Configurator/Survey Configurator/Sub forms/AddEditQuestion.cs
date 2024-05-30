@@ -16,16 +16,16 @@ namespace Survey_Configurator.Sub_forms
 
 
         //the id of the question to be edited
-        private static int QuestionId;
+        private static int mQuestionId;
         //current operation add/edit
-        private static string Operation;
+        private static string mOperation;
 
         //user-control questions objects
-        private static StarsQuestionOptions StarsQuestionOptionsPanel;
-        private static SmileyQuestionOptions SmileyQuestionOptionsPanel;
-        private static SliderQuestionOptions SliderQuestionOptionsPanel;
+        private static StarsQuestionOptions mStarsQuestionOptionsPanel;
+        private static SmileyQuestionOptions mSmileyQuestionOptionsPanel;
+        private static SliderQuestionOptions mSliderQuestionOptionsPanel;
         //location of the question options panel
-        private Point QuestionOptionsPanelLocation = new Point(12, 85);
+        private Point mQuestionOptionsPanelLocation = new Point(12, 85);
 
         /// <summary>
         /// add operation constructor, assign the AddButton click function
@@ -38,7 +38,7 @@ namespace Survey_Configurator.Sub_forms
                 InitializeComponent();
                 Text = GlobalStrings.AddQuestion;
                 OperationButton.Text = GlobalStrings.AddOperation;
-                Operation = GlobalStrings.AddOperation;
+                mOperation = GlobalStrings.AddOperation;
                 OperationButton.Click += AddButton_Click;
             }
             catch (Exception ex)
@@ -58,10 +58,10 @@ namespace Survey_Configurator.Sub_forms
             try
             {
                 InitializeComponent();
-                QuestionId = pQuestionId;
+                mQuestionId = pQuestionId;
                 Text = GlobalStrings.EditQuestion;
                 OperationButton.Text = GlobalStrings.EditOperation;
-                Operation = GlobalStrings.EditOperation;
+                mOperation = GlobalStrings.EditOperation;
                 OperationButton.Click += EditButton_Click;
             }
             catch (Exception ex)
@@ -84,11 +84,11 @@ namespace Survey_Configurator.Sub_forms
             try
             {
                 //to prevent any interruption in adding/updating
-                QuestionOperations.OperationOngoing = true;
+                QuestionOperations.mOperationOngoing = true;
                 //check if the operation is edit and fill the fields with selected question data
-                if (Operation == GlobalStrings.EditOperation)
+                if (mOperation == GlobalStrings.EditOperation)
                 {
-                    Question tGeneralQuestionData = QuestionOperations.GetQuestionData(QuestionId);
+                    Question tGeneralQuestionData = QuestionOperations.GetQuestionData(mQuestionId);
                     //extract question data an add it to UI
                     QuestionTextBox.Text = tGeneralQuestionData.Text;
                     QuestionOrderNumeric.Value = tGeneralQuestionData.Order;
@@ -99,29 +99,29 @@ namespace Survey_Configurator.Sub_forms
                     Question tQuestionSpecificData = null;
 
                     //gets the specific data of the question to show it in the form
-                    OperationResult tQuestionSpecificDataResult = QuestionOperations.GetQuestionSpecificData(QuestionId, ref tQuestionSpecificData);
+                    OperationResult tQuestionSpecificDataResult = QuestionOperations.GetQuestionSpecificData(mQuestionId, ref tQuestionSpecificData);
                     if (tQuestionSpecificDataResult.IsSuccess)
                     {
                         switch (tQuestionSpecificData.Type)
                         {
                             //for each case Get the info and downcast it and assign it to its respective field
-                            case QuestionType.Stars:
-                                StarsQuestionOptionsPanel.NumberOfStarsNumeric.Value = ((StarsQuestion)tQuestionSpecificData).NumberOfStars;
+                            case eQuestionType.Stars:
+                                mStarsQuestionOptionsPanel.NumberOfStarsNumeric.Value = ((StarsQuestion)tQuestionSpecificData).NumberOfStars;
                                 break;
-                            case QuestionType.Smiley:
-                                SmileyQuestionOptionsPanel.NumberOfSmileysNumeric.Value = ((SmileyQuestion)tQuestionSpecificData).NumberOfSmileyFaces;
+                            case eQuestionType.Smiley:
+                                mSmileyQuestionOptionsPanel.NumberOfSmileysNumeric.Value = ((SmileyQuestion)tQuestionSpecificData).NumberOfSmileyFaces;
                                 break;
-                            case QuestionType.Slider:
-                                SliderQuestionOptionsPanel.SliderStartValueNumeric.Value = ((SliderQuestion)tQuestionSpecificData).StartValue;
-                                SliderQuestionOptionsPanel.SliderEndValueNumeric.Value = ((SliderQuestion)tQuestionSpecificData).EndValue;
-                                SliderQuestionOptionsPanel.SliderStartValueCaptionText.Text = ((SliderQuestion)tQuestionSpecificData).StartValueCaption;
-                                SliderQuestionOptionsPanel.SliderEndValueCaptionText.Text = ((SliderQuestion)tQuestionSpecificData).EndValueCaption;
+                            case eQuestionType.Slider:
+                                mSliderQuestionOptionsPanel.SliderStartValueNumeric.Value = ((SliderQuestion)tQuestionSpecificData).StartValue;
+                                mSliderQuestionOptionsPanel.SliderEndValueNumeric.Value = ((SliderQuestion)tQuestionSpecificData).EndValue;
+                                mSliderQuestionOptionsPanel.SliderStartValueCaptionText.Text = ((SliderQuestion)tQuestionSpecificData).StartValueCaption;
+                                mSliderQuestionOptionsPanel.SliderEndValueCaptionText.Text = ((SliderQuestion)tQuestionSpecificData).EndValueCaption;
                                 break;
                         }
                     }
                     else
                     {
-                        MessageBox.Show(tQuestionSpecificDataResult.ErrorMessage, tQuestionSpecificDataResult.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(tQuestionSpecificDataResult.mErrorMessage, tQuestionSpecificDataResult.mError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Close();
                     }
                 }
@@ -155,7 +155,7 @@ namespace Survey_Configurator.Sub_forms
                     string tQuestionText = QuestionTextBox.Text;
                     int tQuestionOrder = (int)QuestionOrderNumeric.Value;
                     //get the enum value of the question type
-                    QuestionType tQuestionType = (QuestionType)QuestionTypeComboBox.SelectedIndex;
+                    eQuestionType tQuestionType = (eQuestionType)QuestionTypeComboBox.SelectedIndex;
                     //encapsulate obtained data in a question object
                     Question tNewQuestionData = new Question(tQuestionText, tQuestionOrder, tQuestionType);
 
@@ -169,28 +169,28 @@ namespace Survey_Configurator.Sub_forms
                         switch (tQuestionType)
                         {
                             //create a question object based on the chosen type and add it to the database
-                            case QuestionType.Stars:
-                                StarsQuestion tStarsData = new StarsQuestion(tNewQuestionData, (int)StarsQuestionOptionsPanel.NumberOfStarsNumeric.Value);
+                            case eQuestionType.Stars:
+                                StarsQuestion tStarsData = new StarsQuestion(tNewQuestionData, (int)mStarsQuestionOptionsPanel.NumberOfStarsNumeric.Value);
                                 tQuestionAddedResult = QuestionOperations.AddQuestion(tStarsData);
                                 break;
-                            case QuestionType.Smiley:
-                                SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)SmileyQuestionOptionsPanel.NumberOfSmileysNumeric.Value);
+                            case eQuestionType.Smiley:
+                                SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)mSmileyQuestionOptionsPanel.NumberOfSmileysNumeric.Value);
                                 tQuestionAddedResult = QuestionOperations.AddQuestion(tSmileyData);
                                 break;
-                            case QuestionType.Slider:
+                            case eQuestionType.Slider:
                                 SliderQuestion tSliderData = new SliderQuestion(
                                     tNewQuestionData,
-                                    (int)SliderQuestionOptionsPanel.SliderStartValueNumeric.Value,
-                                    (int)SliderQuestionOptionsPanel.SliderEndValueNumeric.Value,
-                                    SliderQuestionOptionsPanel.SliderStartValueCaptionText.Text,
-                                    SliderQuestionOptionsPanel.SliderEndValueCaptionText.Text);
+                                    (int)mSliderQuestionOptionsPanel.SliderStartValueNumeric.Value,
+                                    (int)mSliderQuestionOptionsPanel.SliderEndValueNumeric.Value,
+                                    mSliderQuestionOptionsPanel.SliderStartValueCaptionText.Text,
+                                    mSliderQuestionOptionsPanel.SliderEndValueCaptionText.Text);
                                 tQuestionAddedResult = QuestionOperations.AddQuestion(tSliderData);
                                 break;
                         }
 
                         if (tQuestionAddedResult != null && !tQuestionAddedResult.IsSuccess)
                         {
-                            MessageBox.Show(tQuestionAddedResult.ErrorMessage, tQuestionAddedResult.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(tQuestionAddedResult.mErrorMessage, tQuestionAddedResult.mError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         //close form
                         Close();
@@ -243,9 +243,9 @@ namespace Survey_Configurator.Sub_forms
                     string tQuestionText = QuestionTextBox.Text;
                     int tQuestionOrder = (int)QuestionOrderNumeric.Value;
                     //get the enum value of the question type
-                    QuestionType tQuestionType = (QuestionType)QuestionTypeComboBox.SelectedIndex;
+                    eQuestionType tQuestionType = (eQuestionType)QuestionTypeComboBox.SelectedIndex;
                     //encapsulate obtained data in a question object
-                    Question tNewQuestionData = new Question(QuestionId, tQuestionText, tQuestionOrder, tQuestionType);
+                    Question tNewQuestionData = new Question(mQuestionId, tQuestionText, tQuestionOrder, tQuestionType);
 
                     bool tIsInputValid = ValidateInput(tQuestionType);
                     if (tIsInputValid) { 
@@ -255,28 +255,28 @@ namespace Survey_Configurator.Sub_forms
                     switch (tQuestionType)
                     {
                         //send question data to be updated
-                        case QuestionType.Stars:
-                            StarsQuestion tStarsData = new StarsQuestion(tNewQuestionData, (int)StarsQuestionOptionsPanel.NumberOfStarsNumeric.Value);
+                        case eQuestionType.Stars:
+                            StarsQuestion tStarsData = new StarsQuestion(tNewQuestionData, (int)mStarsQuestionOptionsPanel.NumberOfStarsNumeric.Value);
                             tQuestionUpdatedResult = QuestionOperations.UpdateQuestion(tStarsData);
                             break;
-                        case QuestionType.Smiley:
-                            SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)SmileyQuestionOptionsPanel.NumberOfSmileysNumeric.Value);
+                        case eQuestionType.Smiley:
+                            SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)mSmileyQuestionOptionsPanel.NumberOfSmileysNumeric.Value);
                             tQuestionUpdatedResult = QuestionOperations.UpdateQuestion(tSmileyData);
                             break;
-                        case QuestionType.Slider:
+                        case eQuestionType.Slider:
                             SliderQuestion tSliderData = new SliderQuestion(
                                 tNewQuestionData,
-                                (int)SliderQuestionOptionsPanel.SliderStartValueNumeric.Value,
-                                (int)SliderQuestionOptionsPanel.SliderEndValueNumeric.Value,
-                                SliderQuestionOptionsPanel.SliderStartValueCaptionText.Text,
-                                SliderQuestionOptionsPanel.SliderEndValueCaptionText.Text);
+                                (int)mSliderQuestionOptionsPanel.SliderStartValueNumeric.Value,
+                                (int)mSliderQuestionOptionsPanel.SliderEndValueNumeric.Value,
+                                mSliderQuestionOptionsPanel.SliderStartValueCaptionText.Text,
+                                mSliderQuestionOptionsPanel.SliderEndValueCaptionText.Text);
                             tQuestionUpdatedResult = QuestionOperations.UpdateQuestion(tSliderData);
                             break;
 
                     }
                         if (tQuestionUpdatedResult != null && !tQuestionUpdatedResult.IsSuccess)
                         {
-                            MessageBox.Show(tQuestionUpdatedResult.ErrorMessage, tQuestionUpdatedResult.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(tQuestionUpdatedResult.mErrorMessage, tQuestionUpdatedResult.mError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         Close();
                     }
@@ -333,6 +333,7 @@ namespace Survey_Configurator.Sub_forms
 
         /// <summary>
         /// show the Question optoins control relevant to the chosen question type
+        /// gets the question type based on the index of the chosen question
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -341,16 +342,16 @@ namespace Survey_Configurator.Sub_forms
             try
             {
                 HideQuesitonOptionsPanel();
-                QuestionType tSelectedItemValue = (QuestionType)QuestionTypeComboBox.SelectedIndex;
+                eQuestionType tSelectedItemValue = (eQuestionType)QuestionTypeComboBox.SelectedIndex;
                 switch (tSelectedItemValue)
                 {
-                    case QuestionType.Stars:
+                    case eQuestionType.Stars:
                         AddStarsOptions();
                         break;
-                    case QuestionType.Slider:
+                    case eQuestionType.Slider:
                         AddSliderOptions();
                         break;
-                    case QuestionType.Smiley:
+                    case eQuestionType.Smiley:
                         AddSmileysOptions();
                         break;
                 }
@@ -372,7 +373,7 @@ namespace Survey_Configurator.Sub_forms
         {
             try
             {
-                QuestionOperations.OperationOngoing = false;
+                QuestionOperations.mOperationOngoing = false;
             }
             catch (Exception ex)
             {
@@ -392,10 +393,9 @@ namespace Survey_Configurator.Sub_forms
         {
             try
             {
-                //StarsQuestionOptionsPanel.Show();
-                StarsQuestionOptionsPanel = new StarsQuestionOptions();
-                StarsQuestionOptionsPanel.Location = QuestionOptionsPanelLocation;
-                TypeInformationGroupBox.Controls.Add(StarsQuestionOptionsPanel);
+                mStarsQuestionOptionsPanel = new StarsQuestionOptions();
+                mStarsQuestionOptionsPanel.Location = mQuestionOptionsPanelLocation;
+                TypeInformationGroupBox.Controls.Add(mStarsQuestionOptionsPanel);
             }
             catch (Exception ex)
             {
@@ -407,9 +407,9 @@ namespace Survey_Configurator.Sub_forms
         {
             try
             {
-                SmileyQuestionOptionsPanel = new SmileyQuestionOptions();
-                SmileyQuestionOptionsPanel.Location = QuestionOptionsPanelLocation;
-                TypeInformationGroupBox.Controls.Add(SmileyQuestionOptionsPanel);
+                mSmileyQuestionOptionsPanel = new SmileyQuestionOptions();
+                mSmileyQuestionOptionsPanel.Location = mQuestionOptionsPanelLocation;
+                TypeInformationGroupBox.Controls.Add(mSmileyQuestionOptionsPanel);
             }
             catch (Exception ex)
             {
@@ -421,9 +421,9 @@ namespace Survey_Configurator.Sub_forms
         {
             try
             {
-                SliderQuestionOptionsPanel = new SliderQuestionOptions();
-                SliderQuestionOptionsPanel.Location = QuestionOptionsPanelLocation;
-                TypeInformationGroupBox.Controls.Add(SliderQuestionOptionsPanel);
+                mSliderQuestionOptionsPanel = new SliderQuestionOptions();
+                mSliderQuestionOptionsPanel.Location = mQuestionOptionsPanelLocation;
+                TypeInformationGroupBox.Controls.Add(mSliderQuestionOptionsPanel);
             }
             catch (Exception ex)
             {
@@ -435,9 +435,9 @@ namespace Survey_Configurator.Sub_forms
         {
             try
             {
-                TypeInformationGroupBox.Controls.Remove(StarsQuestionOptionsPanel);
-                TypeInformationGroupBox.Controls.Remove(SmileyQuestionOptionsPanel);
-                TypeInformationGroupBox.Controls.Remove(SliderQuestionOptionsPanel);
+                TypeInformationGroupBox.Controls.Remove(mStarsQuestionOptionsPanel);
+                TypeInformationGroupBox.Controls.Remove(mSmileyQuestionOptionsPanel);
+                TypeInformationGroupBox.Controls.Remove(mSliderQuestionOptionsPanel);
             }
             catch (Exception ex)
             {
@@ -450,12 +450,17 @@ namespace Survey_Configurator.Sub_forms
 
         #region class utility functions
 
-        private static bool ValidateInput(QuestionType tQuestionType)
+        /// <summary>
+        /// this function peroforms general validation on the given question type
+        /// </summary>
+        /// <param name="tQuestionType">type of the question</param>
+        /// <returns></returns>
+        private static bool ValidateInput(eQuestionType tQuestionType)
         {
             bool tInputIsValid = true;
             switch (tQuestionType)
             {
-                case QuestionType.Slider:
+                case eQuestionType.Slider:
                     tInputIsValid = ValidateSliderQuestionData();
                     break;
             }
@@ -463,9 +468,13 @@ namespace Survey_Configurator.Sub_forms
             return tInputIsValid;
         }
 
+        /// <summary>
+        /// validation function for the slider question type, insures that the min value is smaller than max value
+        /// </summary>
+        /// <returns></returns>
         private static bool ValidateSliderQuestionData()
         {
-            if (SliderQuestionOptionsPanel.SliderStartValueNumeric.Value > SliderQuestionOptionsPanel.SliderEndValueNumeric.Value)
+            if (mSliderQuestionOptionsPanel.SliderStartValueNumeric.Value > mSliderQuestionOptionsPanel.SliderEndValueNumeric.Value)
             {
                 MessageBox.Show(GlobalStrings.SliderInvalidInput, GlobalStrings.InvalidInputTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;

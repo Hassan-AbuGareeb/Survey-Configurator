@@ -97,7 +97,45 @@ namespace SharedResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An error occured while loading data please try again.\nif you keep getting this error restart the app.
+        ///   Looks up a localized string similar to An error occured while connecting to database, the application may not work properly.
+        ///would like to continue?.
+        /// </summary>
+        public static string DataBaseConnectionError {
+            get {
+                return ResourceManager.GetString("DataBaseConnectionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database connection error.
+        /// </summary>
+        public static string DataBaseConnectionErrortitle {
+            get {
+                return ResourceManager.GetString("DataBaseConnectionErrortitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lost connection to database, refer to your system admin.
+        /// </summary>
+        public static string DatabaseNotConnectedError {
+            get {
+                return ResourceManager.GetString("DatabaseNotConnectedError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database not connected.
+        /// </summary>
+        public static string DatabaseNotConnectedErrorTitle {
+            get {
+                return ResourceManager.GetString("DatabaseNotConnectedErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occured while loading data please try again.
+        ///if you keep getting this error restart the app.
         /// </summary>
         public static string DataFetchingError {
             get {
@@ -259,7 +297,7 @@ namespace SharedResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Database Error.
+        ///   Looks up a localized string similar to Database error.
         /// </summary>
         public static string SqlErrorTitle {
             get {

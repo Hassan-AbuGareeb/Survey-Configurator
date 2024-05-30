@@ -20,18 +20,20 @@ namespace QuestionServices
         //event handler for any change that happens to the database from any source
         public static event EventHandler DataBaseChangedEvent;
         //event handler for when the database stops responding
+
         public static event EventHandler DataBaseNotConnectedEvent;
-
-            //contsatns
+        //contsants
         private const int cDatabaseReconnectMaxAttempts = 3;
-        private const string cConnectionStringFileName = "\\connectionSettings.json";
+        public const string cConnectionStringFileName = "\\connectionSettings.json";
 
-            //class variables
+        //class members
         //changed to true when the user is performing adding, updating or deleting operation
-        public static bool OperationOngoing = false;
+        public static bool mOperationOngoing = false;
+        public static string mFilePath = Directory.GetCurrentDirectory() + cConnectionStringFileName;
+
         //a list to temporarily contain the questions data fetched from the database, 
         //and acts as a data source for the UI to faciltate data transfer and fetching.
-        public static List<Question> QuestionsList = new List<Question>();
+        public static List<Question> mQuestionsList = new List<Question>();
 
         private QuestionOperations() 
         {
@@ -47,7 +49,8 @@ namespace QuestionServices
         {
             try
             {
-                return Database.GetQuestionsFromDB(ref QuestionsList);
+                mQuestionsList.Clear();
+                return Database.GetQuestionsFromDB(ref mQuestionsList);
             }
             catch (Exception ex)
             {
@@ -65,7 +68,7 @@ namespace QuestionServices
         {
             try 
             { 
-            Question tQuestionGeneralData = QuestionsList.Find(question => question.Id == pQuestionId);
+            Question tQuestionGeneralData = mQuestionsList.Find(question => question.Id == pQuestionId);
             return tQuestionGeneralData;
             }
             catch(Exception ex) 
@@ -76,7 +79,7 @@ namespace QuestionServices
         }
 
         /// <summary>
-        /// 
+        /// get spcific question of the data based on its Id
         /// </summary>
         /// <param name="pQuestionId">the Id of the quesiton whose information must be fetched</param>
         /// <param name="pQuestionSpecificData">a reference question object to fill with the full question info</param>
@@ -122,7 +125,7 @@ namespace QuestionServices
                 //on successful question addition to Database add it to the Questions List
                 if (tAddQuestionResult.IsSuccess)
                 {
-                    QuestionsList.Add(pQuestionData);
+                    mQuestionsList.Add(pQuestionData);
                     //notify UI of change
                     DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
                 }
@@ -148,15 +151,15 @@ namespace QuestionServices
         {
             try
             {
-                QuestionType tOriginalQuestionType = GetQuestionData(pUpdatedQuestionData.Id).Type;
+                eQuestionType tOriginalQuestionType = GetQuestionData(pUpdatedQuestionData.Id).Type;
 
                 OperationResult tQuestionUpdatedResult = Database.UpdateQuestionOnDB(tOriginalQuestionType, pUpdatedQuestionData);
                 if (tQuestionUpdatedResult.IsSuccess)
                 {
                     //remove from questions list
-                    QuestionsList.Remove(QuestionsList.Find(question => question.Id == pUpdatedQuestionData.Id));
+                    mQuestionsList.Remove(mQuestionsList.Find(question => question.Id == pUpdatedQuestionData.Id));
                     //add the new Question to the list
-                    QuestionsList.Add(pUpdatedQuestionData);
+                    mQuestionsList.Add(pUpdatedQuestionData);
                     //notify UI of change
                     DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
                 }
@@ -189,7 +192,7 @@ namespace QuestionServices
                 //delete question from List (Questions)
                 foreach (Question tQuestion in pSelectedQuestions)
                 {
-                    QuestionsList.Remove(tQuestion);
+                    mQuestionsList.Remove(tQuestion);
                 }
                 //notify UI of change
                 DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
@@ -224,79 +227,82 @@ namespace QuestionServices
 
         /// <summary>
         /// this function obtains the connection string from the connectionString.json file
-        /// if it exists, otherwise create the file if it doesn't exist and fill it with the 
-        /// default values for the connection string properties.
+        /// if it exists, otherwise create the file if it doesn't exist.
         /// </summary>
-        /// <returns>OperationResult object to indicate the success or failure of the connection to database</returns>
-        public static OperationResult SetConnectionString()
+        public static bool GetConnectionString()
         {
             //try to obtain the connection string from a file
             try
             {
-                string tConnectionString = "";
                 //check that file exists
-                string tFilePath = Directory.GetCurrentDirectory() + cConnectionStringFileName;
-                if (!File.Exists(tFilePath))
+                if (!File.Exists(mFilePath))
                 {
                     //create json file and fill it with default stuff
-                    using (FileStream tFs = File.Create(tFilePath)) ;
-
-                    using (StreamWriter tWriter = new StreamWriter(tFilePath))
-                    {
-                        tWriter.Write(JsonSerializer.Serialize(new ConnectionString()));
-                    }
-                    //return a value to indicate that a file has been created and to fill it
+                    using (FileStream tFs = File.Create(mFilePath));
+                    return false;
                 }
-                else
+                
+                //check file content
+                if(new FileInfo(mFilePath).Length == 0)
                 {
-                    //read connection string values from tFilePath
-                    using (StreamReader tFileReader = new StreamReader(tFilePath))
-                    {
-                        string tReadConnectionString = tFileReader.ReadToEnd();
-                        //de-serialize the obtained connection string and transform it to the correct format
-                        ConnectionString tDesrializedConnStrign = JsonSerializer.Deserialize<ConnectionString>(tReadConnectionString);
-                        tConnectionString = tDesrializedConnStrign.GetFormattedConnectionString();
-                    }
+                    return false;
                 }
 
-                Database.ConnectionString = tConnectionString;
-                return new OperationResult();
+                //assuming that the file exists and it contains a connection string
+                using (StreamReader tFileReader = new StreamReader(mFilePath))
+                {
+                    string tReadConnectionString = tFileReader.ReadToEnd();
+                    //de-serialize the obtained connection string and transform it to the correct format
+                    ConnectionString tDesrializedConnString = JsonSerializer.Deserialize<ConnectionString>(tReadConnectionString);
+                    Database.mConnectionString = tDesrializedConnString.GetFormattedConnectionString();
+                }
+                return true;
             }
             catch (UnauthorizedAccessException ex)
             {
                 UtilityMethods.LogError(ex);
-                //handle the unAuthorized access happening
-                return new OperationResult(GlobalStrings.UnAuthorizedAccessErrorTitle, GlobalStrings.UnAuthorizedAccessError);
+                return false;
             }
             catch (Exception ex)
             {
-                //log error
                 UtilityMethods.LogError(ex);
-                //either the file can't be created or it is a permission issue
-                return new OperationResult(GlobalStrings.UnknownErrorTitle , GlobalStrings.UnknownError);
+                return false;
+            }
+        }
+
+        public static void SetConnectionString(ConnectionString pConnectionString)
+        {
+            try
+            {
+                using (StreamWriter tWriter = new StreamWriter(mFilePath))
+                {
+                    string tSerializedConnectionString = JsonSerializer.Serialize<ConnectionString>(pConnectionString);
+                    tWriter.Write(tSerializedConnectionString);
+                }
+                Database.mConnectionString = pConnectionString.GetFormattedConnectionString();
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
             }
         }
 
         /// <summary>
         /// this function create a thread and starts a funciton on it to start monitoring the database
         /// the thread runs in the background as to not block the main thread it the function on the 
-        /// thread, this function only ever returns a result in case the thread won't start at all
-        /// or an error occured within the funciton called on the thread.
+        /// thread.
         /// </summary>
-        /// <returns>OperationResult object to indicate whether the database monitoring is successful or failed</returns>
-        public static OperationResult StartCheckingDataBaseChange()
+        public static void StartCheckingDataBaseChange()
         {
             try 
             {
                 Thread tCheckThread = new Thread(()=>CheckDataBaseChange(Thread.CurrentThread));
                 tCheckThread.IsBackground = true;
                 tCheckThread.Start();
-                return new OperationResult();
             }
             catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
-                return new OperationResult(GlobalStrings.UnknownErrorTitle, GlobalStrings.UnknownError);
             }
         }
 
@@ -325,7 +331,7 @@ namespace QuestionServices
                     Thread.Sleep(10000);
                     if (tcurrentChecksum == 0)
                         continue;
-                    if(!OperationOngoing) 
+                    if(!mOperationOngoing) 
                     {
                         //get checksum again to detect change
                         long tNewChecksum = 0;
@@ -336,8 +342,8 @@ namespace QuestionServices
                                 //data changed
                                tcurrentChecksum = tNewChecksum;
                            
-                               QuestionsList.Clear();
-                               Database.GetQuestionsFromDB(ref QuestionsList);
+                               mQuestionsList.Clear();
+                               Database.GetQuestionsFromDB(ref mQuestionsList);
                                //notify UI of database change
                                DataBaseChangedEvent?.Invoke(typeof(QuestionOperations), EventArgs.Empty);
 
@@ -345,7 +351,7 @@ namespace QuestionServices
                                 tDatabaseConnectionRetryCount = 0;
                             }
                         }
-                        else if(tNewChecksumResult.ErrorMessage == "Database was just created")
+                        else if(tNewChecksumResult.mErrorMessage == "Database was just created")
                         {
                             continue;
                         }

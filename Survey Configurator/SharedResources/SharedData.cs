@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SharedResources
 {
-    public enum QuestionType
+    public enum eQuestionType
     {
         Stars=0,
         Smiley=1,

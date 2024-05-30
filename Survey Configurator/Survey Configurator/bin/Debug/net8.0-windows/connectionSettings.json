@@ -1,1 +1,1 @@
-{"Server":"HASSANABUGHREEB","Database":"Questions_DB","Trusted_Connection":true,"User":"sa","Password":"sedco123","Encrypt":false,"Timeout":5}
+{"mServer":"HASSANABUGHREEB","mDatabase":"Questions_DB","mUser":"sa","mPassword":"sedco123","mEncrypt":false,"mTimeout":5,"mIntegratedSecurity":false}

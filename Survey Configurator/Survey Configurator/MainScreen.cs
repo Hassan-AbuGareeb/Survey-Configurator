@@ -2,10 +2,7 @@
 using QuestionServices;
 using SharedResources;
 using SharedResources.models;
-using System.Diagnostics;
 using System.Configuration;
-using System.ComponentModel;
-using System.Globalization;
 
 namespace Survey_Configurator
 {
@@ -19,41 +16,67 @@ namespace Survey_Configurator
 
 
         //the sorting order for the questions items in the list view
-        private SortOrder SortingOrder = SortOrder.Ascending;
+        private static SortOrder mSortingOrder = SortOrder.Ascending;
+        //flag for disabling & enabling the UI elements
+        private static bool mIsDatabaseConnected = true;
 
         //constants    
         private const string cEnglishLanguageSettings = "en";
         private const string cArabicLanguageSettings = "ar";
-        private const string cLanguageSettginsKey = "Culture";
+        private const string cLanguageSettingsKey = "Culture";
 
         /// <summary>
         /// constructor for the main form,first it sets the language of the app to what last saved in the app.config file,
         /// then it checks whether the connection string can obtained from the
         /// connectionString.json file and checks if the a connection to the database 
-        /// can be created if either fails the application closes immediatly
+        /// can be created if either fails the application will ask show a form
+        /// to ask for connection settings
         /// </summary>
         public MainScreen()
         {
             try
             {
 
-                //check if connection string is successfully obtained 
-                OperationResult tConnectionStringCreated = QuestionOperations.SetConnectionString();
-                if (!tConnectionStringCreated.IsSuccess)
-                {
-                    MessageBox.Show(tConnectionStringCreated.ErrorMessage, tConnectionStringCreated.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Close();
-                }
-                //check database connectivity
-                OperationResult tDatabaseConnected = QuestionOperations.TestDBConnection();
-                if (!tDatabaseConnected.IsSuccess)
-                {
-                    MessageBox.Show(tDatabaseConnected.ErrorMessage, tDatabaseConnected.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Close();
-                }
-
                 //set the language for the app
                 SetAppLanguage();
+
+                //check if connection string is successfully obtained 
+                bool tConnectionStringExists = QuestionOperations.GetConnectionString();
+                if (!tConnectionStringExists)
+                {
+                    //show connection settings form
+                    ConnectionSettings tConnectionSettingsForm = new ConnectionSettings();
+                    DialogResult tContinueToAppResult = tConnectionSettingsForm.ShowDialog();
+                    //decied based on dialogue result
+                    if (tContinueToAppResult == DialogResult.Cancel)
+                    {
+                        Close();
+                    }
+                    else if (tContinueToAppResult == DialogResult.Continue)
+                    {
+                        //user decieded to continue anyway regardless of not being able to connect to database
+                        mIsDatabaseConnected = false;
+                    }
+                }
+                else
+                {
+                    //test database connection
+                    bool tIsDatabaseConnected = CheckDatabaseConnection();
+                    if (!tIsDatabaseConnected)
+                    {
+                        DialogResult tContinueToAppResult = MessageBox.Show(GlobalStrings.DataBaseConnectionError, GlobalStrings.DataBaseConnectionErrortitle,
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (tContinueToAppResult == DialogResult.No || tContinueToAppResult == DialogResult.Cancel)
+                        {
+                            Close();
+                        }
+                        else
+                        {
+                            //disable functionalities
+                            mIsDatabaseConnected = false;
+                        }
+                    }
+                }
 
                 InitializeComponent();
             }
@@ -78,31 +101,13 @@ namespace Survey_Configurator
         {
             try
             {
-                //initialize the list view with questions data
-                QuestionsListViewInit();
-
-                //launch the database change checker to monitor database for any change and reflect it to the UI
-                OperationResult tStartDatabaseCheckResult = QuestionOperations.StartCheckingDataBaseChange();
-                if (!tStartDatabaseCheckResult.IsSuccess)
-                {
-                    MessageBox.Show(tStartDatabaseCheckResult.ErrorMessage, tStartDatabaseCheckResult.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Close();
-                }
-                //listen to any database change event
-                QuestionOperations.DataBaseChangedEvent += QuestionOperations_DataBaseChangedEvent;
-
-                //listener for the event of database refusing to connect multiple times
-                QuestionOperations.DataBaseNotConnectedEvent += QuestionOperations_DataBaseNotConnectedEvent;
-
-                //sort the questions list alphabetically on first load
-                QuestionsListView.ListViewItemSorter = new ListViewItemComparer(1, SortingOrder);
-                Debug.Write(Thread.CurrentThread.CurrentUICulture.ToString());
+                LoadApplication();
             }
             catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
                 ShowDefaultErrorMessage();
-                Close();
+                DisableUIElements();
             }
         }
 
@@ -135,9 +140,8 @@ namespace Survey_Configurator
                 }
                 else
                 {
-                    MessageBox.Show(tIsDatabaseConnected.ErrorMessage, tIsDatabaseConnected.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(tIsDatabaseConnected.mErrorMessage, tIsDatabaseConnected.mError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
             }
             catch (Exception ex)
             {
@@ -185,7 +189,7 @@ namespace Survey_Configurator
                 DialogResult tDeleteQuestion = MessageBox.Show(GlobalStrings.DeleteQuestionConfirm, GlobalStrings.DeleteOperationTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 //to prevent any interruption in deleting
-                QuestionOperations.OperationOngoing = true;
+                QuestionOperations.mOperationOngoing = true;
                 if (tDeleteQuestion == DialogResult.Yes)
                 {
                     List<Question> tSelectedQuestions = new List<Question>();
@@ -201,7 +205,7 @@ namespace Survey_Configurator
                     OperationResult tDeleteQuestionResult = QuestionOperations.DeleteQuestion(tSelectedQuestions);
                     if (!tDeleteQuestionResult.IsSuccess)
                     {
-                        MessageBox.Show(tDeleteQuestionResult.ErrorMessage, tDeleteQuestionResult.Error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(tDeleteQuestionResult.mErrorMessage, tDeleteQuestionResult.mError.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else
                     {
@@ -220,7 +224,7 @@ namespace Survey_Configurator
             }
             finally
             {
-                QuestionOperations.OperationOngoing = false;
+                QuestionOperations.mOperationOngoing = false;
             }
         }
 
@@ -273,16 +277,16 @@ namespace Survey_Configurator
         {
             try
             {
-                if (SortingOrder == SortOrder.Ascending)
+                if (mSortingOrder == SortOrder.Ascending)
                 {
-                    SortingOrder = SortOrder.Descending;
+                    mSortingOrder = SortOrder.Descending;
                 }
                 else
                 {
-                    SortingOrder = SortOrder.Ascending;
+                    mSortingOrder = SortOrder.Ascending;
                 }
                 //change the itemSorter of the listview based on what column is clicked
-                QuestionsListView.ListViewItemSorter = new ListViewItemComparer(e.Column, SortingOrder);
+                QuestionsListView.ListViewItemSorter = new ListViewItemComparer(e.Column, mSortingOrder);
             }
             catch (Exception ex)
             {
@@ -309,12 +313,13 @@ namespace Survey_Configurator
             {
                 UtilityMethods.LogError(ex);
                 ShowDefaultErrorMessage();
+                DisableUIElements();
             }
         }
 
         /// <summary>
         /// called when a connection with the data base cannot be
-        /// established for at least 3 times to terminate the application
+        /// established for at least 3 times to disable the UI elements in the app
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -322,8 +327,8 @@ namespace Survey_Configurator
         {
             try
             {
-                MessageBox.Show(GlobalStrings.SqlError, GlobalStrings.SqlErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Close();
+                MessageBox.Show(GlobalStrings.DatabaseNotConnectedError, GlobalStrings.DatabaseNotConnectedErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DisableUIElements();
             }
             catch (Exception ex)
             {
@@ -332,16 +337,57 @@ namespace Survey_Configurator
             }
         }
 
+        /// <summary>
+        /// the reason for removing these lines from the EditButtonClick
+        /// event handler is to be able to use them in for the event of double
+        /// clicking a question
+        /// </summary>
+        private void EditQuestion()
+        {
+            try
+            {
+                OperationResult tIsDatabaseConnected = QuestionOperations.TestDBConnection();
+                if (tIsDatabaseConnected.IsSuccess)
+                {
+                    Question tSelectedQuestion = QuestionsListView.SelectedItems[0].Tag as Question;
+                    AddEditQuestion tAddForm = new AddEditQuestion(tSelectedQuestion.Id);
+                    DialogResult tQuestionEdited = tAddForm.ShowDialog();
+
+                    //disable delete and edit button
+                    if (tQuestionEdited != DialogResult.Cancel)
+                    {
+                        DeleteQuestionButton.Enabled = false;
+                        EditQuestionButton.Enabled = false;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(tIsDatabaseConnected.mErrorMessage, tIsDatabaseConnected.mError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
+        }
+
+        /// <summary>
+        /// this function shows the edit form whenever the user
+        /// double-clicks a question in the ListView cotrol
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void QuestionsListView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             ListViewHitTestInfo tClickedQuestionInfo = QuestionsListView.HitTest(e.X, e.Y);
             ListViewItem tSelectedQuestion = tClickedQuestionInfo.Item;
 
+            //check if the user clicked on an empty space in the listview control
             if (tSelectedQuestion != null)
             {
                 EditQuestion();
             }
-
         }
 
         #region menu strip items functions
@@ -350,6 +396,9 @@ namespace Survey_Configurator
         /// options
         /// </summary>
 
+        /// <summary>
+        /// these fucntions are concerned with the font change options
+        /// </summary>
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             try
@@ -409,13 +458,19 @@ namespace Survey_Configurator
             }
         }
 
+        /// <summary>
+        /// these functions are conecerned with the language change options
+        /// the functions restarts the app if the user changes the language
+        /// to a one that is different languge
+        /// </summary>
+
         private void EnglishToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
-                string tAppLanguage = ConfigurationManager.AppSettings[cLanguageSettginsKey];
+                string tAppLanguage = ConfigurationManager.AppSettings[cLanguageSettingsKey];
                 if (tAppLanguage != cEnglishLanguageSettings)
-                { 
+                {
 
                     ChangeAppLanguage(cEnglishLanguageSettings);
                     Application.Restart();
@@ -432,9 +487,9 @@ namespace Survey_Configurator
         {
             try
             {
-                string tAppLanguage = ConfigurationManager.AppSettings[cLanguageSettginsKey];
-                if(tAppLanguage != cArabicLanguageSettings) 
-                { 
+                string tAppLanguage = ConfigurationManager.AppSettings[cLanguageSettingsKey];
+                if (tAppLanguage != cArabicLanguageSettings)
+                {
                     ChangeAppLanguage(cArabicLanguageSettings);
                     Application.Restart();
                 }
@@ -446,42 +501,42 @@ namespace Survey_Configurator
             }
         }
 
-        #endregion
-
-        #region class utility functions
-
         /// <summary>
-        /// 
+        /// this funciton shows the connection settings form for the 
+        /// user to change the settings 
         /// </summary>
-        private void EditQuestion()
+        private void ConnectionSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                OperationResult tIsDatabaseConnected = QuestionOperations.TestDBConnection();
-                if (tIsDatabaseConnected.IsSuccess)
+            try 
+            { 
+                ConnectionSettings tConnectionSettingsForm = new ConnectionSettings(true);
+                DialogResult tContinueToAppResult = tConnectionSettingsForm.ShowDialog();
+                //decied based on dialogue result
+                if (tContinueToAppResult == DialogResult.Continue)
                 {
-                    Question tSelectedQuestion = QuestionsListView.SelectedItems[0].Tag as Question;
-                    AddEditQuestion tAddForm = new AddEditQuestion(tSelectedQuestion.Id);
-                    DialogResult tQuestionEdited = tAddForm.ShowDialog();
-
-                    //disable delete and edit button
-                    if (tQuestionEdited != DialogResult.Cancel)
-                    {
-                        DeleteQuestionButton.Enabled = false;
-                        EditQuestionButton.Enabled = false;
-                    }
+                    //user decieded to continue anyway
+                    mIsDatabaseConnected = false;
+                    DisableUIElements();
                 }
-                else
+                else if (tContinueToAppResult == DialogResult.OK)
                 {
-                    MessageBox.Show(tIsDatabaseConnected.ErrorMessage, tIsDatabaseConnected.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    mIsDatabaseConnected= true;
+                    LoadApplication();
+                    EnableUIElements();
+
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 UtilityMethods.LogError(ex);
                 ShowDefaultErrorMessage();
+                DisableUIElements();
+
             }
         }
+        #endregion
+
+        #region class utility functions
 
         /// <summary>
         /// initailaize the List view control with questions objects through the UpdateQuestionFunction
@@ -495,8 +550,8 @@ namespace Survey_Configurator
                 OperationResult tGetQuestionsSuccessful = QuestionOperations.GetQuestions();
                 if (!tGetQuestionsSuccessful.IsSuccess)
                 {
-                    MessageBox.Show(tGetQuestionsSuccessful.ErrorMessage, tGetQuestionsSuccessful.Error.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Close();
+                    MessageBox.Show(tGetQuestionsSuccessful.mErrorMessage, tGetQuestionsSuccessful.mError.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    DisableUIElements();
                 }
                 else
                 {
@@ -507,7 +562,7 @@ namespace Survey_Configurator
             {
                 UtilityMethods.LogError(ex);
                 ShowDefaultErrorMessage();
-                Close();
+                DisableUIElements();
             }
         }
 
@@ -530,7 +585,7 @@ namespace Survey_Configurator
 
                 //re-populate database
                 QuestionsListView.Items.Clear();
-                foreach (Question tQuestion in QuestionOperations.QuestionsList)
+                foreach (Question tQuestion in QuestionOperations.mQuestionsList)
                 {
                     //foreach question add its info to a listViewItem and also to the listViewItem.tag property 
                     // to be able to access that info later on
@@ -552,6 +607,7 @@ namespace Survey_Configurator
             {
                 UtilityMethods.LogError(ex);
                 MessageBox.Show(GlobalStrings.DataFetchingError, GlobalStrings.DataFetchingErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DisableUIElements();
             }
         }
 
@@ -576,12 +632,12 @@ namespace Survey_Configurator
         /// the language stored in the app config in case of any error
         /// sets the language to english;
         /// </summary>
-        private void SetAppLanguage()
+        private static void SetAppLanguage()
         {
             try
             {
                 //read language value settings from app config
-                string tAppLanguage = ConfigurationManager.AppSettings[cLanguageSettginsKey];
+                string tAppLanguage = ConfigurationManager.AppSettings[cLanguageSettingsKey];
                 if (tAppLanguage == null)
                 {
                     tAppLanguage = cEnglishLanguageSettings;
@@ -602,13 +658,13 @@ namespace Survey_Configurator
         /// <summary>
         /// change the language of the application
         /// </summary>
-        private void ChangeAppLanguage(string pLanguage)
+        private static void ChangeAppLanguage(string pLanguage)
         {
             try
             {
                 //change the language settings value in app config
                 Configuration configfile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                configfile.AppSettings.Settings[cLanguageSettginsKey].Value = pLanguage;
+                configfile.AppSettings.Settings[cLanguageSettingsKey].Value = pLanguage;
                 configfile.Save();
             }
             catch (Exception ex)
@@ -617,8 +673,113 @@ namespace Survey_Configurator
             }
         }
 
+        /// <summary>
+        /// disables all UI elements excep the toolstripMenu
+        /// and shows the user a note that the app is not working
+        /// normally
+        /// </summary>
+        private void DisableUIElements()
+        {
+            try
+            {
+                QuestionsListView.Enabled = false;
+                AddQuestionButton.Enabled = false;
+                EditQuestionButton.Enabled = false;
+                DeleteQuestionButton.Enabled = false;
+                DatabaseConnectionIsseuesLabel.Show();
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
+        }
+
+        private void EnableUIElements()
+        {
+            try
+            {
+                QuestionsListView.Enabled = true;
+                AddQuestionButton.Enabled = true;
+                DatabaseConnectionIsseuesLabel.Hide();
+                if (QuestionsListView.SelectedItems.Count > 0)
+                {
+                    DeleteQuestionButton.Enabled = false;
+                }
+
+                if (QuestionsListView.SelectedItems.Count > 0 && QuestionsListView.SelectedItems.Count < 2)
+                {
+                    EditQuestionButton.Enabled = false;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
+        }
+
+        /// <summary>
+        /// check database connection
+        /// </summary>
+        /// <returns>bool value indicating whether the connection succeded or not</returns>
+        public static bool CheckDatabaseConnection()
+        {
+            try 
+            {
+                OperationResult tDatabaseConnected = QuestionOperations.TestDBConnection();
+                return tDatabaseConnected.IsSuccess;
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// loads the data into the application in the case that
+        /// the database is connected, else all the UI elements gets disabled,
+        /// the reason for seperating these operations is to reuse in case the 
+        /// user decides to change the connection settings inside the app
+        /// </summary>
+        private void LoadApplication()
+        {
+            try 
+            { 
+                if (mIsDatabaseConnected)
+                {
+                    //initialize the list view with questions data
+                    QuestionsListViewInit();
+
+                    //launch the database change checker to monitor database for any change and reflect it to the UI
+                    QuestionOperations.StartCheckingDataBaseChange();
+
+                }
+                else
+                {
+                    DisableUIElements();
+                }
+
+                //listen to any database change event
+                QuestionOperations.DataBaseChangedEvent += QuestionOperations_DataBaseChangedEvent;
+
+                //listener for the event of database refusing to connect multiple times
+                QuestionOperations.DataBaseNotConnectedEvent += QuestionOperations_DataBaseNotConnectedEvent;
+
+                //sort the questions list alphabetically on first load
+                QuestionsListView.ListViewItemSorter = new ListViewItemComparer(1, mSortingOrder);
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
+        }
         #endregion
 
-        
     }
 }

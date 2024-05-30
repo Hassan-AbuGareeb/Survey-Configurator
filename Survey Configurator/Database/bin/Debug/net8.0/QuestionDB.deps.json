@@ -374,8 +374,16 @@
       "System.Text.Json/4.7.2": {},
       "System.Threading.Tasks.Extensions/4.5.4": {},
       "SharedResources/1.0.0": {
+        "dependencies": {
+          "Microsoft.Data.SqlClient": "5.2.0"
+        },
         "runtime": {
           "SharedResources.dll": {}
+        },
+        "resources": {
+          "ar/SharedResources.resources.dll": {
+            "locale": "ar"
+          }
         }
       }
     }
