@@ -19,15 +19,12 @@ namespace Survey_Configurator.Sub_forms
     {
         //class members
         private LogIn mLogInControl;
-        //SqlConnectionStringBuilder mConnectionString = new SqlConnectionStringBuilder();
         private ConnectionString mConnectionString = new ConnectionString();
 
         //constants
         //authentication type
         private const string cWindowsAuthentication = "Windows Authentication";
         private const string cSQLServerAuthentication = "SQL Server Authentication";
-        private const string cConnectionStringFileName = "\\connectionSettings.json";
-        private static string mFilePath = Directory.GetCurrentDirectory() + cConnectionStringFileName;
         //encrytion options
 
         public ConnectionSettings(bool isOpenedFromSettings)
@@ -39,7 +36,6 @@ namespace Survey_Configurator.Sub_forms
                 {
                     //some default settings
                     AuthenticationComboBox.SelectedItem = cWindowsAuthentication;
-                    EncryptionComboBox.SelectedItem = SqlConnectionEncryptOption.Strict.ToString();
                 }
                 else
                 {
@@ -48,15 +44,12 @@ namespace Survey_Configurator.Sub_forms
                     //fill the form with the existing data from the connection string
                     ServerNameTestBox.Text = mConnectionString.Server;
                     DatabaseNameTextBox.Text = mConnectionString.Database;
-                    AuthenticationComboBox.SelectedItem = mConnectionString.Trusted_Connection;
+                    AuthenticationComboBox.SelectedItem = mConnectionString.IntegratedSecurity ?cWindowsAuthentication :cSQLServerAuthentication;
                     if(AuthenticationComboBox.SelectedItem == cSQLServerAuthentication)
                     {
                         mLogInControl.LoginTextBox.Text = mConnectionString.User;
                         mLogInControl.PasswordTextBox.Text = mConnectionString.Password;
                     }
-                    EncryptionComboBox.SelectedItem = mConnectionString.Encrypt;
-                    TrustServerCertificateCheckBox.Checked = mConnectionString.TrustServerCertificate;
-                    HostNameInCertificateTextbox.Text = mConnectionString.HostNameInCertificate;
                 }
             }
             catch(Exception ex)
@@ -83,32 +76,15 @@ namespace Survey_Configurator.Sub_forms
         {
             try
             {
-                //construct connection string
-                //mConnectionString.Clear();
-
-                //mConnectionString.DataSource = ServerNameTestBox.Text;
-                //mConnectionString.InitialCatalog = DatabaseNameTextBox.Text;
-                //mConnectionString.Authentication = SqlAuthenticationMethod.
-                //if(mLogInControl != null) 
-                //{ 
-                //    mConnectionString.UserID = mLogInControl.LoginTextBox.Text;
-                //    mConnectionString.Password = mLogInControl.PasswordTextBox.Text;
-                //}
-
                 mConnectionString.Server = ServerNameTestBox.Text;
                 mConnectionString.Database = DatabaseNameTextBox.Text;
-                mConnectionString.Trusted_Connection = AuthenticationComboBox.SelectedItem.ToString() == cWindowsAuthentication;
+                mConnectionString.IntegratedSecurity = AuthenticationComboBox.SelectedItem.ToString() == cWindowsAuthentication;
                 if (AuthenticationComboBox.SelectedItem.ToString() == cSQLServerAuthentication)
                 {
                     mConnectionString.User = mLogInControl.LoginTextBox.Text;
                     mConnectionString.Password = mLogInControl.PasswordTextBox.Text;
                 }
-                mConnectionString.Encrypt = SqlConnectionEncryptOption.Optional.ToString();
-                mConnectionString.TrustServerCertificate = TrustServerCertificateCheckBox.Checked;
-                if (HostNameInCertificateTextbox.Enabled)
-                {
-                    mConnectionString.HostNameInCertificate = HostNameInCertificateTextbox.Text;
-                }
+                mConnectionString.Encrypt = false;
 
                 QuestionOperations.SetConnectionString(mConnectionString);
 
@@ -148,11 +124,11 @@ namespace Survey_Configurator.Sub_forms
                     mLogInControl = new LogIn();
                     mLogInControl.Location = new Point(42, 159);
                     //specify location 
-                    ServerGroupBox.Controls.Add(mLogInControl);
+                    ConnectionCredintials.Controls.Add(mLogInControl);
                 }
                 else
                 {
-                    ServerGroupBox.Controls.Remove(mLogInControl);
+                    ConnectionCredintials.Controls.Remove(mLogInControl);
                 }
             }
             catch(Exception ex)
@@ -161,41 +137,6 @@ namespace Survey_Configurator.Sub_forms
                 MainScreen.ShowDefaultErrorMessage();
             }
     }
-
-        private void EncryptionComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try 
-            { 
-                if (EncryptionComboBox.SelectedItem.ToString() == SqlConnectionEncryptOption.Strict.ToString())
-                {
-                    TrustServerCertificateCheckBox.Checked = false;
-                    TrustServerCertificateCheckBox.Enabled = false;
-                    HostNameInCertificateTextbox.Enabled = true;
-                }
-                else
-                {
-                    TrustServerCertificateCheckBox.Enabled = true;
-                }
-            }
-            catch(Exception ex)
-            {
-                UtilityMethods.LogError(ex);
-                MainScreen.ShowDefaultErrorMessage();
-            }
-        }
-
-        private void TrustServerCertificateCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            try 
-            { 
-                HostNameInCertificateTextbox.Enabled = !TrustServerCertificateCheckBox.Checked;
-            }
-            catch (Exception ex)
-            {
-                UtilityMethods.LogError(ex);
-                MainScreen.ShowDefaultErrorMessage();
-            }
-        }
 
         private void ServerNameTestBox_TextChanged(object sender, EventArgs e)
         {
@@ -225,16 +166,13 @@ namespace Survey_Configurator.Sub_forms
 
         private void PopulateConnectionString()
         {
-            using (StreamReader tFileReader = new StreamReader(mFilePath))
+            using (StreamReader tFileReader = new StreamReader(QuestionOperations.mFilePath))
             {
                 string tReadConnectionString = tFileReader.ReadToEnd();
                 //de-serialize the obtained connection string and transform it to the correct format
                 ConnectionString tDesrializedConnString = JsonSerializer.Deserialize<ConnectionString>(tReadConnectionString);
                 mConnectionString = tDesrializedConnString;
             }
-
-
-
         }
     }
 }

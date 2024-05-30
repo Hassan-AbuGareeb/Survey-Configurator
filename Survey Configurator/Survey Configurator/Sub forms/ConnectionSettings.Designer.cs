@@ -28,13 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            ConnectionSecurityGroupBox = new GroupBox();
-            HostNameInCertificateTextbox = new TextBox();
-            HostNameInCertificateLabel = new Label();
-            TrustServerCertificateCheckBox = new CheckBox();
-            EncryptionComboBox = new ComboBox();
-            EncryptionLabel = new Label();
-            ServerGroupBox = new GroupBox();
+            ConnectionCredintials = new GroupBox();
             AuthenticationComboBox = new ComboBox();
             AuthenticationLabel = new Label();
             DatabaseNameTextBox = new TextBox();
@@ -43,87 +37,23 @@
             ServerNameLabel = new Label();
             CancelButton = new Button();
             ConnectButton = new Button();
-            ConnectionSecurityGroupBox.SuspendLayout();
-            ServerGroupBox.SuspendLayout();
+            ConnectionCredintials.SuspendLayout();
             SuspendLayout();
             // 
-            // ConnectionSecurityGroupBox
+            // ConnectionCredintials
             // 
-            ConnectionSecurityGroupBox.Controls.Add(HostNameInCertificateTextbox);
-            ConnectionSecurityGroupBox.Controls.Add(HostNameInCertificateLabel);
-            ConnectionSecurityGroupBox.Controls.Add(TrustServerCertificateCheckBox);
-            ConnectionSecurityGroupBox.Controls.Add(EncryptionComboBox);
-            ConnectionSecurityGroupBox.Controls.Add(EncryptionLabel);
-            ConnectionSecurityGroupBox.Location = new Point(12, 268);
-            ConnectionSecurityGroupBox.Name = "ConnectionSecurityGroupBox";
-            ConnectionSecurityGroupBox.Size = new Size(600, 190);
-            ConnectionSecurityGroupBox.TabIndex = 1;
-            ConnectionSecurityGroupBox.TabStop = false;
-            ConnectionSecurityGroupBox.Text = "Connection Security";
-            // 
-            // HostNameInCertificateTextbox
-            // 
-            HostNameInCertificateTextbox.Location = new Point(194, 116);
-            HostNameInCertificateTextbox.Name = "HostNameInCertificateTextbox";
-            HostNameInCertificateTextbox.Size = new Size(400, 27);
-            HostNameInCertificateTextbox.TabIndex = 7;
-            // 
-            // HostNameInCertificateLabel
-            // 
-            HostNameInCertificateLabel.AutoSize = true;
-            HostNameInCertificateLabel.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            HostNameInCertificateLabel.Location = new Point(17, 120);
-            HostNameInCertificateLabel.Name = "HostNameInCertificateLabel";
-            HostNameInCertificateLabel.Size = new Size(171, 18);
-            HostNameInCertificateLabel.TabIndex = 6;
-            HostNameInCertificateLabel.Text = "Host name in certificate :";
-            // 
-            // TrustServerCertificateCheckBox
-            // 
-            TrustServerCertificateCheckBox.AutoSize = true;
-            TrustServerCertificateCheckBox.Location = new Point(194, 70);
-            TrustServerCertificateCheckBox.Name = "TrustServerCertificateCheckBox";
-            TrustServerCertificateCheckBox.Size = new Size(175, 24);
-            TrustServerCertificateCheckBox.TabIndex = 8;
-            TrustServerCertificateCheckBox.Text = "Trust server certificate";
-            TrustServerCertificateCheckBox.UseVisualStyleBackColor = true;
-            TrustServerCertificateCheckBox.CheckedChanged += TrustServerCertificateCheckBox_CheckedChanged;
-            // 
-            // EncryptionComboBox
-            // 
-            EncryptionComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            EncryptionComboBox.FormattingEnabled = true;
-            EncryptionComboBox.Items.AddRange(new object[] { "Optional", "Mandatory", "Strict" });
-            EncryptionComboBox.Location = new Point(194, 36);
-            EncryptionComboBox.Name = "EncryptionComboBox";
-            EncryptionComboBox.Size = new Size(400, 28);
-            EncryptionComboBox.TabIndex = 7;
-            EncryptionComboBox.SelectedIndexChanged += EncryptionComboBox_SelectedIndexChanged;
-            // 
-            // EncryptionLabel
-            // 
-            EncryptionLabel.AutoSize = true;
-            EncryptionLabel.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            EncryptionLabel.Location = new Point(17, 40);
-            EncryptionLabel.Name = "EncryptionLabel";
-            EncryptionLabel.Size = new Size(82, 18);
-            EncryptionLabel.TabIndex = 6;
-            EncryptionLabel.Text = "Encryption:";
-            // 
-            // ServerGroupBox
-            // 
-            ServerGroupBox.Controls.Add(AuthenticationComboBox);
-            ServerGroupBox.Controls.Add(AuthenticationLabel);
-            ServerGroupBox.Controls.Add(DatabaseNameTextBox);
-            ServerGroupBox.Controls.Add(DatabaseNameLabel);
-            ServerGroupBox.Controls.Add(ServerNameTestBox);
-            ServerGroupBox.Controls.Add(ServerNameLabel);
-            ServerGroupBox.Location = new Point(12, 12);
-            ServerGroupBox.Name = "ServerGroupBox";
-            ServerGroupBox.Size = new Size(600, 250);
-            ServerGroupBox.TabIndex = 0;
-            ServerGroupBox.TabStop = false;
-            ServerGroupBox.Text = "Server";
+            ConnectionCredintials.Controls.Add(AuthenticationComboBox);
+            ConnectionCredintials.Controls.Add(AuthenticationLabel);
+            ConnectionCredintials.Controls.Add(DatabaseNameTextBox);
+            ConnectionCredintials.Controls.Add(DatabaseNameLabel);
+            ConnectionCredintials.Controls.Add(ServerNameTestBox);
+            ConnectionCredintials.Controls.Add(ServerNameLabel);
+            ConnectionCredintials.Location = new Point(12, 12);
+            ConnectionCredintials.Name = "ConnectionCredintials";
+            ConnectionCredintials.Size = new Size(600, 250);
+            ConnectionCredintials.TabIndex = 0;
+            ConnectionCredintials.TabStop = false;
+            ConnectionCredintials.Text = "Connection credintials";
             // 
             // AuthenticationComboBox
             // 
@@ -188,7 +118,7 @@
             CancelButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             CancelButton.Font = new Font("Microsoft Sans Serif", 9F);
             CancelButton.ImeMode = ImeMode.NoControl;
-            CancelButton.Location = new Point(509, 468);
+            CancelButton.Location = new Point(509, 274);
             CancelButton.Name = "CancelButton";
             CancelButton.Size = new Size(100, 30);
             CancelButton.TabIndex = 3;
@@ -203,7 +133,7 @@
             ConnectButton.Enabled = false;
             ConnectButton.Font = new Font("Microsoft Sans Serif", 9F);
             ConnectButton.ImeMode = ImeMode.NoControl;
-            ConnectButton.Location = new Point(403, 468);
+            ConnectButton.Location = new Point(403, 274);
             ConnectButton.Name = "ConnectButton";
             ConnectButton.Size = new Size(100, 30);
             ConnectButton.TabIndex = 4;
@@ -215,37 +145,28 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(625, 510);
-            Controls.Add(ConnectionSecurityGroupBox);
+            ClientSize = new Size(625, 316);
             Controls.Add(ConnectButton);
-            Controls.Add(ServerGroupBox);
+            Controls.Add(ConnectionCredintials);
             Controls.Add(CancelButton);
-            MaximumSize = new Size(643, 557);
-            MinimumSize = new Size(643, 557);
+            MaximumSize = new Size(643, 363);
+            MinimumSize = new Size(643, 363);
             Name = "ConnectionSettings";
             Text = "Connection settings";
-            ConnectionSecurityGroupBox.ResumeLayout(false);
-            ConnectionSecurityGroupBox.PerformLayout();
-            ServerGroupBox.ResumeLayout(false);
-            ServerGroupBox.PerformLayout();
+            ConnectionCredintials.ResumeLayout(false);
+            ConnectionCredintials.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
         private Button CancelButton;
         private Button ConnectButton;
-        private GroupBox ServerGroupBox;
-        private GroupBox ConnectionSecurityGroupBox;
+        private GroupBox ConnectionCredintials;
         private Label ServerNameLabel;
         private TextBox ServerNameTestBox;
         private TextBox DatabaseNameTextBox;
         private Label DatabaseNameLabel;
         private Label AuthenticationLabel;
         private ComboBox AuthenticationComboBox;
-        private ComboBox EncryptionComboBox;
-        private Label EncryptionLabel;
-        private TextBox HostNameInCertificateTextbox;
-        private Label HostNameInCertificateLabel;
-        private CheckBox TrustServerCertificateCheckBox;
     }
 }

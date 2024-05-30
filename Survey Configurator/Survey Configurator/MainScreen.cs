@@ -459,6 +459,7 @@ namespace Survey_Configurator
             if (tContinueToAppResult == DialogResult.Continue)
             {//user decieded to continue anyway
                 mIsDatabaseConnected = false;
+                DisableUIElements();
             }
             else if (tContinueToAppResult == DialogResult.OK)
             {

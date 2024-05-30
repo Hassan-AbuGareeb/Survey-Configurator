@@ -10,25 +10,21 @@ namespace SharedResources
         /// </summary>
         public string Server {  get; set; }
         public string Database { get; set; }
-        public bool Trusted_Connection { get; set; }
         public string User {  get; set; }
         public string Password { get; set; }
-        public string Encrypt { get; set; }
+        public bool Encrypt { get; set; }
         public int Timeout { get; set; }
-        public bool TrustServerCertificate { get; set; }
-        public string HostNameInCertificate { get; set; }
+        public bool IntegratedSecurity { get; set; }
 
         public ConnectionString() {
             try { 
                 Server = string.Empty;
                 Database = string.Empty;
-                Trusted_Connection = false;
                 User = string.Empty;
                 Password = string.Empty;
-                Encrypt = "Optional";
-                TrustServerCertificate = true;
+                Encrypt = false;
                 Timeout = 5;
-                HostNameInCertificate = string.Empty;
+                IntegratedSecurity = true;
             }
             catch(Exception ex)
             {
@@ -44,7 +40,7 @@ namespace SharedResources
         {
             try
             {
-                return $"Server={Server}; Database={Database}; Trusted_Connection={Trusted_Connection}; User={User}; Password={Password}; Encrypt={Encrypt}; Timeout={Timeout}; TrustServerCertificate={TrustServerCertificate}";
+                return $"Server={Server}; Database={Database}; Integrated Security={IntegratedSecurity}; User={User}; Password={Password}; Encrypt={Encrypt}; Timeout={Timeout}";
             }
             catch (Exception ex)
             {

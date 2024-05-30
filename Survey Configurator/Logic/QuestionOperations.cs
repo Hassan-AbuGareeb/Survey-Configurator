@@ -24,12 +24,12 @@ namespace QuestionServices
         public static event EventHandler DataBaseNotConnectedEvent;
         //contsants
         private const int cDatabaseReconnectMaxAttempts = 3;
-        private const string cConnectionStringFileName = "\\connectionSettings.json";
+        public const string cConnectionStringFileName = "\\connectionSettings.json";
 
         //class members
         //changed to true when the user is performing adding, updating or deleting operation
         public static bool OperationOngoing = false;
-        private static string mFilePath = Directory.GetCurrentDirectory() + cConnectionStringFileName;
+        public static string mFilePath = Directory.GetCurrentDirectory() + cConnectionStringFileName;
 
         //a list to temporarily contain the questions data fetched from the database, 
         //and acts as a data source for the UI to faciltate data transfer and fetching.
@@ -49,6 +49,7 @@ namespace QuestionServices
         {
             try
             {
+                QuestionsList.Clear();
                 return Database.GetQuestionsFromDB(ref QuestionsList);
             }
             catch (Exception ex)
@@ -257,7 +258,6 @@ namespace QuestionServices
                     ConnectionString tDesrializedConnString = JsonSerializer.Deserialize<ConnectionString>(tReadConnectionString);
                     Database.ConnectionString = tDesrializedConnString.GetFormattedConnectionString();
                 }
-
                 return true;
             }
             catch (UnauthorizedAccessException ex)
