@@ -6739,3 +6739,79 @@ Stack trace:
 
 --------
 
+31‏‏/5‏‏/2024 1:49:35 م UTC,
+Exception: Win32Exception,
+Exception message: An error occurred trying to start process 'C:\Test\NewDocument.docx' with working directory 'D:\Survey Configurator\Survey-Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows'. The system cannot find the file specified.,
+Stack trace:
+   at System.Diagnostics.Process.StartWithCreateProcess(ProcessStartInfo startInfo)
+   at System.Diagnostics.Process.Start(ProcessStartInfo startInfo)
+   at Survey_Configurator.MainScreen.openManualToolStripMenuItem_Click(Object sender, EventArgs e) in D:\Survey Configurator\Survey-Configurator\Survey Configurator\Survey Configurator\MainScreen.cs:line 788
+
+--------
+
+31‏‏/5‏‏/2024 1:50:00 م UTC,
+Exception: Win32Exception,
+Exception message: An error occurred trying to start process 'C:\Test\NewDocument.docx' with working directory 'D:\Survey Configurator\Survey-Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows'. The system cannot find the file specified.,
+Stack trace:
+   at System.Diagnostics.Process.StartWithCreateProcess(ProcessStartInfo startInfo)
+   at System.Diagnostics.Process.Start(ProcessStartInfo startInfo)
+   at Survey_Configurator.MainScreen.openManualToolStripMenuItem_Click(Object sender, EventArgs e) in D:\Survey Configurator\Survey-Configurator\Survey Configurator\Survey Configurator\MainScreen.cs:line 788
+
+--------
+
+31‏‏/5‏‏/2024 1:50:01 م UTC,
+Exception: Win32Exception,
+Exception message: An error occurred trying to start process 'C:\Test\NewDocument.docx' with working directory 'D:\Survey Configurator\Survey-Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows'. The system cannot find the file specified.,
+Stack trace:
+   at System.Diagnostics.Process.StartWithCreateProcess(ProcessStartInfo startInfo)
+   at System.Diagnostics.Process.Start(ProcessStartInfo startInfo)
+   at Survey_Configurator.MainScreen.openManualToolStripMenuItem_Click(Object sender, EventArgs e) in D:\Survey Configurator\Survey-Configurator\Survey Configurator\Survey Configurator\MainScreen.cs:line 788
+
+--------
+
+31‏‏/5‏‏/2024 1:50:02 م UTC,
+Exception: Win32Exception,
+Exception message: An error occurred trying to start process 'C:\Test\NewDocument.docx' with working directory 'D:\Survey Configurator\Survey-Configurator\Survey Configurator\Survey Configurator\bin\Debug\net8.0-windows'. The system cannot find the file specified.,
+Stack trace:
+   at System.Diagnostics.Process.StartWithCreateProcess(ProcessStartInfo startInfo)
+   at System.Diagnostics.Process.Start(ProcessStartInfo startInfo)
+   at Survey_Configurator.MainScreen.openManualToolStripMenuItem_Click(Object sender, EventArgs e) in D:\Survey Configurator\Survey-Configurator\Survey Configurator\Survey Configurator\MainScreen.cs:line 788
+
+--------
+
+5/31/2024 4:03:34 PM UTC,
+Exception: InvalidOperationException,
+Exception message: Cross-thread operation not valid: Control 'QuestionsListView' accessed from a thread other than the thread it was created on.,
+Stack trace:
+   at System.Windows.Forms.Control.get_Handle()
+   at System.Windows.Forms.Control.IHandle<Windows.Win32.Foundation.HWND>.get_Handle()
+   at Windows.Win32.PInvoke.SendMessage[T](T hWnd, MessageId Msg, WPARAM wParam, LPARAM lParam)
+   at System.Windows.Forms.ListView.SelectedListViewItemCollection.get_Count()
+   at Survey_Configurator.MainScreen.UpdateQuestionsList() in D:\Survey Configurator\Survey-Configurator\Survey Configurator\Survey Configurator\MainScreen.cs:line 579
+
+--------
+
+5/31/2024 4:04:28 PM UTC,
+Exception: InvalidOperationException,
+Exception message: Cross-thread operation not valid: Control 'QuestionsListView' accessed from a thread other than the thread it was created on.,
+Stack trace:
+   at System.Windows.Forms.Control.get_Handle()
+   at System.Windows.Forms.Control.IHandle<Windows.Win32.Foundation.HWND>.get_Handle()
+   at Windows.Win32.PInvoke.EnableWindow[T](T hWnd, BOOL bEnable)
+   at System.Windows.Forms.Control.OnEnabledChanged(EventArgs e)
+   at Survey_Configurator.MainScreen.DisableUIElements() in D:\Survey Configurator\Survey-Configurator\Survey Configurator\Survey Configurator\MainScreen.cs:line 685
+
+--------
+
+5/31/2024 4:15:41 PM UTC,
+Exception: InvalidOperationException,
+Exception message: Cross-thread operation not valid: Control 'QuestionsListView' accessed from a thread other than the thread it was created on.,
+Stack trace:
+   at System.Windows.Forms.Control.get_Handle()
+   at System.Windows.Forms.Control.IHandle<Windows.Win32.Foundation.HWND>.get_Handle()
+   at Windows.Win32.PInvoke.SendMessage[T](T hWnd, MessageId Msg, WPARAM wParam, LPARAM lParam)
+   at System.Windows.Forms.ListView.SelectedListViewItemCollection.get_Count()
+   at Survey_Configurator.MainScreen.UpdateQuestionsList() in D:\Survey Configurator\Survey-Configurator\Survey Configurator\Survey Configurator\MainScreen.cs:line 579
+
+--------
+

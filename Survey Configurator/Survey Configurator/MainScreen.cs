@@ -24,7 +24,7 @@ namespace Survey_Configurator
         private const string cEnglishLanguageSettings = "en";
         private const string cArabicLanguageSettings = "ar";
         private const string cLanguageSettingsKey = "Culture";
-
+        private  string cUserManualFilePath = $@"""D:\Survey Configurator\Survey-Configurator\Survey Configurator\Survey Configurator\bin\Release\net8.0-windows\manual\Usermanual.docx""";
         /// <summary>
         /// constructor for the main form,first it sets the language of the app to what last saved in the app.config file,
         /// then it checks whether the connection string can obtained from the
@@ -305,9 +305,21 @@ namespace Survey_Configurator
         {
             try
             {
+                //to handle the case when the event is raised from a different thread
+                if(QuestionsListView.InvokeRequired)
+                {
+                    QuestionsListView.Invoke((MethodInvoker)delegate
+                    {
+                        UpdateQuestionsList();
+                        EditQuestionButton.Enabled = false;
+                        DeleteQuestionButton.Enabled = false;
+                    });
+                }
+                else { 
                 UpdateQuestionsList();
                 EditQuestionButton.Enabled = false;
                 DeleteQuestionButton.Enabled = false;
+                }
             }
             catch (Exception ex)
             {
@@ -507,8 +519,8 @@ namespace Survey_Configurator
         /// </summary>
         private void ConnectionSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try 
-            { 
+            try
+            {
                 ConnectionSettings tConnectionSettingsForm = new ConnectionSettings(true);
                 DialogResult tContinueToAppResult = tConnectionSettingsForm.ShowDialog();
                 //decied based on dialogue result
@@ -520,13 +532,13 @@ namespace Survey_Configurator
                 }
                 else if (tContinueToAppResult == DialogResult.OK)
                 {
-                    mIsDatabaseConnected= true;
+                    mIsDatabaseConnected = true;
                     LoadApplication();
                     EnableUIElements();
 
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
                 ShowDefaultErrorMessage();
@@ -727,12 +739,12 @@ namespace Survey_Configurator
         /// <returns>bool value indicating whether the connection succeded or not</returns>
         public static bool CheckDatabaseConnection()
         {
-            try 
+            try
             {
                 OperationResult tDatabaseConnected = QuestionOperations.TestDBConnection();
                 return tDatabaseConnected.IsSuccess;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
                 ShowDefaultErrorMessage();
@@ -748,8 +760,8 @@ namespace Survey_Configurator
         /// </summary>
         private void LoadApplication()
         {
-            try 
-            { 
+            try
+            {
                 if (mIsDatabaseConnected)
                 {
                     //initialize the list view with questions data
@@ -757,7 +769,6 @@ namespace Survey_Configurator
 
                     //launch the database change checker to monitor database for any change and reflect it to the UI
                     QuestionOperations.StartCheckingDataBaseChange();
-
                 }
                 else
                 {
@@ -773,7 +784,7 @@ namespace Survey_Configurator
                 //sort the questions list alphabetically on first load
                 QuestionsListView.ListViewItemSorter = new ListViewItemComparer(1, mSortingOrder);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 UtilityMethods.LogError(ex);
                 ShowDefaultErrorMessage();
@@ -781,5 +792,9 @@ namespace Survey_Configurator
         }
         #endregion
 
+        private void openManualToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("C:\\Program Files\\Microsoft Office\\Office16\\WINWORD.EXE",cUserManualFilePath);
+        }
     }
 }

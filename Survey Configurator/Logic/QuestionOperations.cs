@@ -329,8 +329,6 @@ namespace QuestionServices
                 while (pMainThread.IsAlive)
                 {
                     Thread.Sleep(10000);
-                    if (tcurrentChecksum == 0)
-                        continue;
                     if(!mOperationOngoing) 
                     {
                         //get checksum again to detect change

@@ -89,3 +89,4 @@ D:\Survey Configurator\Survey-Configurator\Survey Configurator\Survey Configurat
 D:\Survey Configurator\Survey-Configurator\Survey Configurator\Survey Configurator\obj\Release\net8.0-windows\FormUI.pdb
 D:\Survey Configurator\Survey-Configurator\Survey Configurator\Survey Configurator\obj\Release\net8.0-windows\FormUI.genruntimeconfig.cache
 D:\Survey Configurator\Survey-Configurator\Survey Configurator\Survey Configurator\obj\Release\net8.0-windows\ref\FormUI.dll
+D:\Survey Configurator\Survey-Configurator\Survey Configurator\Survey Configurator\bin\Release\net8.0-windows\Microsoft.Office.Interop.Word.dll

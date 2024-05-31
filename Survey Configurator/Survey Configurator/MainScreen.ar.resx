@@ -183,7 +183,7 @@
     <value>خيارات</value>
   </data>
   <data name="openManualToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 28</value>
+    <value>224, 28</value>
   </data>
   <data name="openManualToolStripMenuItem.Text" xml:space="preserve">
     <value>دليل المستخدم</value>

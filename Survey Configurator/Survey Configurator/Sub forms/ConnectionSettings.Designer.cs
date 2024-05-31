@@ -53,7 +53,7 @@
             ConnectionCredintials.Size = new Size(600, 250);
             ConnectionCredintials.TabIndex = 0;
             ConnectionCredintials.TabStop = false;
-            ConnectionCredintials.Text = "Connection credintials";
+            ConnectionCredintials.Text = "Connection credentials";
             // 
             // AuthenticationComboBox
             // 

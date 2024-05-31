@@ -147,6 +147,7 @@
             // 
             resources.ApplyResources(openManualToolStripMenuItem, "openManualToolStripMenuItem");
             openManualToolStripMenuItem.Name = "openManualToolStripMenuItem";
+            openManualToolStripMenuItem.Click += openManualToolStripMenuItem_Click;
             // 
             // QuestionsListView
             // 

@@ -580,8 +580,12 @@ namespace DatabaseLayer
                     tConn.Open();
                     SqlCommand tGetChecksum = new SqlCommand($"SELECT CHECKSUM_AGG(BINARY_CHECKSUM(*)) FROM {cQuestionsTableName} WITH (NOLOCK)", tConn);
                     var tChecksum = tGetChecksum.ExecuteScalar();
+                    //database is empty
                     if (DBNull.Value.Equals(tChecksum))
-                        return new OperationResult(GlobalStrings.SqlErrorTitle, "Database was just created");
+                    {
+                        pChecksum = 0;
+                        return new OperationResult();
+                    }
                     pChecksum = (int)tChecksum;
                     return new OperationResult();
                 }
