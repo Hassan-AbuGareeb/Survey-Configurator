@@ -1890,11 +1890,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Survey Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj",
+      "projectUniqueName": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj",
       "projectName": "SharedResources",
-      "projectPath": "D:\\Survey Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj",
+      "projectPath": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj",
       "packagesPath": "C:\\Users\\hassan\\.nuget\\packages\\",
-      "outputPath": "D:\\Survey Configurator\\Survey Configurator\\SharedResources\\obj\\",
+      "outputPath": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\SharedResources\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\hassan\\AppData\\Roaming\\NuGet\\NuGet.Config",

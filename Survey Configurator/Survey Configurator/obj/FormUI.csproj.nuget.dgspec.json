@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Survey Configurator\\Survey Configurator\\Survey Configurator\\FormUI.csproj": {}
+    "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\Survey Configurator\\FormUI.csproj": {}
   },
   "projects": {
-    "D:\\Survey Configurator\\Survey Configurator\\Database\\QuestionDB.csproj": {
+    "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\Database\\QuestionDB.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Survey Configurator\\Survey Configurator\\Database\\QuestionDB.csproj",
+        "projectUniqueName": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\Database\\QuestionDB.csproj",
         "projectName": "QuestionDB",
-        "projectPath": "D:\\Survey Configurator\\Survey Configurator\\Database\\QuestionDB.csproj",
+        "projectPath": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\Database\\QuestionDB.csproj",
         "packagesPath": "C:\\Users\\hassan\\.nuget\\packages\\",
-        "outputPath": "D:\\Survey Configurator\\Survey Configurator\\Database\\obj\\",
+        "outputPath": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\Database\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hassan\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,8 +28,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Survey Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj": {
-                "projectPath": "D:\\Survey Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj"
+              "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj": {
+                "projectPath": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj"
               }
             }
           }
@@ -74,14 +74,14 @@
         }
       }
     },
-    "D:\\Survey Configurator\\Survey Configurator\\Logic\\QuestionServices.csproj": {
+    "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\Logic\\QuestionServices.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Survey Configurator\\Survey Configurator\\Logic\\QuestionServices.csproj",
+        "projectUniqueName": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\Logic\\QuestionServices.csproj",
         "projectName": "QuestionServices",
-        "projectPath": "D:\\Survey Configurator\\Survey Configurator\\Logic\\QuestionServices.csproj",
+        "projectPath": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\Logic\\QuestionServices.csproj",
         "packagesPath": "C:\\Users\\hassan\\.nuget\\packages\\",
-        "outputPath": "D:\\Survey Configurator\\Survey Configurator\\Logic\\obj\\",
+        "outputPath": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\Logic\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hassan\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -98,11 +98,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Survey Configurator\\Survey Configurator\\Database\\QuestionDB.csproj": {
-                "projectPath": "D:\\Survey Configurator\\Survey Configurator\\Database\\QuestionDB.csproj"
+              "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\Database\\QuestionDB.csproj": {
+                "projectPath": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\Database\\QuestionDB.csproj"
               },
-              "D:\\Survey Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj": {
-                "projectPath": "D:\\Survey Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj"
+              "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj": {
+                "projectPath": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj"
               }
             }
           }
@@ -147,14 +147,14 @@
         }
       }
     },
-    "D:\\Survey Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj": {
+    "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Survey Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj",
+        "projectUniqueName": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj",
         "projectName": "SharedResources",
-        "projectPath": "D:\\Survey Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj",
+        "projectPath": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj",
         "packagesPath": "C:\\Users\\hassan\\.nuget\\packages\\",
-        "outputPath": "D:\\Survey Configurator\\Survey Configurator\\SharedResources\\obj\\",
+        "outputPath": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\SharedResources\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hassan\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -213,14 +213,14 @@
         }
       }
     },
-    "D:\\Survey Configurator\\Survey Configurator\\Survey Configurator\\FormUI.csproj": {
+    "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\Survey Configurator\\FormUI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Survey Configurator\\Survey Configurator\\Survey Configurator\\FormUI.csproj",
+        "projectUniqueName": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\Survey Configurator\\FormUI.csproj",
         "projectName": "FormUI",
-        "projectPath": "D:\\Survey Configurator\\Survey Configurator\\Survey Configurator\\FormUI.csproj",
+        "projectPath": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\Survey Configurator\\FormUI.csproj",
         "packagesPath": "C:\\Users\\hassan\\.nuget\\packages\\",
-        "outputPath": "D:\\Survey Configurator\\Survey Configurator\\Survey Configurator\\obj\\",
+        "outputPath": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\Survey Configurator\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hassan\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -237,11 +237,11 @@
           "net8.0-windows7.0": {
             "targetAlias": "net8.0-windows",
             "projectReferences": {
-              "D:\\Survey Configurator\\Survey Configurator\\Logic\\QuestionServices.csproj": {
-                "projectPath": "D:\\Survey Configurator\\Survey Configurator\\Logic\\QuestionServices.csproj"
+              "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\Logic\\QuestionServices.csproj": {
+                "projectPath": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\Logic\\QuestionServices.csproj"
               },
-              "D:\\Survey Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj": {
-                "projectPath": "D:\\Survey Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj"
+              "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj": {
+                "projectPath": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj"
               }
             }
           }

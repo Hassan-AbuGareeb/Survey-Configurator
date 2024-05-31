@@ -225,6 +225,9 @@
   <data name="QuestionsListView.Size" type="System.Drawing.Size, System.Drawing">
     <value>1667, 806</value>
   </data>
+  <data name="DatabaseConnectionIsseuesLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
   <data name="DatabaseConnectionIsseuesLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>1108, 857</value>
   </data>

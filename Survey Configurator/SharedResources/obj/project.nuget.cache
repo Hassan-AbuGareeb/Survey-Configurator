@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MkhEjrvcdBWYA+NqLY62OqRhtoMQED0w0dfRZwFOeq6yszvvZTcRvILZyJNWoevBw7fRd7ukPK8tuhI8EoYSaQ==",
+  "dgSpecHash": "+h98TNlPahZ7o1C15bOG7HebIAAA64Shr92i/avMjyB0vv931VHCY67jhEOiFvrY8RueyPWbxvry7HKF+wXofA==",
   "success": true,
-  "projectFilePath": "D:\\Survey Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj",
+  "projectFilePath": "D:\\Survey Configurator\\Survey-Configurator\\Survey Configurator\\SharedResources\\SharedResources.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hassan\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\hassan\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
