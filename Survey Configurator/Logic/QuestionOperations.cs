@@ -270,6 +270,10 @@ namespace QuestionServices
             }
         }
 
+        /// <summary>
+        /// writes the connection string details to the ConnectionString.json file
+        /// </summary>
+        /// <param name="pConnectionString"></param>
         public static void SetConnectionString(ConnectionString pConnectionString)
         {
             try

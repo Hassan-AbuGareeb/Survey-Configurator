@@ -23,8 +23,12 @@ namespace Survey_Configurator
         //constants    
         private const string cEnglishLanguageSettings = "en";
         private const string cArabicLanguageSettings = "ar";
+        //add the new language abbrivation here
+
         private const string cLanguageSettingsKey = "Culture";
-        private  string cUserManualFilePath = $@"""D:\Survey Configurator\Survey-Configurator\Survey Configurator\Survey Configurator\bin\Release\net8.0-windows\manual\Usermanual.docx""";
+        private const string cUserManualFilePath = $@"""D:\Survey Configurator\Survey-Configurator\Survey Configurator\Survey Configurator\bin\Release\net8.0-windows\manual\Usermanual.docx""";
+        private const string cWordAppFilePath = "C:\\Program Files\\Microsoft Office\\Office16\\WINWORD.EXE";
+
         /// <summary>
         /// constructor for the main form,first it sets the language of the app to what last saved in the app.config file,
         /// then it checks whether the connection string can obtained from the
@@ -306,6 +310,7 @@ namespace Survey_Configurator
             try
             {
                 //to handle the case when the event is raised from a different thread
+                //than the thread the control was orignially created on (main thread)
                 if(QuestionsListView.InvokeRequired)
                 {
                     QuestionsListView.Invoke((MethodInvoker)delegate
@@ -316,6 +321,7 @@ namespace Survey_Configurator
                     });
                 }
                 else { 
+                    //the event was raised from the same thread the control was created on (main thread)
                 UpdateQuestionsList();
                 EditQuestionButton.Enabled = false;
                 DeleteQuestionButton.Enabled = false;
@@ -546,6 +552,25 @@ namespace Survey_Configurator
 
             }
         }
+
+        /// <summary>
+        /// this function opens the user manul word document
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void openManualToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try 
+            { 
+                System.Diagnostics.Process.Start(cWordAppFilePath, cUserManualFilePath);
+            }
+            catch(Exception ex)
+            {
+                UtilityMethods.LogError(ex);
+                ShowDefaultErrorMessage();
+            }
+        }
+
         #endregion
 
         #region class utility functions
@@ -668,7 +693,7 @@ namespace Survey_Configurator
         }
 
         /// <summary>
-        /// change the language of the application
+        /// change the language of the application in the appconfig file
         /// </summary>
         private static void ChangeAppLanguage(string pLanguage)
         {
@@ -707,6 +732,10 @@ namespace Survey_Configurator
             }
         }
 
+        /// <summary>
+        /// enables the UI elements for the application to 
+        /// function normally
+        /// </summary>
         private void EnableUIElements()
         {
             try
@@ -792,9 +821,5 @@ namespace Survey_Configurator
         }
         #endregion
 
-        private void openManualToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start("C:\\Program Files\\Microsoft Office\\Office16\\WINWORD.EXE",cUserManualFilePath);
-        }
     }
 }

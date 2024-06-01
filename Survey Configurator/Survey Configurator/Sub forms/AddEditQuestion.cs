@@ -2,6 +2,8 @@
 using SharedResources.models;
 using SharedResources;
 using Survey_Configurator.Custom_controls;
+using System.Drawing.Drawing2D;
+using System.ComponentModel.DataAnnotations;
 
 namespace Survey_Configurator.Sub_forms
 {
@@ -24,6 +26,7 @@ namespace Survey_Configurator.Sub_forms
         private static StarsQuestionOptions mStarsQuestionOptionsPanel;
         private static SmileyQuestionOptions mSmileyQuestionOptionsPanel;
         private static SliderQuestionOptions mSliderQuestionOptionsPanel;
+        //add your new user control here
         //location of the question options panel
         private Point mQuestionOptionsPanelLocation = new Point(12, 85);
 
@@ -74,8 +77,7 @@ namespace Survey_Configurator.Sub_forms
         /// <summary>
         /// works on the load event for this form, sets the Opeartion ongoing property to true to
         /// prevent any change in the data while adding or editing and if the operation porperty is 
-        /// Edit it gets the data of the selected data to change it
-        /// the current version of the data
+        /// Edit it gets the data of the selected question and fills it in the form fields
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -159,12 +161,12 @@ namespace Survey_Configurator.Sub_forms
                     //encapsulate obtained data in a question object
                     Question tNewQuestionData = new Question(tQuestionText, tQuestionOrder, tQuestionType);
 
-                        
-                        //check validity of input
+
+                    //check validity of input
                     bool tIsInputValid = ValidateInput(tQuestionType);
-                    if (tIsInputValid) 
-                    { 
-                            OperationResult tQuestionAddedResult = null;
+                    if (tIsInputValid)
+                    {
+                        OperationResult tQuestionAddedResult = null;
                         //add question to db and interface
                         switch (tQuestionType)
                         {
@@ -248,32 +250,32 @@ namespace Survey_Configurator.Sub_forms
                     Question tNewQuestionData = new Question(mQuestionId, tQuestionText, tQuestionOrder, tQuestionType);
 
                     bool tIsInputValid = ValidateInput(tQuestionType);
-                    if (tIsInputValid) { 
-                    OperationResult tQuestionUpdatedResult = null;
-                    //add question to db and interface
-
-                    switch (tQuestionType)
+                    if (tIsInputValid)
                     {
-                        //send question data to be updated
-                        case eQuestionType.Stars:
-                            StarsQuestion tStarsData = new StarsQuestion(tNewQuestionData, (int)mStarsQuestionOptionsPanel.NumberOfStarsNumeric.Value);
-                            tQuestionUpdatedResult = QuestionOperations.UpdateQuestion(tStarsData);
-                            break;
-                        case eQuestionType.Smiley:
-                            SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)mSmileyQuestionOptionsPanel.NumberOfSmileysNumeric.Value);
-                            tQuestionUpdatedResult = QuestionOperations.UpdateQuestion(tSmileyData);
-                            break;
-                        case eQuestionType.Slider:
-                            SliderQuestion tSliderData = new SliderQuestion(
-                                tNewQuestionData,
-                                (int)mSliderQuestionOptionsPanel.SliderStartValueNumeric.Value,
-                                (int)mSliderQuestionOptionsPanel.SliderEndValueNumeric.Value,
-                                mSliderQuestionOptionsPanel.SliderStartValueCaptionText.Text,
-                                mSliderQuestionOptionsPanel.SliderEndValueCaptionText.Text);
-                            tQuestionUpdatedResult = QuestionOperations.UpdateQuestion(tSliderData);
-                            break;
+                        OperationResult tQuestionUpdatedResult = null;
+                        //add question to db and interface
 
-                    }
+                        switch (tQuestionType)
+                        {
+                            //send question data to be updated
+                            case eQuestionType.Stars:
+                                StarsQuestion tStarsData = new StarsQuestion(tNewQuestionData, (int)mStarsQuestionOptionsPanel.NumberOfStarsNumeric.Value);
+                                tQuestionUpdatedResult = QuestionOperations.UpdateQuestion(tStarsData);
+                                break;
+                            case eQuestionType.Smiley:
+                                SmileyQuestion tSmileyData = new SmileyQuestion(tNewQuestionData, (int)mSmileyQuestionOptionsPanel.NumberOfSmileysNumeric.Value);
+                                tQuestionUpdatedResult = QuestionOperations.UpdateQuestion(tSmileyData);
+                                break;
+                            case eQuestionType.Slider:
+                                SliderQuestion tSliderData = new SliderQuestion(
+                                    tNewQuestionData,
+                                    (int)mSliderQuestionOptionsPanel.SliderStartValueNumeric.Value,
+                                    (int)mSliderQuestionOptionsPanel.SliderEndValueNumeric.Value,
+                                    mSliderQuestionOptionsPanel.SliderStartValueCaptionText.Text,
+                                    mSliderQuestionOptionsPanel.SliderEndValueCaptionText.Text);
+                                tQuestionUpdatedResult = QuestionOperations.UpdateQuestion(tSliderData);
+                                break;
+                        }
                         if (tQuestionUpdatedResult != null && !tQuestionUpdatedResult.IsSuccess)
                         {
                             MessageBox.Show(tQuestionUpdatedResult.mErrorMessage, tQuestionUpdatedResult.mError, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -403,6 +405,7 @@ namespace Survey_Configurator.Sub_forms
                 MainScreen.ShowDefaultErrorMessage();
             }
         }
+
         private void AddSmileysOptions()
         {
             try
@@ -481,6 +484,7 @@ namespace Survey_Configurator.Sub_forms
             }
             return true;
         }
+
         #endregion
     }
 }

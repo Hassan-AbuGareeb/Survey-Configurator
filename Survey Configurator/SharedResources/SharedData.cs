@@ -7,7 +7,7 @@ namespace SharedResources
     {
         Stars=0,
         Smiley=1,
-        Slider=2
+        Slider=2,
     }
 
     public class SharedData

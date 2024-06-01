@@ -122,13 +122,13 @@
     <value>246, 28</value>
   </data>
   <data name="EnglishToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>148, 28</value>
+    <value>224, 28</value>
   </data>
   <data name="EnglishToolStripMenuItem.Text" xml:space="preserve">
     <value>English</value>
   </data>
   <data name="ArabicToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>148, 28</value>
+    <value>224, 28</value>
   </data>
   <data name="ArabicToolStripMenuItem.Text" xml:space="preserve">
     <value>العربية</value>

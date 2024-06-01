@@ -118,326 +118,326 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="CancelButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 30</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="QuestionOrderLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="QuestionTypeComboBox.Items2" xml:space="preserve">
-    <value>Slider</value>
-  </data>
-  <data name="GeneralInformationGroupBox.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;QuestionTextLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;QuestionOrderNumeric.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="TypeInformationGroupBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 203</value>
-  </data>
-  <data name="&gt;&gt;GeneralInformationGroupBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GeneralInformationGroupBox.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;GeneralInformationGroupBox.Name" xml:space="preserve">
-    <value>GeneralInformationGroupBox</value>
-  </data>
-  <data name="&gt;&gt;CancelButton.Name" xml:space="preserve">
-    <value>CancelButton</value>
-  </data>
-  <data name="OperationButton.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="CancelButton.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="QuestionTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>386, 51</value>
-  </data>
-  <data name="QuestionOrderType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 20</value>
-  </data>
-  <data name="&gt;&gt;QuestionOrderNumeric.Name" xml:space="preserve">
-    <value>QuestionOrderNumeric</value>
+  <data name="OperationButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>364, 490</value>
   </data>
   <data name="&gt;&gt;QuestionTypeComboBox.Parent" xml:space="preserve">
     <value>TypeInformationGroupBox</value>
   </data>
-  <data name="QuestionOrderLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+  <data name="QuestionTypeComboBox.Items" xml:space="preserve">
+    <value>Stars</value>
   </data>
-  <data name="&gt;&gt;QuestionTypeComboBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="QuestionTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>158, 33</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="OperationButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
+  <data name="&gt;&gt;GeneralInformationGroupBox.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="QuestionTextLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 36</value>
+  <data name="QuestionOrderLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 100</value>
   </data>
-  <data name="QuestionOrderType.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 9pt</value>
+  <data name="&gt;&gt;CancelButton.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
-  <data name="QuestionTextLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 20</value>
+  <data name="GeneralInformationGroupBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>558, 168</value>
+  </data>
+  <data name="&gt;&gt;QuestionTextBox.Parent" xml:space="preserve">
+    <value>GeneralInformationGroupBox</value>
+  </data>
+  <data name="&gt;&gt;QuestionTextLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GeneralInformationGroupBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;QuestionTextBox.Name" xml:space="preserve">
+    <value>QuestionTextBox</value>
+  </data>
+  <data name="&gt;&gt;QuestionOrderNumeric.Parent" xml:space="preserve">
+    <value>GeneralInformationGroupBox</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="CancelButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>
   </data>
-  <data name="QuestionOrderType.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="GeneralInformationGroupBox.Text" xml:space="preserve">
+    <value>General information</value>
   </data>
-  <data name="&gt;&gt;QuestionOrderLabel.Name" xml:space="preserve">
-    <value>QuestionOrderLabel</value>
+  <data name="CancelButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>470, 490</value>
   </data>
-  <data name="&gt;&gt;QuestionTextLabel.ZOrder" xml:space="preserve">
+  <data name="CancelButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 30</value>
+  </data>
+  <data name="&gt;&gt;CancelButton.Name" xml:space="preserve">
+    <value>CancelButton</value>
+  </data>
+  <data name="QuestionTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>386, 51</value>
+  </data>
+  <data name="TypeInformationGroupBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 203</value>
+  </data>
+  <data name="QuestionTextLabel.Text" xml:space="preserve">
+    <value>Text:</value>
+  </data>
+  <data name="&gt;&gt;QuestionOrderLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TypeInformationGroupBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="QuestionTextLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 36</value>
+  </data>
+  <data name="&gt;&gt;QuestionTextBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="QuestionOrderNumeric.Location" type="System.Drawing.Point, System.Drawing">
+    <value>158, 98</value>
+  </data>
+  <data name="&gt;&gt;QuestionTypeComboBox.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="GeneralInformationGroupBox.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="QuestionOrderType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 20</value>
+  </data>
+  <data name="OperationButton.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
   </data>
   <data name="QuestionTypeComboBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>386, 28</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;QuestionOrderNumeric.Name" xml:space="preserve">
+    <value>QuestionOrderNumeric</value>
+  </data>
+  <data name="TypeInformationGroupBox.Text" xml:space="preserve">
+    <value>Type information</value>
+  </data>
+  <data name="OperationButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9pt</value>
+  </data>
+  <data name="QuestionTextBox.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="QuestionTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="QuestionTypeComboBox.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;TypeInformationGroupBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GeneralInformationGroupBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
   </data>
   <data name="&gt;&gt;QuestionOrderLabel.Parent" xml:space="preserve">
+    <value>GeneralInformationGroupBox</value>
+  </data>
+  <data name="OperationButton.Text" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="&gt;&gt;TypeInformationGroupBox.Name" xml:space="preserve">
+    <value>TypeInformationGroupBox</value>
+  </data>
+  <data name="QuestionOrderType.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="QuestionOrderType.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;QuestionTypeComboBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="QuestionOrderLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="QuestionTextLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;GeneralInformationGroupBox.Name" xml:space="preserve">
     <value>GeneralInformationGroupBox</value>
   </data>
   <data name="&gt;&gt;QuestionOrderType.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;QuestionTypeComboBox.Name" xml:space="preserve">
-    <value>QuestionTypeComboBox</value>
+  <data name="&gt;&gt;QuestionOrderNumeric.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
-  <data name="QuestionTextLabel.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 9pt</value>
-  </data>
-  <data name="OperationButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 30</value>
-  </data>
-  <data name="QuestionOrderLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 100</value>
-  </data>
-  <data name="GeneralInformationGroupBox.Text" xml:space="preserve">
-    <value>General information</value>
+  <data name="&gt;&gt;QuestionTextLabel.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;QuestionOrderType.Name" xml:space="preserve">
     <value>QuestionOrderType</value>
   </data>
-  <data name="QuestionOrderLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>50, 20</value>
-  </data>
-  <data name="QuestionTypeComboBox.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="QuestionOrderType.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="QuestionOrderNumeric.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;CancelButton.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="QuestionTypeComboBox.Items1" xml:space="preserve">
-    <value>Smiley</value>
-  </data>
-  <data name="&gt;&gt;OperationButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="CancelButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>470, 490</value>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>AddEditQuestion</value>
   </data>
   <data name="TypeInformationGroupBox.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
   </data>
-  <data name="&gt;&gt;QuestionTextBox.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Add Edit</value>
   </data>
-  <data name="QuestionOrderNumeric.Size" type="System.Drawing.Size, System.Drawing">
-    <value>386, 27</value>
+  <data name="&gt;&gt;OperationButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;QuestionOrderLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>600, 580</value>
-  </data>
-  <data name="QuestionTextLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>582, 533</value>
-  </data>
-  <data name="QuestionOrderNumeric.Location" type="System.Drawing.Point, System.Drawing">
-    <value>158, 98</value>
-  </data>
-  <data name="QuestionTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="QuestionTextBox.Multiline" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="QuestionTypeComboBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>166, 38</value>
-  </data>
-  <data name="&gt;&gt;OperationButton.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="TypeInformationGroupBox.Text" xml:space="preserve">
-    <value>Type information</value>
-  </data>
-  <data name="&gt;&gt;OperationButton.Name" xml:space="preserve">
-    <value>OperationButton</value>
-  </data>
-  <data name="GeneralInformationGroupBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>558, 168</value>
-  </data>
-  <data name="&gt;&gt;QuestionTextBox.Name" xml:space="preserve">
-    <value>QuestionTextBox</value>
-  </data>
-  <data name="QuestionTextBox.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;QuestionTextLabel.Name" xml:space="preserve">
-    <value>QuestionTextLabel</value>
-  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
-  </data>
-  <data name="QuestionOrderType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>19, 41</value>
-  </data>
-  <data name="OperationButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="&gt;&gt;GeneralInformationGroupBox.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="QuestionTextLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;TypeInformationGroupBox.Name" xml:space="preserve">
-    <value>TypeInformationGroupBox</value>
-  </data>
-  <data name="QuestionTextBox.MaxLength" type="System.Int32, mscorlib">
-    <value>350</value>
   </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>8, 20</value>
   </data>
-  <data name="QuestionOrderLabel.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 9pt</value>
+  <data name="TypeInformationGroupBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>558, 278</value>
   </data>
   <data name="&gt;&gt;CancelButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;QuestionOrderType.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;QuestionOrderLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="CancelButton.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="QuestionTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="&gt;&gt;QuestionTextLabel.Parent" xml:space="preserve">
+    <value>GeneralInformationGroupBox</value>
+  </data>
+  <data name="QuestionOrderNumeric.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;QuestionTextLabel.Name" xml:space="preserve">
+    <value>QuestionTextLabel</value>
+  </data>
+  <data name="QuestionOrderType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 41</value>
+  </data>
   <data name="QuestionOrderNumeric.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>
   </data>
-  <data name="&gt;&gt;QuestionTextBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="OperationButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="QuestionTypeComboBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>166, 38</value>
   </data>
   <data name="&gt;&gt;QuestionOrderType.Parent" xml:space="preserve">
     <value>TypeInformationGroupBox</value>
   </data>
-  <data name="OperationButton.Text" xml:space="preserve">
-    <value>Add</value>
+  <data name="QuestionOrderLabel.Text" xml:space="preserve">
+    <value>Order:</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>AddEditQuestion</value>
+  <data name="QuestionTextBox.MaxLength" type="System.Int32, mscorlib">
+    <value>350</value>
   </data>
-  <data name="&gt;&gt;TypeInformationGroupBox.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="QuestionOrderLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="CancelButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9pt</value>
+  </data>
+  <data name="OperationButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 30</value>
+  </data>
+  <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>600, 580</value>
+  </data>
+  <data name="&gt;&gt;QuestionOrderNumeric.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="QuestionOrderType.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="CancelButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="OperationButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>
   </data>
   <data name="CancelButton.Text" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="TypeInformationGroupBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>558, 278</value>
+  <data name="QuestionTextLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 20</value>
   </data>
-  <data name="GeneralInformationGroupBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 12</value>
+  <data name="QuestionTextLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
   </data>
-  <data name="QuestionTextLabel.Text" xml:space="preserve">
-    <value>Text:</value>
+  <data name="QuestionOrderLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 20</value>
   </data>
-  <data name="QuestionOrderType.Text" xml:space="preserve">
-    <value>Type:</value>
+  <data name="&gt;&gt;QuestionOrderLabel.Name" xml:space="preserve">
+    <value>QuestionOrderLabel</value>
+  </data>
+  <data name="QuestionTypeComboBox.Items2" xml:space="preserve">
+    <value>Slider</value>
   </data>
   <data name="QuestionTypeComboBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>
   </data>
-  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>600, 580</value>
+  <data name="&gt;&gt;QuestionTypeComboBox.Name" xml:space="preserve">
+    <value>QuestionTypeComboBox</value>
   </data>
-  <data name="&gt;&gt;TypeInformationGroupBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="QuestionTextLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
   </data>
-  <data name="OperationButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 9pt</value>
-  </data>
-  <data name="CancelButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 9pt</value>
-  </data>
-  <data name="QuestionTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>158, 33</value>
-  </data>
-  <data name="&gt;&gt;QuestionTypeComboBox.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;QuestionOrderType.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Add Edit</value>
-  </data>
-  <data name="&gt;&gt;QuestionTextBox.Parent" xml:space="preserve">
-    <value>GeneralInformationGroupBox</value>
-  </data>
-  <data name="&gt;&gt;CancelButton.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;QuestionOrderNumeric.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;OperationButton.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="QuestionOrderLabel.Text" xml:space="preserve">
-    <value>Order:</value>
+  <data name="&gt;&gt;TypeInformationGroupBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;GeneralInformationGroupBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;OperationButton.Name" xml:space="preserve">
+    <value>OperationButton</value>
+  </data>
+  <data name="QuestionOrderLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="QuestionOrderType.Text" xml:space="preserve">
+    <value>Type:</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="&gt;&gt;CancelButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="QuestionOrderNumeric.Size" type="System.Drawing.Size, System.Drawing">
+    <value>386, 27</value>
+  </data>
+  <data name="QuestionTypeComboBox.Items1" xml:space="preserve">
+    <value>Smiley</value>
   </data>
   <data name="&gt;&gt;OperationButton.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="QuestionTypeComboBox.Items" xml:space="preserve">
-    <value>Stars</value>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>600, 580</value>
   </data>
-  <data name="CancelButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>582, 533</value>
   </data>
-  <data name="&gt;&gt;QuestionOrderLabel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;TypeInformationGroupBox.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;QuestionOrderNumeric.Parent" xml:space="preserve">
-    <value>GeneralInformationGroupBox</value>
-  </data>
-  <data name="&gt;&gt;QuestionTextLabel.Parent" xml:space="preserve">
-    <value>GeneralInformationGroupBox</value>
-  </data>
-  <data name="OperationButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>364, 490</value>
+  <data name="&gt;&gt;QuestionTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <metadata name="$this.Language" type="System.Globalization.CultureInfo, System.Private.CoreLib, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
     <value>en</value>

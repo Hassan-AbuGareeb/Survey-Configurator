@@ -3,6 +3,7 @@ using System.Data.Common;
 using SharedResources.models;
 using Microsoft.Data.SqlClient;
 using SharedResources;
+using System.ComponentModel.DataAnnotations;
 
 namespace DatabaseLayer
 {
@@ -34,6 +35,9 @@ namespace DatabaseLayer
         private const string cEndValueColumn = "EndValue";
         private const string cStartValueCaptionColumn = "StartValueCaption";
         private const string cEndValueCaptionColumn = "EndValueCaption";
+            //your type name here
+            //your type columns names constsants here
+
 
         private Database() { }
         #region class main functions
@@ -132,6 +136,7 @@ namespace DatabaseLayer
                                     (int)tReader[cStartValueColumn], (int)tReader[cEndValueColumn],
                                     tReader[cStartValueCaptionColumn].ToString(), tReader[cEndValueCaptionColumn ].ToString());
                                 break;
+
                         }
                     }
                     tReader.Close();
@@ -261,6 +266,7 @@ namespace DatabaseLayer
                                     case eQuestionType.Slider:
                                         tUpdateQuestionSpecificDataCmd = GetUpdateSliderCommand(pUpdatedQuestionData.Id, (SliderQuestion)pUpdatedQuestionData);
                                         break;
+
                                 }
 
                                 tUpdateQuestionSpecificDataCmd.Connection = tConn;
@@ -292,6 +298,7 @@ namespace DatabaseLayer
                                     case eQuestionType.Slider:
                                         tInsertQuestionTypeCmd = GetAddSliderCommand(pUpdatedQuestionData.Id, (SliderQuestion)pUpdatedQuestionData);
                                         break;
+
                                 }
 
                                 tInsertQuestionTypeCmd.Connection = tConn;
